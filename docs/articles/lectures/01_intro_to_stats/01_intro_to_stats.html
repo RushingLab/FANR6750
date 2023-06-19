@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>LECTURE 1: introduction to statistics</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="   Fall 2023" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="FANR6750.css" type="text/css" />
+    <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# LECTURE 1: introduction to statistics
+]
+.subtitle[
+## FANR 6750 (Experimental design)
+]
+.author[
+### <br/><br/><br/>Fall 2023
+]
+
+---
+
+
+
+
+class: inverse
+
+# outline
+
+&lt;br/&gt;
+#### 1) What is statistics?
+
+&lt;br/&gt;  
+--
+
+#### 2) Statistics and the scientific method
+
+&lt;br/&gt; 
+--
+
+#### 3) Experiments and causal inference
+
+&lt;br/&gt; 
+
+---
+
+# what is statistics?
+
+&lt;br/&gt;
+&lt;br/&gt;
+&gt; The study of the collection, analysis, interpretation, presentation, and organization of data (Dodge 2006)  
+
+&lt;br/&gt;  
+--
+&lt;br/&gt;
+&gt; The science of learning from data in the face of **uncertainty** (various)  
+
+--
+&lt;br/&gt;
+`$$Statistics = Information + Uncertainty$$`
+
+---
+# why do we need statistics?
+
+### Common tasks 
+
+- Identify relationships between variables  
+&lt;br/&gt;
+
+--
+- Estimate unknown parameters  
+&lt;br/&gt;
+
+--
+- Test hypotheses  
+&lt;br/&gt;
+
+--
+- Describe stochastic systems  
+&lt;br/&gt;
+
+--
+- Make predictions that account for uncertainty  
+
+---
+# stats and the scientific method
+
+#### Ways of learnings
+
+--
+
+.pull-left[
+**Inductive reasoning**
+
+- Often attributed to Francis Bacon (and others)
+
+- Consistent observations -&gt; general principle
+
+- Problem: "confirmatory" observations can't disprove theory
+
+- Example: I've only seen birds that fly :: all birds can fly
+]
+
+--
+
+.pull-right[
+**Deductive reasoning**
+
+- Formalized by Karl Popper
+
+- Theory -&gt; predictions -&gt; observations
+
+- Based on *falsification*
+
+- Example: All birds can fly :: penguins are birds :: penguins can fly
+]
+
+---
+# stats and the scientific method
+
+#### Ways of learnings (real world)
+
+--
+
+1) Pattern identification (i.e., exploratory studies)
+- Anecdotes  
+- Correlations/visual analysis  
+- Exploratory modeling (i.e., fishing)
+    
+---
+# stats and the scientific method
+
+#### Ways of learnings (real world)
+
+1) Pattern identification (i.e., exploratory studies)
+
+2) Hypothesis formation
+- Formed from patterns  
+- Should focus on mechanisms ("because", "controls", "adapted to") 
+- Should be falsifiable  
+- Ideally &gt; 1 alternatives  
+
+---
+# stats and the scientific method
+
+#### Ways of learnings (real world)
+
+1) Pattern identification (i.e., exploratory studies)
+
+2) Hypothesis formation
+
+3) Predictions
+- If the hypothesis is true, what do you expect to see?  
+- Focus on things **we can measure**
+- More = better
+- "associated", "correlated", "greater/less than"
+
+---
+# stats and the scientific method
+
+#### Ways of learnings (real world)
+
+1) Pattern identification (i.e., exploratory studies)
+
+2) Hypothesis formation
+
+3) Predictions
+
+4) Data collection
+- Can be observational but ideally manipulative experiment  
+- Sampling must be *designed* to answer question  
+
+---
+# stats and the scientific method
+
+#### Ways of learnings (real world)
+
+1) Pattern identification (i.e., exploratory studies)
+
+2) Hypothesis formation
+
+3) Predictions
+
+4) Data collection
+
+5) Models and testing  
+- Model is mathematical abstraction of hypothesis
+- Model used to "confront" hypothesis with data (via predictions)
+- Draw conclusions: Does data support hypothesis?  
+
+---
+# stats and the scientific method
+
+#### Example
+1) **Pattern**: Trees at higher elevations are shorter than at low elevations
+
+--
+
+2) **Hypotheses**
+
+--
+
+3) **Predictions**
+
+--
+
+4) **Data collection**&lt;sup&gt;1&lt;/sup&gt;
+
+
+5) **Models**&lt;sup&gt;1&lt;/sup&gt;
+
+.footnote[[1] We'll get to these!]
+
+---
+class: inverse, middle, center
+
+# causal inference
+
+---
+# causal inference
+
+#### Often, we want to know whether `\(x\)` influences `\(y\)`
+
+--
+
+- In other words, if we change `\(x\)`, will `\(y\)` change also (and by how much)? 
+
+--
+
+- Harder than it seems! Why?
+
+--
+
+- Generally restricted to *manipulative* experiments
+
+--
+
+    + Well-designed experiments ensure that "treatment assignment is independent of the potential outcomes" (Gelman et al. 2021)
+
+---
+class: inverse, middle, center
+
+# uncertainty
+
+---
+# populations vs samples
+
+#### **Hypothesis**: New plant variety is more disease resistant than current variety
+
+&lt;img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Hemileia_vastatrix_-_coffee_leaf_rust.jpg" width="35%" style="display: block; margin: auto;" /&gt;
+
+--
+
+#### **Prediction**: Disease prevalence is lower in new variety than in current variety
+
+--
+
+### How can we determine whether the hypothesis is true?
+
+---
+class:inverse
+
+# populations vs samples
+
+#### Population  
+- A collection of subjects of interest  
+
+- Often, a biologically meaningful unit  
+
+- Sometimes a process of interest  
+
+--
+
+### Question: What is the population in our example?
+
+---
+# population
+
+&lt;img src="01_intro_to_stats_files/figure-html/pop-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+#### Note:
+1) This is the **population**  
+
+2) There is **variation** within and among groups, but: 
+
+3) The hypothesis is correct (mean prevalence is lower in new vs. current variety)
+
+
+---
+class:inverse 
+
+# populations vs samples
+
+#### Population  
+- A collection of subjects of interest  
+
+- Often, a biologically meaningful unit  
+
+- Sometimes a process of interest  
+
+--
+
+#### Sample
+
+- A finite subset of the population of interest, i.e. the data we collect  
+
+- Samples allow us to draw inferences about the population  
+
+- Good samples are:
+    + Random  
+    + Representative  
+    + Sufficiently large  
+
+---
+# sample
+
+&lt;img src="01_intro_to_stats_files/figure-html/samp1-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# sample
+
+&lt;img src="01_intro_to_stats_files/figure-html/samp_lab-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+
+--
+
+#### Note:
+1) This is *a* **sample**  
+
+2) The sample means are our best estimates of the population means  
+
+3) But the sample means will never equal the population means (Uncertainty!)  
+
+
+---
+# sampling error
+
+Every sample has a different mean (and standard deviation) - more uncertainty! 
+
+&lt;img src="01_intro_to_stats_files/figure-html/samp1_again-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+&lt;img src="01_intro_to_stats_files/figure-html/samp2-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# sampling = uncertainty
+
+#### Because populations (usually) cannot be measured, sampling is essential
+
+--
+
+#### But sampling is inherently *stochastic* 
+
+- sampling produces uncertainty
+
+- unavoidable (but that's ok!) 
+
+&gt; Doubt is not a pleasant condition, but certainty is absurd -- Voltaire
+
+--
+
+#### Statistics is what allows us to learn about the **population** using **samples** in the face of **uncertainty** 
+
+- the primary goal of this class is for you to understand how to make robust inferences that account for uncertainty (and the limitations of those inferences)
+
+- we will return to this basic concept (sampling error) many times this semester
+
+
+---
+# looking ahead
+
+&lt;br/&gt;
+
+### **Next time**: Introduction to linear models
+
+&lt;br/&gt;
+
+### **Reading**: Quinn chp. 2.1-2.3
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

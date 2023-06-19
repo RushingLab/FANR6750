@@ -1,0 +1,62 @@
+---
+title: "LECTURE 2: introduction to linear models"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2023"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, fig.retina = 2)
+source(here::here("R/zzz.R"))
+# library(emo)
+# library(gganimate)
+```
+
+class: inverse
+
+# outline
+
+<br/>
+#### 1) Basic structure of a linear model
+
+<br/>  
+--
+
+#### 2) Parameter interpretation
+
+<br/> 
+--
+
+#### 3) Assumptions
+
+<br/> 
+
+---
+
+# statistics = information $\small +$ uncertainty
+
+#### In the last lecture, we learned that uncertainty is inherent to sampling and that we must account for that uncertainty to make statistical inferences
+
+--
+
+#### Today we are going to ignore uncertainty
+
+---
+# looking ahead
+
+<br/>
+
+### **Next time**: Princples of estimation
+
+<br/>
+
+### **Reading**: Quinn chp. 2.1-2.3
+

@@ -1,0 +1,458 @@
+---
+title: "LECTURE 1: introduction to statistics"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2023"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, fig.retina = 2)
+source(here::here("R/zzz.R"))
+# library(emo)
+# library(gganimate)
+```
+
+class: inverse
+
+# outline
+
+<br/>
+#### 1) What is statistics?
+
+<br/>  
+--
+
+#### 2) Statistics and the scientific method
+
+<br/> 
+--
+
+#### 3) Experiments and causal inference
+
+<br/> 
+
+---
+
+# what is statistics?
+
+<br/>
+<br/>
+> The study of the collection, analysis, interpretation, presentation, and organization of data (Dodge 2006)  
+
+<br/>  
+--
+<br/>
+> The science of learning from data in the face of **uncertainty** (various)  
+
+--
+<br/>
+$$Statistics = Information + Uncertainty$$
+
+---
+# why do we need statistics?
+
+### Common tasks 
+
+- Identify relationships between variables  
+<br/>
+
+--
+- Estimate unknown parameters  
+<br/>
+
+--
+- Test hypotheses  
+<br/>
+
+--
+- Describe stochastic systems  
+<br/>
+
+--
+- Make predictions that account for uncertainty  
+
+---
+# stats and the scientific method
+
+#### Ways of learnings
+
+--
+
+.pull-left[
+**Inductive reasoning**
+
+- Often attributed to Francis Bacon (and others)
+
+- Consistent observations -> general principle
+
+- Problem: "confirmatory" observations can't disprove theory
+
+- Example: I've only seen birds that fly :: all birds can fly
+]
+
+--
+
+.pull-right[
+**Deductive reasoning**
+
+- Formalized by Karl Popper
+
+- Theory -> predictions -> observations
+
+- Based on *falsification*
+
+- Example: All birds can fly :: penguins are birds :: penguins can fly
+]
+
+---
+# stats and the scientific method
+
+#### Ways of learnings (real world)
+
+--
+
+1) Pattern identification (i.e., exploratory studies)
+- Anecdotes  
+- Correlations/visual analysis  
+- Exploratory modeling (i.e., fishing)
+    
+---
+# stats and the scientific method
+
+#### Ways of learnings (real world)
+
+1) Pattern identification (i.e., exploratory studies)
+
+2) Hypothesis formation
+- Formed from patterns  
+- Should focus on mechanisms ("because", "controls", "adapted to") 
+- Should be falsifiable  
+- Ideally > 1 alternatives  
+
+---
+# stats and the scientific method
+
+#### Ways of learnings (real world)
+
+1) Pattern identification (i.e., exploratory studies)
+
+2) Hypothesis formation
+
+3) Predictions
+- If the hypothesis is true, what do you expect to see?  
+- Focus on things **we can measure**
+- More = better
+- "associated", "correlated", "greater/less than"
+
+---
+# stats and the scientific method
+
+#### Ways of learnings (real world)
+
+1) Pattern identification (i.e., exploratory studies)
+
+2) Hypothesis formation
+
+3) Predictions
+
+4) Data collection
+- Can be observational but ideally manipulative experiment  
+- Sampling must be *designed* to answer question  
+
+---
+# stats and the scientific method
+
+#### Ways of learnings (real world)
+
+1) Pattern identification (i.e., exploratory studies)
+
+2) Hypothesis formation
+
+3) Predictions
+
+4) Data collection
+
+5) Models and testing  
+- Model is mathematical abstraction of hypothesis
+- Model used to "confront" hypothesis with data (via predictions)
+- Draw conclusions: Does data support hypothesis?  
+
+---
+# stats and the scientific method
+
+#### Example
+1) **Pattern**: Trees at higher elevations are shorter than at low elevations
+
+--
+
+2) **Hypotheses**
+
+--
+
+3) **Predictions**
+
+--
+
+4) **Data collection**<sup>1</sup>
+
+
+5) **Models**<sup>1</sup>
+
+.footnote[[1] We'll get to these!]
+
+---
+class: inverse, middle, center
+
+# causal inference
+
+---
+# causal inference
+
+#### Often, we want to know whether $x$ influences $y$
+
+--
+
+- In other words, if we change $x$, will $y$ change also (and by how much)? 
+
+--
+
+- Harder than it seems! Why?
+
+--
+
+- Generally restricted to *manipulative* experiments
+
+--
+
+    + Well-designed experiments ensure that "treatment assignment is independent of the potential outcomes" (Gelman et al. 2021)
+
+---
+class: inverse, middle, center
+
+# uncertainty
+
+---
+# populations vs samples
+
+#### **Hypothesis**: New plant variety is more disease resistant than current variety
+
+```{r leaf_rust, out.width="35%", out.align="c"}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/3/3e/Hemileia_vastatrix_-_coffee_leaf_rust.jpg")
+```
+
+--
+
+#### **Prediction**: Disease prevalence is lower in new variety than in current variety
+
+--
+
+### How can we determine whether the hypothesis is true?
+
+---
+class:inverse
+
+# populations vs samples
+
+#### Population  
+- A collection of subjects of interest  
+
+- Often, a biologically meaningful unit  
+
+- Sometimes a process of interest  
+
+--
+
+### Question: What is the population in our example?
+
+---
+# population
+
+```{r pop, fig.width=9, fig.height=4}
+x <- seq(from = 0, to = 100, length.out = 100)
+
+delta_df <- data.frame(x = x, 
+                       y1 = c(dnorm(x, 40, 10), dnorm(x, 60, 10)),
+                       y2 = c(rnorm(200, 40, 10), rnorm(200, 60, 10)),
+                       Variety = rep(c("New", "Current"), each = 100))
+
+ggplot(delta_df) +
+  geom_path(aes(x = x, y = y1, color = Variety), size = 1.75) +
+  geom_rug(aes(x = y2, color = Variety), sides = "b") +
+  scale_x_continuous("% of leaves infected") +
+  scale_y_continuous("") +
+  labs(subtitle = "Disease prevalance in population")
+```
+
+#### Note:
+1) This is the **population**  
+
+2) There is **variation** within and among groups, but: 
+
+3) The hypothesis is correct (mean prevalence is lower in new vs. current variety)
+
+
+---
+class:inverse 
+
+# populations vs samples
+
+#### Population  
+- A collection of subjects of interest  
+
+- Often, a biologically meaningful unit  
+
+- Sometimes a process of interest  
+
+--
+
+#### Sample
+
+- A finite subset of the population of interest, i.e. the data we collect  
+
+- Samples allow us to draw inferences about the population  
+
+- Good samples are:
+    + Random  
+    + Representative  
+    + Sufficiently large  
+
+---
+# sample
+
+```{r samp1, fig.width=9, fig.height=4}
+set.seed(43049)
+samp_df <- data.frame(y2 = c(rnorm(15, 40, 10), rnorm(15, 60, 10)),
+                      Variety = rep(c("New", "Current"), each = 15))
+mean_df <- data.frame(x = c(mean(samp_df$y2[samp_df$Variety=="New"]),
+                            mean(samp_df$y2[samp_df$Variety=="Current"])),
+                      Variety = c("New", "Current"))
+ggplot() +
+  geom_histogram(data = samp_df, aes(x = y2, y = ..density..,fill = Variety), 
+                 color = "white", alpha = 0.6) +
+  geom_path(data = delta_df, aes(x = x, y = y1, color = Variety), size = 1.25, alpha = 0.5) +
+  geom_rug(data = samp_df, aes(x = y2, color = Variety), sides = "b") +
+  geom_vline(data = mean_df, aes(xintercept = x, color = Variety), size = 1) +
+  scale_x_continuous("% of leaves infected") +
+  scale_y_continuous("") +
+  labs(subtitle = "Disease prevalence in sample (n = 15)")
+```
+
+---
+# sample
+
+```{r samp_lab, fig.width=9, fig.height=4}
+ggplot() +
+  geom_histogram(data = samp_df, aes(x = y2, y = ..density..,fill = Variety), 
+                 color = "white", alpha = 0.6) +
+  geom_path(data = delta_df, aes(x = x, y = y1, color = Variety), size = 1.25, alpha = 0.5) +
+  geom_rug(data = samp_df, aes(x = y2, color = Variety), sides = "b") +
+  geom_vline(data = mean_df, aes(xintercept = x, color = Variety), size = 1) +
+  scale_x_continuous("% of leaves infected") +
+  scale_y_continuous("") +
+  annotate("text", x = 15, y = 0.025, label = "populations") +
+  geom_segment(aes(x = 15.25, y = 0.021, xend = 21, yend = 0.008),
+               arrow = arrow(length = unit(0.25, "cm"))) +
+  geom_segment(aes(x = 15.25, y = 0.0215, xend = 45, yend = 0.015),
+               arrow = arrow(length = unit(0.25, "cm"))) +
+  annotate("text", x = 80, y = 0.11, label = "sample means") +
+  geom_segment(aes(x = 71.5, y = 0.109, xend = 64, yend = 0.1),
+               arrow = arrow(length = unit(0.25, "cm"))) +
+  geom_segment(aes(x = 71.5, y = 0.109, xend = 40, yend = 0.1185),
+               arrow = arrow(length = unit(0.25, "cm"))) +
+  annotate("text", x = 15, y = 0.05, label = "sample frequencies") +
+  geom_segment(aes(x = 26.5, y = 0.049, xend = 28.75, yend = 0.037),
+               arrow = arrow(length = unit(0.25, "cm"))) +
+  geom_segment(aes(x = 26.5, y = 0.049, xend = 53, yend = 0.041),
+               arrow = arrow(length = unit(0.25, "cm"))) +
+  labs(subtitle = "Disease prevalence in sample (n = 15)")
+```
+
+
+--
+
+#### Note:
+1) This is *a* **sample**  
+
+2) The sample means are our best estimates of the population means  
+
+3) But the sample means will never equal the population means (Uncertainty!)  
+
+
+---
+# sampling error
+
+Every sample has a different mean (and standard deviation) - more uncertainty! 
+
+```{r samp1_again, fig.width=9, fig.height=3}
+ggplot() +
+  geom_histogram(data = samp_df, aes(x = y2, y = ..density..,fill = Variety), 
+                 color = "white", alpha = 0.6) +
+  geom_path(data = delta_df, aes(x = x, y = y1, color = Variety), size = 1.25, alpha = 0.5) +
+  geom_rug(data = samp_df, aes(x = y2, color = Variety), sides = "b") +
+  geom_vline(data = mean_df, aes(xintercept = x, color = Variety), size = 1) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  labs(subtitle = "Sample 1 (n = 15)")
+```
+
+```{r samp2, fig.width=9, fig.height=3}
+set.seed(59403)
+samp_df <- data.frame(y2 = c(rnorm(15, 48, 5), rnorm(15, 55, 15)),
+                      Variety = rep(c("New", "Current"), each = 15))
+mean_df <- data.frame(x = c(mean(samp_df$y2[samp_df$Variety=="New"]),
+                            mean(samp_df$y2[samp_df$Variety=="Current"])),
+                      Variety = c("New", "Current"))
+ggplot() +
+  geom_histogram(data = samp_df, aes(x = y2, y = ..density..,fill = Variety), 
+                 color = "white", alpha = 0.6) +
+  geom_path(data = delta_df, aes(x = x, y = y1, color = Variety), size = 1.25, alpha = 0.5) +
+  geom_rug(data = samp_df, aes(x = y2, color = Variety), sides = "b") +
+  geom_vline(data = mean_df, aes(xintercept = x, color = Variety), size = 1) +
+  scale_x_continuous("% of leaves infected") +
+  scale_y_continuous("") +
+  labs(subtitle = "Sample 2 (n = 15)")
+```
+
+---
+# sampling = uncertainty
+
+#### Because populations (usually) cannot be measured, sampling is essential
+
+--
+
+#### But sampling is inherently *stochastic* 
+
+- sampling produces uncertainty
+
+- unavoidable (but that's ok!) 
+
+> Doubt is not a pleasant condition, but certainty is absurd -- Voltaire
+
+--
+
+#### Statistics is what allows us to learn about the **population** using **samples** in the face of **uncertainty** 
+
+- the primary goal of this class is for you to understand how to make robust inferences that account for uncertainty (and the limitations of those inferences)
+
+- we will return to this basic concept (sampling error) many times this semester
+
+
+---
+# looking ahead
+
+<br/>
+
+### **Next time**: Introduction to linear models
+
+<br/>
+
+### **Reading**: Quinn chp. 2.1-2.3
+
