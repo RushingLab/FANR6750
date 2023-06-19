@@ -1,0 +1,173 @@
+---
+title: "Syllabus"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2023"
+output: 
+  rmarkdown::html_vignette:
+    keep_md: yes
+vignette: >
+  %\VignetteIndexEntry{Syllabus}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,warning = FALSE, message = FALSE,
+  comment = "#>"
+)
+```
+
+*Disclaimer*: The course syllabus is a general plan for the course; deviations announced to the class by the instructor may be necessary.
+
+# LOGISTICS
+
+**Lecture**: Monday, Wednesday, Friday 11:30-12:20  
+**Location**: 1-304  
+
+**Lab**: Monday 1:50 – 3:50 or Tuesday 2:20 – 4:20  
+**Location**: 4-419  
+
+# INSTRUCTOR
+Dr. Clark Rushing  
+clark.rushing@uga.edu  
+Office: Warnell 3-409   
+Office hours: By appointment
+
+# TEACHING ASSISTANTS
+Michael Baker  
+michael.baker2@uga.edu  
+Office: 1-102A  
+Office hours: W 9:30-11:00 or by appointment  
+  
+Nancy Raginski  
+nancy.raginski@uga.edu  
+Office: 3-402  
+Office hours: Th 10-11:30 or by appointment  
+
+
+# COURSE OBJECTIVES
+
+To understand: (1) the logical structure of experiments, especially the design of manipulative experiments, (2) the analysis of such experiments, focusing on analysis of variance procedures, (3) the use of models in ecological studies (experimental and observational).
+
+# PREREQUISITES
+
+All lab activities for this course will rely heavily on the statistical programming language `R`. During the first few weeks, each lab session will begin with a tutorial on these tools so students are not expected to be experts prior to the course. However, we will quickly move into activities that require some degree of `R` proficiency so I highly recommend that you have a basic understanding of programming in `R` (e.g., importing/exporting & manipulating data objects, visualizing data) prior to this course. If you find yourself struggling with any aspects of using `R`, please seek individual help during office hours. The earlier we can get you up to speed, the more painless the remainder of the semester will be.  
+
+
+# COURSE FORMAT
+
+The components of a scientific study need to be considered together rather than separately; design and analysis aspects will be completely blended in this course. Emphasis will be on application, and will include instruction on the use of the `R` statistical software. Important points will be reinforced by readings from the scientific literature and by discussions. Homework assignments and exams (take home) are intended to keep the material fresh in the students' minds. The syllabus is subject to change, but the order of material is correct. 
+
+# COURSE RESOURCES
+
+## Textbooks
+
+Lecture material will largely be based on:  
+
+**Quinn, G.P. & Keough, M.J. 2002. Experimental Design and Data Analysis for Biologists. Cambridge University Press**  
+
+Purchasing the textbook is not required but may be helpful for clarifying some concepts. A pdf of the book can be downloaded [here](https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&%20Keough.pdf).  
+
+Additional readings will come from a variety of sources, including other textbooks and scientific journals, and will be posted on eLC.
+
+## Lab materials
+
+Materials for labs will be provided as HTML and R Markdown files on the course webpage. These materials will include step-by-step tutorials for all lab exercises as well as links to additional online resources, problem sets, and homework assignments. 
+
+## Software
+
+All lab computers will have `R` and `RStudio` installed on them so students are not required to install software on their own computers. However, students are free to use their own laptops during lab and having `R` and `RStudio` installed will make it easier to complete lab assignments outside of class. Any students wishing to use their own computers **should have R and RStudio installed and running prior to the first lab**. Detailed instructions for installing `R` and `RStudio` can be found [here](http://stat545.com/block000_r-rstudio-install.html).  
+
+If you plan to use your own computer, **be sure you have the most recent versions of both software programs installed**. This will greatly decrease the chances of running into issues running the code I will provide in lab. Prior to the start of the semester, test that you have `R` and `RStudio` installed correctly by doing the following: 
+
+1) Launch `RStudio`
+
+2) Put the cursor in the window labeled `Console`. Type the following code followed by enter or return: `x <- 2 * 4`. Next type `x` followed by enter or return. You should see the value `8` print to screen. If yes, you’ve succeeded in installing R and RStudio.
+
+### Course `R` package
+
+Materials for the course will be distributed through an `R` package called *FANR6750*. The main purpose of the package is to distribute code and data that will used for labs, though eventually additional materials may be included, including lectures and reference documents. You can install the most current version of *FANR6750* with:
+
+``` r
+install.packages("devtools")
+devtools::install_github("RushingLab/FANR6750")
+```
+
+If you encounter any problems with the previous steps, please contact me prior to the first class.  
+
+
+# ATTENDANCE
+
+As graduate students who willingly signed up for this course, I presume that you are eager to learn the material and are self-motivated enough to put in the required effort. For this reason, I do not set a formal attendance policy. However, we will cover a lot of material over the course of the semester and each topic will build on concepts from previous weeks. As a result, missing even a few lectures or labs will make it difficult for you to fully master the learning outcomes described above. If you know you will be missing any lectures or labs, please contact me in advance so we can make sure you do not get too far behind on the material. 
+
+### A note on fieldwork
+
+I realize that many students have field work obligations during the semester. If you need to take this course but know in advance that you will be in the field for a portion of the semester, please let me know ASAP so we can discuss whether field work will be a barrier to taking the course or merely an inconvenience. This distinction will mainly be a function of how long and when you will miss class. If these absences are relatively few, taking the course may still be an option. I will do my best to record lectures and make them available via eLC. Students will still be expected to complete and turn in any assignments they miss. If you are going to miss too many classes or will be unable to complete the assignments while you're in the field, it may be better to take the class at a time when your field commitments are smaller. 
+
+# GRADING
+
+200 total points.  
+
+Three take-home exams, 50 points (25%) each. Exam dates in the [schedule](https://rushinglab.github.io/FANR6750/articles/schedule.html) are approximate days when the exam will be provided. 
+
+The remaining 50 points (25%) of the grade will come from lab homework assignments. Homework assignments will build on concepts and skills that we cover in lecture and lab. Specific objectives and tasks for each assignment, along with any necessary data, will be provided at the end of each lab activity. These assignments are meant to ensure that you understand lecture and lab concepts, provide additional practice implementing relevant statistical methods in `R`, and provide experience interpreting and presenting model output. 
+
+Over the course of semester, there will be **5** of these assignments worth **10 points each**. Each assignment will be due before class the week after the assignment is posted and must be prepared as an R Markdown file that include all text, code, model output, and figures necessary to fully document your work and conclusions (we will spend the first several labs going over preparation of reports using R Markdown so, again, no previous experience is necessary). You will automatically receive 6 points for turning in a completed lab assignment by the assigned due date. Late assignments will receive a 1-point deduction for each day late and incomplete assignments will have points deducted in proportion to the degree of incompleteness (e.g., if 1/3 of the assignment is incomplete, 2-point deduction). 
+
+At the time each assignment is due, we will post an answer key on eLC. You will receive 2 points for reviewing your answers and correcting any incorrect answers based on the key. You will also receive 2 points for completing a self-assessment form describing your performance on the assignment and things you had trouble with. Self-assessment forms for each assignment will be posted on eLC. To receive full credit, corrections and self-assessments must be completed within one week.  
+
+All academic work must meet the standards contained in the University's academic [honesty policy](https://honesty.uga.edu/). All students are responsible for informing themselves about those standards before performing any academic work. The penalties for academic dishonesty are [severe](https://honesty.uga.edu/Academic-Honesty-Policy/Consequences_for_Honesty_Violations/), and ignorance is not an acceptable defense.  
+
+If you know ahead of time that you will miss an assignment or exam, please let me know as soon as possible so that we can arrange a make up. If you do not let me or a TA know ahead of time, missed/late assignments will lose 10% of the final grade per day that they are late.
+
+# GRADING SCALE
+
+```{r grading, echo=FALSE}
+library(kableExtra)
+grades <- data.frame(Grade = c("A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+", "D", "F"),
+                       Percent = c("93-100%", "90-92.9%", 
+                                   "87-89.9%", "83-86.9%", "80-82.9%", 
+                                   "77-79.9%", "73-76.9%", "70-72.9%",
+                                   "67-69.9%", "60-66.9%", "59.9% and below"),
+                       Points = c("186-200", "180-185", 
+                                   "174-179", "166-173", "160-165", 
+                                   "154-159", "146-153", "140-145",
+                                   "134-139", "126-133", "0-125"))
+
+grades %>%
+  kable("html", col.names = c("GRADE", "% RANGE", "POINT RANGE"), align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = TRUE)
+
+```
+
+# UNIVERSITY HONOR CODE & ACADEMIC HONESTY
+
+As a University of Georgia student, you have agreed to abide by the UGA academic honesty policy. UGA Student Honor code: 
+
+> I will be academically honest in all of my academic work and will not tolerate academic dishonesty of others  
+
+A Culture of Honesty, the University's policy and procedures for handling cases of suspected dishonesty, can be found at [https://honesty.uga.edu/](https://honesty.uga.edu/)  
+
+You are responsible for informing yourself about the university’s standards before performing any academic work. Lack of knowledge of the academic honesty policy is not a reasonable explanation for a violation. Please ask if you have questions related to course assignments and the academic honesty policy. Any form of possible academic dishonesty will be reported to the UGA Office of the Vice President for Instruction.
+
+# ACCOMMODATIONS FOR DISABILITIES
+
+If you require a disability-required accommodation, it is essential that you register with the Disability Resource Center (Clark Howell Hall; https://drc.uga.edu; 706-542-8719 [voice]; 706-542-8778 [TTY]) and notify me of your eligibility for reasonable accommodations. We can then plan how best to coordinate your accommodations. Please note that accommodations cannot be provided retroactively. 
+
+# WELLNESS STATEMENT 
+
+Mental Health and Wellness Resources:
+
+- If you or someone you know needs assistance, you are encouraged to contact Student Care and Outreach in the Division of Student Affairs at 706-542-7774 or visit [https://sco.uga.edu/](https://sco.uga.edu/). They will help you navigate any difficult circumstances you may be facing by connecting you with the appropriate resources or services.
+
+- UGA has several resources for a student seeking mental health services ([https://www.uhs.uga.edu/bewelluga/bewelluga](https://www.uhs.uga.edu/bewelluga/bewelluga)) or crisis support ([https://www.uhs.uga.edu/info/emergencies](https://www.uhs.uga.edu/info/emergencies)).
+
+- If you need help managing stress anxiety, relationships, etc., please visit BeWellUGA ([https://www.uhs.uga.edu/bewelluga/bewelluga](https://www.uhs.uga.edu/bewelluga/bewelluga)) for a list of FREE workshops, classes, mentoring, and health coaching led by licensed clinicians and health educators in the University Health Center.
+
+- Additional resources can be accessed through the UGA App.
+
+
+# FERPA NOTICE
+
+The Federal Family Educational Rights and Privacy Act (FERPA) grants students certain information privacy rights. To comply with FERPA, all communication that refers to individual students must be through a secure medium (UGAMail or eLC) or in person. Instructors are not allowed to respond to messages that refer to individual students or student progress in the course through non-UGA accounts, phone calls, or other types of electronic media. For details, please visit [https://apps.reg.uga.edu/FERPA](https://apps.reg.uga.edu/FERPA).

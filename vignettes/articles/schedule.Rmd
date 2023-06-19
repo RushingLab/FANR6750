@@ -1,0 +1,162 @@
+---
+title: "Schedule (subject to change)"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2023"
+output: 
+  rmarkdown::html_vignette:
+    keep_md: yes
+vignette: >
+  %\VignetteIndexEntry{Schedule}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE,
+  collapse = TRUE, warning = FALSE, message = FALSE,
+  comment = "#>"
+)
+
+source(here::here("R/MWF.R"))
+```
+
+
+```{r schedule, echo = FALSE}
+library(kableExtra)
+
+schedule <- data.frame(WK = c("1", "", "", 
+                              "2", "", "", "",
+                              "3", "", "", "", 
+                              "4", "", "", "",
+                              "5", "", "", "", 
+                              "6", "", "", "", 
+                              "7", "", "", "", 
+                              "8", "", "", "",
+                              "9", "", "", "", 
+                              "10", "", "", "", 
+                              "11", "", "", "", 
+                              "12", "", "", "",
+                              "13", "", "", "", 
+                              "14", "", "", "", 
+                              "15", "", "", "", 
+                              "16", "", "", "", 
+                              "17"),
+                       Day = c("W", "F", "", rep(c("M", "W", "F", ""), 15), "M"),
+                       Week = MWF(first.day = "2022/08/17", last.day = "2022/12/06"),
+                       Lecture = c("Course introduction", "Basic concepts in statistics", "", #1
+      "Principles of estimation",  "Principles of estimation", "Intro to statistical modeling", "",#2
+      "Intro to statistical modeling", "t-tests and null hypothesis testing", "t-tests and null hypothesis testing", "", #3
+      "Labor Day", "Randomized ANOVA", "Randomized ANOVA", "", # 4
+       "Multiple comparisons", "Statistcal Power", "Paper discussion: hypothesis testing",  "", #5
+       "Contrasts", "Contrasts", "Buffer", "", #6
+      "Transformations", "Nonparametrics", "Nonparametrics", "", #7
+       "Blocking and blocked designs",  "Blocking and blocked designs", "Random and fixed effects",  "", #8 
+             "AB factorial designs", "AB factorial designs", "ABC factorial designs",  "", #9
+      "Nested designs", "Nested designs", "Paper discussion: Pseudoreplication", "", # 10
+          "Split-plot designs", "Split-plot designs", "Fall break", "", #11
+      "Repeated measures", "Repeated measures", "Buffer", "",
+         "Regression review", "Analysis of covariance", "Analysis of covariance", "", #13
+          "Generalized linear models", "Logistic regression", "Poisson regression", "", #14
+          "Thanksgiving break", "", "", "", #15
+           "GLMMs", "Model selection", "Paper discussion: Model selection",  "", #16
+                                   "Course wrap up"),
+                       Lab = c("", "", "",
+                               "Introduction to R", "", "", "",
+                               "Introduction to RMarkdown", "", "", "",
+                               "No lab", "", "", "",
+                               "R graphics and t-tests", "", "", "",
+                               "ANOVA*", "", "", "",
+                               "Contrasts and power", "", "", "",
+                               "Transformations and nonparametrics*", "", "", "",
+                               "Blocking", "", "", "",
+                                "Factorial designs", "", "", "",
+                               "Nested designs*", "", "", "",
+                               "Split-plot designs", "", "", "",
+                               "Repeated measures*", "", "", "",
+                               "ANCOVA", "", "", "",
+                               "Linear models*", "", "", "",
+                               "GLMs", "", "", "",
+                               # "Model selection", "", "", "",
+                               "No lab"),
+                       Reading = c("", "Chp. 1", "",
+                               "Chp. 2.1-2.3", "", "Chp. 5.2-5.3", "",
+                               "", "Chp. 3.1;", "", "",
+                               "", "Chp. 8.1-8.4", "", "",
+                               "Chp. 8.6", "", "Johnson 1999", "",
+                               "Chp. 7.3", "", "", "",
+                               "**Exam 1 distributed**", "Chp. 8.5", "", "",
+                               "Chp. 8.2; **Exam 1 due**", "Chp. 10.1-10.2", "", "",
+                               "Chp. 9.2", "", "Colegrave & Ruxton 2018", "",
+                               "", "Chp. 9.1", "", "",
+                               "Chp. 11.1-11.3", "", "", "",
+                               "**Exam 2 distributed**", "",  "", "",
+                               "Chp. 6; **Exam 2 due**", "Chp. 12", "", "",
+                               "Chp. 13", "", "", "",
+                               "", "", "", "",
+                               "**Exam 3 distributed**", "", "Tredennick et al. 2021", "",
+                               ""))
+
+schedule %>%
+  kable("html", col.names = c("Week", "", "Date", "Lecture topic", "Lab topic", "Reading"), align = 'c') %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = TRUE)
+
+```
+
+\* = Graded assignment
+
+## Tentative lecture topics (aim for 18-20 lectures)
+
+1) Introduction to statistics
+    + goals of statistics (exploration, inference, prediction)
+    + populations vs samples
+    + uncertainty
+
+2) Linear regression
+    + model structure: linear predictor + error
+    + parameter interpretation
+    + assumptions
+    
+3) Inference
+    + sampling distribution
+    + standard error
+    + confidence intervals
+
+4) Categorical predictor
+    + matrix notation 
+    + dummy variables
+    + formulated as t-test
+    
+5) Null hypothesis testing
+    + p-values
+
+6) Categorical predictor > 2 levels
+    + linear model
+    + formulated as ANOVA
+
+7) Multiple comparisons
+
+8) Causal inference 
+
+9) Multiple regression
+   + continuous + categorical
+   + > 1 continuous
+   + > categorical
+   + link to blocking/ANCOVA
+
+10) Interactions
+   + link to factorial design
+
+11) Multicollinearity
+
+12) Goodness-of-fit/model selection
+
+13) Random effects/mixed models
+
+14) Repeated measures
+
+16) GLM: Logistic regression
+
+17) GLM: Poisson regression
+
+18) GLM: Zero-inflated data
