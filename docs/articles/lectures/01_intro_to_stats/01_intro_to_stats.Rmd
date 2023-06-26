@@ -35,7 +35,7 @@ class: inverse
 <br/> 
 --
 
-#### 3) Experiments and causal inference
+#### 3) Populations vs. samples
 
 <br/> 
 
@@ -234,6 +234,12 @@ class: inverse, middle, center
 
     + Well-designed experiments ensure that "treatment assignment is independent of the potential outcomes" (Gelman et al. 2021)
 
+--
+
+- Increasing interest in causal inference from observational studies
+
+    + This is something we will discuss later in the semester
+    
 ---
 class: inverse, middle, center
 
@@ -386,6 +392,47 @@ ggplot() +
 3) But the sample means will never equal the population means (Uncertainty!)  
 
 
+
+---
+# summary statistics
+
+### Measures of central tendency
+
+- Sample mean
+
+$$\large \bar{y} = \frac{\sum_{i=1}^n y_i}{n}$$
+
+<br/>
+
+--
+- Median  
+
+<br/>
+--
+
+- Mode
+
+---
+# summary statistics
+
+### Measures of dispersion
+
+- Sample variance
+
+$$\large s^2 = \frac{\sum_{i=1}^n (y_i - \bar{y})^2}{n-1}$$
+
+<br/>
+
+--
+- Sample standard deviation
+
+$$\large s = \sqrt{s^2}$$
+
+<br/>
+
+--
+- Range  
+
 ---
 # sampling error
 
@@ -454,5 +501,5 @@ ggplot() +
 
 <br/>
 
-### **Reading**: Quinn chp. 2.1-2.3
+### **Reading**: [Fieberg chp. 1.2-1.4](https://statistics4ecologists-v1.netlify.app/linreg.html#data-example-sustainable-trophy-hunting-of-male-african-lions)
 

@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>LECTURE 3: principles of stastical inference</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="   Fall 2023" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="FANR6750.css" type="text/css" />
+    <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# LECTURE 3: principles of stastical inference
+]
+.subtitle[
+## FANR 6750 (Experimental design)
+]
+.author[
+### <br/><br/><br/>Fall 2023
+]
+
+---
+
+
+
+
+class: inverse
+
+# outline
+
+&lt;br/&gt;
+#### 1) Uncertainty in statistical models
+
+&lt;br/&gt;  
+--
+
+#### 2) Sampling distributions
+
+&lt;br/&gt; 
+--
+
+#### 3) Standard error
+
+&lt;br/&gt; 
+
+--
+
+#### 4) Confidence intervals
+
+&lt;br/&gt; 
+
+---
+class: inverse
+
+# statistics = information `\(\small +\)` uncertainty
+
+#### In the last lecture, we learned that models allow us to quantify relationships between variables based on **samples**
+
+--
+
+#### We also learned that sampling = uncertainty
+
+- Parameter estimates from samples will never exactly equal population parameters
+
+--
+
+#### Inference about populations requires quantifying the magnitude of this uncertainty
+
+--
+
+#### But how can we measure how far our estimates are from the population parameters if we don't know the population parameters? 
+
+---
+# parameters vs statistics
+
+### Parameters 
+
+- Attributes of the population  
+  + Mean ( `\(\mu\)` )  
+  + Variance ( `\(\sigma^2\)` )  
+  + Standard deviation ( `\(\sigma\)` )  
+
+--
+- Usually unknown  
+
+--
+- Parameters are the quantities of interest  
+
+--
+
+### Statistics
+
+- Attributes of the sample  
+  + Mean ( `\(\bar{y}\)` or `\(\hat{\mu}\)` )  
+  + Variance ( `\(s^2\)` or `\(\hat{\sigma}^2\)` )  
+  + Standard deviation ( `\(s\)` or `\(\hat{\sigma}\)` )  
+
+--
+- Often treated as estimates of parameters
+
+---
+# sampling error
+
+#### Question: What is the probablity that `\(\large \bar{y} = \mu\)`?
+
+--
+
+- Answer: 0 (why?)
+
+--
+
+#### Fact: The sample mean will never equal the population mean
+
+--
+
+- The difference between `\(\large \bar{y}\)` and `\(\large \mu\)` is **sampling error** 
+
+--
+
+- Sampling error can be reduced but it cannot be eliminated
+
+--
+
+#### Problem: If we don't know `\(\large \mu\)`, how do we know how far our estimate is from the true value?
+
+--
+- Answer: We don't (for any specific sample)
+
+--
+- BUT...we do know how far, on average, a sample of size `\(n\)` will be from the true value
+
+
+---
+class:inverse, center, middle
+
+# the sampling distribution
+
+---
+# a single sample (n = 25)
+
+&lt;br/&gt;
+
+&lt;img src="03_inference_files/figure-html/sampling-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# standard deviation
+
+&lt;br/&gt;
+
+&lt;img src="03_inference_files/figure-html/sampling_sd-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+--
+
+**Remember** - this error bar is the standard deviation **of our sample**!  
+
+
+---
+# standard deviation
+
+But remember, what we really want to know is, how far is the sample mean from the true parameter value?
+
+--
+
+&lt;img src="03_inference_files/figure-html/sample_se-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+
+---
+# the sampling distribution
+
+Imagine we could repeat our experiment many, many times
+
+&lt;img src="samples.gif" style="display: block; margin: auto;" /&gt;
+
+---
+# the sampling distribution
+
+The collection of sample means is referred to as the **sampling distribution**  
+
+&lt;img src="03_inference_files/figure-html/sampling_dist, -1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# the sampling distribution
+
+The collection of sample means is referred to as the **sampling distribution**  
+
+&lt;img src="03_inference_files/figure-html/sampling_dist2, -1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# the sampling distribution
+
+The standard deviation *of the sampling distribution* measures, on average, how far each sample mean from the true population value
+
+&lt;img src="03_inference_files/figure-html/sampling_se, -1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+
+---
+# the sampling distribution
+
+#### We rarely repeat experiments
+
+&lt;br/&gt;
+--
+
+#### But we can estimate the standard deviation of the sampling distribution from a single sample!
+&lt;br/&gt;
+
+--
+
+#### How? The **central limit theorem**!
+
+---
+class:inverse
+
+# central limit theorem
+
+&gt; For a population with mean `\(\mu\)` and standard deviation `\(\sigma\)`, the sampling distribution will be (approximately) normally distributed with mean `\(\mu_X = \mu\)` and standard deviation `\(\sigma_X = \sigma/\sqrt{n}\)`. 
+
+
+&lt;img src="03_inference_files/figure-html/crt-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+class:inverse
+
+# central limit theorem
+
+&gt; For a population with mean `\(\mu\)` and standard deviation `\(\sigma\)`, the sampling distribution will be (approximately) normally distributed with mean `\(\mu_X = \mu\)` and standard deviation `\(\sigma_X = \sigma/\sqrt{n}\)`. 
+
+This might seem academic but it is hugely important
+
+- given sufficient sample size ( `\(\sim n &gt; 30\)` ), we *know* the sampling distribution will be normally distributed without needing to repeat the experiment
+
+- although we never know the true population mean `\(\mu\)`, we can estimate how far (on average) our sample mean is likely to be away from it (that's what the standard deviation is!)
+
+- the CRT will hold true regardless of whether the source population is normal! 
+
+- [Demonstration using simulations](http://www.ltcconline.net/greenl/java/Statistics/clt/cltsimulation.html)
+
+---
+# standard error
+
+#### The standard deviation of the sampling distribution is called the **standard error of the mean** (or just the standard error)
+
+`$$\Large SE =\frac{s}{\sqrt{n}}$$`
+- Standard error tells us how far (on average) our sample mean is likely to be from the population mean
+
+- It is the key to estimating uncertainty in our estimates
+
+- Smaller is better
+
+
+---
+class:inverse
+
+# descriptive vs inferential statistics 
+
+&gt; The sample standard deviation ( `\(s\)` ) is a descriptive statistic  
+
+`$$\Large s = \sqrt{s^2}$$`
+
+- `\(\large s\)` tells us how far, on average, each observation `\(\large y\)` is from the sample mean `\(\large \bar{y}\)`
+
+&lt;br/&gt;
+--
+
+&gt; The standard error (SE) is an inferential statistic  
+
+`$$\Large SE = \frac{s}{\sqrt{n}}$$`
+- `\(\large SE\)` tells us how far, on average, each sample mean `\(\large \bar{y}\)` is from the population mean `\(\large \mu\)`
+
+
+---
+# quick review
+
+1) sampling is a stochastic process 
+
+- sample statistics (mean, standard deviation) will vary from sample to sample
+
+--
+
+2) the sampling distribution is an (imaginary) collection of statistics from repeated samples of the same population
+
+- assumes that the procedure for generating samples (e.g., sample size) is identical
+
+--
+
+3) Standard error is the standard deviation of the sampling distribution
+
+- `\(\large SE =  s/\sqrt{n}\)`
+
+- measures how far, on average, sample statistics are from the true population value (smaller is better!)
+
+--
+
+#### We will explore these concepts in lab, using `R` to generate and visualize repeated samples, calculate properties of the sampling distribution
+
+
+---
+class:inverse,center,middle
+
+# confidence intervals
+
+---
+# confidence intervals
+
+#### Uncertainty is commonly reported using *confidence intervals* 
+
+- this is a concept that seems intuitive but in reality it is commonly misunderstood
+
+--
+
+&gt; If we calculated a `\(x\)`% confidence interval from repeated samples of the population, about `\(x\)`% of those confidence intervals would contain the true population mean  
+
+--
+
+&lt;img src="03_inference_files/figure-html/ci-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+---
+# confidence intervals
+
+#### What a confidence interval is **NOT**:
+
+- "there is an `\(x\)`% probability that the true population parameter is inside this interval" 
+
+--
+
+#### The true population value is considered a *fixed* parameter
+
+--
+
+#### Before we collect our sample, the ends of the confidence intervals are considered *random variables* (i.e., their value will change each time we collect a sample)
+
+-  Like all random variables, we can describe the long-term (i.e., asymptotic) expectations of confidence intervals if we repeated the experiment many times
+
+--
+
+#### After we collect our sample, the confidence interval either *does* or *does not* contain the true population value
+
+---
+# confidence intervals
+
+.pull-left[
+
+Think of confidence intervals like trying to determine where the stake is in a game of horseshoes by looking at where the horseshoes landed 
+
+- The true parameter (i.e., the stake) does not move
+
+- Each horseshoe is the CI based on a single sample (i.e., one throw) 
+
+- Before a horseshoe is thrown, there is some probability it will land around the stake
+
+- After it is thrown, it is either around the stake or not
+
+or...
+]
+
+--
+
+.pull-right[
+<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@dunk/video/7218281145279220997" data-video-id="7218281145279220997" data-embed-from="oembed" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@dunk" href="https://www.tiktok.com/@dunk?refer=embed">@dunk</a> <p>Tag someone you could beat in reverse basketball 😭 (@creationsross)</p> <a target="_blank" title="♬ original sound - Chizi" href="https://www.tiktok.com/music/original-sound-7212359167532075782?refer=embed">♬ original sound - Chizi</a> </section> </blockquote> 
+<!--SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
+<script async data-external="1" src="https://www.tiktok.com/embed.js"></script>
+<style>blockquote.tiktok-embed {border:unset;padding:unset;}</style>
+<!--/SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
+]
+
+
+
+---
+# confidence intervals
+
+I like to think of confidence intervals providing a range of values that, based on our sample, are consistent with the population mean (*plausible interval*?)
+
+- If want to be more confident that the CI contains the parameter (e.g., 50% CI vs 95% CI), what happens to the size of the interval?
+
+--
+
+It's worth remembering that 1 - `\(x\)`% of the time, the confidence interval we calculate from our sample **will not** include the true population mean. 
+
+&lt;img src="03_inference_files/figure-html/ci2-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+Of course, with our real data, we have no way of knowing if our sample is one of the black points on this graph 😀 or one of the red dots 😢
+
+---
+# for thought
+
+#### If our goal is generally to decrease uncertainty in parameter estimates:
+
+--
+- What factors determine the magnitude of our uncertainty estimates (SE or confidence intervals)?
+
+&lt;br/&gt;
+
+--
+- What can we, as researchers, control when we design experiments to minimize uncertainty? What can we not control?
+
+
+
+
+
+---
+# looking ahead
+
+&lt;br/&gt;
+
+### **Next time**: Princples of estimation
+
+&lt;br/&gt;
+
+### **Reading**: Quinn chp. 2.1-2.3
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

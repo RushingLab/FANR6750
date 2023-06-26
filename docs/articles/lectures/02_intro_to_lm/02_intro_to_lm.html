@@ -48,20 +48,426 @@ class: inverse
 &lt;br/&gt; 
 
 ---
+class: inverse
 
 # statistics = information `\(\small +\)` uncertainty
 
+#### In the last lecture, we learned that statistics is what allows us to make inferences about a population in the face of uncertainty
+
+--
+
+#### Statistical inference requires **models**
+
+---
+# what is a model?
+
+![](https://media.giphy.com/media/12npFVlmZoXN4Y/giphy.gif)
+
+---
+# what is a model?
+
+&gt; an abstraction of reality used to describe the relationship between two or more variables
+
+--
+
+#### Many types (conceptual, graphical, mathematical)
+
+--
+
+#### In this class, we will deal with *statistical* models
+
+--
+
+- Mathematical representation of our hypothesis
+
+--
+
+- By necessity, models will be simplifications of reality ("all models are wrong...") 
+
+--
+
+- Do not have to be complex
+
+---
+# but i don't want to be a modeler!
+
+&lt;img src="puffy_shirt.png" width="46%" height="65%" style="display: block; margin: auto;" /&gt;
+
+--
+- Inference **requires** models  
+
+--
+- Models link **observations** to **processes**  
+
+--
+- Models are tools that allow us understand processes that we **cannot directly observe** based on quantities that we **can** observe  
+
+---
+# a simple example
+
+#### Suppose we are interested in the hypothesis that water availability limits acorn production by oak trees
+
+- **Prediction**: Acorn production will increase following years with higher rainfall
+
+--
+
+&lt;img src="02_intro_to_lm_files/figure-html/unnamed-chunk-2-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+---
+# a simple model
+
+--
+
+&lt;/br&gt;
+&lt;/br&gt;
+
+`$$\Huge y = a + bx$$`
+
+--
+
+&lt;img src="02_intro_to_lm_files/figure-html/unnamed-chunk-3-1.png" width="360" style="display: block; margin: auto;" /&gt;
+
+--
+It may not be obvious, but this is essentially the only model we will use this semester&lt;sup&gt;1&lt;/sup&gt;
+
+.footnote[[1] With some minor variations, mainly in `\(x\)`]
+
+---
+# a simple model
+
+&lt;/br&gt;
+&lt;/br&gt;
+
+`$$\Huge y = a + bx$$`
+
+
+&lt;img src="02_intro_to_lm_files/figure-html/unnamed-chunk-4-1.png" width="360" style="display: block; margin: auto;" /&gt;
+
+If we want to use this as a statistical model, what's missing?
+
+---
+# a simple model
+
+&lt;/br&gt;
+&lt;/br&gt;
+
+`$$\Huge y = a + bx$$`
+
+
+&lt;img src="02_intro_to_lm_files/figure-html/unnamed-chunk-5-1.png" width="360" style="display: block; margin: auto;" /&gt;
+
+If we want to use this as a statistical model, what's missing?
+
+#### **Stochasticity!**
+
+---
+# a simple model
+
+&lt;/br&gt;
+&lt;/br&gt;
+
+`$$\Huge y = a + bx$$`
+
+
+&lt;img src="02_intro_to_lm_files/figure-html/unnamed-chunk-6-1.png" width="360" style="display: block; margin: auto;" /&gt;
+
+If we want to use this as a statistical model, what's missing?
+
+#### **Stochasticity!**
+
+---
+class:inverse, middle, center
+
+# the linear model
+
+---
+# Statistics cookbook
+
+&lt;img src="stats_flow_chart.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+---
+# the linear model
+
+&lt;br/&gt;
+&lt;br/&gt;
+`$$\Large response = deterministic\; part+stochastic\; part$$` 
+&lt;br/&gt;
+&lt;br/&gt;
+
+--
+`$$\underbrace{\LARGE E[y_i] = \beta_0 + \beta_1 \times x_i}_{Deterministic}$$`
+
+&lt;br/&gt;
+&lt;br/&gt;
+
+--
+`$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma)}_{Stochastic}$$`  
+
+???
+
+Note that the deterministic portion of the model has the same form as the equation for a line: `\(y = a + b \times x\)`, which is why we call these linear models
+
+---
+# the linear model
+
+#### Sometimes you will see linear models written as:
+
+`$$\LARGE y_i = \beta_0 + \beta_1  x_i + \epsilon_i$$`
+
+`$$\LARGE \epsilon_i \sim normal(0, \sigma)$$`  
+
+#### with the `\(\epsilon_i\)` terms referred to as *residuals* or *residual error*
+
+- Mathematically, the two formulations are identical 
+
+- We will use both formulations 
+
+---
+class:inverse
+
+# a note on notation
+
+#### Throughout the semester, we will try to be consistent with mathematical notation, e.g.
+
+- `\(y\)` = response/dependent variable
+
+- `\(x\)` = predictor/independent variable
+
+- `\(\mu\)` = population mean
+
+- `\(\sigma\)` = population standard deviation
+
+- `\(\beta\)` = model parameter (i.e., intercept/slope)
+
+--
+
+#### To the extent possible, these follow conventions used in many textbooks/papers (but there is a lot of variation between authors)
+
+--
+
+#### Remember that these are just *symbols* - you could replace them with other symbols (e.g., emoji) and it would not change their interpretation!
+
+---
+# parameter interpretation
+
+`\(\large \beta_0\)` = intercept
+
+- The *expected* value of the response variable, `\(\large E[y_i]\)`, when all predictors `\(=0\)`
+    
+`\(\large \beta_n\)` = slope
+
+- The expected change in the response variable for a one unit change in the associated predictor variable `\(\large x_n\)`
+    
+--
+
+Mathematically, the interpretation of the intercept and slope(s) is always the same
+
+--
+
+Ecologically, the interpretation will depend on:
+
+- the structure of the predictor variables (continuous vs. categorical)
+
+- the units of the predictor variables (e.g., scaled vs unscaled)
+
+- the inclusion of interaction terms
+
+We will discuss each of these scenarios in detail as the semester progresses
+
+
+
+---
+# the linear model
+
+#### A "simple" example
+
+`$$\underbrace{\LARGE E[y_i] = -2 + 0.5 \times x_i}_{Deterministic}$$`
+
+--
+
+`$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}$$`
+
+--
+&lt;img src="02_intro_to_lm_files/figure-html/unnamed-chunk-8-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+---
+# the linear model
+
+#### A more complex model
+
+`$$\large y_i = \beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + ... + \beta_px_{ip} + \epsilon_i$$`
+
+--
+
+- Each `\(\beta\)` coefficient is the effect of a specific predictor variables `\(x\)`
+
+- Predictor variables may be continuous, binary, factors, or a combination
+
+- We will cover more complex models (and interpretation) later
+
+---
+# is this a linear model?
+
+`$$\Large y = 20 + 0.5x - 0.3x^2$$`
+
+&lt;img src="02_intro_to_lm_files/figure-html/unnamed-chunk-9-1.png" width="396" style="display: block; margin: auto;" /&gt;
+
+---
+# residuals
+
+#### One concept we will talk about a lot is *residuals*, i.e., `\(\Large \epsilon_i\)`
+
+--
+
+- Residuals are the difference between the observed values `\(\large y_i\)` and the predicted values `\(\large E[y_i]\)` - how much variation in `\(\large y\)` is explained by `\(\large x\)`?
+
+&lt;img src="02_intro_to_lm_files/figure-html/unnamed-chunk-10-1.png" width="396" style="display: block; margin: auto;" /&gt;
+
+---
+# residuals
+
+#### One concept we will talk about a lot is *residuals*, i.e., `\(\Large \epsilon_i\)`
+
+- Residuals are the difference between the observed values `\(\large y_i\)` and the predicted values `\(\large  E[y_i]\)` - how much variation in `\(\large y\)` is explained by `\(\large x\)`?
+
+&lt;img src="02_intro_to_lm_files/figure-html/unnamed-chunk-11-1.png" width="396" style="display: block; margin: auto;" /&gt;
+
+--
+
+- Parameters are generally estimated by finding values that minimize residual error (e.g., ordinary least squares)
+
+--
+
+- Useful for assessing whether data violate model assumptions
+
+
+
+---
+class:inverse, center, middle
+
+# assumptions
+
+---
+# assumptions
+
+#### **EVERY** model has assumptions
+
+--
+
+- Assumptions are necessary to simplify real world to workable model
+
+--
+
+- If your data violate the assumptions of your model, inferences *may* be invalid
+
+--
+
+- **Always** know (and test) the assumptions of your model&lt;sup&gt;1&lt;/sup&gt; 
+
+.footnote[[1] You know what happens when you assume...]
+
+---
+# linear model assumptions
+
+&lt;/br&gt;
+
+`$$\Large y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$`
+
+`$$\Large \epsilon_i \sim normal(0, \sigma)$$`
+
+
+&lt;/br&gt;
+
+--
+
+1) **Linearity**: The relationship between `\(x\)` and `\(y\)` is linear
+
+--
+
+2) **Normality**: The residuals are normally distributed&lt;sup&gt;2&lt;/sup&gt;
+
+.footnote[[2] Note that these assumptions apply to the residuals, not the data!]
+
+--
+
+3) **Homoscedasticity**: The residuals have a constant variance at every level of `\(x\)`
+
+--
+
+4) **Independence**: The residuals are independent (i.e., uncorrelated with each other)
+
+???
+
+Because virtually every model we will use this semester is a linear model, these assumptions apply to everything we will discuss from here out
+
+---
+# linear models
+
+#### Very flexible
+
+--
+
+- Predictor(s) can take different forms (binary, continuous, factor)
+
+--
+
+- Can contain many predictors
+
+--
+
+- Can model non-linear relationships
+
+--
+
+#### Link different "tests" (e.g., t-tests, ANOVA, ANCOVA, linear regression)
+
+--
+
+#### Can be used for different statistical goals
+
+- Estimating unknown parameters  
+
+- Testing hypotheses  
+
+- Describing stochastic systems  
+
+- Making predictions that account for uncertainty  
+
+---
+# statistical inference
+
+#### Linear models allow us to quantify relationships between variables
+
+--
+
+#### Generally, models are fit to **samples**
+
+- The intercept and slope values correspond to the *observed* response and predictor values
+
+- If we repeated our study, the sampled values would change and so would the intercept/slope values
+
+--
+
+#### We're generally interested in the **population**, not the sample
+
+- The intercept and slope values fitted to a particular sample are considered *estimates* of the true population values
+
+--
+
+#### Inference about populations requires quantifying how well our estimated values represent the true population values (which we can never know)
+
+- This will be the topic of the next lecture (and a theme we will revisit throughout the semester)
 
 ---
 # looking ahead
 
 &lt;br/&gt;
 
-### **Next time**: Princples of estimation
+### **Next time**: Princples of statistical inference
 
 &lt;br/&gt;
 
-### **Reading**: Quinn chp. 2.1-2.3
+### **Reading**: [Feiberg chp. 1.6-1.8](https://statistics4ecologists-v1.netlify.app/linreg.html#sampdist)
 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

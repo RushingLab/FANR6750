@@ -65,9 +65,13 @@ The components of a scientific study need to be considered together rather than 
 
 Lecture material will largely be based on:  
 
+**Fieberg, J. (2022). Statistics for Ecologists: A Frequentist and Bayesian Treatment of Modern Regression Models. An open-source online textbook.** 
+
+and 
+
 **Quinn, G.P. & Keough, M.J. 2002. Experimental Design and Data Analysis for Biologists. Cambridge University Press**  
 
-Purchasing the textbook is not required but may be helpful for clarifying some concepts. A pdf of the book can be downloaded [here](https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&%20Keough.pdf).  
+The Fieberg (2022) textbook can be accesses [here](https://fw8051statistics4ecologists.netlify.app/). Purchasing the Quinn (2002) textbook is not required but may be helpful for clarifying some concepts. A pdf of the book can be downloaded [here](https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&%20Keough.pdf).  
 
 Additional readings will come from a variety of sources, including other textbooks and scientific journals, and will be posted on eLC.
 
