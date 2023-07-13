@@ -1,0 +1,630 @@
+---
+title: "LECTURE 5: null hypothesis testing"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2023"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, fig.retina = 2)
+source(here::here("R/zzz.R"))
+library(emo)
+library(FANR6750)
+# library(gganimate)
+```
+
+class: inverse
+
+# outline
+
+#### 1) Sampling error and regression coefficients
+
+<br/>  
+--
+
+#### 2) Logic of null hypothesis testing
+
+<br/> 
+--
+
+#### 3) *t*-statistics and *t*-distribution
+
+<br/> 
+
+--
+
+#### 4) *p*-values and decisions
+
+<br/> 
+
+--
+
+#### 5) NHT for regression models
+
+
+---
+# fitting the model in `R`
+
+```{r echo=TRUE}
+data(frogs)
+
+fit2 <- lm(Frogs ~ Development, data = frogs)
+
+broom::tidy(fit2)
+```
+
+
+- The `(Intercept)` estimate ( $\beta_0$ ) is the expected number of frogs in a low-development plot
+
+
+- The `DevelopmentHigh` estimate ( $\beta_1$ ) is the *difference* between low-development and high-development plots
+
+
+- **Question**: Are there fewer frogs in high-development plots?
+
+---
+
+#### **Question**: Are there fewer frogs in high-development plots?
+
+- This question is harder to answer than it might seem. Why?
+
+--
+
+#### Sampling error!
+
+--
+
+- If we did the experiment again, we'd get a different difference (maybe even a change in direction)
+
+--
+
+- The sample means will *always* be different (which we will prove shortly)
+
+--
+
+If the sample means will never be the same, we need to re-formulate our question:
+
+- How large of a difference between our samples provides evidence that the population means are different? 
+
+
+---
+class:inverse,middle
+
+# null hypothesis testing
+
+---
+# null hypothesis testing
+
+#### How can we express our question about development and its impacts on frogs as a hypothesis?
+
+--
+
+If development does not influence frog abundance, $\beta_1 = 0$
+
+- This is called the *null hypothesis* (i.e., no effect)
+
+- Denoted $H_0$
+
+--
+
+If development does influence frog abundance, $\beta_1 \neq 0$
+
+- This is the *alternative hypothesis*
+
+- Denoted $H_a$
+
+--
+
+- Note that we could make the alternative more specific and say development negatively effects abundance ( $\beta_0 < 0$ )
+
+---
+# null hypothesis testing
+
+#### Remember that $\large \beta_1$ is a **population** parameter
+
+- We estimate population parameters from samples
+
+--
+
+#### What is our best estimate of $\large \beta_1$? 
+
+--
+
+ - The difference in sample means: $\hat{\beta}_1 = \hat{\mu}_{Low} - \hat{\mu}_{High}$
+ 
+--
+
+- For the frog data:
+
+```{r echo = TRUE}
+mu_high <- mean(frogs$Frogs[frogs$Development == "High"])
+mu_low <- mean(frogs$Frogs[frogs$Development == "Low"])
+
+(beta_1.hat <- mu_high - mu_low)
+```
+
+Note that this is same as the estimate of $\beta_1$ provided by the `lm` and `t-test` functions
+
+---
+# null hypothesis testing
+
+#### Our estimate of $\large \beta_1$ is clearly not $\large 0$ but does that imply that the null hypothesis is wrong?
+
+--
+
+- Not necessarily! Why?
+
+--
+
+- Sampling error! Even if $\beta_1 = 0$, $\hat{\beta}_1$ will *never* equal 0
+
+--
+
+Enter *null hypothesis testing*:
+
+> formal approach to deciding whether a statistical relationship in a sample reflects a real relationship in the population or is just due to chance 
+
+
+---
+# null hypothesis testing
+
+#### NHT is based on the *expectation* of what our data should look like **if the null hypothesis is true**
+
+--
+
+- If our data look really different than what we expect **if the null hypothesis is true**, then it is unlikely that the null hypothesis is true and we reject $H_0$
+
+--
+
+- It's important to note that there is *always* a chance that our results are simply due to chance 
+
+--
+
+#### Type I error (i.e., false positive rate)
+
+- The probability that we will reject $H_0$ when it is actually true
+
+- Usually denoted $\alpha$
+
+- Generally, $\alpha = 0.05$ or $\alpha = 0.01$ are accepted Type I error rates
+
+---
+# null hypothesis testing
+
+#### How do we know what the data should look like **if the null hypothesis is true**?
+
+--
+
+- Again, we can use theory to tell us about long-term expectations (similar to the sampling distribution)
+
+--
+
+- But maybe easier to understand using simulation
+
+---
+# simulating data under the null hypothesis
+
+#### Imagine the null hypothesis is true in the measurement error example (i.e., measurement error = 0)
+
+- Any difference between the sample mean and 0 is just due to sampling error
+
+--
+
+- We can simulate a "sample" in `R` using the `rnorm()` function
+
+```{r echo = TRUE}
+y <- rnorm(n = 10, mean = 0, sd = 1)
+
+mean(y) - 0
+```
+
+
+--
+
+Note that the we fixed the mean of the normal distribution to be 0, so we know the null hypothesis is true
+
+---
+# simulating data under the null hypothesis
+
+Instead of just taking the difference $\bar{y} - 0$, we can standardize the differences by dividing by the standard error:
+
+```{r echo = TRUE}
+se.y <- sd(y)/sqrt(10)
+(mean(y) - 0)/se.y
+```
+
+--
+
+- This tells us how many standard errors away from 0 the sample mean is 
+
+- We'll call this value $t$
+
+$$\large t = \frac{\bar{y} - 0}{SE_y}$$
+
+
+---
+# simulating data under the null hypothesis
+
+#### Generate and plot 1000 sample means:
+
+```{r echo = TRUE}
+t <- numeric(length = 1000)
+
+for(i in 1:1000){
+  y <-  rnorm(10, mean = 0, sd = 1)
+  t[i] <- mean(y)/(sd(y)/sqrt(10))
+}
+```
+
+```{r fig.width=6, fig.height=2.5}
+ggplot(data.frame(t = t), aes(x = t)) +
+  geom_histogram(color = "grey75") +
+  geom_rug(alpha = 0.1) +
+  scale_x_continuous("t") +
+  scale_y_continuous("Count")
+```
+
+---
+# simulating data under the null hypothesis
+
+```{r fig.width=6, fig.height=3}
+ggplot(data.frame(t = t), aes(x = t)) +
+  geom_histogram(color = "grey75") +
+  geom_rug(alpha = 0.1) +
+  scale_x_continuous("t") +
+  scale_y_continuous("Count")
+```
+
+#### Note that:
+
+--
+1. The null hypothesis was true for every sample
+
+--
+
+2. Some sample means were bigger than expected, some were smaller (all due to sampling error!)
+
+--
+
+3. The resulting distribution looks *kind of* normal
+
+---
+## THE *t*-DISTRIBUTION
+
+The distribution of the *t*-statistics is not quite normally distributed
+
+--
+
+Instead, theory says that the *t*-statistics will follow a $t$-distribution with $n - 1$ degrees of freedom (**if the null hypothesis is true**!)
+
+```{r t, fig.width=8, fig.height=6}
+curve(dt(x, 1), -5, 5, ylim=c(0, 0.5),
+      xlab="t value", ylab="Probability density",
+      cex.lab=1.5, lwd=1.5)
+curve(dt(x, 5), -5, 5, add=TRUE, col="blue", lwd=1.5)
+curve(dnorm(x, 0, 1), -5, 5, add=TRUE,  lty=3, lwd=1.5)
+legend(-5, 0.5, c("Standard normal distribution", "t distribution (df=5)", "t distribution (df=1)"),
+       lty=c(3, 1, 1), col=c("black", "blue", "black"), lwd=1.5)
+```
+
+---
+## THE *t*-DISTRIBUTION
+
+#### More about the *t*-distribution
+
+--
+
+- Continuous probability distribution
+
+--
+
+- Symmetrical with mean = 0
+
+--
+
+- More mass in the tails as degrees of freedom get smaller (i.e., more extreme values become more likely)
+
+
+--
+
+- For sample sizes $n \gt 30$, the $t$-distribution is essentially a standard normal distribution with mean = 0 and SD = 1
+
+--
+
+- Published by William Sealy Gosset in 1908 under the pseudonym "Student". Gosset worked for Guinness and was interested in quality control of beer ingredients 
+
+---
+# null hypothesis testing
+
+#### Quick review:
+
+--
+
+1. The null hypothesis $\large H_0$ is that there is no effect or no difference
+
+--
+
+2. The *t*-statistic measures the difference between the sample mean and its hypothesized value (under the null) relative to its standard error 
+
+--
+
+3. **If the null hypothesis is true**, the *t*-statistics from repeated samples follow a *t*-distribution with $\large n-1$ degrees of freedom
+
+--
+
+Importantly, because we can quantify properties of the *t*-distribution, we can compare the *t*-statistic calculated from our observed sample to the expected values under the null hypothesis
+
+--
+- If our observed *t*-statistic would be unlikely under the null hypothesis, we can conclude that the null hypothesis is false
+
+--
+
+- This is the logic behind null hypothesis testing
+
+---
+# null hypothesis testing
+
+---
+# null hypothesis testing
+
+#### Is there evidence to reject $\large H_0$?
+
+```{r fig.width=6, fig.height=4}
+df <- data.frame(t = t,
+                 group = ifelse(t > -1.07 & t < 1.07, "0", "1"))
+
+ggplot() +
+  geom_histogram(data = df, aes(x = t), 
+                 alpha = 0.75, bins = 100) +
+  geom_vline(xintercept = 1.05, color = "#D47500", linetype = "dashed", size = 1) +
+  geom_vline(xintercept = mean(t), color = "black") +
+  scale_y_continuous("") + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank())
+```
+
+---
+# null hypothesis testing
+
+#### Measurement error example
+
+```{r echo =TRUE}
+y <- c(-0.062, -0.38, 0.85, -0.58,  0.53,  0.09,  0.31,  0.77,  0.59,  -0.17)
+
+(mean.y <- mean(y))
+
+(se.y <- sd(y)/sqrt(10))
+
+(t.stat <- mean.y / se.y)
+```
+
+--
+
+#### Is there evidence to reject $\large H_0$?
+
+---
+# null hypothesis testing
+
+#### Measurement error example
+
+
+```{r fig.width=6, fig.height=4}
+df <- data.frame(t = t,
+                 group = ifelse(t > -t.stat & t < t.stat, "0", "1"))
+
+ggplot() +
+  geom_histogram(data = df, aes(x = t, fill = as.factor(group)), 
+                 alpha = 0.75, bins = 100) +
+  geom_vline(xintercept = t.stat, color = "#D47500", linetype = "dashed", size = 1) +
+  geom_vline(xintercept = mean(t), color = "black") +
+  scale_y_continuous("") + theme(axis.text.y = element_blank(), axis.ticks.y = element_blank()) +
+  guides(fill = "none") +
+  labs(subtitle = "Distribution of 1000 t-statistics")
+```
+
+Approximately 18% of the simulated values of $t$ are larger than 1.25 (or smaller than -1.25)
+
+- Put another way, **if the null hypothesis is true**, there is about a 1 in 5 chance of observing $t \geq 1.25$ 
+
+---
+# null hypothesis testing
+
+In reality, we don't need to simulate the distribution of $t$ every time we do an experiment
+
+<br/>
+```{r p, fig.width=5, fig.height=3}
+op <- par(mai=c(0.8, 0.2, 0.2, 0.2))
+curve(dt(x, df=9), -4, 4, xlab="t value", ylab="", yaxt="n",
+      ylim=c(0,0.5),
+      frame=FALSE , main="t-distribution with df=9", cex.main=1.5)
+xs1 <- seq(qt(.025, df=9), -4, by=-0.1)
+ys1 <- dt(xs1, df=9)
+xs2 <- seq(qt(.975, df=9), 4, by=0.1)
+ys2 <- dt(xs2, df=9)
+xs3 <- seq(qt(pt(-1.251,9), df=9), -4, by=-0.1)
+ys3 <- dt(xs3, df=9)
+xs4 <- seq(qt(pt(1.251,9), df=9), 4, by=0.1)
+ys4 <- dt(xs4, df=9)
+polygon(c(xs3, rev(xs3)), c(rep(0, length(xs3)), rev(ys3)), col=gray(0.7))
+polygon(c(xs4, rev(xs4)), c(rep(0, length(xs4)), rev(ys4)), col=gray(0.7))
+#polygon(c(xs1, rev(xs1)), c(rep(0, length(xs1)), rev(ys1)), col="red")
+#polygon(c(xs2, rev(xs2)), c(rep(0, length(xs2)), rev(ys2)), col="red")
+text(-1.251, dt(0,9), "t=-1.251", pos=3)
+text(1.251, dt(0,9), "t=1.251", pos=3)
+#text(-3, dt(0,18), "t=-3", pos=3)
+#text(3, dt(0,18), "t=3", pos=3)
+arrows(-1.07, dt(0,9), -1.251, dt(-1.07,9), length=0.1)
+arrows(1.07, dt(0,9), 1.251, dt(1.07,9), length=0.1)
+par(op)
+```
+
+--
+
+- Easy (in `R`) to calculate the area of grey shaded regions, which is the probability of getting a value $t$ larger in magnitude than 1.251 **if the null hypothesis true**
+
+--
+
+- This is called a *p*-value
+
+--
+
+- In our example, $p = 0.174$. Would you reject the null?
+
+---
+# more on *p*-values
+
+#### The *p* -value tells you how likely your observations (or more extreme) would be **if the null hypothesis is true**  
+
+--
+
+#### A *p* -value does not tell us how much evidence there is in favor of a particular difference in means
+
+--
+
+#### What factors result in a small *p* -value?
+
+--
+
+- The sample mean is far from 0
+
+- And/or the SE is small
+
+---
+# *p*-values and type i error
+
+#### In NHST, our conclusion must be to either reject or "fail to reject" the null hypothesis
+
+--
+
+#### When we reject the null hypothesis, there is always a chance that we do so mistakenly
+
+- Due to sampling error, there is always a chance we get a large value of *t* even if the null hypothesis is true
+
+- These "false positive" mistakes are referred to as *Type I error* (denoted $\alpha$)
+
+--
+
+#### The probability of type I error is measured by the *p*-value
+
+--
+
+#### Generally, we want to avoid false positive conclusions. Why?
+
+--
+
+- Type I error rates of $\lt 5$% or $\lt 1$% are generally considered reasonable
+
+
+---
+# critical values
+
+#### Before statistical software made it easy to calculate *p*-values, researchers would look up *critical values*
+
+- For a given sample size (degrees of freedom) and $\alpha$, what is the associated value of *t*
+
+- If your calculated *t* is $\geq$ the critical value, reject the null hypothesis
+
+```{r cv, fig.width=6, fig.height=4}
+op <- par(mai=c(0.8, 0.2, 0.2, 0.2))
+curve(dt(x, df=9), -4, 4, xlab="t value", ylab="", yaxt="n",
+      ylim=c(0,0.5),
+      frame=FALSE , main="t distribution with df=9", cex.main=1.5)
+xs1 <- seq(qt(.025, df=9), -4, by=-0.1)
+ys1 <- dt(xs1, df=9)
+xs2 <- seq(qt(.975, df=9), 4, by=0.1)
+ys2 <- dt(xs2, df=9)
+polygon(c(xs1, rev(xs1)), c(rep(0, length(xs1)), rev(ys1)), col="red")
+polygon(c(xs2, rev(xs2)), c(rep(0, length(xs2)), rev(ys2)), col="red")
+text(xs1[1], dt(0,9)/1.5, "critical value\nt=-2.26", pos=3)
+text(xs2[1], dt(0,9)/1.5, "critical value\nt=2.26", pos=3)
+arrows(xs1[1], dt(0,9)/1.5, xs1[1], ys1[1], length=0.1)
+arrows(xs2[1], dt(0,9)/1.5, xs2[1], ys2[1], length=0.1)
+#text(-3, dt(0,18), "t=-3", pos=3)
+#text(3, dt(0,18), "t=3", pos=3)
+#arrows(-3, dt(0,18), -3, dt(-3,18), length=0.1)
+#arrows(3, dt(0,18), 3, dt(3,18), length=0.1)
+par(op)
+
+```
+
+---
+# frog example
+
+#### Back to the frog example
+
+```{r echo=TRUE}
+data(frogs)
+
+fit2 <- lm(Frogs ~ Development, data = frogs)
+
+broom::tidy(fit2)
+```
+
+--
+
+Now we're ready to interpret the rest of this output
+
+---
+# nhst for regression parameters
+
+#### It turns out, regression parameters also follow a *t*-distribution **if the null hypothesis is true**
+
+--
+
+#### In a regression context:
+
+$$\large t = \frac{\hat{\beta}_1 - \beta_1}{SE(\hat{\beta}_1)}$$
+
+--
+
+#### For the frog example:
+
+```{r echo = TRUE}
+beta1.hat <- mu_high - mu_low
+(t <- (beta1.hat - 0)/2.64)
+```
+
+---
+# nhst for regression parameters
+
+```{r echo=TRUE}
+broom::tidy(fit2)
+```
+
+Notice that the `lm` output provides a *t*-statistic and *p*-value for both the slope coefficient and the intercept
+
+- How do we interpret the intercept *p*-value? 
+
+- Is the *p*-value for the intercept biologically meaningful?
+
+
+---
+# nhst for t-tests
+
+As we saw before, the frog model can be fit as a two-sample *t*-test
+
+```{r echo = TRUE}
+t.test(Frogs ~ Development, data = frogs)
+```
+
+--
+
+Notice that the *t*-statistic and *p*-value is the same as the `lm` model
+
+---
+# looking ahead
+
+<br/>
+
+
+### **Next time**: Linear models part 2: categorical predictor >2 levels
+
+<br/>
+
+### **Reading**: [Fieberg chp. 3.7](https://statistics4ecologists-v1.netlify.app/matrixreg#ancova)

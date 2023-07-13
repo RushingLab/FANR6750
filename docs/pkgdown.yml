@@ -1,8 +1,9 @@
-pandoc: 3.1.1
-pkgdown: 2.0.6
+pandoc: 3.1.4
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
+  lab03_linear_models: lab03_linear_models.html
   schedule: schedule.html
   syllabus: syllabus.html
-last_built: 2023-06-26T14:29Z
+last_built: 2023-07-12T14:47Z
 

@@ -43,24 +43,24 @@ schedule <- data.frame(WK = c("1", "", "",
                               "16", "", "", "", 
                               "17"),
                        Day = c("W", "F", "", rep(c("M", "W", "F", ""), 15), "M"),
-                       Week = MWF(first.day = "2022/08/17", last.day = "2022/12/06"),
-                       Lecture = c("Course introduction", "Basic concepts in statistics", "", #1
-      "Principles of estimation",  "Principles of estimation", "Intro to statistical modeling", "",#2
-      "Intro to statistical modeling", "t-tests and null hypothesis testing", "t-tests and null hypothesis testing", "", #3
-      "Labor Day", "Randomized ANOVA", "Randomized ANOVA", "", # 4
-       "Multiple comparisons", "Statistcal Power", "Paper discussion: hypothesis testing",  "", #5
-       "Contrasts", "Contrasts", "Buffer", "", #6
-      "Transformations", "Nonparametrics", "Nonparametrics", "", #7
-       "Blocking and blocked designs",  "Blocking and blocked designs", "Random and fixed effects",  "", #8 
-             "AB factorial designs", "AB factorial designs", "ABC factorial designs",  "", #9
-      "Nested designs", "Nested designs", "Paper discussion: Pseudoreplication", "", # 10
+                       Week = MWF(first.day = "2023/08/16", last.day = "2023/12/05"),
+                       Lecture = c("Course introduction", "Introduction to statistics", "", #1
+      "Introduction to linear models",  "Introduction to linear models", "Principles of statistical inference", "",#2
+      "Principles of statiscal inference", "Linear models for simple categorical predictors (aka t-test)", "Linear models for simple categorical predictors (aka t-test)", "", #3
+      "Labor Day", "Linear models for simple categorical predictors (aka t-test)", "Null hypothesis testing", "", # 4
+       "Null hypothesis testing", "Linear models for categorical predictor w/ >2 levels (aka ANOVA)", "Paper discussion: hypothesis testing", "", #5
+       "Linear models for categorical predictor w/ >2 levels (aka ANOVA)", "Linear regression", "Linear regression", "", #6
+      "Multiple regression", "Interactions", "buffer", "", #7
+       "Diagnosing goodness-of-fit",  "Diagnosing goodness-of-fit", "Model selection",  "", #8 
+             "Model selection", "Model selection", "Paper discussion: model selection",  "", #9
+      "Random effects", "Nested designs", "Paper discussion: Pseudoreplication", "", # 10
           "Split-plot designs", "Split-plot designs", "Fall break", "", #11
       "Repeated measures", "Repeated measures", "Buffer", "",
          "Regression review", "Analysis of covariance", "Analysis of covariance", "", #13
-          "Generalized linear models", "Logistic regression", "Poisson regression", "", #14
+          "Generalized linear models", "GLM: Logistic regression", "GLM: Logistic regression", "", #14
           "Thanksgiving break", "", "", "", #15
-           "GLMMs", "Model selection", "Paper discussion: Model selection",  "", #16
-                                   "Course wrap up"),
+           "GLM: Poisson regression", "GLM: Poisson regression", "GLM: Zero-inflated data",  "", #16
+                                   "TBD"),
                        Lab = c("", "", "",
                                "Introduction to R", "", "", "",
                                "Introduction to RMarkdown", "", "", "",
@@ -129,12 +129,14 @@ schedule %>%
     
 5) Null hypothesis testing
     + p-values
+    + power (intuition)
 
 6) Categorical predictor > 2 levels
     + linear model
     + formulated as ANOVA
 
 7) Multiple comparisons
+   + contrasts/pre-planned hypotheses
 
 8) Causal inference 
 
@@ -147,13 +149,15 @@ schedule %>%
 10) Interactions
    + link to factorial design
 
-11) Multicollinearity
+11) Goodness-of-fit/diagnostics (maybe move earlier)
 
-12) Goodness-of-fit/model selection
+12) Model selection
 
 13) Random effects/mixed models
 
-14) Repeated measures
+14) Nested/split-plot
+
+15) Repeated measures
 
 16) GLM: Logistic regression
 

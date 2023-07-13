@@ -527,9 +527,9 @@ Of course, with our real data, we have no way of knowing if our sample is one of
 
 <br/>
 
-### **Next time**: Princples of estimation
+### **Next time**: Linear models, part 1: Categorical predictor with 2 levels
 
 <br/>
 
-### **Reading**: Quinn chp. 2.1-2.3
+### **Reading**: [Fieberg chp. 3.6](https://statistics4ecologists-v1.netlify.app/matrixreg#categorical-predictors)
 
