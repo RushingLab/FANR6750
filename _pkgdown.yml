@@ -29,7 +29,7 @@ navbar:
         - text: "Lecture 3: Principles of inference"
           href: articles/lectures/03_inference/03_inference.html
         - text: "Lecture 4: Linear models part 1: categorical predictor w/ 2 levels"
-          href: articles/lectures/04_t-tests/04_t-tests.html
+          href: articles/lectures/04_t-test/04_t-test.html
         - text: "Lecture 5: Null hypothesis significance testings"
           href: articles/lectures/05_nht/05_nht.html
         - text: "Lecture 6: Linear models part 2: categorical predictor > 2 levels"
