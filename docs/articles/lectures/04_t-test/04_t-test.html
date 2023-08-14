@@ -191,11 +191,11 @@ class:inverse
 
 # context, part 2
 
-#### We are interested in determining how urban development influences the abundance of strawberry poison-dart frogs (*Oophaga pumilio*)
+#### We are interested in determining how urban development influences the abundance of strawberry poison-dart frogdata (*Oophaga pumilio*)
 
 .left-column[
 &lt;/br&gt;
-&lt;img src="fig/frog2.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="fig/frog2.png" width="2016" style="display: block; margin: auto;" /&gt;
 ]
 
 .right-column[
@@ -207,7 +207,7 @@ Field procedure:
 
 - `\(\large n=10\)` plots are established on one high-development island and one low-development island
 
-- Within each plot, strawberry frogs are counted within 5 randomly-located quadrats 
+- Within each plot, strawberry frogdata are counted within 5 randomly-located quadrats 
 
 ]
 
@@ -292,9 +292,9 @@ Field procedure:
 
 
 ```r
-data(frogs)
+data(frogdata)
 
-fit &lt;- lm(Frogs ~ Development, data = frogs)
+fit &lt;- lm(Frogs ~ Development, data = frogdata)
 
 broom::tidy(fit)
 ```
@@ -325,7 +325,7 @@ To interpret this output, we need to know how `R` codes categorical predictors..
 
 
 ```r
-str(frogs)
+str(frogdata)
 ```
 
 ```
@@ -415,7 +415,7 @@ model.matrix(fit)[c(1,2,11,12),]
 
 ```r
 ### View rows 1, 2, 11, and 12 of the data
-frogs[c(1,2,11,12),]
+frogdata[c(1,2,11,12),]
 ```
 
 ```
@@ -432,9 +432,9 @@ frogs[c(1,2,11,12),]
 
 
 ```r
-data(frogs)
+data(frogdata)
 
-fit2 &lt;- lm(Frogs ~ Development, data = frogs)
+fit2 &lt;- lm(Frogs ~ Development, data = frogdata)
 
 broom::tidy(fit2)
 ```
@@ -449,7 +449,7 @@ broom::tidy(fit2)
 
 --
 
-- The `(Intercept)` estimate ( `\(\beta_0\)` ) is the expected number of frogs in a low-development plot
+- The `(Intercept)` estimate ( `\(\beta_0\)` ) is the expected number of frogdata in a low-development plot
 
 --
 
@@ -457,7 +457,7 @@ broom::tidy(fit2)
 
 --
 
-- **Question**: Are there fewer frogs in high-development plots?
+- **Question**: Are there fewer frogdata in high-development plots?
 
 ---
 # fitting the model by hand
@@ -470,14 +470,14 @@ The parameter estimates are:
 
 
 ```r
-mu_high &lt;- mean(frogs$Frogs[frogs$Development == "High"])
-mu_low &lt;- mean(frogs$Frogs[frogs$Development == "Low"])
+mu_high &lt;- mean(frogdata$frogdata[frogdata$Development == "High"])
+mu_low &lt;- mean(frogdata$frogdata[frogdata$Development == "Low"])
 
 (beta_0.hat &lt;- mu_low)
 ```
 
 ```
-## [1] 19.2
+## [1] NA
 ```
 
 ```r
@@ -485,7 +485,7 @@ mu_low &lt;- mean(frogs$Frogs[frogs$Development == "Low"])
 ```
 
 ```
-## [1] -13.1
+## [1] NA
 ```
 
 --
@@ -559,7 +559,7 @@ What is the interpretation of these standard errors?
 
 
 ```r
-t.test(Frogs ~ Development, data = frogs)
+t.test(Frogs ~ Development, data = frogdata)
 ```
 
 ```
@@ -568,7 +568,7 @@ t.test(Frogs ~ Development, data = frogs)
 ## 
 ## data:  Frogs by Development
 ## t = 5, df = 18, p-value = 1e-04
-## alternative hypothesis: true difference in means between group Low and group High is not equal to 0
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
 ##   7.554 18.646
 ## sample estimates:
@@ -593,7 +593,7 @@ t.test(Frogs ~ Development, data = frogs)
 
 
 ```r
-fit3 &lt;- lm(Frogs ~ Development - 1, data = frogs)
+fit3 &lt;- lm(Frogs ~ Development - 1, data = frogdata)
 broom::tidy(fit3)
 ```
 

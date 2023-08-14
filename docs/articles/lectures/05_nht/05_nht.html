@@ -62,9 +62,9 @@ class: inverse
 
 
 ```r
-data(frogs)
+data(frogdata)
 
-fit2 &lt;- lm(Frogs ~ Development, data = frogs)
+fit2 &lt;- lm(Frogs ~ Development, data = frogdata)
 
 broom::tidy(fit2)
 ```
@@ -249,7 +249,7 @@ mean(y) - 0
 ```
 
 ```
-## [1] -0.12
+## [1] 0.2065
 ```
 
 
@@ -269,7 +269,7 @@ se.y &lt;- sd(y)/sqrt(10)
 ```
 
 ```
-## [1] -0.3088
+## [1] 0.6555
 ```
 
 --
@@ -522,9 +522,9 @@ In reality, we don't need to simulate the distribution of `\(t\)` every time we 
 
 
 ```r
-data(frogs)
+data(frogdata)
 
-fit2 &lt;- lm(Frogs ~ Development, data = frogs)
+fit2 &lt;- lm(Frogs ~ Development, data = frogdata)
 
 broom::tidy(fit2)
 ```
@@ -623,11 +623,8 @@ Notice that the *t*-statistic and *p*-value is the same as the `lm` model
 &lt;br/&gt;
 
 
-### **Next time**: Linear models part 2: categorical predictor &gt;2 levels
+### **Next time**: Statistical power
 
-&lt;br/&gt;
-
-### **Reading**: [Fieberg chp. 3.7](https://statistics4ecologists-v1.netlify.app/matrixreg#ancova)
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

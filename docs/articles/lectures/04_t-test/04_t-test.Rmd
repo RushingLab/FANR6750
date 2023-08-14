@@ -149,7 +149,7 @@ class:inverse
 
 # context, part 2
 
-#### We are interested in determining how urban development influences the abundance of strawberry poison-dart frogs (*Oophaga pumilio*)
+#### We are interested in determining how urban development influences the abundance of strawberry poison-dart frogdata (*Oophaga pumilio*)
 
 .left-column[
 </br>
@@ -167,7 +167,7 @@ Field procedure:
 
 - $\large n=10$ plots are established on one high-development island and one low-development island
 
-- Within each plot, strawberry frogs are counted within 5 randomly-located quadrats 
+- Within each plot, strawberry frogdata are counted within 5 randomly-located quadrats 
 
 ]
 
@@ -282,9 +282,9 @@ $$\LARGE E[y_i] = \beta_0 + \beta_1  x_i$$
 # fitting the model in `R`
 
 ```{r echo=TRUE}
-data(frogs)
+data(frogdata)
 
-fit <- lm(Frogs ~ Development, data = frogs)
+fit <- lm(Frogs ~ Development, data = frogdata)
 
 broom::tidy(fit)
 ```
@@ -306,7 +306,7 @@ To interpret this output, we need to know how `R` codes categorical predictors..
 --
 
 ```{r echo = TRUE}
-str(frogs)
+str(frogdata)
 ```
 
 ---
@@ -371,7 +371,7 @@ model.matrix(fit)[c(1,2,11,12),]
 .pull-right[
 ```{r echo = TRUE}
 ### View rows 1, 2, 11, and 12 of the data
-frogs[c(1,2,11,12),]
+frogdata[c(1,2,11,12),]
 ```
 ]
 
@@ -379,16 +379,16 @@ frogs[c(1,2,11,12),]
 # fitting the model in `R`
 
 ```{r echo=TRUE}
-data(frogs)
+data(frogdata)
 
-fit2 <- lm(Frogs ~ Development, data = frogs)
+fit2 <- lm(Frogs ~ Development, data = frogdata)
 
 broom::tidy(fit2)
 ```
 
 --
 
-- The `(Intercept)` estimate ( $\beta_0$ ) is the expected number of frogs in a low-development plot
+- The `(Intercept)` estimate ( $\beta_0$ ) is the expected number of frogdata in a low-development plot
 
 --
 
@@ -396,7 +396,7 @@ broom::tidy(fit2)
 
 --
 
-- **Question**: Are there fewer frogs in high-development plots?
+- **Question**: Are there fewer frogdata in high-development plots?
 
 ---
 # fitting the model by hand
@@ -408,8 +408,8 @@ In this case, we can also fit the model "by hand"
 The parameter estimates are:
 
 ```{r echo = TRUE}
-mu_high <- mean(frogs$Frogs[frogs$Development == "High"])
-mu_low <- mean(frogs$Frogs[frogs$Development == "Low"])
+mu_high <- mean(frogdata$frogdata[frogdata$Development == "High"])
+mu_low <- mean(frogdata$frogdata[frogdata$Development == "Low"])
 
 (beta_0.hat <- mu_low)
 (beta_1.hat <- mu_high - mu_low)
@@ -433,8 +433,8 @@ $$\large s^2_p = \frac{(n_L − 1)s^2_L + (n_H − 1)s^2_H}{n_L + n_H − 2}$$
 --
 
 ```{r}
-var_low <- var(frogs$Frogs[frogs$Development == "Low"])
-var_high <- var(frogs$Frogs[frogs$Development == "High"])
+var_low <- var(frogdata$Frogs[frogdata$Development == "Low"])
+var_high <- var(frogdata$Frogs[frogdata$Development == "High"])
 
 # Pooled variance
 (s2.p <- (9*var_low + 9*var_high)/18)
@@ -486,7 +486,7 @@ What is the interpretation of these standard errors?
 .pull-right[
 
 ```{r echo = TRUE}
-t.test(Frogs ~ Development, data = frogs)
+t.test(Frogs ~ Development, data = frogdata)
 ```
 ]
 
@@ -505,7 +505,7 @@ t.test(Frogs ~ Development, data = frogs)
 - We can also recode the model in `R` to provide the group means (the *means parameterization*)
 
 ```{r echo = TRUE}
-fit3 <- lm(Frogs ~ Development - 1, data = frogs)
+fit3 <- lm(Frogs ~ Development - 1, data = frogdata)
 broom::tidy(fit3)
 ```
 

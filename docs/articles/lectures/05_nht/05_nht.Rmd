@@ -54,9 +54,9 @@ class: inverse
 # fitting the model in `R`
 
 ```{r echo=TRUE}
-data(frogs)
+data(frogdata)
 
-fit2 <- lm(Frogs ~ Development, data = frogs)
+fit2 <- lm(Frogs ~ Development, data = frogdata)
 
 broom::tidy(fit2)
 ```
@@ -559,9 +559,9 @@ par(op)
 #### Back to the frog example
 
 ```{r echo=TRUE}
-data(frogs)
+data(frogdata)
 
-fit2 <- lm(Frogs ~ Development, data = frogs)
+fit2 <- lm(Frogs ~ Development, data = frogdata)
 
 broom::tidy(fit2)
 ```
@@ -623,8 +623,5 @@ Notice that the *t*-statistic and *p*-value is the same as the `lm` model
 <br/>
 
 
-### **Next time**: Linear models part 2: categorical predictor >2 levels
+### **Next time**: Statistical power
 
-<br/>
-
-### **Reading**: [Fieberg chp. 3.7](https://statistics4ecologists-v1.netlify.app/matrixreg#ancova)

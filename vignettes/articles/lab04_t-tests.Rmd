@@ -1,0 +1,660 @@
+---
+title: "Lab 4: Linear models with one categorical predictor-- t-tests"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2023"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lab02_t-tests}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include= F}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.retina = 2,
+                      fig.align = "c",
+  collapse = TRUE,
+  comment = "#>"
+)
+library(dplyr)
+library(knitr)
+library(FANR6750)
+library(ggplot2)
+#source(here::here("R/zzz.R"))
+```
+
+```{r, eval= F, include= F}
+calls_high <- round(rnorm(50, 12, 3) ,1)
+calls_low <- round(rnorm(50, 17, 2.6), 1)
+hist(calls_high)
+hist(calls_low)
+
+wind <- rep(c('high', 'low'), each= 50)
+calls <- as.vector(cbind(c(calls_high, calls_low)))
+thrushdata <- as.data.frame(cbind(calls, wind))
+thrushdata$calls <- as.numeric(thrushdata$calls)
+thrushdata$wind <- as.factor(thrushdata$wind)
+#write.csv(thrushdata, 'thrushdata.csv', row.names= F)
+data(thrushdata)
+```
+
+```{r eval= F, include= F}
+students <- round(rnorm(100, 61, 3.2), 1)
+studentsdata <- as.data.frame(students)
+#write.csv(studentsdata, 'studentsdata.csv', row.names= F)
+```
+
+
+## Lab 3
+
+- Introduction to Linear Models
+
+- Simple Linear Regression
+
+  + Parameter Interpretation
+  
+  + Residuals
+  
+  + Assumptions
+
+- Linear Models in R
+
+
+
+## Today's topics
+
+- Introduction
+
+- Linear models with one categorical predictor: t-tests
+
+    + One sample
+    
+    + Samples vs tails
+    
+    + Two sample
+    
+    + Graphics Review
+    
+    + Paired
+
+    
+# Introduction
+
+Today we will discuss a range of scenarios which broadly fall under the category of **t-tests**. These will include:
+
+- when a sample mean is being compared to a particular value (**one-sample t-test**)
+
+- when two sample means are being compared to each other and the observations between samples are independent (**two-sample t-test**)
+
+- when two sample means are being compared to each other and the observations between samples are paired (**paired t-test**)
+
+
+# Scenario 1: One sample t-tests
+
+- For now, we will talk about the scenario in which we only have one sample of data and we are interested in its mean.
+
+- **Question**: Is the average height of students at UGA equal to 65 inches?
+
+- **Problem**: We don’t know the true population mean ($\mu_1$). All we have is the sample mean ($\bar{y}_1$).
+
+- The relevant hypotheses are:  
+
+    + $H_0 : \mu_1 = 65$  
+
+    + $H_A : \mu_1 \neq 65$
+    
+Suppose we have collected a random sample of 100 students. Below is a plot of the distribution of their heights. In this case the sample mean is 61 inches. From the plot below, it would be difficult to conclude one way or another whether the population mean is equal to 65.
+
+```{r echo = FALSE, fig.width=6, fig.density=3, fig.align='center'}
+x <- seq(from = 50, to = 70, length.out = 1000)
+y1 <- dnorm(x, 61, 3)
+
+
+df <- data.frame(x = x,
+                 y = y1,
+                 pop = rep('A', each= 1000))
+
+ggplot(df, aes(x = x, y = y, color= pop)) +
+  geom_path() +
+  guides(color = "none") +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  theme(axis.text.y = element_blank(), axis.ticks = element_blank()) + 
+  geom_segment(aes(x = 61, xend = 61, y = -Inf, yend = max(y1)), color = "black") +
+  geom_segment(aes(x = 65, xend = 65, y = -Inf, yend = max(y1)), color = "black") +
+  annotate("text", label = "bar(y)[1]", parse = TRUE, x = 61, y = max(y1) + 0.05) +
+  annotate("text", label = "mu[1]", parse = TRUE, x = 65, y = max(y1) + 0.05)
+```
+
+<br>
+
+<br>
+
+We can think about this problem in a few different ways. Below we will see how to approach it both from the perspective of a linear model as well as from the perspective of a test. Remember that in our linear model below we are interested in estimating $\beta_0$ which in this very simple case just represents the population mean.
+
+$$
+y_i = \beta_0 + \epsilon_i \ \ \ \ \ \text{where} \ \ \ \ \ \epsilon_i \sim \text{N}(0,\sigma)
+$$
+
+## Key points
+
+- If the sample mean ($\bar{y}_1$) is very different from the proposed population mean and the standard error of the difference is small, the $t$-statistic will be far from zero  
+
+- If the $t$-statistic is more extreme than the critical values, we reject the null hypothesis ($H_0$)
+
+```{r echo = FALSE, fig.width=6, fig.density=3, fig.align='center'}
+op <- par(mai=c(0.8, 0.2, 0.2, 0.2))
+curve(dt(x, df=99), -4, 4, xlab="t-value", ylab="", yaxt="n",
+      ylim=c(0,0.4),
+      frame=FALSE , main="t distribution with df=99", cex.main=1.5)
+xs1 <- seq(qt(.025, df=99), -4, by=-0.1)
+ys1 <- dt(xs1, df=99)
+xs2 <- seq(qt(.975, df=99), 4, by=0.1)
+ys2 <- dt(xs2, df=99)
+polygon(c(xs1, rev(xs1)), c(rep(0, length(xs1)), rev(ys1)), col=gray(0.7))
+polygon(c(xs2, rev(xs2)), c(rep(0, length(xs2)), rev(ys2)), col=gray(0.7))
+#text(xs1[1], dt(0,18)/1.5, "t=-2.10\np=0.05", pos=3)
+#text(xs2[1], dt(0,18)/1.5, "t=2.10\np=0.05", pos=3)
+text(xs1[1], dt(0,99)/1.5, "critical value\nt=-1.98", pos=3)
+text(xs2[1], dt(0,99)/1.5, "critical value\nt=1.98", pos=3)
+arrows(xs1[1], dt(0,99)/1.5, xs1[1], ys1[1], length=0.1)
+arrows(xs2[1], dt(0,99)/1.5, xs2[1], ys2[1], length=0.1)
+#text(-3, dt(0,18), "t=-3\np=0.0038", pos=3)
+#text(3, dt(0,18), "t=3\np=0.0038", pos=3)
+#text(-3, dt(0,18), "t=-3", pos=3)
+#text(3, dt(0,18), "t=3", pos=3)
+#arrows(-3, dt(0,18), -3, dt(-3,18), length=0.1)
+#arrows(3, dt(0,18), 3, dt(3,18), length=0.1)
+par(op)
+```
+
+
+
+## Exercise 1
+
+### Formulation as a linear model
+
+1) Open your `FANR6750` RStudio project (if you have one)  
+
+2) Create a new `R` script and save it to the directory where you store you lab activities. Name it something like `lab04-t_tests.R`
+
+3) Load the `FANR6750` package and the `studentsdata` object
+
+```
+library(FANR6750)
+data("studentsdata")
+```
+
+4) Create an object `students` which is the vector in the `studentsdata` dataframe.
+
+```{r include= F}
+data("studentsdata")
+```
+
+```{r}
+students <- studentsdata$students
+```
+
+5) Fit a linear model to this dataset.
+
+```{r}
+mod1 <- lm(students - 65 ~ 1)
+summary(mod1)
+```
+
+A few things to think about here:
+
+- Why did we include the `- 65` in the model statement?
+
+- What does the `~ 1` represent?
+
+- What does the intercept value mean?
+
+- What do we conclude from this model and p-value?
+
+### Formulation as a t-test by hand
+
+Now that we have seen how R can create a linear model to help us answer the question about the population mean, we will dive deeper into what exactly the computer is doing. How exactly did it decide to reject the null hypothesis? How did it calculate the p-value? Where did it get those numbers?
+
+We know from lecture that the formula to get a test statistic for a one sample test is the following:
+
+$$
+t = \frac{\bar{y} - \mu_0}{SEM} \ \ \ \ \ \text{where} \ \ \ \ \ SEM = \frac{s}{\sqrt{n}} = \frac{\sqrt{\frac{1}{n-1}\sum^n_{i=1}(y_i - \bar{y})^2}}{\sqrt{n}}
+$$
+While this looks like a lot, we can break it into pieces as lines of code in R.
+
+6) Create an object which is the sample mean.
+
+```{r}
+y_bar <- mean(students)
+```
+
+7) Create an object which is the standard error
+
+```{r}
+se_y <- sd(students)/sqrt(length(students))
+```
+
+8) Put these together to calculate the test statistic
+
+```{r}
+t_stat <- (y_bar - 65)/se_y
+```
+
+Now that we have a test statistic, we need to calculate a critical value for comparison. 
+
+9) Calculate the critical values
+
+```{r}
+alpha <- 0.05
+t_crit <- qt(c(alpha/2, 1-alpha/2), df= length(students)-1)
+```
+
+Notice that the results are the same as when we used the `lm()` function.
+
+### Formulation as a t-test using the built in R function
+
+10) Use the built in `R` function `t.test()`.
+
+```{r}
+t.test(students, mu= 65, alternative= 'two.sided', conf.level= 0.95)
+```
+
+# Samples vs Tails
+
+Before we go any further, lets address an issue that many students find confusing about t-tests. This is the issue of **samples** vs **tails**. What does it mean when we talk about a 'one sample t-test vs a two sample t-test'? What does it mean when we say a t-test had 'one tail or two tails'?
+
+- **Samples**: The number of samples (one or two) has to do with the data that you are using to approach the research question. If you are comparing one sample to a specific value (e.g. $\mu_1 = 6$) we call that a **one sample test**. If instead, you are comparing two sample means to eachother, we call that a **two sample test**
+
+- **Tails**: The number of tails (one or two) is related to the specific research question that you are interested in asking and it is directly informed by the null and alternative hypotheses. A **two tailed test** will have hypotheses like those below:
+
+$$
+H_0: \mu_1 = x
+$$
+
+$$
+H_A: \mu_1 \ne x
+$$
+
+Notice the $=$ and $\ne$ in the hypotheses. $\mu_1$ may be being compared to a specific value or being compared to another mean (e.g. $\mu_2$) but the hypotheses are always set up as $=$ vs $\ne$.
+
+In constrast, a **one tailed test** will have hypotheses like these below:
+
+$$
+H_0: \mu_1 < x
+$$
+
+$$
+H_A: \mu_1 \ge x
+$$
+
+Or the other way around:
+
+$$
+H_0: \mu_1 \le x
+$$
+
+$$
+H_A: \mu_1 > x
+$$
+
+Notice that in a one tailed test, the alternative is only interested in one direction and the null includes everything else.
+
+**In what types of situations might you want to set up a t-test as one tailed? What about two tailed? Which do you think has more statistical power to detect an effect?**
+
+
+# Scenario 2: Two sample t-tests
+
+- In this dataset, we have the average number of calls over 10 minutes during point count surveys for Song Thrushes (*Turdus philomelos*), a species of song bird in eastern Europe. The researcher is interested in understanding how wind may be affecting the frequency of bird calls. Specifically, she would like to know whether high wind conditions results in fewer average calls over 10 minutes than low wind conditions. 
+
+- **Question**: Do the samples come from the same population, or do they come from populations with different means?  
+
+- **Problem**: We don’t know the true population means ($\mu_H$, $\mu_L$)  
+
+- Under the assumption that the variances of the two populations are equal, the relevant hypotheses are:  
+
+    + $H_0 : \mu_H \ge \mu_L$  
+
+    + $H_A : \mu_H < \mu_L$
+    
+**How many tails are in this test? Why did we decide to do that?**
+
+```{r echo = FALSE, fig.width=6, fig.density=3, fig.align='center'}
+x <- seq(from = -5, to = 5, length.out = 1000)
+y1 <- dnorm(x, -1, 1)
+y2 <- dnorm(x, 1, 1)
+
+df <- data.frame(x = rep(x, 2),
+                 y = c(y1, y2),
+                 pop = rep(c("A", "B"), each = 1000))
+
+ggplot(df, aes(x = x, y = y, color = pop)) +
+  geom_path() +
+  guides(color = "none") +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  theme(axis.text = element_blank(), axis.ticks = element_blank()) +
+  geom_segment(aes(x = -1, xend = -1, y = -Inf, yend = max(y1)), color = "black") +
+  geom_segment(aes(x = 1, xend = 1, y = -Inf, yend = max(y1)), color = "black") +
+  annotate("text", label = "bar(y)[H]", parse = TRUE, x = -1, y = max(y1) + 0.05) +
+  annotate("text", label = "bar(y)[L]", parse = TRUE, x = 1, y = max(y1) + 0.05)
+```
+
+We will again see how this problem can be approached from the perspective of a linear model as well as being considered as a test. Below is the linear model for the two sample t-test. It should look similar to the last one we used, but now we have added the complexity of two categorical levels (i.e. high wind vs low wind):
+
+$$
+y_i = \beta_0 + \beta_1x_i + \epsilon_i \ \ \ \ \ \text{where} \ \ \ \ \ \epsilon_i \sim \text{N}(0,\sigma)
+$$
+
+**How do we interpret $\beta_0$ and $\beta_1$?**
+
+
+## Exercise 2
+
+### Formulation as a linear model
+
+1) Load the `FANR6750` package and the `thrushdata` object. Lets look at the structure and summary of the dataset as well
+
+```
+library(FANR6750)
+data("thrushdata")
+```
+
+```{r include= F}
+data("thrushdata")
+```
+
+
+```{r}
+str(thrushdata)
+summary(thrushdata)
+
+# Notice from the str() and summary() functions that R is interpreting the 'wind' variable 
+# as a character. Because we would like to treat 'wind' as a grouping variable, we can 
+# convert it to a factor in R.
+
+thrushdata$wind <- as.factor(thrushdata$wind)
+```
+
+2) Fit a linear model to the data which estimates call frequency as a function of wind conditions.
+
+```{r}
+mod2 <- lm(calls~ wind, data= thrushdata)
+summary(mod2)
+```
+**How would you interpret these results? Is there a difference in call frequency as a function of wind conditions? Which of these numbers represent $\beta_0$ and $\beta_1$ in our linear model above?**
+
+### Formulation as a t-test by hand
+
+Similar to Exercise 1, we could calculate a test statistic by hand. The formulas for creating this test statistic as well as the pooled variance are shown below:
+
+$$\large t = \frac{(\bar{y}_H − \bar{y}_L) − (\mu_H − \mu_L)}{\sqrt{s^2_p/n_H + s^2_p/n_L}}$$
+
+where $s^2_p$ is the pooled variance
+
+$$\large s^2_p = \frac{(n_H − 1)s^2_H + (n_L − 1)s^2_L}{n_H + n_L − 2}$$
+
+We will leave it as an exercise for you to perform. The general steps are as follows:
+
+- Calculate the test statistic by defining all the necessary terms in R
+
+- Calculate the appropriate critical value/values
+
+- Compare the test statistic to the critical value/values and reach a conclusion about the hypotheses in question
+
+## Formulation as a t-test using the built in R function
+
+3) Create two objects which represent the calls vectors for high and low wind conditions
+
+```{r echo = TRUE}
+yL <- thrushdata$calls[thrushdata$wind== 'low']
+yH <- thrushdata$calls[thrushdata$wind== 'high']
+```
+
+4) Use the `t.test()` function to perform the two sample t-test 
+
+```{r}
+t.test(yH, yL, var.equal = TRUE, paired = FALSE, alternative = "less")
+```
+
+Make sure you set `var.equal=TRUE`. Otherwise, `R` will assume that the variances of the two populations are unequal. We can test this assumption using the code below.
+
+```{r echo = TRUE}
+var.test(yH, yL)
+```
+
+**What do we conclude? Was it appropriate for us to assume equality of variances? What could we have done if this assumption was not met?**
+
+We can also formulate our t-test using some different syntax. It will give us exactly the same results though.
+
+```{r echo = TRUE}
+t.test(calls ~ wind, data = thrushdata, 
+       var.equal = TRUE, paired = FALSE, 
+       alternative = "less")
+```
+
+
+
+
+# Graphics Review (from last week)
+
+We have performed the t-test for this dataset but it would be nice if we could plot the data. This section below will pick up on the ggplot review that we began last week.
+
+```{r fig.width=5, fig.height=4, fig.align='center'}
+ggplot(data = thrushdata, aes(x = wind, y = calls))
+```
+
+You can see that `ggplot` created a figure with the correct axes and labels. But no data. That's because we didn't tell `ggplot` what type of *geometry* to use to represent the data. Once we add a geometry, we can see the data:
+
+```{r fig.width=5, fig.height=4, fig.align='center'}
+ggplot(data = thrushdata, aes(x = wind, y = calls)) + 
+  geom_point()
+```
+
+In this case, a boxplot might make more sense:
+
+```{r fig.width=5, fig.height=4, fig.align='center'}
+ggplot(data = thrushdata, aes(x = wind, y = calls)) + 
+  geom_boxplot()
+```
+
+It's also possible to use more than one geometry:
+
+```{r fig.width=5, fig.height=4, fig.align='center'}
+ggplot(data = thrushdata, aes(x = wind, y = calls)) + 
+  geom_boxplot() +
+  geom_point()
+```
+
+This is reasonable figure showing call frequencies as a function of wind. But `ggplot2` makes it very easy to tweak the way the data is visualized (maybe too easy, you can spend *a lot* of time tweaking minor details). For example, maybe we want to color the points based on the wind. Because we want to map an *attribute* (color) to a *variable* (wind), we make this change inside of `aes`:
+
+```{r fig.width=5, fig.height=4, fig.align='center'}
+ggplot(data = thrushdata, aes(x = wind, y = calls, color = wind)) + 
+  geom_boxplot() +
+  geom_point()
+```
+
+That's not exactly what we wanted. Both the boxplot and the points now colored a function of `wind`. To make just the points a function of wind, we specify `color = wind` inside of the `geom_point()` function (anything in the `ggplot()` function will apply to all geoms):
+
+```{r fig.width=5, fig.height=4, fig.align='center'}
+ggplot(data = thrushdata, aes(x = wind, y = calls)) + 
+  geom_boxplot() +
+  geom_point(aes(color = wind))
+```
+
+We can also do things like the change the size of the geometries. In this case, we are **not** mapping a variable to an attribute (size is not a function of the data values). So these changes happen **outside** of the `aes()` argument:
+
+```{r fig.width=5, fig.height=4, fig.align='center'}
+ggplot(data = thrushdata, aes(x = wind, y = calls)) + 
+  geom_boxplot() +
+  geom_point(aes(color = wind), size = 5)
+```
+
+One last example. Because many of the points overlap, it can be hard to tell how many individual points there are in each group. One way to deal with overplotting like this is to make each point slightly transparent. We can do that with the `alpha` parameter:
+
+```{r fig.width=5, fig.height=4, fig.align='center'}
+ggplot(data = thrushdata, aes(x = wind, y = calls)) + 
+  geom_boxplot() +
+  geom_point(aes(color = wind), size = 5, alpha = 0.5)
+```
+
+Again, because we aren't mapping the alpha value to any data, we include it outside of `aes()`.
+
+## Exercise 3
+
+The graph above is fine for a quick visualization of the data but wouldn't be appropriate for including in publications or reports. On your own,
+
+1) Improve the axis labels. This could include: title case, units, font size, etc. Run `?scale_y_continuous` and `?scale_x_discrete` if you need some help (and note the difference between these two functions!). `?theme` may also be useful
+
+2) Manually change the color of the points (`?scale_color_manual`)
+
+3) Instead of displaying the data using a boxplot, create histograms showing the distribution of call densities at each level of wind (`?geom_histogram`)
+
+As you learn about graphics functions, whether base or `ggplot2`, you will probably need to look up help for how to do certain things. Google is usually your best bet but here are a few other good references:
+
+- The fantastic [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) book by Claus Wilke
+
+- The `ggplot2` package [website](https://ggplot2.tidyverse.org/)
+
+- And, yes, even the base `R` [graph gallery](https://www.r-graph-gallery.com/base-R.html)
+
+
+# Scenario 3: Paired t-test
+
+- In this dataset, the researcher is interested in studying the effects of a pesticide on caterpillar populations. Twelve bushes are examined and the number of caterpillars on each bush is recorded. The pesticide is applied and after 3 days the number of caterpillars on each bush is recorded again.
+
+- **Question**: Does the pesticide have a negative effect on the caterpillar population?
+
+- **Note**: Paired t-tests can be thought of as a one sample t-test on the differences.
+
+- The hypotheses for this test would be the following:
+
+$$
+H_0: \mu_T \ge \mu_U
+$$
+
+$$
+H_A: \mu_T < \mu_U
+$$
+
+Another way we could think about this is to say that $\mu_U - \mu_T = \mu_D$. From here, we can formulate the hypotheses as:
+
+$$
+H_0: \mu_D \le 0
+$$
+
+$$
+H_A: \mu_D > 0
+$$
+
+## Exercise 4
+
+### Formulation as a linear model
+
+In this case, we already know that the paired t-test can be thought of as a one sample t-test on the differences. As a result, the linear model can be set up in the same way as Scenario 1 above. This will be left as an exercise
+
+### Formulation as a t-test by hand
+
+This will be left as an exercise for you but the general steps are as follows:
+
+1) Load the caterpillar dataset
+
+```{r echo = TRUE}
+data("caterpillar")
+```
+
+2) Calculate the difference between the untreated and treated values
+
+```{r echo = TRUE}
+caterpillar$diff <- caterpillar$untreated - caterpillar$treated
+
+mean(caterpillar$diff)
+```
+
+Is the mean different from zero?
+
+```{r echo = TRUE, fig.height = 5, fig.width=5, fig.density=3, fig.align='center'}
+ggplot(data = caterpillar, aes(y = diff)) + 
+  geom_boxplot() +
+  geom_hline(yintercept = 0, linetype = "dashed")
+```
+
+  
+
+3) Calculate the standard deviation of the differences
+
+$$\large s_d = \sqrt{\frac{1}{n-1}\sum_{i=1}^n(y_i - \bar{y})^2}$$
+
+4) Calculate the test statistic
+
+$$\large t = \frac{\bar{y}-0}{s_d/\sqrt{n}}$$
+
+5) Compare to appropriate critical value and draw a conclusion
+
+### Formulation as a t-test using the built in R function
+
+6) Use the `t.test()` function in R to perform the test
+
+```{r}
+t.test(caterpillar$diff, mu= 0, alternative= 'greater')
+```
+
+
+# Excercise (**not for a grade!**)
+
+This dataset comes from fisheries landings data for Yellowfin tuna (*Thunnus albacares*). The weight in pounds was recorded for each fish as well as presence of the larval form of a Lacistorhynchidae tapeworm (*Dasyrhynchus talismani*). The researcher believes that the presence of the tapeworm likely results in a less healthy and therefore lighter fish.
+
+Create an R Markdown file to do the following:
+
+```{r include= F}
+#growth_infected <- round(rnorm(25, 400, 102) ,1)
+#growth_healthy <- round(rnorm(25, 320, 107), 1)
+#hist(growth_infected)
+#hist(growth_healthy)
+#t.test(growth_infected, growth_healthy)
+
+#status <- rep(c('infected', 'healthy'), each= 25)
+#growth <- as.vector(cbind(c(growth_healthy, growth_infected)))
+#tunadata <- as.data.frame(cbind(growth, status))
+#tunadata$growth <- as.numeric(tunadata$growth)
+#tunadata$status <- as.factor(tunadata$status)
+#Random_rows_1<-sample(nrow(tunadata))
+#Random_rows_1
+#tunadata <- tunadata[Random_rows_1,]
+#write.csv(tunadata, 'tunadata.csv', row.names= F)
+#data(tunahdata)
+```
+
+1) Create an `R` chunk to load the tuna data using:
+
+```{r include= F}
+data("tunadata")
+tunadata$status <- as.factor(tunadata$status)
+```
+
+```{r eval = FALSE}
+library(FANR6750)
+data("tunadata")
+```
+
+2) Make a figure to show the weights of both infected and healthy tuna. You should spend some time considering what type of figure would best display this data.
+
+3) Create a header called "Hypotheses" and under this header, in plain English indicate what the null and alternative hypotheses are for the t-test. Also use R Markdown's equation features to write these hypotheses using mathematical notation. In order to do this, you will need to consider what type of test would be appropriate for this data and how many tails the test will have.
+
+4) Create a header called "t-test by hand". Under this header, do a t-test on the tuna data without using the `t.test()` function. Use only the functions `mean`, `sd`, and possibly `length`. Be sure to **annotate your code** (either within the `R` chunk using `#` or as plain text within the R Markdown file) and **state the decision** (reject or fail to reject the null) based on your results. 
+
+5) Create a header called "t-test in R". Under this header, do the t-test again, but this time using the `t.test` function.
+
+    - Assume variances are equal  
+
+6) Add a section at the end of your file called "Discussion" and explain why you think the t-test failed to reject the null hypothesis even though the sample means were ~60 pounds different (almost a 20% difference in weight). What about the data may have caused this result?
+
+A few things to remember when creating the document:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Be sure to set `echo = TRUE` in all `R` chunks so that all code and output is visible in the knitted document
+
+- Regularly knit the document as you work to check for errors
+
+- See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+

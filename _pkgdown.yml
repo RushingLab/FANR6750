@@ -32,15 +32,33 @@ navbar:
           href: articles/lectures/04_t-test/04_t-test.html
         - text: "Lecture 5: Null hypothesis significance testings"
           href: articles/lectures/05_nht/05_nht.html
-        - text: "Lecture 6: Linear models part 2: categorical predictor > 2 levels"
-          href: articles/lectures/06_anova/06_anova.html
+        - text: "Lecture 6: Statistical power"
+          href: articles/lectures/06_power/06_power.html
+        - text: "Lecture 7: Linear models part 2: categorical predictor > 2 levels"
+          href: articles/lectures/07_anova/07_anova.html
+        - text: "Lecture 8: Multiple Comparisons"
+          href: articles/lectures/08_mult_comp/08_mult_comp.html
+        - text: "Lecture 9: Multiple Regression"
+          href: articles/lectures/09_regression/09_regression.html
+        - text: "Lecture 10: Interactions"
+          href: articles/lectures/10_interactions/10_interactions.html
+        - text: "Lecture 11: Evaluating assumptions"
+          href: articles/lectures/11_assumptions/11_assumptions.html
+        - text: "Lecture 12: Model selection"
+          href: articles/lectures/12_model_selection/12_model_selection.html
     - text: "Labs"
       icon: fas fa-desktop
       menu:
         - text: "Lab 1: Introduction to R"
-          href: articles/lab01_Intro_to_R.html
+          href: articles/lab01_intro_to_R.html
+        - text: "Lab 2: Introduction to projects and RMarkdown"
+          href: articles/lab02_intro_project_RMD.html
         - text: "Lab 3: Linear models"
           href: articles/lab03_linear_models.html
+        - text: "Lab 4: t-tests"
+          href: articles/lab04_t-tests.html
+        - text: "Lab 5: ANOVA"
+          href: articles/lab05_anova.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:

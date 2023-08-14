@@ -1,0 +1,614 @@
+---
+title: "LECTURE 9: multiple regression"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2023"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, fig.retina = 2)
+source(here::here("R/zzz.R"))
+library(emo)
+library(FANR6750)
+library(dplyr)
+library(kableExtra)
+# library(gganimate)
+```
+
+class: inverse
+
+# outline
+
+#### 1) Model structure
+
+<br/>  
+--
+
+#### 2) Factor + continuous predictor (ANCOVA)
+
+<br/> 
+--
+
+#### 3) Two factors (blocking design)
+
+<br/> 
+
+--
+
+#### 4) Two continuous predictors
+
+<br/> 
+
+--
+
+#### 5) Centering predictors
+
+---
+# review
+
+$$\large y_i = \beta_0 + \beta_1 \times X_i + \epsilon_i$$
+$$\large \epsilon_i \sim normal(0, \sigma)$$
+So far, we have learned about linear models that contain only a single predictor variable $X$:
+
+1) Single continuous variable = "simple" regression (lecture 2)
+
+2) Single categorical predictor w/ one level = one-sample *t*-test (lecture 4)
+
+3) Single categorical predictor w/ two levels = two-sample *t*-test (lecture 4)
+
+4) Single categorical predictor w/ > 2 levels = ANOVA (lecture 7)
+
+--
+
+More often than not, your models will need to contain more than one predictor
+
+---
+# multiple regression
+
+Models with more than one predictor go by many names (blocking, ANCOVA, factorial, etc) but are all forms of *multiple regression* of the form:
+
+$$\Large y_i = \beta_0 + \beta_1 \times X1_i + \beta_2 \times X2_i + \epsilon_i$$
+$$\Large \epsilon_i \sim normal(0, \sigma)$$
+
+\*Note that this model only contains two predictors but multiple regression models often contain many predictors 
+
+--
+
+Interpretation of the intercept $\beta_0$, residual error $\epsilon_i$, and residual variance $\sigma$ remains the same as before
+
+--
+
+Interpretation of the slope coefficients $\beta_1$, $\beta_2$, etc. changes *slightly*
+
+--
+
+- Slopes are the expected change in the response variable $y_i$ for a unit change in the corresponding predictor variable *while holding all other predictors constant*
+
+--
+
+- This is a subtle difference but an important one
+
+
+---
+# example
+
+One of the most common reasons for using multiple regression models is to control for extraneous sources of variation (i.e., sources of variation that influence the response variable but are not of interest in and of themselves)
+
+--
+
+Why would we want to control for extraneous variation? 
+
+--
+
+Perhaps we are raising desert tortoises (*Gopherus agassizii*) for release into the wild and are interested in whether different diets influence their weight gain
+
+.pull-left[
+```{r out.width="80%", out.height="80%"}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/d/dc/Desert_Tortoise_%28Gopherus_agassizii%292.jpg")
+```
+]
+
+.pull-right[
+```{r fig.width=5, fig.height=3.75}
+data(dietdata)
+ggplot(dietdata) +
+  geom_boxplot(aes(x = diet, y = weight)) +
+  scale_x_discrete("Diet") +
+  scale_y_continuous("Weight (g)")
+```
+]
+
+---
+# example
+
+A tortoises final weight, however, is not influenced only by diet. For example, it may also be influenced by it's starting body size
+
+```{r fig.width=5, fig.height=3.75}
+ggplot(dietdata) +
+  geom_point(aes(x = length, y = weight)) +
+  scale_x_continuous("Initial length (mm)") +
+  scale_y_continuous("Weight (g)")
+```
+
+--
+
+As we will see, accurately measuring the effect of diet requires taking into account each individual's initial body size. Multiple regression allows us to do this
+
+---
+# anova
+
+Let's start by fitting a model we've already learned about:
+
+--
+
+.vsmall-code[
+
+```{r echo = TRUE}
+fit.lm <- lm(weight ~ diet, data = dietdata)
+summary(fit.lm)
+```
+
+]
+
+--
+
+Conclusions?
+
+---
+# "ancova"
+
+Now let's fit a slightly different model:
+
+--
+
+.vsmall-code[
+
+```{r echo = TRUE}
+fit.lm2 <- lm(weight ~ diet + length, data = dietdata)
+summary(fit.lm2)
+```
+
+]
+
+
+--
+What changed?
+
+---
+# signal vs. noise
+
+$$\large y_i = \beta_0 + \beta_1 X1_i + \beta_2 X2_i + \epsilon_i$$
+
+In any statistical test, our goal is to detect a signal ( $\beta$ ) in the presence of noise (residual variation $\epsilon$)
+
+--
+
+Our ability to do that depends on the strength of the signal (usually beyond our control) and the amount of noise (partially within our control)
+
+--
+
+- In the first model, where was all the variation in weight caused by variation in length?
+
+- We can see this clearly by looking at the ANOVA tables for the two models
+
+---
+# anova tables
+
+.small-code[
+```{r echo = TRUE}
+anova(fit.lm)
+```
+
+```{r echo = TRUE}
+anova(fit.lm2)
+```
+]
+
+--
+
+Note the residual sum of squares and mean square error of the two models 
+
+---
+class:inverse
+# sums of squares
+
+When calculating the sums of squares for multiple regression models, the order that we write the model matters
+
+--
+
+We wrote the model formula with diet first and length second (`weight ~ diet + length`). `R` calculates the sums of squares for diet first, then length 
+
+- Notice that the diet SS in the two previous tables are the same
+
+- This is called the Type I sums of squares
+
+--
+
+If we wrote `weight ~ length + diet`, `R` calculates the length SS first, then the diet SS
+
+- The diet SS tells us how much variation is explained by the treatment variable **after** accounting for the covariate
+
+- This is called the Type III sums of squares
+
+- In experimental settings, Type III is generally preferred
+
+
+---
+class:inverse
+# sums of squares
+
+.small-code[
+
+```{r echo = TRUE}
+anova(fit.lm2)
+```
+
+```{r echo = TRUE}
+fit.lm3 <- lm(weight ~ length + diet, data = dietdata)
+anova(fit.lm3)
+```
+]
+
+---
+# another example
+
+We are interested in comparing the alternative gypsy moth control strategies (Bt, Dimilin, no spray) in their effectiveness in controlling gypsy moth. Because sprayed areas are large, and
+different treatments are applied on different ridges, extraneous variability due to location is expected. Data are the average number of moths captured in pheromone traps placed in the plots.
+
+```{r}
+gm <- data.frame(Region = 1:4,
+                  Control = c(25, 10, 15, 32),
+                  Bt = c(16, 3, 10, 18),
+                  Dimilin = c(14, 2, 16, 12))
+
+gm %>%
+  kable(format = 'html', col.names = c(" ",  "Control","Bt", "Dimilin")) %>%
+  add_header_above(c("Region" = 1, "Treatment" = 3)) %>%
+  kable_styling(full_width = FALSE, bootstrap_options = "condensed", font_size = 10)
+```
+
+--
+
+What are the experimental units? What are the observational units?
+
+---
+# another example
+
+Fit the model with treatment only:
+
+```{r echo = TRUE}
+data(mothdata)
+fm1 <- lm(Larvae ~ Treatment, data = mothdata)
+anova(fm1)
+```
+
+Conclusions?
+
+
+---
+# another example
+
+Because the ridges differ in a variety of ways that may influence moth abundance, we probably want to control for this variability in our analysis
+
+We do that by adding it to the model:
+
+.small-code[
+```{r echo = TRUE}
+data(mothdata)
+fm2 <- lm(Larvae ~ Treatment + Region, data = mothdata)
+anova(fm2)
+```
+]
+
+Conclusions?
+
+---
+# another example
+
+Note that in this case, each treatment is applied exactly once within each region
+
+--
+
+Region itself is not a experimental treatment and is not replicated
+
+--
+
+This design is often referred to as a "randomized complete blocking" design (RCBD)
+
+- The regions are called "blocks" and should be identified as a source of variability **before** the experiment is conducted
+
+- "Complete" refers to each treatment being represented in each block
+
+- "Randomized" means that treatments are assigned randomly to each experimental unit
+
+--
+
+Again, blocks must be identified during the design phase. You should not "search" for blocks after the fact (why?)
+---
+# multiple regression
+
+As these examples show, one reason to use a multiple regression model is to increase power to detect treatment effects
+
+- Remember that $F = MS_{treatment}/MS_{error}$ 
+
+- By explaining some of the residual variation, including predictors in the model reduces $MS_{errer}$ and thereby increases $F$
+
+--
+
+When one predictor is a factor and the other(s) is continuous (as in this example), this model is often referred to as an *ANCOVA* (**An**alysis of **Cova**riance)
+
+--
+
+In experimental setting, ANCOVA is often used when there is an extraneous source of information that we cannot control during the design phase
+
+- the continuous predictor is often not of interest, it is only included to increase power (similar to blocks)
+
+--
+
+In observational settings, the same model may be used but we often have have interest in both predictors
+
+
+---
+# interpreting model output
+
+If we are only interested in the treatment effect and not the blocks/continuous predictor, the ANOVA table (possibly in combination with multiple comparisons) is often sufficient for interpreting the model
+
+--
+
+However, if we are interested in the effects of both predictors, it helps to understand the model structure and parameter interpretation in more detail 
+
+--
+
+- Understanding how multiple regression models are structured will also help when you need to include different combinations of factors and continuous predictors
+
+--
+
+Luckily, you already have the tools exploring these models in detail...
+
+---
+# interpreting the ancova model
+
+.small-code[
+```{r echo = TRUE}
+broom::tidy(fit.lm2)
+```
+]
+
+--
+
+- `Intercept` = predicted weight of control group **when length = 0**
+
+--
+
+- `dietLow` = difference between control and low diet
+
+--
+
+- `dietMed` = difference between control and medium diet
+
+--
+
+- `dietHigh` = difference between control and high diet
+
+--
+
+- `length` = predicted increase in weight for one unit increase in length
+
+---
+# interpreting the ancova model
+
+```{r fig.height=5, fig.width=7}
+ancova <- lm(weight ~ diet + length - 1, data = dietdata)
+
+ancova_df <- data.frame(diet = factor(unique(dietdata$diet), 
+                                      levels = c("Control", "Low", "Med", "High")),
+                        slope = coef(ancova)[5],
+                        intercept = coef(ancova)[1:4])
+ggplot(dietdata, aes(x = length, y = weight, color = diet)) +
+  geom_point() +
+  scale_x_continuous("Length", limits = c(0, 20)) +
+  scale_y_continuous("Weight") +
+  geom_abline(data = ancova_df, aes(slope = slope, intercept = intercept, color = diet)) +
+  geom_vline(xintercept = 0) +
+  geom_segment(aes(x = 1.5, xend = 0, y = 18.5, yend = 19.14), 
+               alpha = 0.5, linewidth = 0.2, color = "#446E9B") +
+  annotate("text", label = "(Intercept)", x = 1.6, y = 18.5, hjust = 0, color = "#446E9B") +
+  geom_segment(aes(x = 1, xend = 1, y = 19.7, yend = 21.07),
+               arrow = arrow(length = unit(0.02, "npc"), ends = "both"), color = "#D47500") +
+  geom_segment(aes(x = 2.2, xend = 1, y = 19.3, yend = 20.5),
+               color = "#D47500", alpha = 0.5, linewidth = 0.2) +
+  annotate("text", label = "dietLow", x = 2.3, y = 19.3, hjust = 0, color = "#D47500") +
+  geom_segment(aes(x = 2, xend = 2, y = 20.25, yend = 22.78),
+               arrow = arrow(length = unit(0.02, "npc"), ends = "both"), color = "#3CB521") +
+  geom_segment(aes(x = 3.2, xend = 2, y = 19.95, yend = 21),
+               color = "#3CB521", alpha = 0.5, linewidth = 0.2) +
+  annotate("text", label = "dietMed", x = 3.3, y = 19.95, hjust = 0, color = "#3CB521") +
+  geom_segment(aes(x = 3, xend = 3, y = 20.81, yend = 23.9),
+               arrow = arrow(length = unit(0.02, "npc"), ends = "both"), color = "#CD0200") +
+  geom_segment(aes(x = 4.3, xend = 3, y = 20.61, yend = 22),
+               color = "#CD0200", alpha = 0.5, linewidth = 0.2) +
+  annotate("text", label = "dietHigh", x = 4.4, y = 20.61, hjust = 0, color = "#CD0200") 
+```
+
+--
+
+#### Question: does the effect of length depend on diet treatment?
+
+--
+
+#### Answer: No. The model assumes the effect of length is the same for every treatment
+
+
+---
+# interpreting the rcbd model
+
+.vsmall-code[
+```{r echo = TRUE}
+summary(fm2)
+```
+]
+
+--
+
+This scenario (two factors) is a little more tricky. But, as before, we'll use the design matrix to help understand what each parameter means
+
+---
+# interpreting the rcbd model
+
+.small-code[
+```{r echo = TRUE}
+model.matrix(fm2)
+```
+]
+
+---
+# interpreting the rcbd model
+
+- `Intercept` = predicted number of larvae of control treatment in region 1
+
+--
+
+- `TreatmentBt` = difference between control and Bt treatments
+
+--
+
+- `TreatmentDimilin` = difference between control and dimilin treatments
+
+--
+
+- `Region2` = difference region 1 and region 2
+
+--
+
+- `Region 3` = difference region 1 and region 3
+
+--
+
+- `Region 4` = difference region 1 and region 4
+
+--
+
+Again, because there is no interaction between `Treatment` and `Region`, the model assumes that the effects of pesticide treatments are the same in every region (and that the regional differences are the same for every treatment level)
+
+---
+# one more example 
+
+We have looked at multiple regression examples with two factors and with one factor and one continuous covariate, but what about multiple continuous covariates?
+
+--
+
+The `biomassdata` object contains (made up) biomass measurements (kg) as a function of rainfall (mm) and elevation (km)
+
+```{r echo = TRUE}
+data("biomassdata")
+head(biomassdata)
+```
+
+---
+# multiple regression model
+
+
+.vsmall-code[
+```{r echo = TRUE}
+fit.lm <- lm(biomass ~ rainfall + elevation, data = biomassdata)
+broom::tidy(fit.lm)
+```
+]
+
+- `Intercept` = predicted biomass when rainfall = 0 and elevation = 0
+
+--
+
+- `rainfall` = predicted change in biomass for 1mm increase in rainfall while holding elevation constant
+
+--
+
+- `elevation` = predicted change in biomass for 1km increase in elevation while holding rainfall constant
+
+---
+# centering and standardizing data
+
+When fitting models to continuous covariates, it is common to center or standardize covariates. 
+
+--
+
+Centering is done by subtracting the mean
+
+.small-code[
+```{r echo = TRUE}
+biomassdata$elevation.c <- biomassdata$elevation - mean(biomassdata$elevation)
+biomassdata$rainfall.c <- biomassdata$rainfall - mean(biomassdata$rainfall)
+```
+]
+
+--
+
+When interpreting centered data:
+
+- positive values indicate observations larger than the mean
+
+- negative values indicate observation smaller than the mean
+
+- units don't change
+
+---
+# multiple regression model
+
+
+.vsmall-code[
+```{r echo = TRUE}
+fit.lm <- lm(biomass ~ rainfall.c + elevation.c, data = biomassdata)
+broom::tidy(fit.lm)
+```
+]
+
+- `Intercept` = predicted biomass when rainfall and elevation are **at their mean**
+
+--
+
+- `rainfall` = predicted change in biomass for 1mm increase in rainfall while holding elevation constant
+
+--
+
+- `elevation` = predicted change in biomass for 1km increase in elevation while holding rainfall constant
+
+
+---
+# multiple regression model
+
+```{r fig.height=6, fig.width=8}
+fit.lm <- lm(biomass ~ rainfall + elevation, data = biomassdata)
+
+newdat.r <- data.frame(rainfall = seq(0, 230), elevation = mean(biomassdata$elevation))
+pred.r.df <- data.frame(rainfall = newdat.r$rainfall,
+                        biomass = predict(fit.lm, newdat.r))
+
+ggplot(biomassdata, aes(x = rainfall, y = biomass)) +
+  geom_point() +
+  geom_vline(xintercept = c(0, mean(biomassdata$rainfall)), 
+             linetype = "dashed", 
+             color = "grey40") +
+  geom_line(data = pred.r.df) +
+  scale_x_continuous(breaks = c(0, mean(biomassdata$rainfall))) +
+  scale_y_continuous(limits = c(0, 325))
+```
+
+---
+# looking ahead
+
+<br/>
+
+### **Next time**: Interactions
+
+<br/>
+
+### **Reading**: [Fieberg chp. 3.8](https://statistics4ecologists-v1.netlify.app/matrixreg#models-with-interactions)
+

@@ -83,13 +83,31 @@
       <a href="../articles/lectures/03_inference/03_inference.html">Lecture 3: Principles of inference</a>
     </li>
     <li>
-      <a href="../articles/lectures/04_t-tests/04_t-tests.html">Lecture 4: Linear models part 1: categorical predictor w/ 2 levels</a>
+      <a href="../articles/lectures/04_t-test/04_t-test.html">Lecture 4: Linear models part 1: categorical predictor w/ 2 levels</a>
     </li>
     <li>
       <a href="../articles/lectures/05_nht/05_nht.html">Lecture 5: Null hypothesis significance testings</a>
     </li>
     <li>
-      <a href="../articles/lectures/06_anova/06_anova.html">Lecture 6: Linear models part 2: categorical predictor &gt; 2 levels</a>
+      <a href="../articles/lectures/06_power/06_power.html">Lecture 6: Statistical power</a>
+    </li>
+    <li>
+      <a href="../articles/lectures/07_anova/07_anova.html">Lecture 7: Linear models part 2: categorical predictor &gt; 2 levels</a>
+    </li>
+    <li>
+      <a href="../articles/lectures/08_mult_comp/08_mult_comp.html">Lecture 8: Multiple Comparisons</a>
+    </li>
+    <li>
+      <a href="../articles/lectures/09_regression/09_regression.html">Lecture 9: Multiple Regression</a>
+    </li>
+    <li>
+      <a href="../articles/lectures/10_interactions/10_interactions.html">Lecture 10: Interactions</a>
+    </li>
+    <li>
+      <a href="../articles/lectures/11_assumptions/11_assumptions.html">Lecture 11: Evaluating assumptions</a>
+    </li>
+    <li>
+      <a href="../articles/lectures/12_model_selection/12_model_selection.html">Lecture 12: Model selection</a>
     </li>
   </ul>
 </li>
@@ -103,10 +121,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/lab01_Intro_to_R.html">Lab 1: Introduction to R</a>
+      <a href="../articles/lab01_intro_to_R.html">Lab 1: Introduction to R</a>
+    </li>
+    <li>
+      <a href="../articles/lab02_intro_project_RMD.html">Lab 2: Introduction to projects and RMarkdown</a>
     </li>
     <li>
       <a href="../articles/lab03_linear_models.html">Lab 3: Linear models</a>
+    </li>
+    <li>
+      <a href="../articles/lab04_t-tests.html">Lab 4: t-tests</a>
+    </li>
+    <li>
+      <a href="../articles/lab05_anova.html">Lab 5: ANOVA</a>
     </li>
   </ul>
 </li>
@@ -174,17 +201,15 @@ necessary.</p>
 </h2>
 <p>Dr. Clark Rushing<br><a href="mailto:clark.rushing@uga.edu" class="email">clark.rushing@uga.edu</a><br>
 Office: Warnell 3-409<br>
-Office hours: By appointment</p>
+Office hours: M 12:30-2:00; Tu 9:00-10:00</p>
 </div>
 <div class="section level2">
 <h2 id="teaching-assistants">TEACHING ASSISTANTS<a class="anchor" aria-label="anchor" href="#teaching-assistants"></a>
 </h2>
 <p>Michael Baker<br><a href="mailto:michael.baker2@uga.edu" class="email">michael.baker2@uga.edu</a><br>
 Office: 1-102A<br>
-Office hours: W 9:30-11:00 or by appointment</p>
-<p>Nancy Raginski<br><a href="mailto:nancy.raginski@uga.edu" class="email">nancy.raginski@uga.edu</a><br>
-Office: 3-402<br>
-Office hours: Th 10-11:30 or by appointment</p>
+Office hours: W 9:00-11:00 or by appointment</p>
+<p>Kaili Gregory <a href="mailto:k.gregory@uga.edu" class="email">k.gregory@uga.edu</a> Office: 3-422 Office hours:</p>
 </div>
 <div class="section level2">
 <h2 id="course-objectives">COURSE OBJECTIVES<a class="anchor" aria-label="anchor" href="#course-objectives"></a>
@@ -326,10 +351,10 @@ class at a time when your field commitments are smaller.</p>
 <div class="section level2">
 <h2 id="grading">GRADING<a class="anchor" aria-label="anchor" href="#grading"></a>
 </h2>
-<p>200 total points.</p>
-<p>Three take-home exams, 50 points (25%) each. Exam dates in the <a href="https://rushinglab.github.io/FANR6750/articles/schedule.html" class="external-link">schedule</a>
+<p>250 total points.</p>
+<p>Three take-home exams, 50 points (20%) each. Exam dates in the <a href="https://rushinglab.github.io/FANR6750/articles/schedule.html" class="external-link">schedule</a>
 are approximate days when the exam will be provided.</p>
-<p>The remaining 50 points (25%) of the grade will come from lab
+<p>The remaining 100 points (40%) of the grade will come from lab
 homework assignments. Homework assignments will build on concepts and
 skills that we cover in lecture and lab. Specific objectives and tasks
 for each assignment, along with any necessary data, will be provided at
@@ -337,7 +362,7 @@ the end of each lab activity. These assignments are meant to ensure that
 you understand lecture and lab concepts, provide additional practice
 implementing relevant statistical methods in <code>R</code>, and provide
 experience interpreting and presenting model output.</p>
-<p>Over the course of semester, there will be <strong>5</strong> of
+<p>Over the course of semester, there will be <strong>10</strong> of
 these assignments worth <strong>10 points each</strong>. Each assignment
 will be due before class the week after the assignment is posted and
 must be prepared as an R Markdown file that include all text, code,
@@ -348,14 +373,8 @@ necessary). You will automatically receive 6 points for turning in a
 completed lab assignment by the assigned due date. Late assignments will
 receive a 1-point deduction for each day late and incomplete assignments
 will have points deducted in proportion to the degree of incompleteness
-(e.g., if 1/3 of the assignment is incomplete, 2-point deduction).</p>
-<p>At the time each assignment is due, we will post an answer key on
-eLC. You will receive 2 points for reviewing your answers and correcting
-any incorrect answers based on the key. You will also receive 2 points
-for completing a self-assessment form describing your performance on the
-assignment and things you had trouble with. Self-assessment forms for
-each assignment will be posted on eLC. To receive full credit,
-corrections and self-assessments must be completed within one week.</p>
+(e.g., if 1/3 of the assignment is incomplete, 2-point deduction). The
+remaining points will be based on the correctness of your answers.</p>
 <p>All academic work must meet the standards contained in the
 University’s academic <a href="https://honesty.uga.edu/" class="external-link">honesty
 policy</a>. All students are responsible for informing themselves about
@@ -391,7 +410,7 @@ A
 93-100%
 </td>
 <td style="text-align:center;">
-186-200
+233-250
 </td>
 </tr>
 <tr>
@@ -402,7 +421,7 @@ A-
 90-92.9%
 </td>
 <td style="text-align:center;">
-180-185
+225-232.5
 </td>
 </tr>
 <tr>
@@ -413,7 +432,7 @@ B+
 87-89.9%
 </td>
 <td style="text-align:center;">
-174-179
+217.5-232.5
 </td>
 </tr>
 <tr>
@@ -424,7 +443,7 @@ B
 83-86.9%
 </td>
 <td style="text-align:center;">
-166-173
+207.5-217.5
 </td>
 </tr>
 <tr>
@@ -435,7 +454,7 @@ B-
 80-82.9%
 </td>
 <td style="text-align:center;">
-160-165
+200-207.5
 </td>
 </tr>
 <tr>
@@ -446,7 +465,7 @@ C+
 77-79.9%
 </td>
 <td style="text-align:center;">
-154-159
+192.5-200
 </td>
 </tr>
 <tr>
@@ -457,7 +476,7 @@ C
 73-76.9%
 </td>
 <td style="text-align:center;">
-146-153
+182.5-192.5
 </td>
 </tr>
 <tr>
@@ -468,7 +487,7 @@ C-
 70-72.9%
 </td>
 <td style="text-align:center;">
-140-145
+175-182.5
 </td>
 </tr>
 <tr>
@@ -479,7 +498,7 @@ D+
 67-69.9%
 </td>
 <td style="text-align:center;">
-134-139
+167.5-175
 </td>
 </tr>
 <tr>
@@ -490,7 +509,7 @@ D
 60-66.9%
 </td>
 <td style="text-align:center;">
-126-133
+150-167.5
 </td>
 </tr>
 <tr>
@@ -501,7 +520,7 @@ F
 59.9% and below
 </td>
 <td style="text-align:center;">
-0-125
+0-150
 </td>
 </tr>
 </tbody>
@@ -588,7 +607,7 @@ types of electronic media. For details, please visit <a href="https://apps.reg.u
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

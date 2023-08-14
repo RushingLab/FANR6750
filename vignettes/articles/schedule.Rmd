@@ -131,14 +131,14 @@ schedule %>%
     + p-values
     + power (intuition)
 
-6) Categorical predictor > 2 levels
+6) Power
+
+7) Categorical predictor > 2 levels
     + linear model
     + formulated as ANOVA
 
-7) Multiple comparisons
+8) Multiple comparisons
    + contrasts/pre-planned hypotheses
-
-8) Causal inference 
 
 9) Multiple regression
    + continuous + categorical
@@ -164,3 +164,9 @@ schedule %>%
 17) GLM: Poisson regression
 
 18) GLM: Zero-inflated data
+
+#### Things I need to add
+- Type I vs Type III SS
+- correlation (vs lm)
+- sum to zero constraint
+- 

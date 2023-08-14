@@ -440,7 +440,7 @@ $$\Large \epsilon_i \sim normal(0, \sigma)$$
 
 --
 
-3) **Homoscedasticity**: The residuals have a constant variance at every level of $x$
+3) **Homogeneity**: The residuals have a constant variance at every level of $x$
 
 --
 

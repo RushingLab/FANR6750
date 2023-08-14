@@ -22,7 +22,12 @@ Imports:
     broom,
     sf,
     rmarkdown,
-    knitr
+    knitr,
+    performance,
+    see,
+    patchwork,
+    tseries,
+    ggfortify
 VignetteBuilder: knitr
 Depends: 
     R (>= 4.0)

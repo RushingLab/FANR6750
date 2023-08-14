@@ -32,18 +32,18 @@ knitr::opts_chunk$set(
 Dr. Clark Rushing  
 clark.rushing@uga.edu  
 Office: Warnell 3-409   
-Office hours: By appointment
+Office hours: M 12:30-2:00; Tu 9:00-10:00
 
 # TEACHING ASSISTANTS
 Michael Baker  
 michael.baker2@uga.edu  
 Office: 1-102A  
-Office hours: W 9:30-11:00 or by appointment  
+Office hours: W 9:00-11:00 or by appointment  
   
-Nancy Raginski  
-nancy.raginski@uga.edu  
-Office: 3-402  
-Office hours: Th 10-11:30 or by appointment  
+Kaili Gregory
+k.gregory@uga.edu
+Office: 3-422
+Office hours:   
 
 
 # COURSE OBJECTIVES
@@ -111,15 +111,13 @@ I realize that many students have field work obligations during the semester. If
 
 # GRADING
 
-200 total points.  
+250 total points.  
 
-Three take-home exams, 50 points (25%) each. Exam dates in the [schedule](https://rushinglab.github.io/FANR6750/articles/schedule.html) are approximate days when the exam will be provided. 
+Three take-home exams, 50 points (20%) each. Exam dates in the [schedule](https://rushinglab.github.io/FANR6750/articles/schedule.html) are approximate days when the exam will be provided. 
 
-The remaining 50 points (25%) of the grade will come from lab homework assignments. Homework assignments will build on concepts and skills that we cover in lecture and lab. Specific objectives and tasks for each assignment, along with any necessary data, will be provided at the end of each lab activity. These assignments are meant to ensure that you understand lecture and lab concepts, provide additional practice implementing relevant statistical methods in `R`, and provide experience interpreting and presenting model output. 
+The remaining 100 points (40%) of the grade will come from lab homework assignments. Homework assignments will build on concepts and skills that we cover in lecture and lab. Specific objectives and tasks for each assignment, along with any necessary data, will be provided at the end of each lab activity. These assignments are meant to ensure that you understand lecture and lab concepts, provide additional practice implementing relevant statistical methods in `R`, and provide experience interpreting and presenting model output. 
 
-Over the course of semester, there will be **5** of these assignments worth **10 points each**. Each assignment will be due before class the week after the assignment is posted and must be prepared as an R Markdown file that include all text, code, model output, and figures necessary to fully document your work and conclusions (we will spend the first several labs going over preparation of reports using R Markdown so, again, no previous experience is necessary). You will automatically receive 6 points for turning in a completed lab assignment by the assigned due date. Late assignments will receive a 1-point deduction for each day late and incomplete assignments will have points deducted in proportion to the degree of incompleteness (e.g., if 1/3 of the assignment is incomplete, 2-point deduction). 
-
-At the time each assignment is due, we will post an answer key on eLC. You will receive 2 points for reviewing your answers and correcting any incorrect answers based on the key. You will also receive 2 points for completing a self-assessment form describing your performance on the assignment and things you had trouble with. Self-assessment forms for each assignment will be posted on eLC. To receive full credit, corrections and self-assessments must be completed within one week.  
+Over the course of semester, there will be **10** of these assignments worth **10 points each**. Each assignment will be due before class the week after the assignment is posted and must be prepared as an R Markdown file that include all text, code, model output, and figures necessary to fully document your work and conclusions (we will spend the first several labs going over preparation of reports using R Markdown so, again, no previous experience is necessary). You will automatically receive 6 points for turning in a completed lab assignment by the assigned due date. Late assignments will receive a 1-point deduction for each day late and incomplete assignments will have points deducted in proportion to the degree of incompleteness (e.g., if 1/3 of the assignment is incomplete, 2-point deduction). The remaining points will be based on the correctness of your answers. 
 
 All academic work must meet the standards contained in the University's academic [honesty policy](https://honesty.uga.edu/). All students are responsible for informing themselves about those standards before performing any academic work. The penalties for academic dishonesty are [severe](https://honesty.uga.edu/Academic-Honesty-Policy/Consequences_for_Honesty_Violations/), and ignorance is not an acceptable defense.  
 
@@ -134,10 +132,10 @@ grades <- data.frame(Grade = c("A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D+"
                                    "87-89.9%", "83-86.9%", "80-82.9%", 
                                    "77-79.9%", "73-76.9%", "70-72.9%",
                                    "67-69.9%", "60-66.9%", "59.9% and below"),
-                       Points = c("186-200", "180-185", 
-                                   "174-179", "166-173", "160-165", 
-                                   "154-159", "146-153", "140-145",
-                                   "134-139", "126-133", "0-125"))
+                       Points = c("233-250", "225-232.5", 
+                                   "217.5-232.5", "207.5-217.5", "200-207.5", 
+                                   "192.5-200", "182.5-192.5", "175-182.5",
+                                   "167.5-175", "150-167.5", "0-150"))
 
 grades %>%
   kable("html", col.names = c("GRADE", "% RANGE", "POINT RANGE"), align = 'c') %>%
