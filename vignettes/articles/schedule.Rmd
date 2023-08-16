@@ -49,124 +49,59 @@ schedule <- data.frame(WK = c("1", "", "",
       "Principles of statiscal inference", "Linear models for simple categorical predictors (aka t-test)", "Linear models for simple categorical predictors (aka t-test)", "", #3
       "Labor Day", "Linear models for simple categorical predictors (aka t-test)", "Null hypothesis testing", "", # 4
        "Null hypothesis testing", "Linear models for categorical predictor w/ >2 levels (aka ANOVA)", "Paper discussion: hypothesis testing", "", #5
-       "Linear models for categorical predictor w/ >2 levels (aka ANOVA)", "Linear regression", "Linear regression", "", #6
-      "Multiple regression", "Interactions", "buffer", "", #7
-       "Diagnosing goodness-of-fit",  "Diagnosing goodness-of-fit", "Model selection",  "", #8 
-             "Model selection", "Model selection", "Paper discussion: model selection",  "", #9
-      "Random effects", "Nested designs", "Paper discussion: Pseudoreplication", "", # 10
+       "Linear models for categorical predictor w/ >2 levels (aka ANOVA)", "Multiple comparisons", "Exam 1 review", "", #6
+      "Multiple regression", "Multiple regression", "Paper discussion: multicollinearity", "", #7
+       "Interactions",  "Interactions", "Evaluating assumptions",  "", #8 
+             "Evaluating assumptions", "Model selection", "Paper discussion: model selection",  "", #9
+      "Random effects", "Nested designs", "Exam 2 review", "", # 10
           "Split-plot designs", "Split-plot designs", "Fall break", "", #11
-      "Repeated measures", "Repeated measures", "Buffer", "",
-         "Regression review", "Analysis of covariance", "Analysis of covariance", "", #13
-          "Generalized linear models", "GLM: Logistic regression", "GLM: Logistic regression", "", #14
+      "Repeated measures", "Repeated measures", "Paper discussion: Pseudoreplication", "",
+         "Generalized linear models", "GLM: Logistic regression", "GLM: Logistic regression", "", #13
+          "GLM: Poisson regression", "GLM: Poisson regression", "Buffer", "", #14
           "Thanksgiving break", "", "", "", #15
-           "GLM: Poisson regression", "GLM: Poisson regression", "GLM: Zero-inflated data",  "", #16
+           "GLM: Zero-inflated data", "GLM: Zero-inflated data", "Exam 3 review",  "", #16
                                    "TBD"),
                        Lab = c("", "", "",
                                "Introduction to R", "", "", "",
                                "Introduction to RMarkdown", "", "", "",
                                "No lab", "", "", "",
-                               "R graphics and t-tests", "", "", "",
-                               "ANOVA*", "", "", "",
-                               "Contrasts and power", "", "", "",
-                               "Transformations and nonparametrics*", "", "", "",
-                               "Blocking", "", "", "",
-                                "Factorial designs", "", "", "",
-                               "Nested designs*", "", "", "",
+                               "Linear models", "", "", "",
+                               "t-tests", "", "", "",
+                               "ANOVA", "", "", "",
+                               "Multiple regression", "", "", "",
+                               "Evaluating assumptions", "", "", "",
+                                "Model selection", "", "", "",
+                               "Nested designs", "", "", "",
                                "Split-plot designs", "", "", "",
                                "Repeated measures*", "", "", "",
-                               "ANCOVA", "", "", "",
-                               "Linear models*", "", "", "",
-                               "GLMs", "", "", "",
+                               "Logistic regression", "", "", "",
+                               "Poisson regression", "", "", "",
+                               "TBD", "", "", "",
                                # "Model selection", "", "", "",
                                "No lab"),
-                       Reading = c("", "Chp. 1", "",
-                               "Chp. 2.1-2.3", "", "Chp. 5.2-5.3", "",
-                               "", "Chp. 3.1;", "", "",
-                               "", "Chp. 8.1-8.4", "", "",
-                               "Chp. 8.6", "", "Johnson 1999", "",
-                               "Chp. 7.3", "", "", "",
-                               "**Exam 1 distributed**", "Chp. 8.5", "", "",
-                               "Chp. 8.2; **Exam 1 due**", "Chp. 10.1-10.2", "", "",
-                               "Chp. 9.2", "", "Colegrave & Ruxton 2018", "",
-                               "", "Chp. 9.1", "", "",
-                               "Chp. 11.1-11.3", "", "", "",
-                               "**Exam 2 distributed**", "",  "", "",
-                               "Chp. 6; **Exam 2 due**", "Chp. 12", "", "",
-                               "Chp. 13", "", "", "",
+                       Notes = c("", "", "",
                                "", "", "", "",
-                               "**Exam 3 distributed**", "", "Tredennick et al. 2021", "",
+                               "", "", "", "",
+                               "", "", "", "",
+                               "", "", "Johnson 1999", "",
+                               "", "", "", "",
+                               "**Exam 1 distributed**", "", "", "",
+                               "**Exam 1 due**", "", "", "",
+                               "", "", "Tredennick et al. 2021", "",
+                               "", "", "**Exam 2 distributed**", "",
+                               "", "", "**Exam 2 due**", "",
+                               "", "",  "", "",
+                               "", "", "", "",
+                               "", "", "", "",
+                               "", "", "", "",
+                               "", "", "**Exam 3 distributed**", "",
                                ""))
 
 schedule %>%
-  kable("html", col.names = c("Week", "", "Date", "Lecture topic", "Lab topic", "Reading"), align = 'c') %>%
+  kable("html", col.names = c("Week", "", "Date", "Lecture topic", "Lab topic", "Notes"), align = 'c') %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = TRUE)
 
 ```
 
 \* = Graded assignment
 
-## Tentative lecture topics (aim for 18-20 lectures)
-
-1) Introduction to statistics
-    + goals of statistics (exploration, inference, prediction)
-    + populations vs samples
-    + uncertainty
-
-2) Linear regression
-    + model structure: linear predictor + error
-    + parameter interpretation
-    + assumptions
-    
-3) Inference
-    + sampling distribution
-    + standard error
-    + confidence intervals
-
-4) Categorical predictor
-    + matrix notation 
-    + dummy variables
-    + formulated as t-test
-    
-5) Null hypothesis testing
-    + p-values
-    + power (intuition)
-
-6) Power
-
-7) Categorical predictor > 2 levels
-    + linear model
-    + formulated as ANOVA
-
-8) Multiple comparisons
-   + contrasts/pre-planned hypotheses
-
-9) Multiple regression
-   + continuous + categorical
-   + > 1 continuous
-   + > categorical
-   + link to blocking/ANCOVA
-
-10) Interactions
-   + link to factorial design
-
-11) Goodness-of-fit/diagnostics (maybe move earlier)
-
-12) Model selection
-
-13) Random effects/mixed models
-
-14) Nested/split-plot
-
-15) Repeated measures
-
-16) GLM: Logistic regression
-
-17) GLM: Poisson regression
-
-18) GLM: Zero-inflated data
-
-#### Things I need to add
-- Type I vs Type III SS
-- correlation (vs lm)
-- sum to zero constraint
-- 

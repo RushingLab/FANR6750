@@ -281,6 +281,7 @@ Fortunately, linear models are relatively robust to minor (or even moderate) dep
 # what happens when assumptions are violated?
 
 General rules of thumb:
+
 --
 
 - Violating assumptions will not generally bias estimates of `\(\hat{\beta}_0\)`, `\(\hat{\beta}_1\)`, etc.
@@ -295,15 +296,226 @@ General rules of thumb:
 
 --
 
-- 
+- In general, violating assumptions results in standard errors that are too small. What does this do to p-values?
 
+
+---
+class:inverse, center, middle
+
+# multicolinearity
+
+---
+# multicolinearity
+
+One topic that often causes confusion when fitting multiple regression models is *correlated predictors* (aka multicolinearity)
+
+--
+
+Many sources suggest trying to avoid including highly correlated predictors in the same model
+
+- correlation coefficients `\(&gt;0.7\)` are often considered too correlated 
+
+--
+
+However, linear models make no assumptions about correlations between predictor variables. So what is the problem?
+
+---
+# example
+
+We are interested in the factors that govern the evolution of body size of ? and hypothesize that body length will increase with latitude and decrease temperature. Using museum collections, we have body length measurements from 80 individuals collected at sites between 40 and 50 degrees latitude. We also have long-term temperature data from each collection location. 
+
+---
+# example
+
+As expected, body length appears to vary as a function of both latitude and temperature:
+
+&lt;img src="11_assumptions_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+---
+# example
+
+Fitting models to each covariate also appears to confirm our hypotheses:
+
+.vsmall-code[
+
+```r
+data("lengthdata")
+```
+]
+
+.pull-left[
+.vsmall-code[
+
+```r
+fmL &lt;- lm(Length ~ Latitude, data = lengthdata)
+summary(fmL)
+```
+
+```
+## 
+## Call:
+## lm(formula = Length ~ Latitude, data = lengthdata)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -10.239  -4.102  -0.191   4.356  10.431 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  173.879     18.005    9.66  5.8e-15 ***
+## Latitude       1.919      0.396    4.84  6.4e-06 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 5.13 on 78 degrees of freedom
+## Multiple R-squared:  0.231,	Adjusted R-squared:  0.221 
+## F-statistic: 23.4 on 1 and 78 DF,  p-value: 6.45e-06
+```
+]
+]
+
+.pull-right[
+.vsmall-code[
+
+```r
+fmT &lt;- lm(Length ~ Temperature, data = lengthdata)
+summary(fmT)
+```
+
+```
+## 
+## Call:
+## lm(formula = Length ~ Temperature, data = lengthdata)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -10.376  -2.837  -0.423   3.498  12.258 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   308.95       8.10   38.17  &lt; 2e-16 ***
+## Temperature    -2.43       0.41   -5.94  7.5e-08 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4.85 on 78 degrees of freedom
+## Multiple R-squared:  0.312,	Adjusted R-squared:  0.303 
+## F-statistic: 35.3 on 1 and 78 DF,  p-value: 7.47e-08
+```
+]
+]
+
+---
+# example
+
+But when we fit a model with both covariates, our conclusions are quite different:
+
+
+```r
+fmLT &lt;- lm(Length ~ Latitude + Temperature, data = lengthdata)
+summary(fmLT)
+```
+
+```
+## 
+## Call:
+## lm(formula = Length ~ Latitude + Temperature, data = lengthdata)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -10.373  -2.784  -0.423   3.474  12.277 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 314.1379    49.7133    6.32  1.6e-08 ***
+## Latitude     -0.0809     0.7649   -0.11   0.9160    
+## Temperature  -2.5107     0.8353   -3.01   0.0036 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4.88 on 77 degrees of freedom
+## Multiple R-squared:  0.312,	Adjusted R-squared:  0.294 
+## F-statistic: 17.4 on 2 and 77 DF,  p-value: 5.69e-07
+```
+
+---
+# example
+
+What happened? 
+
+--
+
+The first thing to recognize is that latitude and temperature are highly negatively correlated:
+
+
+```r
+cor(lengthdata$Latitude, lengthdata$Temperature)
+```
+
+```
+## [1] -0.8697
+```
+
+&lt;img src="11_assumptions_files/figure-html/unnamed-chunk-19-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+--
+
+So high latitudes tend to have larger individuals *and* lower temperatures
+
+---
+# multicolinearity
+
+At first, the fact that our estimated slope coefficient for Latitude changes signs and our conclusions about significance change between the two models may seem problematic
+
+- the estimated effects and p-values are sensitive to which model we choose
+
+- it may even be tempting to focus on the uni-variate models since they both give us significant results
+
+--
+
+But is there really a problem? Not if we remember the purpose of multiple regression and what the coefficients are measuring
+
+---
+# multicolinearity
+
+The model with only latitude is measuring whether body length changes with latitude. Clearly it does (same for temperature). 
+
+--
+
+But the multiple regression model is measuring the effect of latitude *after controlling for temperature*
+
+- If we hold temperature constant (statistically), does body length change with latitude? Apparently not&lt;sup&gt;\*&lt;/sup&gt;
+
+---
+# multicolinearity
+
+In the presence of highly correlated predictors, multiple regression models do exactly what we want them to do! 
+
+--
+
+Changes in the magnitude/sign/significance in different regression models is expected because the coefficients measure different relationships
+
+--
+
+Larger standard errors are also common but are also expected - multiple regression is a harder problem to solve so, for a given sample size, uncertainty is larger
+
+--
+
+In general, do not automatically exclude correlated predictors just because they are correlated
+
+- If you have an *a priori* reason for including each covariate, include them!
+
+- If parameter estimates are unreliable, you may need to use a more simple model (or gather more data)
+
+
+.footnote[[\*]] In this **made up** data set]
 
 ---
 # looking ahead
 
 &lt;br/&gt;
 
-### **Next time**: Evaluating assumptions
+### **Next time**: Model selection
 
 &lt;br/&gt;
 

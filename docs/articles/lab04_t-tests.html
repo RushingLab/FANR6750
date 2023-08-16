@@ -135,6 +135,9 @@
     <li>
       <a href="../articles/lab05_anova.html">Lab 5: ANOVA</a>
     </li>
+    <li>
+      <a href="../articles/lab06_blocking.html">Lab 6: Multiple Regression</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -793,19 +796,19 @@ follows:</p>
 <li>Load the caterpillar dataset</li>
 </ol>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"caterpillar"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"caterpillardata"</span><span class="op">)</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Calculate the difference between the untreated and treated
 values</li>
 </ol>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">caterpillar</span><span class="op">$</span><span class="va">diff</span> <span class="op">&lt;-</span> <span class="va">caterpillar</span><span class="op">$</span><span class="va">untreated</span> <span class="op">-</span> <span class="va">caterpillar</span><span class="op">$</span><span class="va">treated</span></span>
+<code class="sourceCode R"><span><span class="va">caterpillardata</span><span class="op">$</span><span class="va">diff</span> <span class="op">&lt;-</span> <span class="va">caterpillardata</span><span class="op">$</span><span class="va">untreated</span> <span class="op">-</span> <span class="va">caterpillardata</span><span class="op">$</span><span class="va">treated</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">caterpillar</span><span class="op">$</span><span class="va">diff</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">caterpillardata</span><span class="op">$</span><span class="va">diff</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 1.5</span></span></code></pre></div>
 <p>Is the mean different from zero?</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">caterpillar</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">diff</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">caterpillardata</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">diff</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html" class="external-link">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="st">"dashed"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="lab04_t-tests_files/figure-html/unnamed-chunk-31-1.png" width="480" style="display: block; margin: auto;"></p>
@@ -830,11 +833,11 @@ values</li>
 <li>Use the <code><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test()</a></code> function in R to perform the test</li>
 </ol>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">caterpillar</span><span class="op">$</span><span class="va">diff</span>, mu<span class="op">=</span> <span class="fl">0</span>, alternative<span class="op">=</span> <span class="st">'greater'</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html" class="external-link">t.test</a></span><span class="op">(</span><span class="va">caterpillardata</span><span class="op">$</span><span class="va">diff</span>, mu<span class="op">=</span> <span class="fl">0</span>, alternative<span class="op">=</span> <span class="st">'greater'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;  One Sample t-test</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; data:  caterpillar$diff</span></span>
+<span><span class="co">#&gt; data:  caterpillardata$diff</span></span>
 <span><span class="co">#&gt; t = 2.3238, df = 11, p-value = 0.02015</span></span>
 <span><span class="co">#&gt; alternative hypothesis: true mean is greater than 0</span></span>
 <span><span class="co">#&gt; 95 percent confidence interval:</span></span>

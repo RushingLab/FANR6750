@@ -559,21 +559,21 @@ This will be left as an exercise for you but the general steps are as follows:
 1) Load the caterpillar dataset
 
 ```{r echo = TRUE}
-data("caterpillar")
+data("caterpillardata")
 ```
 
 2) Calculate the difference between the untreated and treated values
 
 ```{r echo = TRUE}
-caterpillar$diff <- caterpillar$untreated - caterpillar$treated
+caterpillardata$diff <- caterpillardata$untreated - caterpillardata$treated
 
-mean(caterpillar$diff)
+mean(caterpillardata$diff)
 ```
 
 Is the mean different from zero?
 
 ```{r echo = TRUE, fig.height = 5, fig.width=5, fig.density=3, fig.align='center'}
-ggplot(data = caterpillar, aes(y = diff)) + 
+ggplot(data = caterpillardata, aes(y = diff)) + 
   geom_boxplot() +
   geom_hline(yintercept = 0, linetype = "dashed")
 ```
@@ -595,7 +595,7 @@ $$\large t = \frac{\bar{y}-0}{s_d/\sqrt{n}}$$
 6) Use the `t.test()` function in R to perform the test
 
 ```{r}
-t.test(caterpillar$diff, mu= 0, alternative= 'greater')
+t.test(caterpillardata$diff, mu= 0, alternative= 'greater')
 ```
 
 

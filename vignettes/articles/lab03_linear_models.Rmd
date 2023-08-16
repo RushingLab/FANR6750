@@ -364,7 +364,7 @@ ggplot(data = raindata, aes(x = rainfall, y = acorns)) +
 <br>
 <br>
 
-# Excercise (**not for a grade!**)
+# Assignment
 
 In this data example, a researcher is interested in using the average density of feral cats (cats/square mile) in 100 city parks across the US to predict the number of lizards/square mile (prey) at those parks.
 

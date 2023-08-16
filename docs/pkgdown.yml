@@ -1,4 +1,4 @@
-pandoc: 2.19.2
+pandoc: 3.1.1
 pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
@@ -7,7 +7,8 @@ articles:
   lab03_linear_models: lab03_linear_models.html
   lab04_t-tests: lab04_t-tests.html
   lab05_anova: lab05_anova.html
+  lab06_blocking: lab06_blocking.html
   schedule: schedule.html
   syllabus: syllabus.html
-last_built: 2023-08-14T15:25Z
+last_built: 2023-08-16T12:27Z
 

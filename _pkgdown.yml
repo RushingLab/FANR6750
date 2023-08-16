@@ -59,6 +59,8 @@ navbar:
           href: articles/lab04_t-tests.html
         - text: "Lab 5: ANOVA"
           href: articles/lab05_anova.html
+        - text: "Lab 6: Multiple Regression"
+          href: articles/lab06_blocking.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:

@@ -214,9 +214,16 @@ swissdata <- read.csv("data-raw/swissData.csv")
 yielddata <- read.csv("data-raw/yieldData.csv")
 weightdata <- read.csv("data-raw/warblerWeight.csv")
 lengthdata <- read.csv("data-raw/lengthdata.csv")
+exploredata <- read.csv("data-raw/exploredata.csv")
+exploredata <- dplyr::select(exploredata, -X)
+names(exploredata) <- c("agb", paste0("bioclim", formatC(1:19, width = 2, format = "d", flag = "0")))
+
+inferencedata <- read.csv("data-raw/inferencedata.csv")
+inferencedata <- dplyr::select(inferencedata, -X)
+inferencedata <- dplyr::rename(inferencedata, agb = y)
 usethis::use_data(aciditydata, biomassdata, caterpillardata, chuckdata, crowdata, cruzdata,
-                  departuredata, dietdata, fishdata, frogdata, infectiondata,
-                  jaydata, lengthdata, meatdata, microtusdata, mothdata, musseldata,
+                  departuredata, dietdata, exploredata, fishdata, frogdata, infectiondata,
+                  inferencedata, jaydata, lengthdata, meatdata, microtusdata, mothdata, musseldata,
                   pinedata, pesticidedata, plantdata, preydata, raindata,
                   salinitydata, sawdata, studentsdata, swissdata,
                   thrushdata, tunadata,

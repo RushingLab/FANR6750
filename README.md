@@ -13,7 +13,7 @@ In addition to this website, materials from the course will be distributed throu
 
 ``` r
 install.packages("devtools")
-devtools::install_github("RushingLab/FANR6750.v2023")
+devtools::install_github("RushingLab/FANR6750")
 ```
 
 

@@ -504,13 +504,16 @@ Changes in the magnitude/sign/significance in different regression models is exp
 
 --
 
-Do not automatically exclude correlated predictors just because they are correlated
+Larger standard errors are also common but are also expected - multiple regression is a harder problem to solve so, for a given sample size, uncertainty is larger
+
+--
+
+In general, do not automatically exclude correlated predictors just because they are correlated
 
 - If you have an *a priori* reason for including each covariate, include them!
 
-- 
+- If parameter estimates are unreliable, you may need to use a more simple model (or gather more data)
 
-- 
 
 .footnote[[\*]] In this **made up** data set]
 

@@ -35,7 +35,7 @@ Click [here](https://rushinglab.github.io/FANR6750/articles/projects_and_directo
 Click [here](https://rushinglab.github.io/FANR6750/articles/homework.html)
 
 
-# Assignment (not for a grade)
+# Assignment
 
 Create an R Markdown file to do the following:
 
