@@ -40,9 +40,9 @@ michael.baker2@uga.edu
 Office: 1-102A  
 Office hours: W 9:00-11:00 or by appointment  
   
-Kaili Gregory
-k.gregory@uga.edu
-Office: 3-422
+Kaili Gregory  
+k.gregory@uga.edu  
+Office: 3-422  
 Office hours: Th 2:30-4:30 or by appointment  
 
 
@@ -71,7 +71,7 @@ and
 
 **Quinn, G.P. & Keough, M.J. 2002. Experimental Design and Data Analysis for Biologists. Cambridge University Press**  
 
-The Fieberg (2022) textbook can be accesses [here](https://fw8051statistics4ecologists.netlify.app/). Purchasing the Quinn (2002) textbook is not required but may be helpful for clarifying some concepts. A pdf of the book can be downloaded [here](https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&%20Keough.pdf).  
+The Fieberg (2022) textbook can be accessed [here](https://fw8051statistics4ecologists.netlify.app/). Purchasing the Quinn (2002) textbook is not required but may be helpful for clarifying some concepts. A pdf of the book can be downloaded [here](https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&%20Keough.pdf).  
 
 Additional readings will come from a variety of sources, including other textbooks and scientific journals, and will be posted on eLC.
 

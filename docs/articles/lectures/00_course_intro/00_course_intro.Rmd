@@ -30,17 +30,17 @@ source(here::here("R/zzz.R"))
 #### Dr. Clark Rushing  
 [clark.rushing@uga.edu](clark.rushing@uga.edu)   
 **Office**: 3-409  
-**Office hours**: Monday and Wednesday 1:00-2:30
+**Office hours**: M 12:30-2:00; Tu 9:00-10:00
 
 #### Michael Baker  
 [michael.baker2@uga.edu](michael.baker2@uga.edu)  
 **Office**: 1-102A  
 **Office hours**: W 9:30-11:00 or by appointment  
   
-#### Nancy Raginski  
-[nancy.raginski@uga.edu](nancy.raginski@uga.edu)  
-**Office**: 3-402  
-**Office hours**: Th 10-11:30 or by appointment
+#### Kaili Gregory  
+[k.gregory@uga.edu](k.gregory@uga.edu)  
+**Office**: 3-422  
+**Office hours**: Th 2:30-4:30 or by appointment  
 
 ---
 # course schedule and materials
@@ -52,7 +52,9 @@ Lectures and labs: [rushinglab.github.io/FANR6750](https://rushinglab.github.io/
 --
 
 .pull-left[
-**Primary text** (not required):
+**Primary texts** (not required):
+
+Fieberg, J. (2022). Statistics for Ecologists: A Frequentist and Bayesian Treatment of Modern Regression Models. [An open-source online textbook.](https://fw8051statistics4ecologists.netlify.app/)
 
 Quinn, G.P. & Keough, M.J. 2002. Experimental Design and Data Analysis for Biologists. Cambridge University Press
 ]
@@ -102,7 +104,7 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
 
 --
 
-- 5 throughout semester (approximately bi-weekly)
+- 10 throughout semester 
 
 --
 
@@ -115,17 +117,16 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
 
 - Worth 10 points each
     + 6 points for turning in **complete** assignment **on time**
-    + 2 points for correcting assignment (using a key)
-    + 2 points for completed self-assessment form
+    + 4 points for correctness  
 
 ---
 # grading
 
-#### 200 points total
+#### 250 points total
 
 --
 
-- 3 lecture exams, 50 points (25%) each
+- 3 lecture exams, 50 points (20%) each
 
     + Take-home, open-note format
     + Not (explicitly) cummulative<sup>1</sup>
@@ -133,7 +134,7 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
 
 --
 
-- 5 lab assignments, 10 points (5%) each
+- 10 lab assignments, 10 points (4%) each
 
 .footnote[[1] Material is somewhat cumulative by nature & some important concepts will be repeated]  
 
