@@ -221,11 +221,14 @@ names(exploredata) <- c("agb", paste0("bioclim", formatC(1:19, width = 2, format
 inferencedata <- read.csv("data-raw/inferencedata.csv")
 inferencedata <- dplyr::select(inferencedata, -X)
 inferencedata <- dplyr::rename(inferencedata, agb = y)
+
+treedata <- read.csv("data-raw/treeHt.csv")
+
 usethis::use_data(aciditydata, biomassdata, caterpillardata, chuckdata, crowdata, cruzdata,
                   departuredata, dietdata, exploredata, fishdata, frogdata, infectiondata,
                   inferencedata, jaydata, lengthdata, meatdata, microtusdata, mothdata, musseldata,
                   pinedata, pesticidedata, plantdata, preydata, raindata,
                   salinitydata, sawdata, studentsdata, swissdata,
-                  thrushdata, tunadata,
+                  thrushdata, treedata, tunadata,
                   warblerdata, weightdata, yielddata,
                   overwrite = TRUE)
