@@ -191,6 +191,7 @@ Normality is usually assessed using *quantile-quantile* (Q-Q) plots, which plots
 
 Large deviations from the line indicate deviations from normality
 
+
 ---
 # evaluating models with factors
 
@@ -257,6 +258,35 @@ However, remember that the assumptions are about the population, not the sample
 --
 
 We will explore some of these tests in lab
+
+---
+# independence
+
+Non-independence of residuals is more difficult to test but is often related to un-modeled structure in the data
+
+- points close in space/time tend to be more alike than distance points
+
+- observations within "groups" (e.g., males/females, plots, growth chamber, lakes) tend to be more alike than individuals from other groups
+
+--
+
+Often, non-independence can be judged based on knowledge of the sampling design/system
+
+- sometimes be seen as "clustering" in residual plots
+
+&lt;img src="11_assumptions_files/figure-html/unnamed-chunk-13-1.png" width="288" style="display: block; margin: auto;" /&gt;
+
+---
+# independence
+
+&lt;img src="11_assumptions_files/figure-html/unnamed-chunk-14-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+Sometimes, non-independence can be remedied by including relevant covariates in the model
+
+- e.g. `lm(y ~ x + Lake)`
+
+- we'll learn more about this and related approaches in a few weeks
+
 
 ---
 # what happens when assumptions are violated?
@@ -329,7 +359,7 @@ We are interested in the factors that govern the evolution of body size of ? and
 
 As expected, body length appears to vary as a function of both latitude and temperature:
 
-&lt;img src="11_assumptions_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" /&gt;
+&lt;img src="11_assumptions_files/figure-html/unnamed-chunk-15-1.png" width="576" style="display: block; margin: auto;" /&gt;
 
 ---
 # example
@@ -456,7 +486,7 @@ cor(lengthdata$Latitude, lengthdata$Temperature)
 ## [1] -0.8697
 ```
 
-&lt;img src="11_assumptions_files/figure-html/unnamed-chunk-19-1.png" width="504" style="display: block; margin: auto;" /&gt;
+&lt;img src="11_assumptions_files/figure-html/unnamed-chunk-21-1.png" width="504" style="display: block; margin: auto;" /&gt;
 
 --
 

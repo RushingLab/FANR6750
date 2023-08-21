@@ -224,11 +224,15 @@ inferencedata <- dplyr::rename(inferencedata, agb = y)
 
 treedata <- read.csv("data-raw/treeHt.csv")
 
+
+storkdata <- read.csv("data-raw/storkdata.csv")
+
 usethis::use_data(aciditydata, biomassdata, caterpillardata, chuckdata, crowdata, cruzdata,
-                  departuredata, dietdata, exploredata, fishdata, frogdata, infectiondata,
+                  departuredata, dietdata, exploredata, fishdata, frogdata,
+                  infectiondata,
                   inferencedata, jaydata, lengthdata, meatdata, microtusdata, mothdata, musseldata,
                   pinedata, pesticidedata, plantdata, preydata, raindata,
-                  salinitydata, sawdata, studentsdata, swissdata,
+                  salinitydata, sawdata, storkdata, studentsdata, swissdata,
                   thrushdata, treedata, tunadata,
                   warblerdata, weightdata, yielddata,
                   overwrite = TRUE)

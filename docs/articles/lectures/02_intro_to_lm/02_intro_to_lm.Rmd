@@ -238,7 +238,7 @@ $$\LARGE y_i = \beta_0 + \beta_1  x_i + \epsilon_i$$
 
 $$\LARGE \epsilon_i \sim normal(0, \sigma)$$  
 
-#### with the $\epsilon_i$ terms referred to as *residuals* or *residual error*
+#### with the $\large \epsilon_i$ terms referred to as *residuals* or *residual error*
 
 - Mathematically, the two formulations are identical 
 
@@ -361,7 +361,7 @@ ggplot(lm2, aes(x = x, y = y)) +
 
 - Residuals are the difference between the observed values $\large y_i$ and the predicted values $\large E[y_i]$ - how much variation in $\large y$ is explained by $\large x$?
 
-```{r fig.height=3.5, fig.width=5.5}
+```{r fig.height=5, fig.width=7}
 ggplot(df, aes(x, y)) + 
   geom_segment(aes(x = x, xend = x, y = mu, yend = y), color = "#3CB521", size = 1) +
   geom_abline(slope = 0.5, intercept = -2, color = "#446E9B", size = 1.5) +

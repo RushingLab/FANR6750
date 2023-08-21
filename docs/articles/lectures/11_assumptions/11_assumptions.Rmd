@@ -255,6 +255,7 @@ ggplot(q_df, aes(sample = y)) +
 
 Large deviations from the line indicate deviations from normality
 
+
 ---
 # evaluating models with factors
 
@@ -325,6 +326,57 @@ However, remember that the assumptions are about the population, not the sample
 --
 
 We will explore some of these tests in lab
+
+---
+# independence
+
+Non-independence of residuals is more difficult to test but is often related to un-modeled structure in the data
+
+- points close in space/time tend to be more alike than distance points
+
+- observations within "groups" (e.g., males/females, plots, growth chamber, lakes) tend to be more alike than individuals from other groups
+
+--
+
+Often, non-independence can be judged based on knowledge of the sampling design/system
+
+- sometimes be seen as "clustering" in residual plots
+
+```{r fig.width = 4, fig.height=2.5}
+x <- rnorm(50)
+group <- sample(1:5, 50, replace = TRUE)
+nu <- c(-5, -2, 0, 2, 5)
+ey <- 5  + nu[group] + (1.2) * x
+y <- ey + rnorm(50, 0, 0.5)
+
+fm <- lm(y ~ x)
+
+df <- data.frame(x = x, y = y, r = fm$residuals, 
+                 e = fm$fitted.values, Lake = as.factor(group))
+ggplot(df, aes(x = e, y = r, color = Lake)) + 
+  geom_point() +
+  scale_x_continuous("Expected value") +
+  scale_y_continuous("Residuals") +
+  theme(legend.title = element_text())
+```
+
+---
+# independence
+
+```{r fig.width = 6, fig.height=4}
+ggplot(df, aes(x = e, y = r, color = Lake)) + 
+  geom_point() +
+  scale_x_continuous("Expected value") +
+  scale_y_continuous("Residuals") +
+  theme(legend.title = element_text())
+```
+
+Sometimes, non-independence can be remedied by including relevant covariates in the model
+
+- e.g. `lm(y ~ x + Lake)`
+
+- we'll learn more about this and related approaches in a few weeks
+
 
 ---
 # what happens when assumptions are violated?
