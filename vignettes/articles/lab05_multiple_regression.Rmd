@@ -1,0 +1,521 @@
+---
+title: "Lab 5: Multiple Regression"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2023"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lab05_multiple_regression}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE,fig.retina = 2,
+                      fig.align = 'center', fig.height = 4, fig.width = 4,
+                       warning = FALSE, message = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+source(here::here("R/zzz.R"))
+```
+
+## Lab 4
+
+1) ANOVA
+
+2) Performing an ANOVA with lm() and aov()
+  
+3) Performing an ANOVA by hand
+  
+4) Plotting confidence intervals
+  
+5) Multiple comparisons
+  
+
+## Today's topics
+
+1) Multiple Regression 
+
+  + ANCOVA
+  
+  + Blocking
+
+2) Centering predictors
+
+
+
+### Scenarios
+
+1) We would like to perform an ANOVA but there is an additional continuous predictor that is likely contributing to some of the variation in the response.
+
+2) We would like to perform an ANOVA but there is another grouping variable other than our treatment that is likely contributing to some of the variation in the response.
+
+3) We would like to perform linear regression but we have more than one continuous predictor (HW assignment).
+
+<br>
+
+# Scenario 1: ANCOVA
+
+Remember from lecture that an ANCOVA (Analysis of Covariance) is used when we are interested in performing an ANOVA while first accounting for a continuous variable. This variable may or may not be of particular interest to us, but we would be wise to at least take it into account. While ANCOVA is sometimes thought of as a hybrid between ANOVA and regression, remember that all of these are just different forms of a linear model. We could write the ANCOVA as a linear model:
+
+$$
+\Large y_{ij} = \mu + \alpha_i + \beta(x_{ij} − \bar{x}) + \epsilon_{ij}
+$$
+
+**How would you interpret each parameter in the context of the data?**  
+
+**What would be the hypotheses related to this model?**
+
+<br>
+<br>
+
+## Data example
+
+Below is a dataset which contains information about Blue Tilapia (*Oreochromis aureus*), a species of fish which are sometimes used in aquaponics systems. In this case, a researcher is interested in understanding how various diet regimens affect tilapia weight (g) after a period of 3 months. While performing this study, he would like to take into account the length (cm) of each fish at the start of the study. Given that longer fish tend to weigh more, he suspects that ignoring this variable would not be appropriate.
+
+Load the data and check the structure:
+
+```{r}
+library(FANR6750)
+data("dietdata")
+str(dietdata)
+```
+
+### An aside about factors
+
+Factors look like character strings but they behave quite differently, and understanding the way that `R` handles factors is key to working with this type of data. The key difference between factors and character strings is that factors are used to represent *categorical* data with a fixed number of possible values, called *levels*^[Under the hood, `R` actually treats factors as integers - 1, 2, 3... - with character labels for each level]. 
+
+Factors can be created using the `factor()` function:
+
+```{r}
+age <- factor(c("adult", "juvenile", "adult", "juvenile"))
+```
+
+Because we didn't explicitly tell `R` the levels of this factor, it will assume the levels are *adult* and *juvenile*. Furthermore, by default `R` assigns levels in alphabetical order, so `adult` will be the first level and `juvenile` will be the second level:
+
+```{r}
+levels(age)
+```
+
+Sometimes alphabetical order might not make sense:
+
+```{r}
+treatment <- factor(c("medium", "low", "high"))
+```
+
+
+**What order will `R` assign to the treatment levels?**
+
+<br>
+<br>
+
+If you want to order the factor in a different way, you can use the optional `levels` argument:
+
+```{r}
+treatment <- factor(c("low", "medium", "high"), levels = c("low", "medium", "high"))
+levels(treatment)
+```
+
+Sometimes you may also need to remove factor levels. For example, let's see what happens if we have a typo in one of the factors:
+
+```{r}
+sex = factor(c("male", "female", "female", "Male", "male", "female", "female"))
+
+barplot(table(sex))
+```
+
+Oops, one of the field techs accidentally capitalized "Male". Let's change that to lowercase:
+
+```{r}
+sex[sex == "Male"] <- "male"
+barplot(table(sex))
+```
+
+Hmm, there's still a bar for `Male`. We can see what's happening here by looking at the levels:
+
+```{r}
+levels(sex)
+```
+
+Removing/editing the factors doesn't change the levels! So `R` still thinks there are three levels, just zero `Male` entries. To remove that mis-specified level, we need to drop it:
+
+```{r}
+sex <- droplevels(sex)
+barplot(table(sex))
+```
+
+<br>
+<br>
+
+## Back to the data
+
+We need to change diet to a factor, and while doing so we'll explicitly define the level order: 
+
+```{r}
+dietdata$diet <- factor(dietdata$diet, levels = c("Control", "Low", "Med", "High"))
+levels(dietdata$diet)
+```
+
+Let's also visualize the data:
+
+```{r}
+library(ggplot2)
+
+ggplot(dietdata, aes(x = length, y = weight)) +
+  geom_point()
+
+ggplot(dietdata, aes(x = diet, y = weight)) +
+  geom_boxplot()
+```
+
+<br>
+
+And finally, let's quantify the relationship between length and weight using a linear regression:
+
+```{r include = FALSE}
+fm1 <- lm(weight ~ length, dietdata)
+summary(fm1)
+```
+
+```{r}
+library(knitr)
+kable(broom::tidy(fm1), col.names = c("Term", "Estimate", "SE", "Statistic", "p-value"))
+```
+
+<br>
+
+We can also add regression lines and CIs to our plot using the `predict()` function:
+
+1) Create a new data frame containing a sequence of values of the predictor variable length
+
+2) Predict weight using these values of length
+
+3) Put predictions and data together for plotting
+
+```{r}
+size <- dietdata$length
+nd <- data.frame(length = seq(min(size), max(size), length = 50))
+E1 <- predict(fm1, newdata = nd, se.fit = TRUE, interval="confidence")
+predictionData <- data.frame(E1$fit, nd)
+
+ggplot() +
+  geom_point(data = dietdata, aes(x = length, y = weight)) +
+  geom_ribbon(data = predictionData, aes(x = length, ymin = lwr, ymax = upr),
+              color = "black", linetype = "longdash", fill = NA) +
+  geom_path(data = predictionData, aes(x = length, y = fit)) 
+```
+
+
+
+**Note that in this simple case, you could use the built in `stat_smooth()` in `ggplot2` to plot the regression line, though that will not always work. `predict()` is a more general method for creating and plotting regression lines from fitted models.**
+
+<br>
+
+It's clear that there is a strong, positive relationship between length and weight. If we want to quantify whether there is an effect of diet on weight, we will clearly need to control for length in our analysis. 
+
+As an aside, let's see what happens if we had ignored length and simply performed a one-way ANOVA.
+
+```{r}
+summary(aov(weight~ diet, data= dietdata))
+```
+
+**Notice that we conclude that there is not a difference in weights as a function of diet type even though later in the lab, we will see that diet is an important factor. Why do we reach this incorrect conclusion here?**
+
+<br>
+<br>
+<br>
+
+Now we are ready to perform the ANCOVA. To make interpretation simpler, we will center the continuous predictor.
+
+```{r}
+dietdata$length_centered <- dietdata$length - mean(dietdata$length)
+fm2 <- lm(weight~ length_centered + diet, data= dietdata)
+summary(fm2)
+```
+
+**How would you interpret each of these parameter estimates in the context of the data?**
+
+<br>
+<br>
+
+As before, we can create predictions of weight over a sequences of lengths, for every level of diet:
+
+```{r fig.width=6}
+lengthC <- dietdata$length_centered
+nd2 <- data.frame(diet=rep(c("Control", "Low", "Med", "High"), each = 15),
+                  length_centered=rep(seq(min(lengthC), max(lengthC),length = 15), times = 4))
+E2 <- predict(fm2, newdata=nd2, se.fit = TRUE, interval = "confidence")
+predData2 <- data.frame(E2$fit, nd2)
+
+ggplot() +
+  geom_point(data = dietdata, aes(x = length_centered, y = weight, color = diet)) +
+  geom_line(data = predData2, aes(x = length_centered, y = fit, color = diet)) +
+  guides(colour= guide_legend(reverse= T)) +
+  scale_y_continuous("Weight") +
+  scale_x_continuous("Length")
+```
+
+<br>
+<br>
+
+We can also look at multiple comparisons. Note that because we used the `lm()` function instead of `aov()`, we are not able to use `TukeyHSD()` as we did before. Instead we can use `glht()` function from the `multcomp` package.
+
+```{r}
+library(multcomp)
+summary(glht(fm2, linfct=mcp(diet="Tukey")))
+```
+
+<br>
+<br>
+<br>
+
+# Scenario 2: Blocking
+
+Blocking is used when an additional factor besides our treatment of interest may be contributing to variation in the response variable. While blocking is usually thought of in the context of an ANOVA, it can be used in other linear modeling situations as well.
+
+Blocks can be regions, time periods, individual subjects, etc. but blocking must occur **during the design phase** of the study. (Later in the course, we will discuss the scenario where we are interested in this second factor and we will no longer refer to it as a block.)
+
+We can write the additive Randomized Complete Block Design as:
+
+$$\large y_{ij} = \mu + \alpha_i + \beta_j + \epsilon_{ij}$$
+
+**What would be the hypotheses related to this model?**
+
+## Blocked ANOVA by hand
+
+To "fit" the RCBD model by hand, we'll use the gypsy moth data we saw in lecture. In this dataset a researcher has counted the number of caterpillars in each plot treated with either Bt or Dimilin (or left as a control). Additionally, because the treated plots were located in 4 geographic regions, region has been included as a block in the model.
+
+```{r mothData, eval = FALSE}
+library(FANR6750)
+data("mothdata")
+
+head(mothdata)
+```
+
+```{r mothTable, echo = FALSE}
+library(FANR6750)
+data("mothdata")
+
+knitr::kable(head(mothdata), align = "c")
+```
+
+
+Before we analyze the moth data, we need to tell `R` to treat the `Treatment` and `Region` variables as factors:
+
+```{r}
+str(mothdata)
+```
+
+Right now, they are character and integer objects, respectively. 
+
+```{r}
+mothdata$Treatment <- factor(mothdata$Treatment, levels = c("Control", "Bt", "Dimilin"))
+levels(mothdata$Treatment)
+
+mothdata$Region <- factor(mothdata$Region)
+levels(mothdata$Region)
+```
+
+Note that we were explicit about the order of levels for `Treatment` so that control came first. 
+
+### Means
+
+Next, compute the means:
+
+```{r}
+library(dplyr)
+
+# Grand mean
+(grand.mean <- mean(mothdata$Larvae))
+
+# Treatment means
+(treatment.means <- group_by(mothdata, Treatment) %>% summarise(mu = mean(Larvae)))
+
+# Block means
+(block.means <- group_by(mothdata, Region) %>% summarise(mu = mean(Larvae)))
+```
+
+### Treatment sums of squares
+
+The formula for the treatment sums of squares:
+
+$$\Large b \times \sum_{i=1}^a (\bar{y}_i - \bar{y}_.)^2$$
+
+```{r}
+b <- nlevels(mothdata$Region)
+(SS.treat <- b * sum((treatment.means$mu - grand.mean)^2))
+```
+
+### Block sums of squares
+
+The formula for the block sums of squares:
+
+$$\Large a \times \sum_{j=1}^b (\bar{y}_j - \bar{y}_.)^2$$
+
+```{r}
+a <- nlevels(mothdata$Treatment)
+(SS.block <- a * sum((block.means$mu - grand.mean)^2))
+```
+
+### Within groups sums of squares
+
+$$\Large \sum_{i=1}^a \sum_{j=1}^b (y_{ij} - \bar{y}_i - \bar{y}_j + \bar{y}_.)^2$$
+
+```{r}
+treatment.means.long <- rep(treatment.means$mu, each = b)
+block.means.long <- rep(block.means$mu, times = a)
+(SS.within <- sum((mothdata$Larvae - treatment.means.long - block.means.long + grand.mean)^2))
+```
+
+
+**NOTE: For the above code to work, `treatment.means` and `block.means` must be in the same order as in the original data.**
+
+
+### Create ANOVA table
+
+Now we're ready to create the ANOVA table. Start with what we've calculated so far:
+
+```{r}
+df.treat <- a - 1
+df.block <- b - 1
+df.within <- df.treat*df.block
+ANOVAtable <- data.frame(df = c(df.treat, df.block, df.within),
+                         SS = c(SS.treat, SS.block, SS.within))
+rownames(ANOVAtable) <- c("Treatment", "Block", "Within")
+ANOVAtable
+```
+
+Next, add the mean squares:
+
+```{r}
+MSE <- ANOVAtable$SS / ANOVAtable$df
+ANOVAtable$MSE <- MSE ## makes a new column!
+```
+
+Now, the *F*-values (with `NA` for error/within/residual row):
+
+```{r}
+F.stat <- c(MSE[1]/MSE[3], MSE[2]/MSE[3], NA)
+ANOVAtable$F.stat <- F.stat
+```
+
+Finally, the *p*-values
+
+```{r}
+p <- c(1 - pf(F.stat[1], 2, 6), 1 - pf(F.stat[2], 3, 6), NA)
+ANOVAtable$p <- p
+```
+
+***
+
+Quick reminder about calculating *p*-values
+
+```{r}
+qf(0.95, 2, 6) # 95% of the distribution is below this value of F
+
+1-pf(F.stat[1], 2, 6) # Proportion of the distribution beyond this F value
+```
+
+Be sure you understand what each of these functions is doing!
+
+***
+
+
+And we'll display the table using `kable()`, with a few options to make it look a little nicer:
+
+```{r}
+options(knitr.kable.NA = "") # leave NA cells empty
+knitr::kable(ANOVAtable, digits = 2, align = "c",
+             col.names = c("df", "SS", "MSE", "F", "p-value"),
+             caption = "RCBD ANOVA table calculated by hand")
+```
+
+## Blocked ANOVA using `aov()`
+
+```{r}
+aov1 <- aov(Larvae ~ Treatment + Region, mothdata)
+summary(aov1)
+```
+
+Look what happens if we ignore the blocking variable though:
+
+```{r}
+aov2 <- aov(Larvae ~ Treatment, mothdata)
+summary(aov2)
+```
+
+
+## Blocked ANOVA using `lm()`
+
+```{r}
+lm1 <- lm(Larvae~ Treatment + Region, mothdata)
+summary(lm1)
+```
+
+**Can you interpret each parameter estimate from the output of aov1 and lm1? What different information is provided from these two ways of constructing the model? Which null hypotheses were rejected? Failed to be rejected?**
+
+<br>
+<br>
+<br>
+
+
+# Assignment (not for a grade)
+
+Some time ago, plantations of *Pinus caribaea* were established at four locations on Puerto Rico. As part of a study, four spacing intervals were used at each location to determine the effect of spacing on tree height. Twenty years after the plantations were established, measurements (height in ft) were made in the study plots. Additionally, soil chemistry was analyzed to determine average pH and nitrogen content (mg N/kg soil) for each tree. Note that although spacing interval is a number, it must be treated as a factor since these 4 spacing intervals (and only these 4) are of interest to the researcher.
+
+You can access these data using:
+
+```{r}
+library(FANR6750)
+data("pinedata")
+```
+
+**Questions/tasks**  
+
+The researcher would like you to develop several models to investigate the variables affecting tree height in the plantations. When you have done this, she asks that you submit a report of your findings. Instructions for the report are shown below.
+
+
+
+1) Construct a model using the lm() function which predicts tree height as a function of spacing and, because the researcher is also interested in seeing if soil pH is contributing to differences in tree height, include pH as a predictor as well. You may choose to center the continuous variable or not, but remember that it will affect the way you interpret the results.
+
+    a) Write out the hypotheses associated with this model
+
+    b) Use the equation editor to show the linear model you would use and interpret each term.
+    
+    c) State your model conclusions in the context of the data. Does there appear to be a relationship between tree height and tree spacing.
+    
+    d) Determine which tree spacings differ from eachother with regard to their effect on tree height.
+    
+    e) Create a publication quality plot displaying the effect that pH and tree spacing has on tree height. The figure should have a descriptive caption and any aesthetics (color, line type, etc.) should be clearly defined.
+ 
+2) Construct an ANOVA table by hand which shows the relationship between tree height and spacing as well as the other categorical variable of location. The researcher is not particularly interested in geographic location and she's not sure of the exact mechanism, but she thinks it may affect the results.
+
+    a) Create a well formatted ANOVA table with a table header using available R functions.
+
+    a) Was it necessary to include location in your model? Would it have changed your overall conclusions about the effect of spacing on tree height if you had not included it?
+ 
+3) Construct a model using the lm() function that predicts tree height as a function of soil pH and nitrogen content.
+
+    a) Write out the hypotheses associated with this model
+
+    b) Use the equation editor to show the linear model you would use and interpret each term.
+    
+    c) Interpret each parameter estimate in the model output
+
+4) Discussion: Up to now, we have discussed how we might construct several types of models which are all being used to predict tree height in this data scenario. Later in the semester we will talk about 'model selection' which is the process of choosing one model out of several that somehow best represents the research system. Having no formal instruction on this topic yet (or perhaps you do) explain how you think model selection might be done. What kinds of metrics might you use to decide which model best represents the data? (There is no one right answer here and all reasonably thought out answers will be accepted.)
+
+
+You may format the report however you like but it should be well-organized, with relevant headers, plain text, and the elements described above.  
+
+As always:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Be sure to set `echo = TRUE` in all `R` chunks
+
+- See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+
+- See the "Creating publication-quality graphics" reference sheet for tips on formatting figures
+
+
+

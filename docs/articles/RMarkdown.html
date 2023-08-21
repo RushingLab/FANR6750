@@ -124,19 +124,16 @@
       <a href="../articles/lab01_intro_to_R.html">Lab 1: Introduction to R</a>
     </li>
     <li>
-      <a href="../articles/lab02_intro_project_RMD.html">Lab 2: Introduction to projects and RMarkdown</a>
+      <a href="../articles/lab02_Intro_project_and_RMD.html">Lab 2: Introduction to projects and RMarkdown</a>
     </li>
     <li>
-      <a href="../articles/lab03_linear_models.html">Lab 3: Linear models</a>
+      <a href="../articles/lab03_t-tests.html">Lab 3: t-tests</a>
     </li>
     <li>
-      <a href="../articles/lab04_t-tests.html">Lab 4: t-tests</a>
+      <a href="../articles/lab04_ANOVA.html">Lab 4: ANOVA</a>
     </li>
     <li>
-      <a href="../articles/lab05_anova.html">Lab 5: ANOVA</a>
-    </li>
-    <li>
-      <a href="../articles/lab06_blocking.html">Lab 6: Multiple Regression</a>
+      <a href="../articles/lab05_multiple_regression.html">Lab 5: Multiple Regression</a>
     </li>
   </ul>
 </li>
@@ -180,7 +177,7 @@
             <h3 data-toc-skip class="subtitle">FANR 6750: Experimental
 Methods in Forestry and Natural Resources Research</h3>
             
-            <h4 data-toc-skip class="date">updated on 2023-08-17</h4>
+            <h4 data-toc-skip class="date">updated on 2023-08-21</h4>
       
       
       <div class="hidden name"><code>RMarkdown.Rmd</code></div>
@@ -264,8 +261,8 @@ Copy-and-paste? Both are a pain and error prone. Rerun your analysis
 using new data? Oops, now you have to copy and paste those new results
 and figures. With R Markdown, we embed code directly into the text so
 results and figures get added to our reports automatically. That means
-no copying and pasting and updating reports as new results come in is
-pain free.</p></li>
+no copying and pasting and updating reports as new results come
+in.</p></li>
 <li><p><strong>Annotate your code</strong> - Using the <code>#</code> is
 great for adding small annotations to your R scripts and you should
 definitely get in the habitat of doing that. But sometimes you need to
@@ -373,7 +370,7 @@ Latex that we want to use <code>Arial</code> font, we have to modify the
 <pre><code><span><span class="va">title</span><span class="op">:</span> <span class="st">"FANR6750"</span></span>
 <span><span class="va">subtitle</span><span class="op">:</span> <span class="st">"Homework 1"</span></span>
 <span><span class="va">author</span><span class="op">:</span> <span class="st">"YOUR NAME HERE"</span></span>
-<span><span class="va">date</span><span class="op">:</span> <span class="st">"2023-08-17"</span></span>
+<span><span class="va">date</span><span class="op">:</span> <span class="st">"2023-08-21"</span></span>
 <span><span class="va">output</span><span class="op">:</span> </span>
 <span>  <span class="va">pdf_document</span><span class="op">:</span></span>
 <span>    <span class="va">latex_engine</span><span class="op">:</span> <span class="va">xelatex</span></span>
@@ -384,12 +381,13 @@ and <code>latex_engine: xelatex</code>.</p>
 <p>To indent the first line of each paragraph, add the following to the
 header:</p>
 <pre><code><span><span class="va">indent</span><span class="op">:</span> <span class="va">true</span></span></code></pre>
-<p>There many possible options for the header (see <a href="https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf" class="external-link">here</a>
+<p>There many possible options for the header (see <a href="https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf" class="external-link">here</a>
+and <a href="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/rmarkdown-cheatsheet-2.0.pdf" class="external-link">here</a>
 for additional examples). We’ll learn more about some of these options
 later in the semester.</p>
 </div>
 <div class="section level3">
-<h3 id="headers">Headers<a class="anchor" aria-label="anchor" href="#headers"></a>
+<h3 id="content-headers">Content headers<a class="anchor" aria-label="anchor" href="#content-headers"></a>
 </h3>
 <p>Using headers is a natural way to break up a document or report into
 smaller sections. You can include headers by putting one or more
@@ -424,7 +422,7 @@ This is the next line</code></pre>
 </div>
 <div class="section level3">
 <h3 id="bold-italics">
-<strong>Bold</strong>, <em>Italics</em>,<a class="anchor" aria-label="anchor" href="#bold-italics"></a>
+<strong>Bold</strong>, <em>Italics</em><a class="anchor" aria-label="anchor" href="#bold-italics"></a>
 </h3>
 <p>As mentioned earlier, create <strong>boldface</strong> by surrounding
 text with two asterisks (<code>**bold**</code>) and use single asterisks
@@ -435,7 +433,7 @@ for <em>italics</em> (<code>*italics*</code>)</p>
 </h3>
 <p>To highlight code (note, this does not actually insert functioning
 code, just formats text to show that it is code rather than plain text),
-surround the text with back ticks “: <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code></p>
+surround the text with back ticks: <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code></p>
 <p>You can include multiple lines of code by including three back ticks
 on the line before the code and then three back ticks on the line after
 the code:</p>
@@ -505,8 +503,9 @@ brackets followed by the link in parentheses:
 comes in handy because equations are written using Latex code. For the
 most part, this is not too difficult but if you need to insert complex
 equations you will probably need to look up the code for some symbols.
-There are many good resources for if you google “latex equations” or
-something similar.</p>
+There are many good resources for this including <a href="https://www.cmor-faculty.rice.edu/~heinken/latex/symbols.pdf" class="external-link">here</a>
+and <a href="https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols" class="external-link">here</a>
+or if you are feeling particularly ambitious <a href="https://mirror2.sandyriver.net/pub/ctan/info/symbols/comprehensive/symbols-a4.pdf" class="external-link">here</a>.</p>
 <div class="section level4">
 <h4 id="inline-vs--block-equations">Inline vs. block equations<a class="anchor" aria-label="anchor" href="#inline-vs--block-equations"></a>
 </h4>
@@ -571,8 +570,8 @@ Some common ones include <span class="math inline">\(\times\)</span>
 (<code>$\sum$</code>), <span class="math inline">\(\prod\)</span>
 (<code>$\prod$</code>), <span class="math inline">\(\infty\)</span>
 (<code>$\infty$</code>), and <span class="math inline">\(\propto\)</span> (<code>$\propto$</code>).</p>
-<p>See <a href="http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.html" class="external-link">here</a> for
-a list of other operators.</p>
+<p>See documents above in Equations section for a list of other
+operators.</p>
 </div>
 </div>
 <div class="section level2">
@@ -662,8 +661,11 @@ in the document.</p>
 the <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable()</a></code> function:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>, caption<span class="op">=</span> <span class="st">'Table 1: Automobile data from 1974 *Motor Trends US*.'</span>,</span>
+<span>      align <span class="op">=</span> <span class="st">'l'</span><span class="op">)</span></span></code></pre></div>
 <table style="width:100%;" class="table">
+<caption>Table 1: Automobile data from 1974 <em>Motor Trends
+US</em>.</caption>
 <colgroup>
 <col width="26%">
 <col width="7%">
@@ -680,108 +682,122 @@ the <code><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-lin
 </colgroup>
 <thead><tr class="header">
 <th align="left"></th>
-<th align="right">mpg</th>
-<th align="right">cyl</th>
-<th align="right">disp</th>
-<th align="right">hp</th>
-<th align="right">drat</th>
-<th align="right">wt</th>
-<th align="right">qsec</th>
-<th align="right">vs</th>
-<th align="right">am</th>
-<th align="right">gear</th>
-<th align="right">carb</th>
+<th align="left">mpg</th>
+<th align="left">cyl</th>
+<th align="left">disp</th>
+<th align="left">hp</th>
+<th align="left">drat</th>
+<th align="left">wt</th>
+<th align="left">qsec</th>
+<th align="left">vs</th>
+<th align="left">am</th>
+<th align="left">gear</th>
+<th align="left">carb</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">Mazda RX4</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.620</td>
-<td align="right">16.46</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
+<td align="left">21.0</td>
+<td align="left">6</td>
+<td align="left">160</td>
+<td align="left">110</td>
+<td align="left">3.90</td>
+<td align="left">2.620</td>
+<td align="left">16.46</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">4</td>
+<td align="left">4</td>
 </tr>
 <tr class="even">
 <td align="left">Mazda RX4 Wag</td>
-<td align="right">21.0</td>
-<td align="right">6</td>
-<td align="right">160</td>
-<td align="right">110</td>
-<td align="right">3.90</td>
-<td align="right">2.875</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">4</td>
+<td align="left">21.0</td>
+<td align="left">6</td>
+<td align="left">160</td>
+<td align="left">110</td>
+<td align="left">3.90</td>
+<td align="left">2.875</td>
+<td align="left">17.02</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">4</td>
+<td align="left">4</td>
 </tr>
 <tr class="odd">
 <td align="left">Datsun 710</td>
-<td align="right">22.8</td>
-<td align="right">4</td>
-<td align="right">108</td>
-<td align="right">93</td>
-<td align="right">3.85</td>
-<td align="right">2.320</td>
-<td align="right">18.61</td>
-<td align="right">1</td>
-<td align="right">1</td>
-<td align="right">4</td>
-<td align="right">1</td>
+<td align="left">22.8</td>
+<td align="left">4</td>
+<td align="left">108</td>
+<td align="left">93</td>
+<td align="left">3.85</td>
+<td align="left">2.320</td>
+<td align="left">18.61</td>
+<td align="left">1</td>
+<td align="left">1</td>
+<td align="left">4</td>
+<td align="left">1</td>
 </tr>
 <tr class="even">
 <td align="left">Hornet 4 Drive</td>
-<td align="right">21.4</td>
-<td align="right">6</td>
-<td align="right">258</td>
-<td align="right">110</td>
-<td align="right">3.08</td>
-<td align="right">3.215</td>
-<td align="right">19.44</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
+<td align="left">21.4</td>
+<td align="left">6</td>
+<td align="left">258</td>
+<td align="left">110</td>
+<td align="left">3.08</td>
+<td align="left">3.215</td>
+<td align="left">19.44</td>
+<td align="left">1</td>
+<td align="left">0</td>
+<td align="left">3</td>
+<td align="left">1</td>
 </tr>
 <tr class="odd">
 <td align="left">Hornet Sportabout</td>
-<td align="right">18.7</td>
-<td align="right">8</td>
-<td align="right">360</td>
-<td align="right">175</td>
-<td align="right">3.15</td>
-<td align="right">3.440</td>
-<td align="right">17.02</td>
-<td align="right">0</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">2</td>
+<td align="left">18.7</td>
+<td align="left">8</td>
+<td align="left">360</td>
+<td align="left">175</td>
+<td align="left">3.15</td>
+<td align="left">3.440</td>
+<td align="left">17.02</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">3</td>
+<td align="left">2</td>
 </tr>
 <tr class="even">
 <td align="left">Valiant</td>
-<td align="right">18.1</td>
-<td align="right">6</td>
-<td align="right">225</td>
-<td align="right">105</td>
-<td align="right">2.76</td>
-<td align="right">3.460</td>
-<td align="right">20.22</td>
-<td align="right">1</td>
-<td align="right">0</td>
-<td align="right">3</td>
-<td align="right">1</td>
+<td align="left">18.1</td>
+<td align="left">6</td>
+<td align="left">225</td>
+<td align="left">105</td>
+<td align="left">2.76</td>
+<td align="left">3.460</td>
+<td align="left">20.22</td>
+<td align="left">1</td>
+<td align="left">0</td>
+<td align="left">3</td>
+<td align="left">1</td>
 </tr>
 </tbody>
 </table>
 <p>The <code>kableExtra</code> package provides even more advanced
 options for creating nice looking tables. See <a href="https://haozhu233.github.io/kableExtra/awesome_table_in_html.html" class="external-link">here</a>
 for an overview of options provided by this package.</p>
+</div>
+<div class="section level4">
+<h4 id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a>
+</h4>
+<p>We can also easily produce figures directly in an RMarkdown file.
+Here, we have a simple demonstration but we will produce many better
+looking figures throughout the semester.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">$</span><span class="va">hp</span>, <span class="va">mtcars</span><span class="op">$</span><span class="va">mpg</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="RMarkdown_files/figure-html/unnamed-chunk-2-1.png" alt="Figure 1: Automobile mpg as a function of horsepower." width="700"><p class="caption">
+Figure 1: Automobile mpg as a function of horsepower.
+</p>
+</div>
 </div>
 </div>
 </div>

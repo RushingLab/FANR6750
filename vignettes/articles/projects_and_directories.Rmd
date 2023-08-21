@@ -92,7 +92,7 @@ The problem is that, again, this creates hidden dependencies. The `.RData` file 
 
 A better workflow is to start every `R` session with an empty workspace. This means you go into each session with the mindset that you will need to re-run all code from scratch every time. Although this seems like a pain, I promise it will make your life easier. It is a way of *ensuring* that at a minimum, you can reproduce all of your analyses anytime you need to.  
 
-In RStudio, you can enforce this workflow by going to `RStudio -> Preferences` and then in the `General` tab setting `Save workspace to .Rdata on exit` to `Never`. Do it. Trust me.  
+In RStudio, you can enforce this workflow by going to `RStudio -> Tools -> Global options` and then in the `General` tab setting `Save workspace to .Rdata on exit` to `Never`. Do it. Trust me.  
 
 What about re-running code that is very time consuming? Do you really need to re-run the code the cleans your raw data every time you need to reanalyze it? Of course not. You can always save those objects (along with the scripts you used to create them!) so that the next time you need them, they can just be re-read into `R` and you can do everything downstream of those steps without a problem.
 

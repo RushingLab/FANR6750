@@ -37,7 +37,7 @@ R Markdown has many advantages compared to creating reports in Word or GoogleDoc
 
 1) **Versatility**- Want to convert a Word document into pdf? That's not too hard. But pdf to Word? That's a pain. PDF to HTML? Maybe you know how to do that but I don't. With R Markdown, we can change between these formats with a single click (or a single line of code). You can even convert them into pretty nice slide shows.  
 
-2) **Embed code in text** - After running an analysis, how do you get your results into Word? Type them by hand? Copy-and-paste? Both are a pain and error prone. Rerun your analysis using new data? Oops, now you have to copy and paste those new results and figures. With R Markdown, we embed code directly into the text so results and figures get added to our reports automatically. That means no copying and pasting and updating reports as new results come in is pain free.  
+2) **Embed code in text** - After running an analysis, how do you get your results into Word? Type them by hand? Copy-and-paste? Both are a pain and error prone. Rerun your analysis using new data? Oops, now you have to copy and paste those new results and figures. With R Markdown, we embed code directly into the text so results and figures get added to our reports automatically. That means no copying and pasting and updating reports as new results come in.  
 
 3) **Annotate your code** - Using the `#` is great for adding small annotations to your R scripts and you should definitely get in the habitat of doing that. But sometimes you need to add a lot of details to help other users (or your future self) make sense of complex code. R Markdown allows you to create documents with as much text and formatting as you need, along with the code.  
 
@@ -119,9 +119,9 @@ To indent the first line of each paragraph, add the following to the header:
 indent: true
 ```
 
-There many possible options for the header (see [here](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf) for additional examples). We'll learn more about some of these options later in the semester. 
+There many possible options for the header (see [here](https://raw.githubusercontent.com/rstudio/cheatsheets/main/rmarkdown.pdf) and [here](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/rmarkdown-cheatsheet-2.0.pdf) for additional examples). We'll learn more about some of these options later in the semester. 
 
-## Headers
+## Content headers
 
 Using headers is a natural way to break up a document or report into smaller sections. You can include headers by putting one or more `#` signs in front of text. One `#` is a main header, `##` is the secondary header, etc.
 
@@ -148,13 +148,13 @@ This is one line
 This is the next line
 ```
 
-## **Bold**, *Italics*, 
+## **Bold**, *Italics*
 
 As mentioned earlier, create **boldface** by surrounding text with two asterisks (`**bold**`) and use single asterisks for *italics* (`*italics*`)
 
 ## Code type
 
-To highlight code (note, this does not actually insert functioning code, just formats text to show that it is code rather than plain text), surround the text with back ticks ": `mean()`
+To highlight code (note, this does not actually insert functioning code, just formats text to show that it is code rather than plain text), surround the text with back ticks: `mean()`
 
 You can include multiple lines of code by including three back ticks on the line before the code and then three back ticks on the line after the code:
 
@@ -194,7 +194,7 @@ Insert hyperlinks by putting the text you want displayed in square brackets foll
 
 ## Equations
 
-Inserting equations in R Markdown is where knowing some Latex really comes in handy because equations are written using Latex code. For the most part, this is not too difficult but if you need to insert complex equations you will probably need to look up the code for some symbols. There are many good resources for if you google "latex equations" or something similar.
+Inserting equations in R Markdown is where knowing some Latex really comes in handy because equations are written using Latex code. For the most part, this is not too difficult but if you need to insert complex equations you will probably need to look up the code for some symbols. There are many good resources for this including [here](https://www.cmor-faculty.rice.edu/~heinken/latex/symbols.pdf) and [here](https://oeis.org/wiki/List_of_LaTeX_mathematical_symbols) or if you are feeling particularly ambitious [here](https://mirror2.sandyriver.net/pub/ctan/info/symbols/comprehensive/symbols-a4.pdf).
 
 ### Inline vs. block equations
 
@@ -231,7 +231,7 @@ Fractions can either be inline ($1/n$ = `$1/n$`) or stacked ($\frac{1}{n}$ = `$\
 
 Pretty much every operator you could need can be written in latex. Some common ones include $\times$ (`$\times$`), $\lt$ (`$\lt$`), $\gt$ (`$\gt$`), $\leq$ (`$\leq$`), $\geq$ (`$\geq$`), $\neq$ (`$\neq$`), $\sum$ (`$\sum$`), $\prod$ (`$\prod$`), $\infty$ (`$\infty$`), and $\propto$ (`$\propto$`).
 
-See [here](http://web.ift.uib.no/Teori/KURS/WRK/TeX/symALL.html) for a list of other operators. 
+See documents above in Equations section for a list of other operators. 
 
 # Adding code
 
@@ -289,10 +289,20 @@ To nicely print matrices and data frames in R Markdown document, use the `kable(
 
 ```{r echo = TRUE}
 library(knitr)
-kable(head(mtcars))
+kable(head(mtcars), caption= 'Table 1: Automobile data from 1974 *Motor Trends US*.',
+      align = 'l')
 ```
 
 The `kableExtra` package provides even more advanced options for creating nice looking tables. See [here](https://haozhu233.github.io/kableExtra/awesome_table_in_html.html) for an overview of options provided by this package. 
+
+### Figures
+
+We can also easily produce figures directly in an RMarkdown file. Here, we have a simple demonstration but we will produce many better looking figures throughout the semester.
+
+```{r, echo= TRUE, fig.cap= 'Figure 1: Automobile mpg as a function of horsepower.'}
+plot(mtcars$hp, mtcars$mpg)
+```
+
 
 # Additional resources
 

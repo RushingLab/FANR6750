@@ -124,19 +124,16 @@
       <a href="../articles/lab01_intro_to_R.html">Lab 1: Introduction to R</a>
     </li>
     <li>
-      <a href="../articles/lab02_intro_project_RMD.html">Lab 2: Introduction to projects and RMarkdown</a>
+      <a href="../articles/lab02_Intro_project_and_RMD.html">Lab 2: Introduction to projects and RMarkdown</a>
     </li>
     <li>
-      <a href="../articles/lab03_linear_models.html">Lab 3: Linear models</a>
+      <a href="../articles/lab03_t-tests.html">Lab 3: t-tests</a>
     </li>
     <li>
-      <a href="../articles/lab04_t-tests.html">Lab 4: t-tests</a>
+      <a href="../articles/lab04_ANOVA.html">Lab 4: ANOVA</a>
     </li>
     <li>
-      <a href="../articles/lab05_anova.html">Lab 5: ANOVA</a>
-    </li>
-    <li>
-      <a href="../articles/lab06_blocking.html">Lab 6: Multiple Regression</a>
+      <a href="../articles/lab05_multiple_regression.html">Lab 5: Multiple Regression</a>
     </li>
   </ul>
 </li>
@@ -263,10 +260,12 @@ this variable would not be appropriate.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">FANR6750</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"dietdata"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">dietdata</span><span class="op">)</span></span>
-<span><span class="co">#&gt; 'data.frame':    60 obs. of  3 variables:</span></span>
-<span><span class="co">#&gt;  $ weight: num  23.8 26 30.3 25.9 18.5 ...</span></span>
+<span><span class="co">#&gt; 'data.frame':    60 obs. of  5 variables:</span></span>
+<span><span class="co">#&gt;  $ weight: num  185 217 232 238 238 ...</span></span>
 <span><span class="co">#&gt;  $ diet  : Factor w/ 4 levels "Control","Low",..: 1 1 1 1 1 1 1 1 1 1 ...</span></span>
-<span><span class="co">#&gt;  $ length: num  11.62 13.56 15.36 7.95 5.49 ...</span></span></code></pre></div>
+<span><span class="co">#&gt;  $ length: num  11 14.8 11.9 25.6 23.2 14.1 15.9 27.1 32.1 35.5 ...</span></span>
+<span><span class="co">#&gt;  $ sex   : chr  "F" "F" "M" "F" ...</span></span>
+<span><span class="co">#&gt;  $ gravid: chr  "Y" NA NA "N" ...</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="an-aside-about-factors">An aside about factors<a class="anchor" aria-label="anchor" href="#an-aside-about-factors"></a>
 </h4>
@@ -366,16 +365,16 @@ weight using a linear regression:</p>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="right">21.325234</td>
-<td align="right">0.8068548</td>
-<td align="right">26.430077</td>
+<td align="right">213.17440</td>
+<td align="right">8.0687929</td>
+<td align="right">26.419615</td>
 <td align="right">0</td>
 </tr>
 <tr class="even">
 <td align="left">length</td>
-<td align="right">0.518067</td>
-<td align="right">0.0674161</td>
-<td align="right">7.684621</td>
+<td align="right">2.59422</td>
+<td align="right">0.3371292</td>
+<td align="right">7.695032</td>
 <td align="right">0</td>
 </tr>
 </tbody>
@@ -416,8 +415,8 @@ simply performed a one-way ANOVA.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov</a></span><span class="op">(</span><span class="va">weight</span><span class="op">~</span> <span class="va">diet</span>, data<span class="op">=</span> <span class="va">dietdata</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             Df Sum Sq Mean Sq F value Pr(&gt;F)</span></span>
-<span><span class="co">#&gt; diet         3   54.6  18.216   2.053  0.117</span></span>
-<span><span class="co">#&gt; Residuals   56  496.9   8.873</span></span></code></pre></div>
+<span><span class="co">#&gt; diet         3   5459  1819.6   2.049  0.117</span></span>
+<span><span class="co">#&gt; Residuals   56  49734   888.1</span></span></code></pre></div>
 <p><strong>Notice that we conclude that there is not a difference in
 weights as a function of diet type even though later in the lab, we will
 see that diet is an important factor. Why do we reach this incorrect
@@ -435,21 +434,21 @@ simpler, we will center the continuous predictor.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Residuals:</span></span>
 <span><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
-<span><span class="co">#&gt; -3.8214 -1.2213 -0.2519  1.2161  4.9185 </span></span>
+<span><span class="co">#&gt; -38.246 -12.180  -2.528  12.152  49.225 </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;                 Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)      25.3951     0.4874  52.105  &lt; 2e-16 ***</span></span>
-<span><span class="co">#&gt; length_centered   0.5573     0.0594   9.382 5.20e-13 ***</span></span>
-<span><span class="co">#&gt; dietLow           1.3688     0.6875   1.991 0.051472 .  </span></span>
-<span><span class="co">#&gt; dietMed           2.5265     0.6973   3.623 0.000636 ***</span></span>
-<span><span class="co">#&gt; dietHigh          3.0830     0.6832   4.513 3.41e-05 ***</span></span>
+<span><span class="co">#&gt; (Intercept)     253.9674     4.8751  52.095  &lt; 2e-16 ***</span></span>
+<span><span class="co">#&gt; length_centered   2.7892     0.2972   9.385 5.16e-13 ***</span></span>
+<span><span class="co">#&gt; dietLow          13.7271     6.8777   1.996 0.050909 .  </span></span>
+<span><span class="co">#&gt; dietMed          25.2262     6.9743   3.617 0.000648 ***</span></span>
+<span><span class="co">#&gt; dietHigh         30.7840     6.8332   4.505 3.50e-05 ***</span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Residual standard error: 1.864 on 55 degrees of freedom</span></span>
+<span><span class="co">#&gt; Residual standard error: 18.64 on 55 degrees of freedom</span></span>
 <span><span class="co">#&gt; Multiple R-squared:  0.6536, Adjusted R-squared:  0.6284 </span></span>
-<span><span class="co">#&gt; F-statistic: 25.94 on 4 and 55 DF,  p-value: 4.147e-12</span></span></code></pre></div>
+<span><span class="co">#&gt; F-statistic: 25.94 on 4 and 55 DF,  p-value: 4.136e-12</span></span></code></pre></div>
 <p><strong>How would you interpret each of these parameter estimates in
 the context of the data?</strong></p>
 <p><br><br></p>
@@ -487,12 +486,12 @@ able to use <code><a href="https://rdrr.io/r/stats/TukeyHSD.html" class="externa
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Linear Hypotheses:</span></span>
 <span><span class="co">#&gt;                     Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; Low - Control == 0    1.3688     0.6875   1.991  0.20400    </span></span>
-<span><span class="co">#&gt; Med - Control == 0    2.5265     0.6973   3.623  0.00353 ** </span></span>
-<span><span class="co">#&gt; High - Control == 0   3.0830     0.6832   4.513  &lt; 0.001 ***</span></span>
-<span><span class="co">#&gt; Med - Low == 0        1.1577     0.6828   1.696  0.33570    </span></span>
-<span><span class="co">#&gt; High - Low == 0       1.7143     0.6817   2.515  0.06862 .  </span></span>
-<span><span class="co">#&gt; High - Med == 0       0.5566     0.6869   0.810  0.84932    </span></span>
+<span><span class="co">#&gt; Low - Control == 0    13.727      6.878   1.996  0.20188    </span></span>
+<span><span class="co">#&gt; Med - Control == 0    25.226      6.974   3.617  0.00328 ** </span></span>
+<span><span class="co">#&gt; High - Control == 0   30.784      6.833   4.505  &lt; 0.001 ***</span></span>
+<span><span class="co">#&gt; Med - Low == 0        11.499      6.829   1.684  0.34187    </span></span>
+<span><span class="co">#&gt; High - Low == 0       17.057      6.819   2.501  0.07083 .  </span></span>
+<span><span class="co">#&gt; High - Med == 0        5.558      6.871   0.809  0.84997    </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; (Adjusted p values reported -- single-step method)</span></span></code></pre></div>

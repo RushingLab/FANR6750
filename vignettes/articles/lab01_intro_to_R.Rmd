@@ -436,7 +436,7 @@ Although useful for many applications, vectors and matrices are limited in their
 
 This is where data frames become useful. Perhaps the most common type of data object you will use in `R` is the data frame. Data frames are tabular objects (rows and columns) similar in structure to spreadsheets (think Excel or GoogleSheets). In effect, data frames store multiple vectors - each column of the data frame is a vector. The advantage they have over matrices is that each column can be a different class (numeric, character, etc.) but all values within a column must be the same class. Just as the first row of an Excel spreadsheet can be a list of column names, each column in a data frame has a name that (hopefully) provides information about what the values in that column represent.  
 
-To see how data frames work, let's load a data frame called `jaydata` that comes with the `FANR6750` package. 
+To see how data frames work, let's load a data frame called `jayData` that comes with the `FANR6750` package. 
 
 
 ### An aside about packages

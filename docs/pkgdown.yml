@@ -6,13 +6,17 @@ articles:
   graphics: graphics.html
   homework: homework.html
   lab01_intro_to_R: lab01_intro_to_R.html
+  lab02_Intro_project_and_Rmd: lab02_Intro_project_and_Rmd.html
   lab02_intro_project_RMD: lab02_intro_project_RMD.html
   lab03_linear_models: lab03_linear_models.html
+  lab03_t-tests: lab03_t-tests.html
+  lab04_ANOVA: lab04_ANOVA.html
   lab04_t-tests: lab04_t-tests.html
   lab05_anova: lab05_anova.html
+  lab05_multiple_regression: lab05_multiple_regression.html
   lab06_blocking: lab06_blocking.html
   projects_and_directories: projects_and_directories.html
   schedule: schedule.html
   syllabus: syllabus.html
-last_built: 2023-08-17T14:25Z
+last_built: 2023-08-21T16:48Z
 

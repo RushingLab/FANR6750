@@ -4,9 +4,7 @@ frogdata <- data.frame(Frogs = c(16, 14, 18, 17, 29, 31, 14, 16, 22, 15,
                            2, 11, 6, 8, 0, 3, 19, 1, 6, 5),
                     Development = factor(rep(c("Low", "High"), each = 10), levels = c("Low", "High")))
 
-pinedata <- data.frame(Replicate = rep(c(1,2,3), 4),
-                   Treatment = rep(c("A", "B", "C", "D"), each = 3),
-                   Height = c(11, 10, 9, 9, 8, 7, 7, 6, 5, 5,4,3))
+pinedata <- read.csv("data-raw/pinedata.csv")
 
 warblerdata <- data.frame(Replicate = rep(c("1", "2", "3", "4"), each = 3),
                        Elevation = rep(c("Low", "Medium", "High"), each = 4),
@@ -106,7 +104,7 @@ pesticidedata <- structure(list(Brand = structure(c(2L, 2L, 2L, 2L, 2L, 2L, 2L,
 musseldata <- read.csv("data-raw/musselData.csv")
 dietdata <- read.csv("data-raw/dietData.csv")
 dietdata$diet <- factor(dietdata$diet, levels = c("Control", "Low", "Med", "High"))
-dietdata <- dplyr::rename(dietdata, length = girth)
+
 
 mothdata <- data.frame(Region = as.factor(1:4),
                  Control = c(25, 10, 15, 32),
