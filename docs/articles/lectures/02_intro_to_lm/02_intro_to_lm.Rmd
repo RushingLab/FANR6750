@@ -544,6 +544,65 @@ $$\large \epsilon_i \sim \color{#3CB521}{normal}(0, \color{#CD0200}\sigma)$$
                  color = "#CD0200") 
 ```
 
+
+---
+# assumptions - normality
+
+Remember that the normality assumption applies to the *residuals* not the data. 
+
+--
+
+In the data below, the histogram of the response variable *y* shows that the data is clearly not normally distributed
+
+```{r fig.width=9, fig.height = 4 }
+set.seed(97342)
+x <- c(rnorm(60, 7, 3), runif(40, 15, 60))
+ey <- -3 + 1.2 * x
+
+eps <- rnorm(length(x), 0, 4)
+y <- ey + eps
+fm1 <- lm(y ~ x)
+
+df <- data.frame(y = y,
+                 ey = ey,
+                 x = x, 
+                 r = resid(fm1))
+
+y <- ggplot(df, aes(x = y)) +
+  geom_histogram() +
+  scale_y_continuous("") +
+  scale_x_continuous("y")
+xy1 <- ggplot(df, aes(x = x, y = y)) +
+  stat_smooth(method = "lm", color = "red", se = FALSE) +
+  geom_point(alpha = 0.5, size = 1)
+xy2 <- ggplot(df, aes(x = x, y = y)) +
+  stat_smooth(method = "lm", color = "red", se = FALSE) +
+  geom_segment(aes(x = x, xend = x, y = ey, yend = y), color = "#3CB521", size = 1) +
+  geom_point(alpha = 0.5, size = 1)
+blank <- ggplot() + geom_blank()
+r <- ggplot(df, aes(x = r)) +
+  geom_histogram() +
+  scale_y_continuous("") +
+  scale_x_continuous("residuals")
+cowplot::plot_grid(xy1, y, nrow = 1, ncol = 3)
+
+```
+
+---
+# assumptions - normality
+
+Remember that the normality assumption applies to the *residuals* not the data. 
+
+In the data below, the histogram of the response variable *y* shows that the data is clearly not normally distributed
+
+But a histogram of the residuals (green lines) shows that they are normal (or at least close)
+
+```{r fig.width=9, fig.height = 4 }
+
+cowplot::plot_grid(xy2, y, r, nrow = 1, ncol = 3)
+
+```
+
 ---
 # linear models
 
