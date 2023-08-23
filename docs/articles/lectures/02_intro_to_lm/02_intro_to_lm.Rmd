@@ -451,6 +451,100 @@ $$\Large \epsilon_i \sim normal(0, \sigma)$$
 Because virtually every model we will use this semester is a linear model, these assumptions apply to everything we will discuss from here out
 
 ---
+# assumptions
+
+$$\large y_i = \beta_0 + \beta_1x_i + \epsilon_i$$
+$$\large \epsilon_i \sim normal(0, \sigma)$$
+
+```{r fig.height=6, fig.width=8}
+  x <- runif(100, 0, 60)
+  ey <- 10 + 1*x 
+  eps <- rnorm(100, 0, 3)
+  y <- ey + eps
+  df <- data.frame(x, y)
+  lm_fit <- lm(y ~ x, data = df)
+  
+  k <- 2.5
+  sigma <- sigma(lm_fit)
+  ab <- coef(lm_fit); a <- ab[1]; b <- ab[2]
+  
+  x <- seq(-k*sigma, k*sigma, length.out = 50)
+  y <- dnorm(x, 0, sigma)/dnorm(0, 0, sigma) * 3
+  
+  x0 <- 5
+  y0 <- a+b*x0
+  path1 <- data.frame(x = y + x0, y = x + y0)
+  segment1 <- data.frame(x = x0, y = y0 - k*sigma, xend = x0, yend = y0 + k*sigma)
+  x0 <- 20
+  y0 <- a+b*x0 
+  path2 <- data.frame(x = y + x0, y = x + y0)
+  segment2 <- data.frame(x = x0, y = y0 - k*sigma, xend = x0, yend = y0 + k*sigma)
+  x0 <- 35
+  y0 <- a+b*x0 
+  path3 <- data.frame(x = y + x0, y = x + y0)
+  segment3 <- data.frame(x = x0, y = y0 - k*sigma, xend = x0, yend = y0 + k*sigma)
+  x0 <- 50
+  y0 <- a+b*x0 
+  path4 <- data.frame(x = y + x0, y = x + y0)
+  segment4 <- data.frame(x = x0, y = y0 - k*sigma, xend = x0, yend = y0 + k*sigma)
+  
+  ggplot(df, mapping = aes(x=x, y=y)) + 
+    geom_point(color="#446E9B", alpha = 0.5) 
+```
+
+---
+# assumptions - linearity
+
+$$\large y_i = \color{#D47500}{\beta_0 + \beta_1x_i} + \epsilon_i$$
+$$\large \epsilon_i \sim normal(0, \sigma)$$
+
+```{r fig.height=6, fig.width=8}
+  ggplot(df, mapping = aes(x=x, y=y)) + 
+    geom_point(color="#446E9B", alpha = 0.5) + 
+    geom_smooth(method='lm', se=FALSE, color="#D47500", alpha = 0.5) 
+```
+
+---
+# assumptions - normality
+
+$$\large y_i = \color{#D47500}{\beta_0 + \beta_1x_i} + \epsilon_i$$
+$$\large \epsilon_i \sim \color{#3CB521}{normal}(0, \sigma)$$
+
+```{r fig.height=6, fig.width=8}
+  ggplot(df, mapping = aes(x=x, y=y)) + 
+    geom_point(color="#446E9B", alpha = 0.5) + 
+    geom_smooth(method='lm', se=FALSE, color="#D47500", alpha = 0.5) + 
+    geom_path(aes(x,y), data = path1, linewidth = 1, color = "#3CB521") + 
+    geom_path(aes(x,y), data = path2, linewidth = 1, color = "#3CB521") + 
+    geom_path(aes(x,y), data = path3, linewidth = 1, color = "#3CB521") +
+    geom_path(aes(x,y), data = path4, linewidth = 1, color = "#3CB521")
+```
+
+---
+# assumptions - homogeniety
+
+$$\large y_i = \color{#D47500}{\beta_0 + \beta_1x_i} + \epsilon_i$$
+$$\large \epsilon_i \sim \color{#3CB521}{normal}(0, \color{#CD0200}\sigma)$$
+
+```{r fig.height=6, fig.width=8}
+  ggplot(df, mapping = aes(x=x, y=y)) + 
+    geom_point(color="#446E9B", alpha = 0.5) + 
+    geom_smooth(method='lm', se=FALSE, color="#D47500", alpha = 0.5) + 
+    geom_path(aes(x,y), data = path1, linewidth = 1, color = "#3CB521") + 
+    geom_path(aes(x,y), data = path2, linewidth = 1, color = "#3CB521") + 
+    geom_path(aes(x,y), data = path3, linewidth = 1, color = "#3CB521") +
+    geom_path(aes(x,y), data = path4, linewidth = 1, color = "#3CB521") +
+    geom_segment(aes(x=x,y=y,xend=xend,yend=yend), data = segment1, linewidth = 0.6, 
+                 color = "#CD0200") +
+    geom_segment(aes(x=x,y=y,xend=xend,yend=yend), data = segment2, linewidth = 0.6,
+                 color = "#CD0200") +
+    geom_segment(aes(x=x,y=y,xend=xend,yend=yend), data = segment3, linewidth = 0.6,
+                 color = "#CD0200") +
+    geom_segment(aes(x=x,y=y,xend=xend,yend=yend), data = segment4, linewidth = 0.6,
+                 color = "#CD0200") 
+```
+
+---
 # linear models
 
 #### Very flexible

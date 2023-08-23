@@ -532,4 +532,3 @@ Of course, with our real data, we have no way of knowing if our sample is one of
 <br/>
 
 ### **Reading**: [Fieberg chp. 3.6](https://statistics4ecologists-v1.netlify.app/matrixreg#categorical-predictors)
-

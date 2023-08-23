@@ -145,8 +145,8 @@ If development does influence frog abundance, $\beta_1 \neq 0$
 - For the frog data:
 
 ```{r echo = TRUE}
-mu_high <- mean(frogs$Frogs[frogs$Development == "High"])
-mu_low <- mean(frogs$Frogs[frogs$Development == "Low"])
+mu_high <- mean(frogdata$Frogs[frogdata$Development == "High"])
+mu_low <- mean(frogdata$Frogs[frogdata$Development == "Low"])
 
 (beta_1.hat <- mu_high - mu_low)
 ```
@@ -610,7 +610,7 @@ Notice that the `lm` output provides a *t*-statistic and *p*-value for both the 
 As we saw before, the frog model can be fit as a two-sample *t*-test
 
 ```{r echo = TRUE}
-t.test(Frogs ~ Development, data = frogs)
+t.test(Frogs ~ Development, data = frogdata)
 ```
 
 --

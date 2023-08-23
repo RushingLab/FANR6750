@@ -162,8 +162,8 @@ If development does influence frog abundance, `\(\beta_1 \neq 0\)`
 
 
 ```r
-mu_high &lt;- mean(frogs$Frogs[frogs$Development == "High"])
-mu_low &lt;- mean(frogs$Frogs[frogs$Development == "Low"])
+mu_high &lt;- mean(frogdata$Frogs[frogdata$Development == "High"])
+mu_low &lt;- mean(frogdata$Frogs[frogdata$Development == "Low"])
 
 (beta_1.hat &lt;- mu_high - mu_low)
 ```
@@ -249,7 +249,7 @@ mean(y) - 0
 ```
 
 ```
-## [1] 0.2065
+## [1] -0.1396
 ```
 
 
@@ -269,7 +269,7 @@ se.y &lt;- sd(y)/sqrt(10)
 ```
 
 ```
-## [1] 0.6555
+## [1] -0.4313
 ```
 
 --
@@ -596,7 +596,7 @@ As we saw before, the frog model can be fit as a two-sample *t*-test
 
 
 ```r
-t.test(Frogs ~ Development, data = frogs)
+t.test(Frogs ~ Development, data = frogdata)
 ```
 
 ```

@@ -1,0 +1,500 @@
+---
+title: "LECTURE 13: random effects"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2023"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, fig.retina = 2)
+source(here::here("R/zzz.R"))
+library(emo)
+library(FANR6750)
+library(dplyr)
+library(kableExtra)
+# library(gganimate)
+```
+
+class: inverse
+
+# outline 
+
+<br/>
+
+1) Independence assumption
+
+<br/>
+
+--
+
+2) Random effects vs. fixed effects
+
+<br/>
+
+--
+
+3) Random effects in linear models
+
+
+---
+# independence assumption
+
+#### As we have seen several times, linear models assume that residuals are independent
+
+--
+
+#### Non-independence often stems from unmodeled "group" structure in the data
+
+```{r fig.width = 6, fig.height=4}
+x <- rnorm(50)
+group <- sample(1:5, 50, replace = TRUE)
+nu <- c(-5, -2, 0, 2, 5)
+ey <- 5  + nu[group] + (1.2) * x
+y <- ey + rnorm(50, 0, 0.5)
+
+fm <- lm(y ~ x)
+
+df <- data.frame(x = x, y = y, r = fm$residuals, 
+                 e = fm$fitted.values, Lake = as.factor(group))
+ggplot(df, aes(x = e, y = r, color = Lake)) + 
+  geom_point() +
+  scale_x_continuous("Expected value") +
+  scale_y_continuous("Residuals") +
+  theme(legend.title = element_text())
+```
+
+---
+# example
+
+We are interested in how distance to the nearest foraging wetland influences the weight of Wood Stork chicks. Wood Storks nest in large colonies, so we measure the distance of 5 randomly selected colonies to the nearest wetland. Within each colony, we randomly select 10 nests and then measure the mass at hatching of 2 chicks within each nest. 
+
+.pull-left[
+```{r}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/6/6e/Mycteria_americana_73472346.jpg")
+
+```
+]
+
+.pull-right[
+.vsmall-code[
+```{r echo = TRUE}
+data("storkdata")
+storkdata0 <- storkdata[storkdata$Age == 0,]
+head(storkdata0)
+```
+]
+]
+
+---
+# example
+
+.pull-left[
+```{r}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/6/6e/Mycteria_americana_73472346.jpg")
+```
+]
+
+.pull-right[
+
+What is the experimental unit of this study?  
+
+What is the observational unit?  
+
+Where do we expect non-independence to arise?
+]
+
+---
+# example
+
+```{r echo = TRUE}
+fm1 <- lm(Weight ~ Distance, data = storkdata0)
+```
+
+```{r fig.height=6, fig.width=8}
+df <- data.frame(x = storkdata0$Distance, y = storkdata0$Weight, r = fm1$residuals, 
+                 e = fm1$fitted.values, Colony = as.factor(storkdata0$Colony), 
+                 Nest = as.factor(storkdata0$Nest))
+ggplot(df, aes(x = e, y = r, color = Colony)) + 
+  geom_point() +
+  scale_x_continuous("Expected value") +
+  scale_y_continuous("Residuals") +
+  theme(legend.title = element_text())
+```
+
+---
+# example
+
+```{r echo = TRUE}
+fm2 <- lm(Weight ~ Distance + as.factor(Colony) + as.factor(Nest), 
+          data = storkdata0)
+```
+
+```{r fig.height=6, fig.width=8}
+df <- data.frame(x = storkdata0$Distance, y = storkdata0$Weight, r = fm2$residuals, 
+                 e = fm2$fitted.values, Colony = as.factor(storkdata0$Colony), 
+                 Nest = as.factor(storkdata0$Nest))
+ggplot(df, aes(x = e, y = r, color = Colony)) + 
+  geom_point() +
+  scale_x_continuous("Expected value") +
+  scale_y_continuous("Residuals") +
+  theme(legend.title = element_text())
+```
+
+---
+# example
+
+**Question**: Where does sampling error come from in this model? 
+
+--
+
+**Answer**: At least three places:
+
+- random selection of chicks within nests
+
+- random selection of nests within colonies
+
+- random selection of colonies
+
+--
+
+Because we are sampling at multiple scales, there is uncertainty associated with each level
+
+- If we re-ran the study, we would get slightly different estimates of each parameter because the exact colonies/nests/chicks would be different
+
+--
+
+For both statistical and inferential reasons, our model should ideally account for sampling processes (and the associated non-independence) at each level
+
+---
+class:inverse, middle, center
+
+# random effects
+
+---
+# what are random effects
+
+--
+- Fixed effects are constant across observational units, random effects vary across units  
+<br/>
+
+--
+- Fixed effects are used when you are interested in the specific factor levels, random effects are used when you are interested in the underlying population  
+<br/>
+
+--
+- When factors levels are exhaustive, they are fixed. When they are a sample of the possible levels, they are random  
+<br/>
+
+--
+- Random effects are the realized values of a random variable  
+<br/>
+
+--
+- Fixed effects are estimated by maximum likelihood, random effects are estimated with shrinkage  
+
+???
+
+Definitions from Gelman & Hill (2007) pg. 245
+
+---
+# what are random effects
+
+To understand random effects, it is helpful to think about the *hierarchy* of the model we are trying to fit  
+
+--
+
+Conventional linear model: 
+
+$$\large y_{ijk} = \beta_0 + \beta_1 x_i + \epsilon_i$$
+$$\large \epsilon_i \sim normal(0, \sigma)$$
+
+--
+
+In this formulation, the residuals are treated as normally-distributed, random variables
+
+---
+# what are random effects
+
+To understand random effects, it is helpful to think about the *hierarchy* of the model we are trying to fit  
+
+--
+
+Conventional linear model: 
+
+
+---
+# example 
+
+.vsmall-code[
+```{r echo = TRUE}
+colonydata <- storkdata0 %>% 
+                group_by(Colony) %>% 
+                  summarise(mu.y = mean(Weight), Distance = mean(Distance))
+
+fm3 <- lm(mu.y ~ Distance, data = colonydata)
+summary(fm3)
+```
+]
+
+---
+# example
+
+```{r fig.height=5, fig.width=7}
+df <- data.frame(x = colonydata$Distance, y = colonydata$mu.y, r = fm3$residuals, 
+                 e = fm3$fitted.values, Colony = as.factor(colonydata$Colony))
+ggplot(df, aes(x = e, y = r, color = Colony)) + 
+  geom_point() +
+  scale_x_continuous("Expected value") +
+  scale_y_continuous("Residuals") +
+  theme(legend.title = element_text())
+```
+
+--
+
+(this example hopefully helps clarify the issue of psuedoreplication. We don't have 100 data points informing the relationship between chick weight and distance - we have 5!)
+
+---
+# fixed vs random effects
+
+<br/>
+
+#### A fixed effects model is appropriate when the treatment levels included in the experiment are exhaustive  
+
+<br/>
+
+--
+
+#### A random effects model is appropriate when the treatment levels in the experiment can be considered a sample from a larger population of interest  
+
+- In the previous example, we are interested in all colonies and nests, not just the ones included in the study
+
+
+---
+# models
+
+### Fixed-effects model  
+
+$$\Large y_{ij} = \mu + \alpha_i + \epsilon_{ij}$$
+$$\Large  \epsilon_{ij} \simnormal(0, \sigma^2)$$
+--
+
+### Random-effects model
+
+$$\Large y_{ij} = \mu + \alpha_i + \epsilon_{ij}$$
+$$\Large \alpha_{i} \simnormal(0, \sigma_A^2)$$
+
+$$\Large \epsilon_{ij} \simnormal(0, \sigma^2)$$
+
+--
+
+In a random effects model, the effects are assumed to be random variables following some probability distribution
+
+---
+# hypotheses
+
+#### In a random-effects model, our interest is in assessing how much variation there is among all the effects in the population, not just the ones in our sample  
+
+
+#### As a result, our hypotheses must be written differently:
+
+--
+
+#### Fixed-effects model
+
+$$\large H_0 : \alpha_1 = \alpha_2 = ... = \alpha_a = 0$$
+
+$$\large H_a : At\;least\;one\;inequality$$
+
+--
+
+#### Random-effects model
+
+$$\large H_0 : \sigma^2_A = 0$$
+
+
+$$\large H_a : \sigma^2_A > 0$$
+
+
+---
+# implications?
+
+#### Oddly enough, in the context of a one-way ANOVA, the analysis procedure is exactly the same for the fixed-effects and random-effects models  
+
+--
+
+#### In other words, we can construct the ANOVA table and test the null hypothesis using the same procedure for the random-effects model as we used for the fixed-effects model, even though the interpretation of the results is slightly different  
+
+--
+
+#### A comprehensive list of the distinctions between the two approaches is given in section 8.2 of Quinn et al.
+
+--
+
+#### The distinction between random and fixed effects becomes much more important in the more complicated models that we will cover soon  
+
+---
+class: inverse, center, middle
+
+# random effects in blocked anova
+
+---
+# blocked anova
+
+<br/>
+
+### Should we treat block effects as fixed or random?  
+
+<br/>
+
+--
+
+### As before, we need to answer the question: 
+
+> Can we view the blocks as samples of a larger population, or do the blocks represent all possible levels?
+
+
+---
+# random effects model for blocked design
+
+
+$$\huge y_{ij} = \mu + \alpha_i + \beta_j + \epsilon_{ij}$$
+$$\Large \beta_{j} \sim normal(0, \sigma^2_B)$$
+
+$$\Large \epsilon_{ij} \sim normal(0, \sigma^2)$$
+
+<br/>
+
+--
+
+#### This is often called a mixed effects model because it includes fixed and random effects  
+
+--
+
+#### If we treated the $\alpha$'s as random too, we might call the model a *variance components model*  
+
+
+
+---
+# hypotheses
+
+.pull-left[
+#### Main hypothesis
+
+$$H_0 : \alpha_1 = \alpha_2 = ... = \alpha_a = 0$$
+
+$$H_a : At\;least\;one\;inequality$$
+
+OR
+
+$$H_0 : \sigma^2_A = 0$$
+
+$$H_a : \sigma^2_A > 0$$
+]
+--
+
+.pull-right[
+
+#### Secondary hypothesis
+
+$$H_0 : \beta_1 = \beta_2 = ... = \beta_b = 0$$
+
+$$H_a : At\;least\;one\;inequality$$
+OR
+
+$$H_0 : \sigma^2_B = 0$$
+
+$$H_a : \sigma^2_B > 0$$
+]
+
+---
+# implications
+
+<br/>
+<br/>
+
+#### Once again, treating block effects as random doesn't affect our calculations for the ANOVA table<sup>1</sup>  - it only affects the interpretation
+
+
+.footnote[<sup>1</sup> Technically, this is only true for balanced designs]
+
+---
+# random-effects model in `r`
+
+```{r echo = FALSE}
+data("mothdata")
+mothdata$Region <- as.factor(mothdata$Region)
+# gypsyData <- data.frame(location = rep(c("A", "B", "C", "D"), 3),
+#                         caterpillars = c(16, 3, 10, 18, 25, 10, 15, 32, 14, 2, 16, 12),
+#                         pesticide = rep(c("Bt", "Control", "Dimilin"), each = 4))
+```
+
+```{r echo = TRUE, eval = FALSE}
+aov1 <- aov(Larvae ~ Treatment + Region, mothdata)
+summary(aov1)
+```
+
+```{r echo = FALSE}
+aov1 <- aov(Larvae ~ Treatment + Region, mothdata)
+options(knitr.kable.NA = '')
+kable(broom::tidy(aov1)) %>%
+  kable_styling(font_size = 10, full_width = FALSE, bootstrap_options = "condensed")
+```
+
+
+--
+
+```{r echo = TRUE, eval = FALSE}
+aov2 <- aov(Larvae ~ Treatment + Error(Region), mothdata)
+summary(aov2)
+```
+
+```{r echo = FALSE}
+aov2 <- aov(Larvae ~ Treatment + Error(Region), mothdata)
+options(knitr.kable.NA = '')
+kable(broom::tidy(aov2)) %>%
+  kable_styling(font_size = 10, full_width = FALSE, bootstrap_options = "condensed")
+```
+
+
+
+---
+# summary
+
+- We usually model the main treatment effects as fixed, but sometimes we are interested in effects not in the sample
+
+--
+
+- Random effects models allow for inference about entire population of effects  
+
+--
+
+- Random effects models make additional distributional assumptions  
+
+--
+
+- Usually, you need many treatment levels (5-10) to get a decent estimate of the variance parameter associated with the random effects  
+
+--
+
+- In spite of the big conceptual differences, the procedures aren't much different for one-way and blocked ANOVAs  
+
+
+---
+# looking ahead
+
+<br/>
+
+### **Next time**: Random effects
+
+<br/>
+
+### **Reading**: [Fieberg chp. 18.4-18.6](https://statistics4ecologists-v1.netlify.app/mixed#what-are-random-effects-mixed-effect-models-and-when-should-they-be-used)
+
