@@ -215,7 +215,9 @@ Conventional linear model:
 
 $$\large y_{ijk} = \beta_0 + \beta_1 x_i + \epsilon_i$$
 $$\large \epsilon_i \sim normal(0, \sigma)$$
+- $y_{ijk}$ = weight of chick $i$ in nest $j$ in colony $k$
 
+- 
 --
 
 In this formulation, the residuals are treated as normally-distributed, random variables
