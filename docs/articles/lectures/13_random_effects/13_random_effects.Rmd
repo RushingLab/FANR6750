@@ -74,7 +74,7 @@ ggplot(df, aes(x = e, y = r, color = Lake)) +
 ---
 # example
 
-We are interested in how distance to the nearest foraging wetland influences the weight of Wood Stork chicks. Wood Storks nest in large colonies, so we measure the distance of 5 randomly selected colonies to the nearest wetland. Within each colony, we randomly select 10 nests and then measure the mass at hatching of 2 chicks within each nest. 
+We are interested in how blood mercury levels influence the weight of Wood Stork chicks. Wood Storks nest in large colonies, so we randomly select 5 colonies for sampling. Within each colony, we randomly select 20 chicks from different nests and then measure their mass at hatching. 
 
 .pull-left[
 ```{r}
@@ -87,8 +87,7 @@ knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/6/6e/Myc
 .vsmall-code[
 ```{r echo = TRUE}
 data("storkdata")
-storkdata0 <- storkdata[storkdata$Age == 0,]
-head(storkdata0)
+head(storkdata)
 ```
 ]
 ]
@@ -115,13 +114,12 @@ Where do we expect non-independence to arise?
 # example
 
 ```{r echo = TRUE}
-fm1 <- lm(Weight ~ Distance, data = storkdata0)
+fm1 <- lm(Weight ~ Mercury, data = storkdata)
 ```
 
 ```{r fig.height=6, fig.width=8}
-df <- data.frame(x = storkdata0$Distance, y = storkdata0$Weight, r = fm1$residuals, 
-                 e = fm1$fitted.values, Colony = as.factor(storkdata0$Colony), 
-                 Nest = as.factor(storkdata0$Nest))
+df <- data.frame(x = storkdata$Mercury, y = storkdata$Weight, r = fm1$residuals, 
+                 e = fm1$fitted.values, Colony = storkdata$Colony)
 ggplot(df, aes(x = e, y = r, color = Colony)) + 
   geom_point() +
   scale_x_continuous("Expected value") +
@@ -133,14 +131,13 @@ ggplot(df, aes(x = e, y = r, color = Colony)) +
 # example
 
 ```{r echo = TRUE}
-fm2 <- lm(Weight ~ Distance + as.factor(Colony) + as.factor(Nest), 
-          data = storkdata0)
+fm2 <- lm(Weight ~ Mercury + Colony, 
+          data = storkdata)
 ```
 
 ```{r fig.height=6, fig.width=8}
-df <- data.frame(x = storkdata0$Distance, y = storkdata0$Weight, r = fm2$residuals, 
-                 e = fm2$fitted.values, Colony = as.factor(storkdata0$Colony), 
-                 Nest = as.factor(storkdata0$Nest))
+df <- data.frame(x = storkdata$Mercury, y = storkdata$Weight, r = fm2$residuals, 
+                 e = fm2$fitted.values, Colony = storkdata$Colony)
 ggplot(df, aes(x = e, y = r, color = Colony)) + 
   geom_point() +
   scale_x_continuous("Expected value") +
@@ -151,15 +148,32 @@ ggplot(df, aes(x = e, y = r, color = Colony)) +
 ---
 # example
 
+```{r echo = TRUE}
+fm2 <- lm(Weight ~ Mercury + Colony, 
+          data = storkdata)
+```
+
+```{r fig.height=6, fig.width=8}
+df <- data.frame(x = storkdata$Mercury, y = storkdata$Weight, r = fm2$residuals, 
+                 e = fm2$fitted.values, Colony = storkdata$Colony)
+ggplot(df, aes(x = e, y = r, color = Colony)) + 
+  geom_point() +
+  scale_x_continuous("Expected value") +
+  scale_y_continuous("Residuals") +
+  theme(legend.title = element_text())
+```
+
+---
+# example
+
+Statistically, including 
 **Question**: Where does sampling error come from in this model? 
 
 --
 
-**Answer**: At least three places:
+**Answer**: At least two places:
 
-- random selection of chicks within nests
-
-- random selection of nests within colonies
+- random selection of chicks within colonies
 
 - random selection of colonies
 
@@ -167,7 +181,7 @@ ggplot(df, aes(x = e, y = r, color = Colony)) +
 
 Because we are sampling at multiple scales, there is uncertainty associated with each level
 
-- If we re-ran the study, we would get slightly different estimates of each parameter because the exact colonies/nests/chicks would be different
+- If we re-ran the study, we would get slightly different estimates of each parameter because the exact colonies/chicks would be different
 
 --
 
@@ -207,97 +221,71 @@ Definitions from Gelman & Hill (2007) pg. 245
 ---
 # what are random effects
 
-To understand random effects, it is helpful to think about the *hierarchy* of the model we are trying to fit  
+Previously, when we included factors in the model, we treated them as *fixed effects*. We chose each level for a reason and if we repeated the experiment, we would use the same levels, either because those are the specific levels we are interested in or because those are all of the possible levels
+
+- Low, medium, high 
+
+- Brand A, Brand B, Brand C
+
+- Species 1, species 2, species 3
 
 --
 
-Conventional linear model: 
+A random effects model is appropriate when the treatment levels in the experiment can be considered a sample from a larger population of interest  
 
-$$\large y_{ijk} = \beta_0 + \beta_1 x_i + \epsilon_i$$
-$$\large \epsilon_i \sim normal(0, \sigma)$$
-- $y_{ijk}$ = weight of chick $i$ in nest $j$ in colony $k$
-
-- 
---
-
-In this formulation, the residuals are treated as normally-distributed, random variables
-
----
-# what are random effects
-
-To understand random effects, it is helpful to think about the *hierarchy* of the model we are trying to fit  
-
---
-
-Conventional linear model: 
+- In the previous example, we are interested in all colonies, not just the ones included in the study
 
 
 ---
-# example 
+# fixed vs. random effects
 
-.vsmall-code[
-```{r echo = TRUE}
-colonydata <- storkdata0 %>% 
-                group_by(Colony) %>% 
-                  summarise(mu.y = mean(Weight), Distance = mean(Distance))
+Fixed-effect formulation: 
 
-fm3 <- lm(mu.y ~ Distance, data = colonydata)
-summary(fm3)
-```
-]
+$$\large y_{ij} = \beta_0 + \beta_{1[j]} + \beta_{2} x_i + \epsilon_{ij}$$
+$$\large \epsilon_{ij} \sim normal(0, \sigma^2)$$
 
----
-# example
+- $y_{ij}$ = weight of chick $i$ in colony $j$
 
-```{r fig.height=5, fig.width=7}
-df <- data.frame(x = colonydata$Distance, y = colonydata$mu.y, r = fm3$residuals, 
-                 e = fm3$fitted.values, Colony = as.factor(colonydata$Colony))
-ggplot(df, aes(x = e, y = r, color = Colony)) + 
-  geom_point() +
-  scale_x_continuous("Expected value") +
-  scale_y_continuous("Residuals") +
-  theme(legend.title = element_text())
+```{r fig.height=3.5, fig.width=6}
+f1 <- lm(Weight ~ Mercury + Colony, data = storkdata, contrasts = list(Colony = "contr.sum"))
+
+fe_df <- data.frame(intercept =  coef(f1)[1] + c(coef(f1)[c(3:6)], -sum(coef(f1)[c(3:6)])), 
+                    slope = coef(f1)[2], 
+                    Colony = c("C1", "C2", "C3", "C4", "C5"))
+
+ggplot(storkdata, aes(x = Mercury, y = Weight, color = Colony)) +
+  geom_point() + 
+  geom_abline(intercept = coef(f1)[1], slope = coef(f1)[2], linewidth = 1) +
+  geom_abline(data = fe_df, aes(intercept = intercept, slope = slope, color = Colony)) 
 ```
 
---
-
-(this example hopefully helps clarify the issue of psuedoreplication. We don't have 100 data points informing the relationship between chick weight and distance - we have 5!)
-
 ---
-# fixed vs random effects
+# fixed vs. random effects
 
-<br/>
+Random-effect formulation: 
 
-#### A fixed effects model is appropriate when the treatment levels included in the experiment are exhaustive  
+$$\large y_{ij} = \beta_0 + \beta_{1[j]} + \beta_{2} x_i + \epsilon_{ij}$$
+$$\large \beta_{1[j]} \sim normal(0, \sigma^2_C)$$
 
-<br/>
+$$\large \epsilon_{ij} \sim normal(0, \sigma^2)$$
 
---
-
-#### A random effects model is appropriate when the treatment levels in the experiment can be considered a sample from a larger population of interest  
-
-- In the previous example, we are interested in all colonies and nests, not just the ones included in the study
-
-
----
-# models
-
-### Fixed-effects model  
-
-$$\Large y_{ij} = \mu + \alpha_i + \epsilon_{ij}$$
-$$\Large  \epsilon_{ij} \simnormal(0, \sigma^2)$$
---
-
-### Random-effects model
-
-$$\Large y_{ij} = \mu + \alpha_i + \epsilon_{ij}$$
-$$\Large \alpha_{i} \simnormal(0, \sigma_A^2)$$
-
-$$\Large \epsilon_{ij} \simnormal(0, \sigma^2)$$
+- $y_{ij}$ = weight of chick $i$ in colony $j$
 
 --
 
-In a random effects model, the effects are assumed to be random variables following some probability distribution
+```{r fig.height=3.5, fig.width=6}
+m1 <- lme4::lmer(Weight ~ Mercury + (1|Colony), data = storkdata)
+re_df <- data.frame(intercept =  coef(m1)$Colony[,1], 
+                    slope = coef(m1)$Colony[,2], 
+                    Colony = c("C1", "C2", "C3", "C4", "C5"))
+
+ggplot(storkdata, aes(x = Mercury, y = Weight, color = Colony)) +
+  geom_point() + 
+  geom_abline(intercept = lme4::fixef(m1)[1], slope = lme4::fixef(m1)[2], linewidth = 1) +
+  geom_abline(data = fe_df, aes(intercept = intercept, slope = slope, color = Colony), alpha = 0.5) +
+  geom_abline(data = re_df, aes(intercept = intercept, slope = slope, color = Colony), linetype = "dashed") 
+
+```
 
 ---
 # hypotheses
@@ -311,7 +299,7 @@ In a random effects model, the effects are assumed to be random variables follow
 
 #### Fixed-effects model
 
-$$\large H_0 : \alpha_1 = \alpha_2 = ... = \alpha_a = 0$$
+$$\large H_0 : \beta_{1[1]} = \beta_{1[2]} = ... = \beta_{1[a]} = 0$$
 
 $$\large H_a : At\;least\;one\;inequality$$
 
@@ -319,174 +307,115 @@ $$\large H_a : At\;least\;one\;inequality$$
 
 #### Random-effects model
 
-$$\large H_0 : \sigma^2_A = 0$$
+$$\large H_0 : \sigma^2_C = 0$$
 
 
-$$\large H_a : \sigma^2_A > 0$$
-
-
----
-# implications?
-
-#### Oddly enough, in the context of a one-way ANOVA, the analysis procedure is exactly the same for the fixed-effects and random-effects models  
-
---
-
-#### In other words, we can construct the ANOVA table and test the null hypothesis using the same procedure for the random-effects model as we used for the fixed-effects model, even though the interpretation of the results is slightly different  
-
---
-
-#### A comprehensive list of the distinctions between the two approaches is given in section 8.2 of Quinn et al.
-
---
-
-#### The distinction between random and fixed effects becomes much more important in the more complicated models that we will cover soon  
+$$\large H_a : \sigma^2_C > 0$$
 
 ---
-class: inverse, center, middle
-
-# random effects in blocked anova
-
----
-# blocked anova
-
-<br/>
-
-### Should we treat block effects as fixed or random?  
-
-<br/>
-
---
-
-### As before, we need to answer the question: 
-
-> Can we view the blocks as samples of a larger population, or do the blocks represent all possible levels?
-
-
----
-# random effects model for blocked design
-
-
-$$\huge y_{ij} = \mu + \alpha_i + \beta_j + \epsilon_{ij}$$
-$$\Large \beta_{j} \sim normal(0, \sigma^2_B)$$
-
-$$\Large \epsilon_{ij} \sim normal(0, \sigma^2)$$
-
-<br/>
-
---
-
-#### This is often called a mixed effects model because it includes fixed and random effects  
-
---
-
-#### If we treated the $\alpha$'s as random too, we might call the model a *variance components model*  
-
-
-
----
-# hypotheses
+# random-intercept models in `r`
 
 .pull-left[
-#### Main hypothesis
-
-$$H_0 : \alpha_1 = \alpha_2 = ... = \alpha_a = 0$$
-
-$$H_a : At\;least\;one\;inequality$$
-
-OR
-
-$$H_0 : \sigma^2_A = 0$$
-
-$$H_a : \sigma^2_A > 0$$
+.vsmall-code[
+```{r echo = TRUE}
+library(lme4)
+data("storkdata")
+m1 <- lmer(Weight ~ Mercury + (1|Colony), data = storkdata)
+summary(m1)
+```
 ]
---
+]
 
 .pull-right[
+.vsmall-code[
+```{r echo = TRUE}
+ranef(m1)
+```
+]
 
-#### Secondary hypothesis
+```{r fig.height=3, fig.width=5}
+ggplot(storkdata, aes(x = Mercury, y = Weight, color = Colony)) +
+  geom_point() + 
+  geom_abline(intercept = lme4::fixef(m1)[1], slope = lme4::fixef(m1)[2], linewidth = 1) +
+  geom_abline(data = fe_df, aes(intercept = intercept, slope = slope, color = Colony), alpha = 0.5) +
+  geom_abline(data = re_df, aes(intercept = intercept, slope = slope, color = Colony), linetype = "dashed") 
 
-$$H_0 : \beta_1 = \beta_2 = ... = \beta_b = 0$$
+```
 
-$$H_a : At\;least\;one\;inequality$$
-OR
-
-$$H_0 : \sigma^2_B = 0$$
-
-$$H_a : \sigma^2_B > 0$$
 ]
 
 ---
-# implications
+# random-slope models in `r`
 
-<br/>
-<br/>
+It's also possible to treat the slopes as random effects
 
-#### Once again, treating block effects as random doesn't affect our calculations for the ANOVA table<sup>1</sup>  - it only affects the interpretation
+.pull-left[
+.vsmall-code[
+```{r echo = TRUE}
+m2 <- lmer(Weight ~ (Mercury|Colony), data = storkdata)
+summary(m2)
+```
+]
+]
 
+.pull-right[
+.vsmall-code[
+```{r echo = TRUE}
+ranef(m2)
+```
+]
 
-.footnote[<sup>1</sup> Technically, this is only true for balanced designs]
+```{r fig.height=3, fig.width=5}
+re_df2 <- data.frame(intercept = lme4::fixef(m2)[1] + lme4::ranef(m2)$Colony[,1], 
+                     slope = lme4::ranef(m2)$Colony[,2], 
+                     Colony = c("C1", "C2", "C3", "C4", "C5"))
+ggplot(storkdata, aes(x = Mercury, y = Weight, color = Colony)) +
+  geom_point() +
+  geom_abline(data = re_df2, aes(intercept = intercept, slope = slope, color = Colony)) 
+
+```
+
+]
 
 ---
-# random-effects model in `r`
+# mixed-effect models in `r`
 
-```{r echo = FALSE}
+It's also possible to combine fixed and random effects in the same model (usually referred to as "mixed effect" models or "mixed" models)
+
+.vsmall-code[
+```{r echo = TRUE}
 data("mothdata")
-mothdata$Region <- as.factor(mothdata$Region)
-# gypsyData <- data.frame(location = rep(c("A", "B", "C", "D"), 3),
-#                         caterpillars = c(16, 3, 10, 18, 25, 10, 15, 32, 14, 2, 16, 12),
-#                         pesticide = rep(c("Bt", "Control", "Dimilin"), each = 4))
+m3 <- lmer(Larvae ~ Treatment + (1|Region), data = mothdata)
+summary(m3)
 ```
-
-```{r echo = TRUE, eval = FALSE}
-aov1 <- aov(Larvae ~ Treatment + Region, mothdata)
-summary(aov1)
-```
-
-```{r echo = FALSE}
-aov1 <- aov(Larvae ~ Treatment + Region, mothdata)
-options(knitr.kable.NA = '')
-kable(broom::tidy(aov1)) %>%
-  kable_styling(font_size = 10, full_width = FALSE, bootstrap_options = "condensed")
-```
-
-
---
-
-```{r echo = TRUE, eval = FALSE}
-aov2 <- aov(Larvae ~ Treatment + Error(Region), mothdata)
-summary(aov2)
-```
-
-```{r echo = FALSE}
-aov2 <- aov(Larvae ~ Treatment + Error(Region), mothdata)
-options(knitr.kable.NA = '')
-kable(broom::tidy(aov2)) %>%
-  kable_styling(font_size = 10, full_width = FALSE, bootstrap_options = "condensed")
-```
-
-
+]
 
 ---
-# summary
-
-- We usually model the main treatment effects as fixed, but sometimes we are interested in effects not in the sample
+# why use random effects?
 
 --
 
-- Random effects models allow for inference about entire population of effects  
+- Random effects only apply to categorical predictors, not continuous predictors
+
+    + Generally need many treatment levels (5-10) to estimate variance parameter
 
 --
 
-- Random effects models make additional distributional assumptions  
+- The choice of random vs fixed effects usually depends on the scope of inference
+
+    + Are the factor levels exhaustive or are they samples of a larger population? If you repeated the experiment, could you end up with different groups?
+  
+--
+
+- Random effects account for non-independence caused by group structure *and* provide insights into the larger population
 
 --
 
-- Usually, you need many treatment levels (5-10) to get a decent estimate of the variance parameter associated with the random effects  
+- When sample sizes are sufficiently large and balanced, the regression parameters will be essentially the same in fixed vs random-effect models
 
---
-
-- In spite of the big conceptual differences, the procedures aren't much different for one-way and blocked ANOVAs  
+    + When sample sizes are small/unbalanced, estimates for groups with less data will be "pulled" towards the mean (this is a good thing!)
+    
+    + The degree of change is a function of how far the parameters are from the mean and how much information is in the data
 
 
 ---
@@ -494,7 +423,7 @@ kable(broom::tidy(aov2)) %>%
 
 <br/>
 
-### **Next time**: Random effects
+### **Next time**: Nesting designs
 
 <br/>
 

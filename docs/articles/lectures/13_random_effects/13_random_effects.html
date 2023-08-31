@@ -6,8 +6,6 @@
     <meta name="author" content="   Fall 2023" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
-    <script src="libs/kePrint/kePrint.js"></script>
-    <link href="libs/lightable/lightable.css" rel="stylesheet" />
     <link rel="stylesheet" href="FANR6750.css" type="text/css" />
     <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
   </head>
@@ -65,7 +63,7 @@ class: inverse
 ---
 # example
 
-We are interested in how distance to the nearest foraging wetland influences the weight of Wood Stork chicks. Wood Storks nest in large colonies, so we measure the distance of 5 randomly selected colonies to the nearest wetland. Within each colony, we randomly select 10 nests and then measure the mass at hatching of 2 chicks within each nest. 
+We are interested in how blood mercury levels influence the weight of Wood Stork chicks. Wood Storks nest in large colonies, so we randomly select 5 colonies for sampling. Within each colony, we randomly select 20 chicks from different nests and then measure their mass at hatching. 
 
 .pull-left[
 &lt;img src="https://upload.wikimedia.org/wikipedia/commons/6/6e/Mycteria_americana_73472346.jpg" style="display: block; margin: auto;" /&gt;
@@ -76,18 +74,17 @@ We are interested in how distance to the nearest foraging wetland influences the
 
 ```r
 data("storkdata")
-storkdata0 &lt;- storkdata[storkdata$Age == 0,]
-head(storkdata0)
+head(storkdata)
 ```
 
 ```
-##    Individual Age Colony Nest Distance Weight
-## 1           1   0      1    1    2.211  63.75
-## 6           2   0      1    1    2.211  61.68
-## 11          3   0      1    2    2.211  60.55
-## 16          4   0      1    2    2.211  61.89
-## 21          5   0      1    3    2.211  60.95
-## 26          6   0      1    3    2.211  62.12
+##   Colony Mercury Weight
+## 1     C1  7.7476  48.60
+## 2     C1 23.7235  46.75
+## 3     C1 16.4074  51.31
+## 4     C2  2.6362  68.25
+## 5     C2  0.4626  73.36
+## 6     C2 16.0777  65.37
 ```
 ]
 ]
@@ -113,7 +110,7 @@ Where do we expect non-independence to arise?
 
 
 ```r
-fm1 &lt;- lm(Weight ~ Distance, data = storkdata0)
+fm1 &lt;- lm(Weight ~ Mercury, data = storkdata)
 ```
 
 &lt;img src="13_random_effects_files/figure-html/unnamed-chunk-6-1.png" width="576" style="display: block; margin: auto;" /&gt;
@@ -123,8 +120,8 @@ fm1 &lt;- lm(Weight ~ Distance, data = storkdata0)
 
 
 ```r
-fm2 &lt;- lm(Weight ~ Distance + as.factor(Colony) + as.factor(Nest), 
-          data = storkdata0)
+fm2 &lt;- lm(Weight ~ Mercury + Colony, 
+          data = storkdata)
 ```
 
 &lt;img src="13_random_effects_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" /&gt;
@@ -132,15 +129,25 @@ fm2 &lt;- lm(Weight ~ Distance + as.factor(Colony) + as.factor(Nest),
 ---
 # example
 
+
+```r
+fm2 &lt;- lm(Weight ~ Mercury + Colony, 
+          data = storkdata)
+```
+
+&lt;img src="13_random_effects_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+---
+# example
+
+Statistically, including 
 **Question**: Where does sampling error come from in this model? 
 
 --
 
-**Answer**: At least three places:
+**Answer**: At least two places:
 
-- random selection of chicks within nests
-
-- random selection of nests within colonies
+- random selection of chicks within colonies
 
 - random selection of colonies
 
@@ -148,11 +155,16 @@ fm2 &lt;- lm(Weight ~ Distance + as.factor(Colony) + as.factor(Nest),
 
 Because we are sampling at multiple scales, there is uncertainty associated with each level
 
-- If we re-ran the study, we would get slightly different estimates of each parameter because the exact colonies/nests/chicks would be different
+- If we re-ran the study, we would get slightly different estimates of each parameter because the exact colonies/chicks would be different
 
 --
 
 For both statistical and inferential reasons, our model should ideally account for sampling processes (and the associated non-independence) at each level
+
+---
+class:inverse, middle, center
+
+# random effects
 
 ---
 # what are random effects
@@ -183,102 +195,48 @@ Definitions from Gelman &amp; Hill (2007) pg. 245
 ---
 # what are random effects
 
-To understand random effects, it is helpful to think about the *hierarchy* of the model we are trying to fit  
+Previously, when we included factors in the model, we treated them as *fixed effects*. We chose each level for a reason and if we repeated the experiment, we would use the same levels, either because those are the specific levels we are interested in or because those are all of the possible levels
+
+- Low, medium, high 
+
+- Brand A, Brand B, Brand C
+
+- Species 1, species 2, species 3
 
 --
 
-For the stork data, we could think of three models:
+A random effects model is appropriate when the treatment levels in the experiment can be considered a sample from a larger population of interest  
 
-1) Mean chick weight in each colony as a function of distance to wetlands
-
---
-
-2) Variation in mean chick weight among nests within each colony
-
---
-
-3) Variation in weight among chicks in each nest
-
----
-# example 
-
-.vsmall-code[
-
-```r
-colonydata &lt;- storkdata0 %&gt;% 
-                group_by(Colony) %&gt;% 
-                  summarise(mu.y = mean(Weight), Distance = mean(Distance))
-
-fm3 &lt;- lm(mu.y ~ Distance, data = colonydata)
-summary(fm3)
-```
-
-```
-## 
-## Call:
-## lm(formula = mu.y ~ Distance, data = colonydata)
-## 
-## Residuals:
-##       1       2       3       4       5 
-##  1.2000 -1.5476  1.4968 -1.2189  0.0698 
-## 
-## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   63.594      1.278   49.76  1.8e-05 ***
-## Distance      -1.768      0.216   -8.18   0.0038 ** 
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 1.59 on 3 degrees of freedom
-## Multiple R-squared:  0.957,	Adjusted R-squared:  0.943 
-## F-statistic:   67 on 1 and 3 DF,  p-value: 0.00382
-```
-]
-
----
-# example
-
-&lt;img src="13_random_effects_files/figure-html/unnamed-chunk-10-1.png" width="504" style="display: block; margin: auto;" /&gt;
-
---
-
-(this example hopefully helps clarify the issue of psuedoreplication. We don't have 100 data points informing the relationship between chick weight and distance - we have 5!)
-
----
-# fixed vs random effects
-
-&lt;br/&gt;
-
-#### A fixed effects model is appropriate when the treatment levels included in the experiment are exhaustive  
-
-&lt;br/&gt;
-
---
-
-#### A random effects model is appropriate when the treatment levels in the experiment can be considered a sample from a larger population of interest  
-
-- In the previous example, we are interested in all colonies and nests, not just the ones included in the study
+- In the previous example, we are interested in all colonies, not just the ones included in the study
 
 
 ---
-# models
+# fixed vs. random effects
 
-### Fixed-effects model  
+Fixed-effect formulation: 
 
-`$$\Large y_{ij} = \mu + \alpha_i + \epsilon_{ij}$$`
-`$$\Large  \epsilon_{ij} \simnormal(0, \sigma^2)$$`
+`$$\large y_{ij} = \beta_0 + \beta_{1[j]} + \beta_{2} x_i + \epsilon_{ij}$$`
+`$$\large \epsilon_{ij} \sim normal(0, \sigma^2)$$`
+
+- `\(y_{ij}\)` = weight of chick `\(i\)` in colony `\(j\)`
+
+&lt;img src="13_random_effects_files/figure-html/unnamed-chunk-11-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+---
+# fixed vs. random effects
+
+Random-effect formulation: 
+
+`$$\large y_{ij} = \beta_0 + \beta_{1[j]} + \beta_{2} x_i + \epsilon_{ij}$$`
+`$$\large \beta_{1[j]} \sim normal(0, \sigma^2_C)$$`
+
+`$$\large \epsilon_{ij} \sim normal(0, \sigma^2)$$`
+
+- `\(y_{ij}\)` = weight of chick `\(i\)` in colony `\(j\)`
+
 --
 
-### Random-effects model
-
-`$$\Large y_{ij} = \mu + \alpha_i + \epsilon_{ij}$$`
-`$$\Large \alpha_{i} \simnormal(0, \sigma_A^2)$$`
-
-`$$\Large \epsilon_{ij} \simnormal(0, \sigma^2)$$`
-
---
-
-In a random effects model, the effects are assumed to be random variables following some probability distribution
+&lt;img src="13_random_effects_files/figure-html/unnamed-chunk-12-1.png" width="432" style="display: block; margin: auto;" /&gt;
 
 ---
 # hypotheses
@@ -292,7 +250,7 @@ In a random effects model, the effects are assumed to be random variables follow
 
 #### Fixed-effects model
 
-`$$\large H_0 : \alpha_1 = \alpha_2 = ... = \alpha_a = 0$$`
+`$$\large H_0 : \beta_{1[1]} = \beta_{1[2]} = ... = \beta_{1[a]} = 0$$`
 
 `$$\large H_a : At\;least\;one\;inequality$$`
 
@@ -300,238 +258,208 @@ In a random effects model, the effects are assumed to be random variables follow
 
 #### Random-effects model
 
-`$$\large H_0 : \sigma^2_A = 0$$`
+`$$\large H_0 : \sigma^2_C = 0$$`
 
 
-`$$\large H_a : \sigma^2_A &gt; 0$$`
-
-
----
-# implications?
-
-#### Oddly enough, in the context of a one-way ANOVA, the analysis procedure is exactly the same for the fixed-effects and random-effects models  
-
---
-
-#### In other words, we can construct the ANOVA table and test the null hypothesis using the same procedure for the random-effects model as we used for the fixed-effects model, even though the interpretation of the results is slightly different  
-
---
-
-#### A comprehensive list of the distinctions between the two approaches is given in section 8.2 of Quinn et al.
-
---
-
-#### The distinction between random and fixed effects becomes much more important in the more complicated models that we will cover soon  
+`$$\large H_a : \sigma^2_C &gt; 0$$`
 
 ---
-class: inverse, center, middle
-
-# random effects in blocked anova
-
----
-# blocked anova
-
-&lt;br/&gt;
-
-### Should we treat block effects as fixed or random?  
-
-&lt;br/&gt;
-
---
-
-### As before, we need to answer the question: 
-
-&gt; Can we view the blocks as samples of a larger population, or do the blocks represent all possible levels?
-
-
----
-# random effects model for blocked design
-
-
-`$$\huge y_{ij} = \mu + \alpha_i + \beta_j + \epsilon_{ij}$$`
-`$$\Large \beta_{j} \sim normal(0, \sigma^2_B)$$`
-
-`$$\Large \epsilon_{ij} \sim normal(0, \sigma^2)$$`
-
-&lt;br/&gt;
-
---
-
-#### This is often called a mixed effects model because it includes fixed and random effects  
-
---
-
-#### If we treated the `\(\alpha\)`'s as random too, we might call the model a *variance components model*  
-
-
-
----
-# hypotheses
+# random-intercept models in `r`
 
 .pull-left[
-#### Main hypothesis
+.vsmall-code[
 
-`$$H_0 : \alpha_1 = \alpha_2 = ... = \alpha_a = 0$$`
+```r
+library(lme4)
+data("storkdata")
+m1 &lt;- lmer(Weight ~ Mercury + (1|Colony), data = storkdata)
+summary(m1)
+```
 
-`$$H_a : At\;least\;one\;inequality$$`
-
-OR
-
-`$$H_0 : \sigma^2_A = 0$$`
-
-`$$H_a : \sigma^2_A &gt; 0$$`
+```
+## Linear mixed model fit by REML ['lmerMod']
+## Formula: Weight ~ Mercury + (1 | Colony)
+##    Data: storkdata
+## 
+## REML criterion at convergence: 316.4
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.1711 -0.4972 -0.0025  0.6121  2.4314 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Colony   (Intercept) 51.58    7.18    
+##  Residual              4.71    2.17    
+## Number of obs: 67, groups:  Colony, 5
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)  61.9644     3.2669   18.97
+## Mercury      -0.3261     0.0355   -9.19
+## 
+## Correlation of Fixed Effects:
+##         (Intr)
+## Mercury -0.149
+```
 ]
---
+]
 
 .pull-right[
+.vsmall-code[
 
-#### Secondary hypothesis
+```r
+ranef(m1)
+```
 
-`$$H_0 : \beta_1 = \beta_2 = ... = \beta_b = 0$$`
+```
+## $Colony
+##    (Intercept)
+## C1     -7.6440
+## C2      9.1814
+## C3     -6.0028
+## C4      4.9890
+## C5     -0.5236
+## 
+## with conditional variances for "Colony"
+```
+]
 
-`$$H_a : At\;least\;one\;inequality$$`
-OR
+&lt;img src="13_random_effects_files/figure-html/unnamed-chunk-15-1.png" width="360" style="display: block; margin: auto;" /&gt;
 
-`$$H_0 : \sigma^2_B = 0$$`
-
-`$$H_a : \sigma^2_B &gt; 0$$`
 ]
 
 ---
-# implications
+# random-slope models in `r`
 
-&lt;br/&gt;
-&lt;br/&gt;
+It's also possible to treat the slopes as random effects
 
-#### Once again, treating block effects as random doesn't affect our calculations for the ANOVA table&lt;sup&gt;1&lt;/sup&gt;  - it only affects the interpretation
-
-
-.footnote[&lt;sup&gt;1&lt;/sup&gt; Technically, this is only true for balanced designs]
-
----
-# random-effects model in `r`
-
-
-
+.pull-left[
+.vsmall-code[
 
 ```r
-aov1 &lt;- aov(Larvae ~ Treatment + Region, mothdata)
-summary(aov1)
+m2 &lt;- lmer(Weight ~ (Mercury|Colony), data = storkdata)
+summary(m2)
 ```
 
-&lt;table class="table table-condensed" style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; df &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; sumsq &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; meansq &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Treatment &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 223.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 111.58 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5.830 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0392 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Region &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 430.9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 143.64 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 7.505 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0187 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Residuals &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 114.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 19.14 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+```
+## Linear mixed model fit by REML ['lmerMod']
+## Formula: Weight ~ (Mercury | Colony)
+##    Data: storkdata
+## 
+## REML criterion at convergence: 324.4
+## 
+## Scaled residuals: 
+##     Min      1Q  Median      3Q     Max 
+## -2.3062 -0.5052 -0.0609  0.6958  2.4559 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev. Corr 
+##  Colony   (Intercept) 172.82   13.146        
+##           Mercury       0.10    0.316   -0.88
+##  Residual               4.66    2.159        
+## Number of obs: 67, groups:  Colony, 5
+## 
+## Fixed effects:
+##             Estimate Std. Error t value
+## (Intercept)    51.00       2.95    17.3
+```
+]
+]
 
-
---
-
+.pull-right[
+.vsmall-code[
 
 ```r
-aov2 &lt;- aov(Larvae ~ Treatment + Error(Region), mothdata)
-summary(aov2)
+ranef(m2)
 ```
 
-&lt;table class="table table-condensed" style="font-size: 10px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
- &lt;thead&gt;
-  &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; stratum &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; term &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; df &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; sumsq &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; meansq &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; statistic &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; p.value &lt;/th&gt;
-  &lt;/tr&gt;
- &lt;/thead&gt;
-&lt;tbody&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Region &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Residuals &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 430.9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 143.64 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Within &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Treatment &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 223.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 111.58 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 5.83 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.0392 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; Within &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Residuals &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 114.8 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 19.14 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt;  &lt;/td&gt;
-  &lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
+```
+## $Colony
+##    (Intercept)  Mercury
+## C1      -1.440 -0.03554
+## C2      20.816 -0.39147
+## C3       5.684 -0.37504
+## C4      15.615 -0.30312
+## C5       9.598 -0.26529
+## 
+## with conditional variances for "Colony"
+```
+]
 
+&lt;img src="13_random_effects_files/figure-html/unnamed-chunk-18-1.png" width="360" style="display: block; margin: auto;" /&gt;
 
+]
 
 ---
-# summary
+# mixed-effect models in `r`
 
-- We usually model the main treatment effects as fixed, but sometimes we are interested in effects not in the sample
+It's also possible to combine fixed and random effects in the same model (usually referred to as "mixed effect" models or "mixed" models)
+
+.vsmall-code[
+
+```r
+data("mothdata")
+m3 &lt;- lmer(Larvae ~ Treatment + (1|Region), data = mothdata)
+summary(m3)
+```
+
+```
+## Linear mixed model fit by REML ['lmerMod']
+## Formula: Larvae ~ Treatment + (1 | Region)
+##    Data: mothdata
+## 
+## REML criterion at convergence: 62.3
+## 
+## Scaled residuals: 
+##    Min     1Q Median     3Q    Max 
+## -1.109 -0.322 -0.112  0.210  1.390 
+## 
+## Random effects:
+##  Groups   Name        Variance Std.Dev.
+##  Region   (Intercept) 41.5     6.44    
+##  Residual             19.1     4.37    
+## Number of obs: 12, groups:  Region, 4
+## 
+## Fixed effects:
+##                  Estimate Std. Error t value
+## (Intercept)         20.50       3.89    5.27
+## TreatmentBt         -8.75       3.09   -2.83
+## TreatmentDimilin    -9.50       3.09   -3.07
+## 
+## Correlation of Fixed Effects:
+##             (Intr) TrtmnB
+## TreatmentBt -0.397       
+## TretmntDmln -0.397  0.500
+```
+]
+
+---
+# why use random effects?
 
 --
 
-- Random effects models allow for inference about entire population of effects  
+- Random effects only apply to categorical predictors, not continuous predictors
+
+    + Generally need many treatment levels (5-10) to estimate variance parameter
 
 --
 
-- Random effects models make additional distributional assumptions  
+- The choice of random vs fixed effects usually depends on the scope of inference
+
+    + Are the factor levels exhaustive or are they samples of a larger population? If you repeated the experiment, could you end up with different groups?
+  
+--
+
+- Random effects account for non-independence caused by group structure *and* provide insights into the larger population
 
 --
 
-- Usually, you need many treatment levels (5-10) to get a decent estimate of the variance parameter associated with the random effects  
+- When sample sizes are sufficiently large and balanced, the regression parameters will be essentially the same in fixed vs random-effect models
 
---
-
-- In spite of the big conceptual differences, the procedures aren't much different for one-way and blocked ANOVAs  
+    + When sample sizes are small/unbalanced, estimates for groups with less data will be "pulled" towards the mean (this is a good thing!)
+    
+    + The degree of change is a function of how far the parameters are from the mean and how much information is in the data
 
 
 ---

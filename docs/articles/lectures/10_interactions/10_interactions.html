@@ -425,11 +425,11 @@ summary(fm4)
 ## -2.365 -0.392  0.158  0.560  1.497 
 ## 
 ## Coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)    2.582      0.405    6.38  3.7e-08 ***
-## moon           2.734      0.802    3.41   0.0012 ** 
-## cloud          0.228      0.642    0.36   0.7238    
-## moon:cloud    -2.387      1.230   -1.94   0.0573 .  
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.582092   0.405007    6.38  3.7e-08 ***
+## moon         0.027339   0.008023    3.41   0.0012 ** 
+## cloud        0.002281   0.006423    0.36   0.7238    
+## moon:cloud  -0.000239   0.000123   -1.94   0.0573 .  
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
@@ -460,13 +460,13 @@ Cloud = 0
 
 - `\(\color{#D47500}{\beta_0}\)` (i.e., `Intercept`) = expected call rate when both moon and cloud = 0
 
-- `\(\color{#D47500}{\beta_1}\)` (i.e.,`moon` ) = change in call rate per % change in moon **when cloud = 0**
+- `\(\color{#D47500}{\beta_1}\)` (i.e., `moon` ) = change in call rate per % change in moon **when cloud = 0**
 
 --
 
-Cloud = 1
+Cloud = 100
 
-`$$\color{#D47500}{\beta_0} + (\color{#D47500}{\beta_1 + \beta_3}^*1)^*moon_i + \color{#D47500}{\beta_2}^*1$$`
+`$$\color{#D47500}{\beta_0} + (\color{#D47500}{\beta_1 + \beta_3}^*100)^*moon_i + \color{#D47500}{\beta_2}^*100$$`
 
 -  `\(\color{#D47500}{\beta_2}\)` (i.e., `cloud`)=  change in call rate per % change in cloud **when moon = 0**
 

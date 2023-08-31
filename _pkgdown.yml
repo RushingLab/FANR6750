@@ -59,6 +59,8 @@ navbar:
           href: articles/lab04_ANOVA.html
         - text: "Lab 5: Multiple Regression"
           href: articles/lab05_multiple_regression.html
+        - text: "Lab 6: Interactions"
+          href: articles/lab06_interactions.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:

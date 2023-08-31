@@ -199,7 +199,8 @@ departuredata <- structure(list(Sex = c("M", "M", "M", "M", "M", "M", "M", "M",
                                                                                                                          -60L))
 
 chuckdata <- read.csv("data-raw/calldata.csv")
-
+chuckdata$cloud <- chuckdata$cloud*100
+chuckdata$moon <- chuckdata$moon*100
 aciditydata <- read.csv("data-raw/acidityData.csv")
 crowdata <- read.csv("data-raw/crowData.csv")
 cruzdata <- read.csv("data-raw/cruzData.csv")
@@ -225,7 +226,8 @@ treedata <- read.csv("data-raw/treeHt.csv")
 
 storkdata <- read.csv("data-raw/storkdata.csv")
 
-usethis::use_data(aciditydata, biomassdata, caterpillardata, chuckdata, crowdata, cruzdata,
+agingdata <- read.csv("data-raw/agingdata.csv")
+usethis::use_data(aciditydata, agingdata, biomassdata, caterpillardata, chuckdata, crowdata, cruzdata,
                   departuredata, dietdata, exploredata, fishdata, frogdata,
                   infectiondata,
                   inferencedata, jaydata, lengthdata, meatdata, microtusdata, mothdata, musseldata,

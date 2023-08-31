@@ -16,7 +16,7 @@
     <loc>/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/lab01_Intro_to_R.html</loc>
+    <loc>/articles/lab01_intro_to_R.html</loc>
   </url>
   <url>
     <loc>/articles/lab02_Intro_project_and_Rmd.html</loc>
@@ -44,6 +44,9 @@
   </url>
   <url>
     <loc>/articles/lab06_blocking.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lab06_interactions.html</loc>
   </url>
   <url>
     <loc>/articles/lectures/00_course_intro/00_course_intro.html</loc>
