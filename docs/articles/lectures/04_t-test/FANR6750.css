@@ -10,6 +10,9 @@ code {
   word-break: break-word;
 }
 
+.small-code .remark-code{
+  font-size: 66%
+}
 
 .table {
   width: 100%;

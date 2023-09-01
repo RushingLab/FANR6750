@@ -440,6 +440,7 @@ summary(fmT)
 
 But when we fit a model with both covariates, our conclusions are quite different:
 
+.vsmall-code[
 
 ```r
 fmLT &lt;- lm(Length ~ Latitude + Temperature, data = lengthdata)
@@ -467,6 +468,7 @@ summary(fmLT)
 ## Multiple R-squared:  0.312,	Adjusted R-squared:  0.294 
 ## F-statistic: 17.4 on 2 and 77 DF,  p-value: 5.69e-07
 ```
+]
 
 ---
 # example
@@ -486,7 +488,7 @@ cor(lengthdata$Latitude, lengthdata$Temperature)
 ## [1] -0.8697
 ```
 
-&lt;img src="11_assumptions_files/figure-html/unnamed-chunk-21-1.png" width="504" style="display: block; margin: auto;" /&gt;
+&lt;img src="11_assumptions_files/figure-html/unnamed-chunk-21-1.png" width="360" style="display: block; margin: auto;" /&gt;
 
 --
 
@@ -516,6 +518,8 @@ But the multiple regression model is measuring the effect of latitude *after con
 
 - If we hold temperature constant (statistically), does body length change with latitude? Apparently not&lt;sup&gt;\*&lt;/sup&gt;
 
+.footnote[\*In this **made up** data set]
+
 ---
 # multicolinearity
 
@@ -538,7 +542,7 @@ In general, do not automatically exclude correlated predictors just because they
 - If parameter estimates are unreliable, you may need to use a more simple model (or gather more data)
 
 
-.footnote[[\*]] In this **made up** data set]
+
 
 ---
 # looking ahead

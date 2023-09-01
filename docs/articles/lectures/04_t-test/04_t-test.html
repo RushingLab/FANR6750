@@ -61,6 +61,11 @@ Hypothesis
 
 --
 
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-1-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+---
+# context, part 1
+
 Field procedure:
 
 - randomly sample 10 scales of the same make and model
@@ -73,6 +78,8 @@ Field procedure:
 Data:
 
 `-0.062, -0.38, 0.85, -0.58,  0.53,  0.09,  0.31,  0.77,  0.59,  -0.17`
+
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-2-1.png" width="432" style="display: block; margin: auto;" /&gt;
 
 ---
 # the linear model
@@ -90,6 +97,61 @@ Data:
 --
 
 - This is most simple linear model we can construct
+
+---
+# linear model by hand
+
+.small-code[
+
+```r
+y &lt;- c(-0.062, -0.38, 0.85, -0.58,  0.53,  0.09,  0.31,  0.77,  0.59,  -0.17)
+
+(beta0.hat &lt;- mean(y))
+```
+
+```
+## [1] 0.1948
+```
+
+```r
+(stnderr &lt;- sd(y)/sqrt(10))
+```
+
+```
+## [1] 0.1557
+```
+]
+
+--
+
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-4-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+---
+# linear model by hand
+
+.small-code[
+
+```r
+y &lt;- c(-0.062, -0.38, 0.85, -0.58,  0.53,  0.09,  0.31,  0.77,  0.59,  -0.17)
+
+(beta0.hat &lt;- mean(y))
+```
+
+```
+## [1] 0.1948
+```
+
+```r
+(stnderr &lt;- sd(y)/sqrt(10))
+```
+
+```
+## [1] 0.1557
+```
+]
+
+
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-6-1.png" width="432" style="display: block; margin: auto;" /&gt;
 
 ---
 # the linear model
@@ -119,7 +181,7 @@ broom::tidy(fit1)
 
 --
 
-- The standard error is calculated simply as `\(\sigma \ sqrt{n}\)`
+- The standard error is calculated simply as `\(\frac{s}{\sqrt{n}}\)`
 --
 
 - We will discuss whether there is evidence that `\(\beta_0 \neq 0\)` in the next lecture
@@ -191,7 +253,7 @@ class:inverse
 
 # context, part 2
 
-#### We are interested in determining how urban development influences the abundance of strawberry poison-dart frogdata (*Oophaga pumilio*)
+#### We are interested in determining how urban development influences the abundance of strawberry poison-dart frog (*Oophaga pumilio*)
 
 .left-column[
 &lt;/br&gt;
@@ -207,7 +269,7 @@ Field procedure:
 
 - `\(\large n=10\)` plots are established on one high-development island and one low-development island
 
-- Within each plot, strawberry frogdata are counted within 5 randomly-located quadrats 
+- Within each plot, strawberry frogs are counted within 5 randomly-located quadrats 
 
 ]
 
@@ -226,6 +288,10 @@ Field procedure:
 `Low development: 16, 14, 18, 17, 29, 31, 14, 16, 22, 15`
 
 `High development: 2, 11, 6, 8, 0, 3, 19, 1, 6, 5`
+
+
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-12-1.png" width="360" style="display: block; margin: auto;" /&gt;
+
 ]
 
 ---
@@ -237,7 +303,7 @@ Field procedure:
 
 `$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}$$`
 
-&lt;img src="04_t-test_files/figure-html/unnamed-chunk-6-1.png" width="432" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-13-1.png" width="432" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -250,7 +316,7 @@ Field procedure:
 `$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}$$`
 
 
-&lt;img src="04_t-test_files/figure-html/unnamed-chunk-7-1.png" width="288" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-14-1.png" width="288" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -262,7 +328,7 @@ Field procedure:
 
 `$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}$$`
 
-&lt;img src="04_t-test_files/figure-html/unnamed-chunk-8-1.png" width="288" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-15-1.png" width="288" style="display: block; margin: auto;" /&gt;
 
 ---
 # the linear model
@@ -449,7 +515,7 @@ broom::tidy(fit2)
 
 --
 
-- The `(Intercept)` estimate ( `\(\beta_0\)` ) is the expected number of frogdata in a low-development plot
+- The `(Intercept)` estimate ( `\(\beta_0\)` ) is the expected number of frogs in a low-development plot
 
 --
 
@@ -457,7 +523,17 @@ broom::tidy(fit2)
 
 --
 
-- **Question**: Are there fewer frogdata in high-development plots?
+- **Question**: Are there fewer frogs in high-development plots?
+
+---
+# visualizing the linear model
+
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-22-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+
+--
+
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-23-1.png" width="504" style="display: block; margin: auto;" /&gt;
 
 ---
 # fitting the model by hand
@@ -470,14 +546,14 @@ The parameter estimates are:
 
 
 ```r
-mu_high &lt;- mean(frogdata$frogdata[frogdata$Development == "High"])
-mu_low &lt;- mean(frogdata$frogdata[frogdata$Development == "Low"])
+mu_high &lt;- mean(frogdata$Frogs[frogdata$Development == "High"])
+mu_low &lt;- mean(frogdata$Frogs[frogdata$Development == "Low"])
 
 (beta_0.hat &lt;- mu_low)
 ```
 
 ```
-## [1] NA
+## [1] 19.2
 ```
 
 ```r
@@ -485,7 +561,7 @@ mu_low &lt;- mean(frogdata$frogdata[frogdata$Development == "Low"])
 ```
 
 ```
-## [1] NA
+## [1] -13.1
 ```
 
 --
@@ -519,7 +595,7 @@ How do we calculate the standard errors?
 
 With the pooled variance calculated, we can calculate the standard errors. For the intercept:
 
-`$$\large SE_{\beta_0} = \sqrt{\frac{s^2_p}{n_H}}$$`
+`$$\large SE_{\beta_0} = \sqrt{\frac{s^2_p}{n_L}}$$`
 
 
 ```

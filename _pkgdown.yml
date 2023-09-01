@@ -46,6 +46,8 @@ navbar:
           href: articles/lectures/11_assumptions/11_assumptions.html
         - text: "Lecture 12: Model selection"
           href: articles/lectures/12_model_selection/12_model_selection.html
+        - text: "Lecture 13: Random effects"
+          href: articles/lectures/13_random_effects/13_random_effects.html
     - text: "Labs"
       icon: fas fa-desktop
       menu:

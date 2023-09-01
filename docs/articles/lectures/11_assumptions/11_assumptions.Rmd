@@ -449,7 +449,7 @@ We are interested in the factors that govern the evolution of body size of ? and
 
 As expected, body length appears to vary as a function of both latitude and temperature:
 
-```{r fig.width=8, fig.height = 5}
+```{r fig.width=8, fig.height = 4}
 data("lengthdata")
 p <- ggplot(lengthdata, aes(x = Latitude, y = Length)) +
   geom_point() +
@@ -495,10 +495,12 @@ summary(fmT)
 
 But when we fit a model with both covariates, our conclusions are quite different:
 
+.vsmall-code[
 ```{r echo = TRUE}
 fmLT <- lm(Length ~ Latitude + Temperature, data = lengthdata)
 summary(fmLT)
 ```
+]
 
 ---
 # example
@@ -513,7 +515,7 @@ The first thing to recognize is that latitude and temperature are highly negativ
 cor(lengthdata$Latitude, lengthdata$Temperature)
 ```
 
-```{r}
+```{r fig.height = 3, fig.width=5}
 ggplot(lengthdata, aes(x = Latitude, y = Temperature)) +geom_point()
 ```
 
@@ -545,6 +547,8 @@ But the multiple regression model is measuring the effect of latitude *after con
 
 - If we hold temperature constant (statistically), does body length change with latitude? Apparently not<sup>\*</sup>
 
+.footnote[\*In this **made up** data set]
+
 ---
 # multicolinearity
 
@@ -567,7 +571,7 @@ In general, do not automatically exclude correlated predictors just because they
 - If parameter estimates are unreliable, you may need to use a more simple model (or gather more data)
 
 
-.footnote[[\*]] In this **made up** data set]
+
 
 ---
 # looking ahead

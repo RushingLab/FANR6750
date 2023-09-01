@@ -1,0 +1,15 @@
+ggplot2
+kableExtra
+gridExtra
+tidyverse
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats
+png
+downloader
+FANR6750
+lubridate
