@@ -199,8 +199,6 @@ departuredata <- structure(list(Sex = c("M", "M", "M", "M", "M", "M", "M", "M",
                                                                                                                          -60L))
 
 chuckdata <- read.csv("data-raw/calldata.csv")
-chuckdata$cloud <- chuckdata$cloud*100
-chuckdata$moon <- chuckdata$moon*100
 aciditydata <- read.csv("data-raw/acidityData.csv")
 crowdata <- read.csv("data-raw/crowData.csv")
 cruzdata <- read.csv("data-raw/cruzData.csv")

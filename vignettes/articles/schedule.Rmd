@@ -46,7 +46,7 @@ schedule <- data.frame(WK = c("1", "", "",
                        Week = MWF(first.day = "2023/08/16", last.day = "2023/12/05"),
                        Lecture = c("Course introduction", "Introduction to statistics", "", #1
       "Introduction to linear models",  "Introduction to linear models", "Principles of statistical inference", "",#2
-      "Principles of statiscal inference", "Linear models for simple categorical predictors (aka t-test)", "Linear models for simple categorical predictors (aka t-test)", "", #3
+      "Principles of statistical inference", "Linear models for simple categorical predictors (aka t-test)", "Linear models for simple categorical predictors (aka t-test)", "", #3
       "Labor Day", "Linear models for simple categorical predictors (aka t-test)", "Null hypothesis testing", "", # 4
        "Null hypothesis testing", "Power", "Paper discussion: null hypothesis testing", "", #5
        "Linear models for categorical predictor w/ >2 levels (aka ANOVA)", "Linear models for categorical predictor w/ >2 levels (aka ANOVA)", "Multiple comparisons", "", #6
@@ -65,19 +65,18 @@ schedule <- data.frame(WK = c("1", "", "",
                                "Introduction to R", "", "", "",
                                "Introduction to RMarkdown", "", "", "",
                                "No lab", "", "", "",
-                               "Linear models", "", "", "",
-                               "t-tests", "", "", "",
-                               "ANOVA", "", "", "",
+                               "t-tests*", "", "", "",
+                               "ANOVA*", "", "", "",
                                "Multiple regression", "", "", "",
-                               "Evaluating assumptions", "", "", "",
-                                "Model selection", "", "", "",
+                               "Interactions*", "", "", "",
+                               "Evaluating assumptions*", "", "", "",
+                               "Model selection*", "", "", "",
                                "Nested designs", "", "", "",
-                               "Split-plot designs", "", "", "",
+                               "Split-plot designs*", "", "", "",
                                "Repeated measures*", "", "", "",
-                               "Logistic regression", "", "", "",
-                               "Poisson regression", "", "", "",
-                               "TBD", "", "", "",
-                               # "Model selection", "", "", "",
+                               "Logistic regression*", "", "", "",
+                               "Poisson regression*", "", "", "",
+                               "TBD*", "", "", "",
                                "No lab"),
                        Notes = c("", "", "",
                                "", "", "", "",
