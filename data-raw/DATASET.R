@@ -225,8 +225,11 @@ treedata <- read.csv("data-raw/treeHt.csv")
 storkdata <- read.csv("data-raw/storkdata.csv")
 
 agingdata <- read.csv("data-raw/agingdata.csv")
-usethis::use_data(aciditydata, agingdata, biomassdata, caterpillardata, chuckdata, crowdata, cruzdata,
-                  departuredata, dietdata, exploredata, fishdata, frogdata,
+deerdata <- read.csv("data-raw/deerdata.csv")
+burrowdata <- read.csv("data-raw/burrowdata.csv")
+usethis::use_data(aciditydata, agingdata, biomassdata, burrowdata,
+                  caterpillardata, chuckdata, crowdata, cruzdata,
+                  deerdata, departuredata, dietdata, exploredata, fishdata, frogdata,
                   infectiondata,
                   inferencedata, jaydata, lengthdata, meatdata, microtusdata, mothdata, musseldata,
                   pinedata, pesticidedata, plantdata, preydata, raindata,

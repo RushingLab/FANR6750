@@ -63,6 +63,8 @@ navbar:
           href: articles/lab05_multiple_regression.html
         - text: "Lab 6: Interactions"
           href: articles/lab06_interactions.html
+        - text: "Lab 7: Evaluating assumptions"
+          href: articles/lab07_linear_model_assumptions.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:

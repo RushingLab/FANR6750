@@ -27,7 +27,10 @@ Imports:
     see,
     patchwork,
     tseries,
-    ggfortify
+    ggfortify,
+    corrplot,
+    faux,
+    olsrr
 VignetteBuilder: knitr
 Depends: 
     R (>= 4.0)
