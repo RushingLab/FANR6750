@@ -291,17 +291,17 @@ values of one predictor may alter the effects of the other.</p>
 <span><span class="co">#&gt; 'data.frame':    60 obs. of  4 variables:</span></span>
 <span><span class="co">#&gt;  $ X        : int  1 2 3 4 5 6 7 8 9 10 ...</span></span>
 <span><span class="co">#&gt;  $ call.rate: num  2.9 3.65 3.68 2.73 3.56 ...</span></span>
-<span><span class="co">#&gt;  $ cloud    : num  11.85 91.56 9.41 85.36 14 ...</span></span>
-<span><span class="co">#&gt;  $ moon     : num  24.1 56 56 85.5 24 ...</span></span>
+<span><span class="co">#&gt;  $ cloud    : num  0.1185 0.9156 0.0941 0.8536 0.14 ...</span></span>
+<span><span class="co">#&gt;  $ moon     : num  0.241 0.56 0.56 0.855 0.24 ...</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">chuckdata</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        X          call.rate         cloud            moon      </span></span>
-<span><span class="co">#&gt;  Min.   : 1.0   Min.   :0.736   Min.   : 3.94   Min.   : 0.06  </span></span>
-<span><span class="co">#&gt;  1st Qu.:15.8   1st Qu.:2.840   1st Qu.:22.42   1st Qu.:22.00  </span></span>
-<span><span class="co">#&gt;  Median :30.5   Median :3.441   Median :49.65   Median :43.99  </span></span>
-<span><span class="co">#&gt;  Mean   :30.5   Mean   :3.361   Mean   :51.71   Mean   :44.64  </span></span>
-<span><span class="co">#&gt;  3rd Qu.:45.2   3rd Qu.:3.840   3rd Qu.:81.23   3rd Qu.:71.31  </span></span>
-<span><span class="co">#&gt;  Max.   :60.0   Max.   :5.594   Max.   :96.97   Max.   :99.30</span></span></code></pre></div>
+<span><span class="co">#&gt;        X          call.rate         cloud             moon       </span></span>
+<span><span class="co">#&gt;  Min.   : 1.0   Min.   :0.736   Min.   :0.0394   Min.   :0.0006  </span></span>
+<span><span class="co">#&gt;  1st Qu.:15.8   1st Qu.:2.840   1st Qu.:0.2242   1st Qu.:0.2200  </span></span>
+<span><span class="co">#&gt;  Median :30.5   Median :3.441   Median :0.4965   Median :0.4399  </span></span>
+<span><span class="co">#&gt;  Mean   :30.5   Mean   :3.361   Mean   :0.5171   Mean   :0.4464  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:45.2   3rd Qu.:3.840   3rd Qu.:0.8123   3rd Qu.:0.7131  </span></span>
+<span><span class="co">#&gt;  Max.   :60.0   Max.   :5.594   Max.   :0.9697   Max.   :0.9930</span></span></code></pre></div>
 <p><br></p>
 <p>Notice that several of the variables in the dataset are recorded as
 percentages. This fact will affect the way that we interpret the model
@@ -365,10 +365,10 @@ interaction?</strong></p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span><span class="co">#&gt; (Intercept)  2.58e+00   4.05e-01    6.38  3.7e-08 ***</span></span>
-<span><span class="co">#&gt; moon         2.73e-04   8.02e-05    3.41   0.0012 ** </span></span>
-<span><span class="co">#&gt; cloud        2.28e-05   6.42e-05    0.36   0.7238    </span></span>
-<span><span class="co">#&gt; moon:cloud  -2.39e-08   1.23e-08   -1.94   0.0573 .  </span></span>
+<span><span class="co">#&gt; (Intercept)  2.582092   0.405007    6.38  3.7e-08 ***</span></span>
+<span><span class="co">#&gt; moon         0.027339   0.008023    3.41   0.0012 ** </span></span>
+<span><span class="co">#&gt; cloud        0.002281   0.006423    0.36   0.7238    </span></span>
+<span><span class="co">#&gt; moon:cloud  -0.000239   0.000123   -1.94   0.0573 .  </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span><span class="co">#&gt; </span></span>

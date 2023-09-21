@@ -227,13 +227,26 @@ storkdata <- read.csv("data-raw/storkdata.csv")
 agingdata <- read.csv("data-raw/agingdata.csv")
 deerdata <- read.csv("data-raw/deerdata.csv")
 burrowdata <- read.csv("data-raw/burrowdata.csv")
-usethis::use_data(aciditydata, agingdata, biomassdata, burrowdata,
+salamanderdata <- data.frame(Pond = 1:10,
+                             Treatment = rep(c("Cut", "Uncut"), 5),
+                             Salamanders = c(18, 10, 24, 12, 35, 21, 12, 8, 30, 24))
+
+acorndata <- data.frame(Treatment = rep(c("Watered", "Unwatered"), each = 10),
+                        Acorns = c(29, 39, 37, 31, 45, 38, 42, 35,
+                                   44, 41, 38, 34, 21, 31, 36, 31, 36, 32, 36, 44))
+hostadata <- data.frame(Weight = c(27,31, 26, 32, 39, 37, 38, 39,
+                                   29, 28, 37, 24, 35, 40, 40, 31,
+                                   34, 36, 34, 41, 30, 44, 44, 32,
+                                   34, 34, 43, 44, 40, 47, 34, 31),
+                        Repellent = c(rep("Egg", 8), rep("Soap", 4), "Saop", rep("Soap", 3),rep("Garlic", 8),  rep("Control", 8)))
+
+usethis::use_data(aciditydata, acorndata, agingdata, biomassdata, burrowdata,
                   caterpillardata, chuckdata, crowdata, cruzdata,
                   deerdata, departuredata, dietdata, exploredata, fishdata, frogdata,
-                  infectiondata,
+                  hostadata, infectiondata,
                   inferencedata, jaydata, lengthdata, meatdata, microtusdata, mothdata, musseldata,
                   pinedata, pesticidedata, plantdata, preydata, raindata,
-                  salinitydata, sawdata, storkdata, studentsdata, swissdata,
+                  salamanderdata, salinitydata, sawdata, storkdata, studentsdata, swissdata,
                   thrushdata, treedata, tunadata,
                   warblerdata, weightdata, yielddata,
                   overwrite = TRUE)

@@ -423,7 +423,7 @@ summary(m3)
 
 <br/>
 
-### **Next time**: Nesting designs
+### **Next time**: Nested designs
 
 <br/>
 
