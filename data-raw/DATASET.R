@@ -240,13 +240,15 @@ hostadata <- data.frame(Weight = c(27,31, 26, 32, 39, 37, 38, 39,
                                    34, 34, 43, 44, 40, 47, 34, 31),
                         Repellent = c(rep("Egg", 8), rep("Soap", 4), "Saop", rep("Soap", 3),rep("Garlic", 8),  rep("Control", 8)))
 
+soybeandata <- read.csv("data-raw/soybeandata.csv")
+grasslanddata <- read.csv("data-raw/grasslanddata.csv")
 usethis::use_data(aciditydata, acorndata, agingdata, biomassdata, burrowdata,
                   caterpillardata, chuckdata, crowdata, cruzdata,
                   deerdata, departuredata, dietdata, exploredata, fishdata, frogdata,
-                  hostadata, infectiondata,
+                  grasslanddata, hostadata, infectiondata,
                   inferencedata, jaydata, lengthdata, meatdata, microtusdata, mothdata, musseldata,
                   pinedata, pesticidedata, plantdata, preydata, raindata,
-                  salamanderdata, salinitydata, sawdata, storkdata, studentsdata, swissdata,
+                  salamanderdata, salinitydata, sawdata, soybeandata, storkdata, studentsdata, swissdata,
                   thrushdata, treedata, tunadata,
                   warblerdata, weightdata, yielddata,
                   overwrite = TRUE)

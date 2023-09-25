@@ -30,7 +30,9 @@ Imports:
     ggfortify,
     corrplot,
     faux,
-    olsrr
+    olsrr,
+    caret,
+    magicfor
 VignetteBuilder: knitr
 Depends: 
     R (>= 4.0)

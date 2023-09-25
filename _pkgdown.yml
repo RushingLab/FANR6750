@@ -48,6 +48,8 @@ navbar:
           href: articles/lectures/12_model_selection/12_model_selection.html
         - text: "Lecture 13: Random effects"
           href: articles/lectures/13_random_effects/13_random_effects.html
+        - text: "Lecture 14: Nested designs"
+          href: articles/lectures/14_nested/14_nested.html
     - text: "Labs"
       icon: fas fa-desktop
       menu:
@@ -65,6 +67,8 @@ navbar:
           href: articles/lab06_interactions.html
         - text: "Lab 7: Evaluating assumptions"
           href: articles/lab07_linear_model_assumptions.html
+        - text: "Lab 8: Model selection"
+          href: articles/lab08_model_selection.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:
