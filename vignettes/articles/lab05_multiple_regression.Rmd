@@ -362,8 +362,8 @@ a <- nlevels(mothdata$Treatment)
 $$\Large \sum_{i=1}^a \sum_{j=1}^b (y_{ij} - \bar{y}_i - \bar{y}_j + \bar{y}_.)^2$$
 
 ```{r}
-treatment.means.long <- rep(treatment.means$mu, each = b)
-block.means.long <- rep(block.means$mu, times = a)
+treatment.means.long <- rep(treatment.means$mu, times = b)
+block.means.long <- rep(block.means$mu, each = a)
 (SS.within <- sum((mothdata$Larvae - treatment.means.long - block.means.long + grand.mean)^2))
 ```
 
