@@ -172,7 +172,7 @@ ggplot(dietdata, aes(x = diet, y = weight)) +
 
 And finally, let's quantify the relationship between length and weight using a linear regression:
 
-```{r include = FALSE}
+```{r}
 fm1 <- lm(weight ~ length, dietdata)
 summary(fm1)
 ```
