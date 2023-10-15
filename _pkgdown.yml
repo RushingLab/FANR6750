@@ -69,6 +69,8 @@ navbar:
           href: articles/lab07_linear_model_assumptions.html
         - text: "Lab 8: Model selection"
           href: articles/lab08_model_selection.html
+        - text: "Lab 9: Nested designs"
+          href: articles/lab09_nested.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:

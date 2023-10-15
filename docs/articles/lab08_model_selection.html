@@ -150,6 +150,9 @@
     <li>
       <a href="../articles/lab08_model_selection.html">Lab 8: Model selection</a>
     </li>
+    <li>
+      <a href="../articles/lab09_nested.html">Lab 9: Nested designs</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -697,24 +700,24 @@ plan to use for each model.</p>
 <span><span class="co">#&gt; Resampling results across tuning parameters:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   mtry  RMSE      Rsquared   MAE     </span></span>
-<span><span class="co">#&gt;   2     1024.318  0.3214504  826.2304</span></span>
-<span><span class="co">#&gt;   3     1034.480  0.3127746  833.4637</span></span>
+<span><span class="co">#&gt;   2     1025.109  0.3218621  825.8172</span></span>
+<span><span class="co">#&gt;   3     1033.008  0.3147885  829.3502</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; RMSE was used to select the optimal model using the smallest value.</span></span>
 <span><span class="co">#&gt; The final value used for the model was mtry = 2.</span></span>
 <span></span>
 <span><span class="va">abiotic</span><span class="op">$</span><span class="va">resample</span></span>
 <span><span class="co">#&gt;         RMSE  Rsquared      MAE Resample</span></span>
-<span><span class="co">#&gt; 1  1024.0489 0.3479166 831.4705   Fold01</span></span>
-<span><span class="co">#&gt; 2   894.9346 0.4180236 727.7713   Fold02</span></span>
-<span><span class="co">#&gt; 3  1101.4149 0.2755449 915.2688   Fold03</span></span>
-<span><span class="co">#&gt; 4   951.0159 0.3434595 732.0075   Fold04</span></span>
-<span><span class="co">#&gt; 5  1077.7787 0.1761280 858.7490   Fold05</span></span>
-<span><span class="co">#&gt; 6  1180.7770 0.2356245 926.1420   Fold06</span></span>
-<span><span class="co">#&gt; 7   931.4069 0.3934196 773.6862   Fold07</span></span>
-<span><span class="co">#&gt; 8  1040.0047 0.3234025 869.5098   Fold08</span></span>
-<span><span class="co">#&gt; 9   977.9512 0.4235453 783.5644   Fold09</span></span>
-<span><span class="co">#&gt; 10 1063.8472 0.2774391 844.1345   Fold10</span></span>
+<span><span class="co">#&gt; 1  1073.8957 0.2960154 847.7841   Fold01</span></span>
+<span><span class="co">#&gt; 2   996.4882 0.3133563 789.3178   Fold02</span></span>
+<span><span class="co">#&gt; 3  1056.3720 0.3102065 832.8312   Fold03</span></span>
+<span><span class="co">#&gt; 4  1051.7963 0.3374971 851.1191   Fold04</span></span>
+<span><span class="co">#&gt; 5   948.4204 0.3985765 782.9767   Fold05</span></span>
+<span><span class="co">#&gt; 6  1035.0446 0.3203953 828.8238   Fold06</span></span>
+<span><span class="co">#&gt; 7  1078.5913 0.2872047 886.2110   Fold07</span></span>
+<span><span class="co">#&gt; 8   987.8311 0.4035800 801.0045   Fold08</span></span>
+<span><span class="co">#&gt; 9  1048.9866 0.1717739 816.1664   Fold09</span></span>
+<span><span class="co">#&gt; 10  973.6594 0.3800156 821.9371   Fold10</span></span>
 <span></span>
 <span><span class="va">biotic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/caret/man/train.html" class="external-link">train</a></span><span class="op">(</span><span class="va">KgDMHA</span><span class="op">~</span> <span class="va">Pests</span> <span class="op">+</span> <span class="va">Graze</span>, data<span class="op">=</span> <span class="va">grasslanddata</span>, trControl<span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span></span>
 <span><span class="co">#&gt; note: only 1 unique complexity parameters in default grid. Truncating the grid to 1 .</span></span>
@@ -730,8 +733,8 @@ plan to use for each model.</p>
 <span><span class="co">#&gt; Summary of sample sizes: 900, 900, 900, 900, 900, 900, ... </span></span>
 <span><span class="co">#&gt; Resampling results:</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   RMSE      Rsquared   MAE     </span></span>
-<span><span class="co">#&gt;   980.3398  0.3908096  783.1338</span></span>
+<span><span class="co">#&gt;   RMSE     Rsquared  MAE     </span></span>
+<span><span class="co">#&gt;   969.978  0.398402  770.2335</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Tuning parameter 'mtry' was held constant at a value of 2</span></span>
 <span></span>
@@ -749,9 +752,9 @@ plan to use for each model.</p>
 <span><span class="co">#&gt; Resampling results across tuning parameters:</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   mtry  RMSE      Rsquared   MAE     </span></span>
-<span><span class="co">#&gt;   2     464.4120  0.8941899  361.3979</span></span>
-<span><span class="co">#&gt;   3     459.5638  0.8855545  359.0910</span></span>
-<span><span class="co">#&gt;   5     458.7309  0.8804397  358.3648</span></span>
+<span><span class="co">#&gt;   2     463.1419  0.8933236  362.1388</span></span>
+<span><span class="co">#&gt;   3     456.2328  0.8861032  358.7840</span></span>
+<span><span class="co">#&gt;   5     456.2033  0.8793087  357.4108</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; RMSE was used to select the optimal model using the smallest value.</span></span>
 <span><span class="co">#&gt; The final value used for the model was mtry = 5.</span></span></code></pre></div>
@@ -834,7 +837,7 @@ errors</p></li>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

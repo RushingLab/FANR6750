@@ -16,7 +16,7 @@
     <loc>/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/lab01_Intro_to_R.html</loc>
+    <loc>/articles/lab01_intro_to_R.html</loc>
   </url>
   <url>
     <loc>/articles/lab02_Intro_project_and_Rmd.html</loc>
@@ -53,6 +53,9 @@
   </url>
   <url>
     <loc>/articles/lab08_model_selection.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lab09_nested.html</loc>
   </url>
   <url>
     <loc>/articles/lectures/00_course_intro/00_course_intro.html</loc>
@@ -98,6 +101,9 @@
   </url>
   <url>
     <loc>/articles/lectures/14_nested/14_nested.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lectures/15_split-plot/15_split-plot.html</loc>
   </url>
   <url>
     <loc>/articles/projects_and_directories.html</loc>

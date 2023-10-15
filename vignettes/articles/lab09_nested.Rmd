@@ -1,0 +1,291 @@
+---
+title: "Lab 9: Nested ANOVA"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2023"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lab09_nested}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.retina = 2,
+                      fig.align = "c",
+  collapse = TRUE, cache= T,
+  comment = "#>"
+)
+library(dplyr)
+library(knitr)
+library(FANR6750)
+library(ggplot2)
+library(tidyr)
+library(faux)
+library(kableExtra)
+source(here::here("R/zzz.R"))
+```
+
+## Lab 8
+
+- Model selection
+
+  + Exploration
+  
+  + Prediction
+
+
+## Today's topics
+
+- Nested ANOVA
+
+  + Specifying the model
+  
+  + Hypotheses
+
+  + Random effects
+  
+  + lme() function
+
+
+<br>
+
+# Scenario
+
+Remember from lecture that nested designs are useful in situations where we subsample within each experimental unit and we’re interested in treatment effects at the experimental (whole) unit level, not the subunit level. For example:
+
+- We count larvae at multiple subplots within a plot  
+
+- We weigh multiple chicks in a brood  
+
+- We measure shrub growth at multiple subplots within a plot
+
+<br>
+
+## The additive model
+
+$$\Large y_{ijk} = \mu + \alpha_i + \beta_{ij} + \epsilon_{ijk}$$
+
+**Can you define all of the terms in the linear model? Why do we need so many subscripts?**
+
+<br>
+
+$$\Large \beta_{ij} \sim normal(0, \sigma^2_B)$$
+
+And as always,
+
+$$\Large \epsilon_{ijk} \sim normal(0, \sigma^2)$$
+
+## Hypotheses
+
+Treatment effects:
+
+$$\Large H_0 : \alpha_1 = · · · = \alpha_a = 0$$
+$$\Large H_a : at\; least\; one\; inequality$$
+Random variation among experimental units:
+
+$$\Large H_0 : \sigma^2_B = 0$$
+
+$$\Large H_a : \sigma^2_B > 0$$
+
+Note: Here we have referred to the variance term as $\sigma^2_B$ but we could use any reasonable subscript to refer to the variance term for the random effect.
+
+Note: Recall that a nested ANOVA is primarily used when the variation among experimental units is of interest. If this variation was not of interest or if we had reason to believe that all the experimental units did not differ from eachother, we can simplify to a one-way ANOVA.
+
+## Example data
+
+For this lab, we'll use another data set on the response of gypsy moth larvae to pesticide treatments:
+
+```{r setup, eval= T}
+library(FANR6750)
+data("mothdata2")
+str(mothdata2)
+```
+
+
+As before, we'll need to convert `Plot` and `Treatment` to be factors:
+
+```{r}
+mothdata2$Treatment <- factor(mothdata2$Treatment, 
+                              levels = c("Control", "Bt", "Dimilin"))
+
+mothdata2$Plot <- factor(mothdata2$Plot)
+```
+
+Note that we explicitly define the levels for `Treatment` so that control will be treated as the baseline level and plotted first. We don't need to do that with `Plot` since the default numeric order is fine.
+
+To see the level of replication within each treatment and plot, let's cross-tabulate the data. It is a good idea to check this since unbalanced designs generally require some additionl thought.
+
+```{r}
+table(mothdata2$Treatment, mothdata2$Plot)
+```
+
+***
+
+Notice how plots are labeled! Not according to $j \in {1, 2, 3}$, even though there are three plots
+within each treatment (and four replicates within each plot). Rather, each plot is labeled independently, 1–9.  
+
+Why is this important?
+
+***
+
+## Analysis using `aov()`
+
+Based on the models we've fit previously this semester, we might instinctively analyze these data using the following:
+
+```{r}
+aov.wrong <- aov(larvae ~ Treatment + Plot, data = mothdata2)
+summary(aov.wrong)
+```
+
+But if we do so, the **denominator degrees of freedom are incorrect**. Instead, we should use:
+
+```{r}
+aov.correct <- aov(larvae ~ Treatment + Error(Plot), data = mothdata2)
+summary(aov.correct)
+```
+
+Can you spot the difference? What calculations changed between these two analyses?
+
+<br>
+<br>
+
+Note: The next few code chunks are not necessary. They are simply demonstrating that what we are doing here is exactly the same as performing a one way ANOVA after averaging across the subunits.
+
+What happens if we analyze plot-level means? The `aggregate()` function is similar to `tapply()` but it works on entire data frames. Here we get averages for each whole plot:
+
+```{r}
+plotData <- aggregate(larvae ~ Treatment + Plot, 
+                      data = mothdata2, FUN = mean)
+plotData
+```
+
+When we use `aov()` to analyze the aggregated data, we get the same *F* and *p* as before:
+
+```{r}
+aov.plot <- aov(larvae ~ Treatment, data = plotData)
+summary(aov.plot)
+```
+
+## Issues with analyzing nested data
+
+When using using `aov()` with Error term:
+
+- You can’t use `TukeyHSD()`
+
+- You don’t get a direct estimate of $\sigma^2_B$
+
+- Doesn’t handle unbalanced designs well
+
+- But, you can use `model.tables()`
+
+<br>
+
+An alternative is to use the `lme()` function in the `nlme` package (which is designed for mixed effects models)
+
+- Possible to get direct estimates of $\sigma^2_B$ and other variance parameters
+
+- Handles very complex models and unbalanced designs
+
+- Possible to do multiple comparisons and contrasts using the `glht()` function in the `multcomp` package
+
+But…
+
+- Only works if there are random effects
+
+- ANOVA tables aren’t as complete as `aov()`
+
+## Using the `lme()` function
+
+To see how the `lme()` function works let's fit the moth data model using this approach:
+
+```{r}
+library(nlme)
+library(multcomp)
+
+lme1 <- lme(larvae ~ Treatment, random = ~1|Plot, data = mothdata2)
+```
+
+The syntax for random effects can be a little confusing at first but see `?lme` for additional information. 
+
+Now we can view the ANOVA table from the model using:
+
+```{r}
+anova(lme1, Terms = "Treatment")
+```
+
+You'll notice that it is a very simplified version of the ANOVA table. It only provides us with one line which relates to the treatment.
+
+And we can view the variance parameter estimates:
+
+```{r}
+VarCorr(lme1)
+```
+
+The first row shows the estimates of $\sigma^2_B$ and $\sigma_B$. These are redundant values since one can be calculated from the other. The second row shows the estimates of $\sigma^2$ and $\sigma$.
+
+<br>
+<br>
+
+**What can we say about the amount of random variation within whole units relative to among whole units (after accounting for treatment effects)? Does it appear that in this scenario the random effect of plot was necessary?**
+
+Note that we will reject the null hypothesis related to the variance ($\sigma^2_B = 0$) if the F-statistic ($\frac{MS_B}{MS_E}$) > $F_{a(b-1), ab(n-1),\alpha}$. Keep in mind though that to get this F-statistic, we will need to use the aov() function approach.
+
+<br>
+
+Next, we can extract the plot-level random effects. These are the $\beta_{ij}$’s:
+
+```{r}
+round(ranef(lme1), 2)
+```
+
+And finally, multiple comparisons:
+
+```{r}
+tuk <- glht(lme1, linfct = mcp(Treatment="Tukey"))
+summary(tuk)
+confint(tuk)
+```
+
+# Assignment
+
+To determine if salinity affects fish reproductive performance, a researcher places one pregnant female in a tank with one of three salinity levels: low, medium, and high, or a control tank. A week after birth, two offspring (fry) are measured.
+
+The data can be accessed using:
+
+```{r, eval= T}
+library(FANR6750)
+data("salinitydata")
+```
+
+
+Perform the appropriate analysis using `aov()` and `lme()` on the dataset. Answer the following questions:
+
+1) What are the null and alternative hypotheses?
+
+2) Does salinity affect fry growth?
+
+3) If so, which salinity levels differ?
+
+4) Is there more random variation among or within experimental units?
+  a. Do you think that it was important to include 'adult' as a random effect or could this analysis have been simplified to a one-way ANOVA?
+  b. Calculate a F-statistic and critical value to determine whether or not to reject the null hypothesis related to the variance term.
+  
+5) Include a well formatted ANOVA table (with header) from the aov() results.
+
+6) Include a publication-quality plot of the estimated effect of salinity on fry growth, including 95% confidence intervals. The figure should also have a descriptive caption and any aesthetics (color, line type, etc.) should be clearly defined.
+
+You may format the report however you like but it should be well-organized, with relevant headers, plain text, and the elements described above.  
+
+As always:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Be sure to include your first and last name in the `author` section 
+
+- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
+
+- Please upload both the `html` and `.Rmd` files when you submit your assignment  
+
+- See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+
+- See the "Creating publication-quality graphics" reference sheet for tips on formatting figures

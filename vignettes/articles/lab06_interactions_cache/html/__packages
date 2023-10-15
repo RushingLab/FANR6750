@@ -9,7 +9,7 @@ purrr
 dplyr
 stringr
 forcats
+lubridate
 png
 downloader
 FANR6750
-lubridate

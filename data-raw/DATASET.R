@@ -242,13 +242,18 @@ hostadata <- data.frame(Weight = c(27,31, 26, 32, 39, 37, 38, 39,
 
 soybeandata <- read.csv("data-raw/soybeandata.csv")
 grasslanddata <- read.csv("data-raw/grasslanddata.csv")
+
+mothdata2 <- read.csv("data-raw/gypsyData.csv")
+
 usethis::use_data(aciditydata, acorndata, agingdata, biomassdata, burrowdata,
                   caterpillardata, chuckdata, crowdata, cruzdata,
                   deerdata, departuredata, dietdata, exploredata, fishdata, frogdata,
                   grasslanddata, hostadata, infectiondata,
-                  inferencedata, jaydata, lengthdata, meatdata, microtusdata, mothdata, musseldata,
+                  inferencedata, jaydata, lengthdata, meatdata, microtusdata,
+                  mothdata, mothdata2, musseldata,
                   pinedata, pesticidedata, plantdata, preydata, raindata,
                   salamanderdata, salinitydata, sawdata, soybeandata, storkdata, studentsdata, swissdata,
                   thrushdata, treedata, tunadata,
                   warblerdata, weightdata, yielddata,
                   overwrite = TRUE)
+
