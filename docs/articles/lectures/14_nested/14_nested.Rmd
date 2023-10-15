@@ -363,5 +363,5 @@ Fitting the linear model requires treating the whole units as random effects, wh
 
 <br/>
 
-### **Reading**: [Fieberg chp. 18.4-18.6](https://statistics4ecologists-v1.netlify.app/mixed#what-are-random-effects-mixed-effect-models-and-when-should-they-be-used)
+### **Reading**: Quinn & Keough 11.1-11.2
 

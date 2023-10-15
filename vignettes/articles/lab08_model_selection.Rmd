@@ -1,0 +1,358 @@
+---
+title: "Lab 8: Model Selection"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2023"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lab08_model_selection}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.retina = 2,
+                      fig.align = "c",
+  collapse = TRUE, cache= T,
+  comment = "#>"
+)
+library(dplyr)
+library(knitr)
+library(FANR6750)
+library(ggplot2)
+library(tidyr)
+library(faux)
+```
+
+## Lab 7
+
+- Review of linear model assumptions
+
+- Evaluating model assumptions
+
+  + Visual assessments
+  
+  + Formal tests
+
+- Outliers and influential points
+
+
+## Today's topics
+
+- Model selection approaches
+
+  + Purpose --> Method
+  
+  + Exploration
+  
+      - Variable screening
+      
+      - Stepwise Procedures
+      
+  + Prediction
+
+
+<br>
+
+# Model Selection Approaches
+
+### Purpose precedes method
+
+Model selection is the formal process of choosing a model (out of possibly many) using some defined performance criterion (or several) that somehow best describes the system. As we have seen in lecture, there are many approaches available when it comes to model selection. Importantly, however, we should note that the way we go about model selection should be directly informed by the purpose of our research study. Models which are used for exploration should not be used for prediction. Those which are used for prediction may or may not be helpful in the context of inference. Below, we will look at several model selection approaches within the context of study purpose.
+
+<br>
+<br>
+
+# Exploration
+
+When a biological system is not yet well understood, exploration is often the purpose of many research studies. Exploration is used to help identify potential relationships between variables and can be the motivation for the development of future hypotheses.
+
+It is important to remember that the results of an exploratory study should not be viewed as demonstrating proof of a hypothesis. It is only providing evidence for a potential hypothesis that will need future testing with **new data**.
+
+Several model selection approaches are commonly used during exploratory studies. Below, we will talk about two broad approaches, variable screening and step-wise procedures.
+
+## Data example
+
+Genetic modification allows for the production of food crops which have increased usefulness to people. These modifications may be directly related to the nutritional content of the crop, such as increasing digestibility, or they may broadly affect the process of crop production, such as decreasing the time required before harvest can occur. In either case, knowledge of the relationships between genetic variability and phenotypic response is a necessary step in modifying a species' genetic structure.
+
+Soybeans (*Glycine max*) are a species of legume native to East Asia which are used worldwide for a variety of food products as well as feed for livestock. In this dataset, a researcher is studying the relationship between several genetic markers and the flowering time of soybean plants. In each row of the dataset, the average flowering time of 10 soybean plants of a particular variety are recorded as well as the parental type (A or H) of each of 141 genetic markers.
+
+<br>
+
+Import the data into `R` and examine the dataset
+
+```{r, eval= T}
+library(FANR6750)
+data('soybeandata')
+```
+
+
+### Variable screening
+
+Having seen the data set, it is clear that there are many more possible predictor variables than we would like to put into one model. Determining which to include and which to leave out, however, can be a tedious process (especially with so many). We will begin this process using variable screening. This will involve determining a subset of the possible predictors which have the strongest relationships with the response variable. 
+
+Note: The code used to set up this analysis is complex. Do not worry too much about getting bogged down in the details of how this data management is done. The main principles being demonstrated here can be seen with other simpler datasets as well.
+
+
+```{r}
+library(magicfor)
+library(MASS)
+
+# Create a dataframe which contains only the genetic markers
+genetic_matrix <- soybeandata[,-c(1:3)]
+
+genetic_matrix <- genetic_matrix %>% mutate_if(is.character,as.factor)
+
+# Function which stores the results from a for loop
+magic_for(print, silent = TRUE)
+
+for (i in 1:ncol(genetic_matrix)){
+  output1=t.test(soybeandata$Flower09 ~genetic_matrix[,i])
+  output2=round(c(output1$statistic,output1$stderr,output1$p.value),4)
+  output3=c(paste("marker",i,sep=""),output2)
+  print(output3)
+}
+```
+
+Above, we see our first example of a for loop in this course. For loops allow us to execute a set of statements in an iterative way which can greatly reduce the number of code lines we have to write. 
+
+The above loop works by iterating through each column of the `genetic_matrix` dataframe and performing multiple tasks. First, the loop conducts a t-test using the two levels (A and H) within a particular genetic marker as the grouping variable and flowering time as the response. The for loop does this for each of the 141 genetic markers. Next, the loop stores the t-test output, rounds those values, and assigns each of them to a particular marker.
+
+```{r}
+# This line uses the magic_for() function to save the output of the for loop as a dataframe
+flower_output1=magic_result_as_dataframe()
+```
+
+Above, we have saved the output from our for loop into a dataframe. The format of the data, however, is not very convenient. All of the information has been piled into one column. Below, we can take the values and spread them out into a matrix which will make them easier to view and work with.
+
+```{r}
+flower_output=as.data.frame(matrix(flower_output1[,2],nrow=141,byrow=TRUE))
+
+# Creates more informative column names
+colnames(flower_output) <- c("marker", "t.stat","Std.Error","pval")
+
+flower_output$pval=as.numeric(as.character(flower_output$pval))
+```
+
+Now that we have conducted all of these t-tests, we need a way of deciding which genetic markers to consider. In this case, it would be wise to be somewhat liberal in our approach. We don't want to miss any potential relationships so we will want to retain the markers for which the t-test was anywhere near significant. We can do this by filtering only the t-tests which have a p-value < 0.1. 
+
+```{r}
+flower_marker1=filter(flower_output, flower_output$pval<0.10)
+head(flower_marker1)
+```
+
+From the above dataframe, we can see that there were 36 genetic markers which may be somewhat related to flowering time.
+
+Below we can take a subset of our original dataset, selecting only the columns that correspond to the potentially relevant genetic markers.
+
+```{r}
+flower_data2 <- cbind(soybeandata[,c(1,2)], genetic_matrix[,which(colnames(genetic_matrix) %in%    flower_marker1$marker)])
+
+flower_data2 <- flower_data2[-1]
+```
+
+Note: In reality, if our purpose in this analysis was simply to determine which genetic markers may have some relationship with soybean flowering time, we would be done after this step. This information could now be used to further genetic research with the goal of minimizing flowering time. We will continue to use this dataset below, however, to demonstrate how we might construct a parsimonious model estimating flowering time from a large number of predictor variables.
+
+### Step-wise procedures
+
+Now that we have screened our set of predictor variables, we can attempt to construct a parsimonious model. The problem, however, is that we still have 36 potential predictors. **How do we decide which to include in the model?**
+
+Three step-wise procedures exist (forward selection, backward elimination, and stepwise regression) which could be used to resolve this issue. Below we will see all three in action.
+
+**Forward selection** works by starting with the simplest possible model (the intercept only model) and adding one predictor variable at a time. The computer will iteratively create a single variable model for each predictor and choose the predictor with the smallest p-value less than alpha (the most significant). Having chosen the first predictor, it will then create a set of two variable models (always containing the most significant and then one each of all the other possible predictors) and select the best two variable model. Larger and larger models will be constructed until either the number of possible predictors is exhausted or the addition of another predictor is not considered significant (the p-value for that predictor is greater than alpha). 
+
+**Backward elimination** works in exactly the opposite way. The most complex model is specified and predictors are dropped one at a time (the least significant predictor is dropped first) until all of the remaining predictors in the model are significant (p-value less than alpha).
+
+**Stepwise regression** can be thought of as doing both of these processes at once. Working from both ends (the intercept only model and the full model) a set of predictors somewhere in the middle is determined to be appropriate (there are multiple variations of how exactly this can be performed).
+
+<br>
+
+**Some things to consider:**
+
+1. Because of how these procedures are performed (one variable added or removed at a time) it is possible to miss the 'optimal' model. This is especially true with correlated predictors where the inclusion or removal of one may affect how meaningful it is to include another.
+
+2. Stepwise procedures tend to select smaller models than might be helpful for prediction. 
+
+3. Different procedures can arrive at different 'optimal' models. In that case, other metrics (adjusted $R^2$, root mean square error, predicted residuals sums of squares, or Mallow's CP) should be considered.
+
+<br>
+<br>
+
+
+We can begin by specifying the intercept only model and the full model. Next, we will tell `R` which stepwise procedure to perform. In this case, we will try all three.
+
+```{r, results= 'hide'}
+# Fitting the models
+intercept_only <- lm(Flower09~ 1, data= flower_data2)
+full.model <- lm(Flower09~., data= flower_data2)
+
+
+forward.model <- step(intercept_only, direction= 'forward', scope= formula(full.model))
+
+backward.model <- step(full.model, direction= 'backward', scope= formula(full.model))
+
+both.model <- step(intercept_only, direction= 'both', scope= formula(full.model))
+```
+
+```{r}
+summary(forward.model)
+summary(backward.model)
+summary(both.model)
+
+AIC(forward.model)
+AIC(backward.model)
+AIC(both.model)
+```
+
+<br>
+
+Notice the differences in the results of each of these three approaches. Not all of the predictors are in common across all three models. The AIC values differ slightly across the models. What does this tell us? Additionally, notice the adjusted $R^2$ value which is the proportion of the variability in the response that is explained by the predictors. While slightly different across each model, none of them are particularly good. 
+
+**Why is this?** 
+
+<br>
+
+This model was designed for the purpose of exploration not prediction. It makes sense that given how many genetic markers there were total, this handful of them is not going to predict most of the variation in flowering time. What this model does do though, is provide an opportunity to explore hypotheses in future studies.
+
+
+<br>
+<br>
+
+# Prediction
+
+Now we will see an example of how we can use model selection for the purpose of prediction. Here, we would like to select a model which not only performs well for the initial dataset, but can also be used to create accurate predictions when presented with new data.
+
+One way we can do this without having to have two completely separate datasets is by using cross validation. In this example, we will use a particular kind of cross validation known as K-fold. The conceptual steps of K-fold cross validation for model selection are as follows:
+
+1. Randomly divide the data set into *k* number of groups (preferably equal size)
+
+2. Fit a model to all but one of the groups
+
+3. Calculate a metric such as MSE using the observations from the k-th group that was not used to train the model
+
+4. Repeat this process k-number of times using each group
+
+5. Calculate the overall MSE as the average of each calculated above
+
+6. Repeat this process for each separate model you wish to compare
+
+6. Compare the metric to the estimated metric from other possible models to select the 'best' model
+
+## Data example
+
+Growth of grasses on ranches can be affected by many factors. In this example, researchers have developed three models which they would like to use to predict grass growth (Kg dry matter per hectare). One of these models contains abiotic factors (gallons of water, ppm soil salinity, and % soil nitrogen) while another contains biotic factors (% pest cover and number of grazers on the plot) and the third contains both.
+
+```{r, eval= F, include= F}
+dat <- rnorm_multi(n = 1000, 
+                  mu = c(6000, 700000, 9.5, 3.7, 45, 40),
+                  sd = c(1300, 80000, 3.2, 0.8, 14, 12),
+                  r = c(0.49, -0.28, 0.31, -0.45, -0.58, rep(0, 10)),
+                  varnames = c("KgDMHA", "Water", "Salinity", "Nitrogen", "Pests", "Graze"),
+                  empirical = FALSE)
+
+dat$KgDMHA <- round(dat$KgDMHA, 0)
+dat$Water <- round(dat$Water, 0)
+dat$Salinity <- round(dat$Salinity, 1)
+dat$Nitrogen <- round(dat$Nitrogen, 1)
+dat$Pests <- round(dat$Pests, 0)
+dat$Graze <- round(dat$Graze, 0)
+
+write.csv(dat, 'grassland.csv')
+```
+
+<br>
+
+Load the data set and examine the data
+
+```{r, eval= T}
+data('grasslanddata')
+```
+
+
+Below, we have specified our three models
+
+```{r}
+mod1 <- lm(KgDMHA~ Water + Salinity + Nitrogen, data= grasslanddata)
+summary(mod1)
+
+mod2 <- lm(KgDMHA~ Pests + Graze, data= grasslanddata)
+summary(mod2)
+
+mod3 <- lm(KgDMHA~ Water + Salinity + Nitrogen + Pests + Graze, data= grasslanddata)
+summary(mod3)
+```
+
+
+Next, we can tell `R` which type of cross validation we plan to use for each model. 
+
+```{r}
+library(caret)
+library(randomForest)
+ctrl <- trainControl(method= 'cv', number= 10)
+
+abiotic <- train(KgDMHA~ Water + Salinity + Nitrogen, data= grasslanddata, trControl= ctrl)
+
+print(abiotic)
+
+abiotic$resample
+
+biotic <- train(KgDMHA~ Pests + Graze, data= grasslanddata, trControl= ctrl)
+
+print(biotic)
+
+both <- train(KgDMHA~ Water + Salinity + Nitrogen + Pests + Graze, data= grasslanddata, trControl= ctrl)
+
+print(both)
+```
+
+**Which of these models appears to more accurately predict growth (as shown by R squared and RMSE)?**
+
+**Take a look at the resample values. Why is there a different R squared for each of the k-number of folds even though each iteration is using the same predictor variables? **
+
+**Why is the estimated R squared value for the cross validation models lower than it was when we ran the model summaries above?**
+
+
+
+<br>
+<br>
+<br>
+
+# Assignment
+
+
+
+Create an R Markdown file to do the following:
+
+1. Create an `R` chunk to load the data using:
+
+```{r, eval= F}
+library(FANR6750)
+data('jaydata')
+```
+
+2. Use the data available to fit 5 linear models which predict jay abundance. Each model should include at least one interaction and at least one model should have a quadratic term.
+
+3. Compare the AIC values of each model and determine which model appears best.
+
+4. Construct an AIC table by hand using the equations found in the lecture notes.
+
+    a. Use the equation AIC = -2log-likelihood + 2k (the log-likelihood can be calculated using the R function logLik())
+    
+    b. Determine the Akaike weight for the best performing model and explain what that weight means in comparison to the second best performing model
+
+5. Perform a k-fold cross validation on your top two performing models.
+
+    a. Use 5 folds
+    
+    b. Explain how you think the number of folds affects this process? When do you think we might choose to use fewer or more folds?
+
+
+
+<br>
+
+A few things to remember when creating the document:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Be sure to set `echo = TRUE` in all `R` chunks so that all code and output is visible in the knitted document
+
+- Regularly knit the document as you work to check for errors
