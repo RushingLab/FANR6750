@@ -126,21 +126,10 @@ fm2 &lt;- lm(Weight ~ Mercury + Colony,
 
 &lt;img src="13_random_effects_files/figure-html/unnamed-chunk-8-1.png" width="576" style="display: block; margin: auto;" /&gt;
 
----
-# example
-
-
-```r
-fm2 &lt;- lm(Weight ~ Mercury + Colony, 
-          data = storkdata)
-```
-
-&lt;img src="13_random_effects_files/figure-html/unnamed-chunk-10-1.png" width="576" style="display: block; margin: auto;" /&gt;
 
 ---
 # example
 
-Statistically, including 
 **Question**: Where does sampling error come from in this model? 
 
 --
@@ -215,26 +204,53 @@ A random effects model is appropriate when the treatment levels in the experimen
 
 Fixed-effect formulation: 
 
-`$$\large y_{ij} = \beta_0 + \beta_{1[j]} + \beta_{2} x_i + \epsilon_{ij}$$`
+`$$\large y_{ij} = \mu + \alpha_j + \beta x_i + \epsilon_{ij}$$`
 `$$\large \epsilon_{ij} \sim normal(0, \sigma^2)$$`
 
-- `\(y_{ij}\)` = weight of chick `\(i\)` in colony `\(j\)`
+- `\(y_{ij}\)` = weight of chick `\(i\)` in colony `\(j\)`; `\(x_i\)` = mercury level of chick `\(i\)`
 
-&lt;img src="13_random_effects_files/figure-html/unnamed-chunk-11-1.png" width="432" style="display: block; margin: auto;" /&gt;
+&lt;img src="13_random_effects_files/figure-html/unnamed-chunk-9-1.png" width="432" style="display: block; margin: auto;" /&gt;
 
 ---
 # fixed vs. random effects
 
 Random-effect formulation: 
 
-`$$\large y_{ij} = \beta_0 + \beta_{1[j]} + \beta_{2} x_i + \epsilon_{ij}$$`
-`$$\large \beta_{1[j]} \sim normal(0, \sigma^2_C)$$`
+`$$\large y_{ij} = \mu + \alpha_j + \beta x_i + \epsilon_{ij}$$`
+`$$\large \alpha_j \sim normal(0, \sigma^2_C)$$`
 
 `$$\large \epsilon_{ij} \sim normal(0, \sigma^2)$$`
 
-- `\(y_{ij}\)` = weight of chick `\(i\)` in colony `\(j\)`
+- `\(y_{ij}\)` = weight of chick `\(i\)` in colony `\(j\)`; `\(x_i\)` = mercury level of chick `\(i\)`
 
---
+&lt;img src="13_random_effects_files/figure-html/unnamed-chunk-10-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# fixed vs. random effects
+
+Random-effect formulation: 
+
+`$$\large y_{ij} = \mu + \alpha_j + \beta x_i + \epsilon_{ij}$$`
+`$$\large \alpha_j \sim normal(0, \sigma^2_C)$$`
+
+`$$\large \epsilon_{ij} \sim normal(0, \sigma^2)$$`
+
+- `\(y_{ij}\)` = weight of chick `\(i\)` in colony `\(j\)`; `\(x_i\)` = mercury level of chick `\(i\)`
+
+&lt;img src="13_random_effects_files/figure-html/unnamed-chunk-11-1.png" width="648" style="display: block; margin: auto;" /&gt;
+
+---
+# fixed vs. random effects
+
+Random-effect formulation: 
+
+`$$\large y_{ij} = \mu + \alpha_{[j]} + \beta x_i + \epsilon_{ij}$$`
+`$$\large \alpha_{[j]} \sim normal(0, \sigma^2_C)$$`
+
+`$$\large \epsilon_{ij} \sim normal(0, \sigma^2)$$`
+
+- `\(y_{ij}\)` = weight of chick `\(i\)` in colony `\(j\)`; `\(x_i\)` = mercury level of chick `\(i\)`
+
 
 &lt;img src="13_random_effects_files/figure-html/unnamed-chunk-12-1.png" width="432" style="display: block; margin: auto;" /&gt;
 
@@ -250,7 +266,7 @@ Random-effect formulation:
 
 #### Fixed-effects model
 
-`$$\large H_0 : \beta_{1[1]} = \beta_{1[2]} = ... = \beta_{1[a]} = 0$$`
+`$$\large H_0 : \alpha_1 = \alpha_2 = ... = \alpha_a = 0$$`
 
 `$$\large H_a : At\;least\;one\;inequality$$`
 
