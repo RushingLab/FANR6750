@@ -50,6 +50,8 @@ navbar:
           href: articles/lectures/13_random_effects/13_random_effects.html
         - text: "Lecture 14: Nested designs"
           href: articles/lectures/14_nested/14_nested.html
+        - text: "Lecture 15: Split-plot designs"
+          href: articles/lectures/15_split-plot/15_split-plot.html
     - text: "Labs"
       icon: fas fa-desktop
       menu:
