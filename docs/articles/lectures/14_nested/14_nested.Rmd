@@ -247,23 +247,34 @@ exp <- data.frame(obs = rep(c(1, 2, 3, 4), 3),
 exp %>%   
   kable(format = "html", align = "c", col.names = c(" ", " ", "Bt", "Dimilin", "Control"), 
         escape = TRUE) %>%
-  add_header_above(c("Observation (k)" = 1, "Experimental unit within observation (j)" = 1, 
+  add_header_above(c("Observation (k)" = 1, "Experimental unit within treatment (j)" = 1, 
                      "Treatment (i)" = 3)) %>%
   kable_styling(bootstrap_options = c("condensed"), font_size = 8)
 ```
 ]
 
---
 
 .pull-right[
-$$\large \bar{y}. = 15.39$$ 
+```{r}
 
-$$\large \bar{y}_i = 14.42, 13.00, 18.75$$ 
-$$\begin{aligned}
-  \bar{y}_{ij} = 15.50, 13.75, 14.00, \\
-  12.50, 13.50, 13.00, \\
-  18.25, 18.75, 19.25
-\end{aligned}$$
+data("mothdata2")
+mothdata2$Treatment <- factor(mothdata2$Treatment, 
+                              levels = c("Control", "Bt", "Dimilin"))
+
+mothdata2$Plot <- factor(mothdata2$Plot)
+plotData <- aggregate(larvae ~ Treatment + Plot, 
+                      data = mothdata2, FUN = mean)
+plotData <- aggregate(larvae ~ Treatment + Plot, 
+                      data = mothdata2, FUN = mean)
+plotData$treatment = c( 1.75, 2, 2.25, 0.75, 1, 1.25, 2.75, 3, 3.25)
+
+y.bar <- dplyr::group_by(mothdata2, Treatment) %>% summarise(mu = mean(larvae)) %>%
+  dplyr::mutate(treatment = c(1, 2, 3))
+y.bar$exp <- mean(mothdata2$larvae)
+mothdata2$treatment <- rep(c( 1.75, 2, 2.25, 0.75, 1, 1.25, 2.75, 3, 3.25), each = 4) + rnorm(36, 0, 0.05)
+mothdata2$exp <- rep(plotData$larvae, each = 4)
+plotData$exp <- rep(c(14.42, 18.75, 13), each = 3)
+```
 
 ]
 
@@ -281,7 +292,171 @@ exp <- data.frame(obs = rep(c(1, 2, 3, 4), 3),
 exp %>%   
   kable(format = "html", align = "c", col.names = c(" ", " ", "Bt", "Dimilin", "Control"), 
         escape = TRUE) %>%
-  add_header_above(c("Observation (k)" = 1, "Experimental unit within observation (j)" = 1, 
+  add_header_above(c("Observation (k)" = 1, "Experimental unit within treatment (j)" = 1, 
+                     "Treatment (i)" = 3)) %>%
+  kable_styling(bootstrap_options = c("condensed"), font_size = 8)
+```
+]
+
+
+.pull-right[
+$$\large y_{ijk} = \mu$$
+
+```{r}
+ggplot() +
+  geom_hline(yintercept = mean(mothdata2$larvae)) +
+  # geom_segment(data = y.bar, 
+  #              aes(x = treatment-0.5, xend = treatment+0.5, y = mu, yend = mu, color = Treatment),
+  #              linewidth = 1) +
+  # geom_segment(data = plotData, aes(x = treatment-0.1, xend = treatment + 0.1, y = larvae, 
+  #                                   yend = larvae, color = Treatment)) +
+  geom_blank(data = mothdata2, aes(x = treatment, y = larvae, color = Treatment), size = 1) +
+  scale_y_continuous("Larvae") +
+  scale_x_continuous("Treatment", breaks = c(1, 2,3), labels = c("Control", "Bt", "Dimilin"))
+```
+
+]
+
+---
+# example
+
+.pull-left[
+```{r}
+exp <- data.frame(obs = rep(c(1, 2, 3, 4), 3),
+                  expUnit = rep(c(1,2,3), each = 4),
+                  bt = c(16.0, 16.0, 15.8, 14.2, 13.9, 14.2, 13.5, 13.4, 14.0, 13.1, 13.5, 15.4),
+                  Dim = c(12.3, 13.0, 12.7, 12.0, 14.0, 13.1, 13.5, 13.4, 13.0, 12.4, 12.8, 13.8),
+                  cnl = c(18.5, 18.0, 18.4, 18.1, 18.7, 19.0, 18.8, 18.5, 19.5, 17.5, 19.1, 20.9))
+
+exp %>%   
+  kable(format = "html", align = "c", col.names = c(" ", " ", "Bt", "Dimilin", "Control"), 
+        escape = TRUE) %>%
+  add_header_above(c("Observation (k)" = 1, "Experimental unit within treatment (j)" = 1, 
+                     "Treatment (i)" = 3)) %>%
+  kable_styling(bootstrap_options = c("condensed"), font_size = 8)
+```
+]
+
+
+.pull-right[
+$$\large y_{ijk} = \mu + \alpha_i$$
+```{r}
+ggplot() +
+  geom_hline(yintercept = mean(mothdata2$larvae)) +
+  geom_segment(data = y.bar, aes(x = treatment, xend = treatment, y = exp, yend = mu)) +
+  geom_segment(data = y.bar,
+               aes(x = treatment-0.5, xend = treatment+0.5, y = mu, yend = mu, color = Treatment),
+               linewidth = 0.75) +
+  # geom_segment(data = plotData, aes(x = treatment-0.1, xend = treatment + 0.1, y = larvae,
+  #                                   yend = larvae, color = Treatment)) +
+  geom_blank(data = mothdata2, aes(x = treatment, y = larvae, color = Treatment), size = 1) +
+  scale_y_continuous("Larvae") +
+  scale_x_continuous("Treatment", breaks = c(1, 2,3), labels = c("Control", "Bt", "Dimilin"))
+```
+
+]
+
+---
+# example
+
+.pull-left[
+```{r}
+exp <- data.frame(obs = rep(c(1, 2, 3, 4), 3),
+                  expUnit = rep(c(1,2,3), each = 4),
+                  bt = c(16.0, 16.0, 15.8, 14.2, 13.9, 14.2, 13.5, 13.4, 14.0, 13.1, 13.5, 15.4),
+                  Dim = c(12.3, 13.0, 12.7, 12.0, 14.0, 13.1, 13.5, 13.4, 13.0, 12.4, 12.8, 13.8),
+                  cnl = c(18.5, 18.0, 18.4, 18.1, 18.7, 19.0, 18.8, 18.5, 19.5, 17.5, 19.1, 20.9))
+
+exp %>%   
+  kable(format = "html", align = "c", col.names = c(" ", " ", "Bt", "Dimilin", "Control"), 
+        escape = TRUE) %>%
+  add_header_above(c("Observation (k)" = 1, "Experimental unit within treatment (j)" = 1, 
+                     "Treatment (i)" = 3)) %>%
+  kable_styling(bootstrap_options = c("condensed"), font_size = 8)
+```
+]
+
+
+.pull-right[
+$$\large y_{ijk} = \mu + \alpha_i + \beta_{ij}$$
+
+```{r}
+ggplot() +
+  geom_hline(yintercept = mean(mothdata2$larvae)) +
+    geom_segment(data = y.bar, aes(x = treatment, xend = treatment, y = exp, yend = mu)) +
+  geom_segment(data = y.bar,
+               aes(x = treatment-0.5, xend = treatment+0.5, y = mu, yend = mu, color = Treatment),
+               linewidth = 0.75) +
+    geom_segment(data = plotData, aes(x = treatment, xend = treatment, y = exp, yend = larvae, 
+                                    color = Treatment)) +
+  geom_segment(data = plotData, aes(x = treatment-0.1, xend = treatment + 0.1, y = larvae,
+                                    yend = larvae, color = Treatment), linewidth = 1.25) +
+  geom_blank(data = mothdata2, aes(x = treatment, y = larvae, color = Treatment), size = 1) +
+  scale_y_continuous("Larvae") +
+  scale_x_continuous("Treatment", breaks = c(1, 2,3), labels = c("Control", "Bt", "Dimilin"))
+```
+
+]
+
+---
+# example
+
+.pull-left[
+```{r}
+exp <- data.frame(obs = rep(c(1, 2, 3, 4), 3),
+                  expUnit = rep(c(1,2,3), each = 4),
+                  bt = c(16.0, 16.0, 15.8, 14.2, 13.9, 14.2, 13.5, 13.4, 14.0, 13.1, 13.5, 15.4),
+                  Dim = c(12.3, 13.0, 12.7, 12.0, 14.0, 13.1, 13.5, 13.4, 13.0, 12.4, 12.8, 13.8),
+                  cnl = c(18.5, 18.0, 18.4, 18.1, 18.7, 19.0, 18.8, 18.5, 19.5, 17.5, 19.1, 20.9))
+
+exp %>%   
+  kable(format = "html", align = "c", col.names = c(" ", " ", "Bt", "Dimilin", "Control"), 
+        escape = TRUE) %>%
+  add_header_above(c("Observation (k)" = 1, "Experimental unit within treatment (j)" = 1, 
+                     "Treatment (i)" = 3)) %>%
+  kable_styling(bootstrap_options = c("condensed"), font_size = 8)
+```
+]
+
+
+.pull-right[
+$$\large y_{ijk} = \mu + \alpha_i + \beta_{ij} + \epsilon_{ijk}$$
+
+```{r}
+ggplot() +
+  geom_hline(yintercept = mean(mothdata2$larvae)) +
+  geom_segment(data = y.bar, aes(x = treatment, xend = treatment, y = exp, yend = mu)) +
+  geom_segment(data = y.bar,
+               aes(x = treatment-0.5, xend = treatment+0.5, y = mu, yend = mu, color = Treatment),
+               linewidth = 0.75) +
+    geom_segment(data = plotData, aes(x = treatment, xend = treatment, y = exp, yend = larvae, 
+                                    color = Treatment)) +
+  geom_segment(data = plotData, aes(x = treatment-0.1, xend = treatment + 0.1, y = larvae,
+                                    yend = larvae, color = Treatment), linewidth = 1.25) +
+    geom_segment(data = mothdata2, aes(x = treatment, xend = treatment, y = exp, yend = larvae), 
+               linewidth = 0.25, linetype = "dashed") +
+  geom_point(data = mothdata2, aes(x = treatment, y = larvae, color = Treatment), size = 1) +
+  scale_y_continuous("Larvae") +
+  scale_x_continuous("Treatment", breaks = c(1, 2,3), labels = c("Control", "Bt", "Dimilin"))
+```
+
+]
+
+---
+# example
+
+.pull-left[
+```{r}
+exp <- data.frame(obs = rep(c(1, 2, 3, 4), 3),
+                  expUnit = rep(c(1,2,3), each = 4),
+                  bt = c(16.0, 16.0, 15.8, 14.2, 13.9, 14.2, 13.5, 13.4, 14.0, 13.1, 13.5, 15.4),
+                  Dim = c(12.3, 13.0, 12.7, 12.0, 14.0, 13.1, 13.5, 13.4, 13.0, 12.4, 12.8, 13.8),
+                  cnl = c(18.5, 18.0, 18.4, 18.1, 18.7, 19.0, 18.8, 18.5, 19.5, 17.5, 19.1, 20.9))
+
+exp %>%   
+  kable(format = "html", align = "c", col.names = c(" ", " ", "Bt", "Dimilin", "Control"), 
+        escape = TRUE) %>%
+  add_header_above(c("Observation (k)" = 1, "Experimental unit within treatment (j)" = 1, 
                      "Treatment (i)" = 3)) %>%
   kable_styling(bootstrap_options = c("condensed"), font_size = 8)
 ```
@@ -303,6 +478,29 @@ anova_tab2 %>%
   kable(align = 'c', booktabs = TRUE, escape = FALSE, format = "html") %>%
   kable_styling(bootstrap_options = c("condensed"), 
                 full_width = FALSE, font_size = 18)
+```
+]
+
+---
+# nested design in r
+
+If we use the `aov()` function like in previous examples, `R` will not use the correct df
+
+.vsmall-code[
+```{r echo = TRUE}
+aov.wrong <- aov(larvae ~ Treatment + Plot, data = mothdata2)
+summary(aov.wrong)
+```
+]
+
+--
+
+Instead, we have to use: 
+
+.vsmall-code[
+```{r echo = TRUE}
+aov.correct <- aov(larvae ~ Treatment + Error(Plot), data = mothdata2)
+summary(aov.correct)
 ```
 ]
 

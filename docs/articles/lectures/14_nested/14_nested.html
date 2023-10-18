@@ -335,7 +335,7 @@ class: inverse, center, middle
  &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Observation (k)&lt;/div&gt;&lt;/th&gt;
-&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Experimental unit within observation (j)&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Experimental unit within treatment (j)&lt;/div&gt;&lt;/th&gt;
 &lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Treatment (i)&lt;/div&gt;&lt;/th&gt;
 &lt;/tr&gt;
   &lt;tr&gt;
@@ -435,17 +435,9 @@ class: inverse, center, middle
 &lt;/table&gt;
 ]
 
---
 
 .pull-right[
-`$$\large \bar{y}. = 15.39$$` 
 
-`$$\large \bar{y}_i = 14.42, 13.00, 18.75$$` 
-`$$\begin{aligned}
-  \bar{y}_{ij} = 15.50, 13.75, 14.00, \\
-  12.50, 13.50, 13.00, \\
-  18.25, 18.75, 19.25
-\end{aligned}$$`
 
 ]
 
@@ -457,7 +449,470 @@ class: inverse, center, middle
  &lt;thead&gt;
 &lt;tr&gt;
 &lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Observation (k)&lt;/div&gt;&lt;/th&gt;
-&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Experimental unit within observation (j)&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Experimental unit within treatment (j)&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Treatment (i)&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Bt &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Dimilin &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Control &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 16.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 16.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 15.8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.7 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.9 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 17.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 15.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 20.9 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+
+.pull-right[
+`$$\large y_{ijk} = \mu$$`
+
+&lt;img src="14_nested_files/figure-html/unnamed-chunk-8-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+# example
+
+.pull-left[
+&lt;table class="table table-condensed" style="font-size: 8px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Observation (k)&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Experimental unit within treatment (j)&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Treatment (i)&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Bt &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Dimilin &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Control &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 16.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 16.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 15.8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.7 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.9 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 17.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 15.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 20.9 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+
+.pull-right[
+`$$\large y_{ijk} = \mu + \alpha_i$$`
+&lt;img src="14_nested_files/figure-html/unnamed-chunk-10-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+# example
+
+.pull-left[
+&lt;table class="table table-condensed" style="font-size: 8px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Observation (k)&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Experimental unit within treatment (j)&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Treatment (i)&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Bt &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Dimilin &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Control &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 16.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 16.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 15.8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.7 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.9 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 17.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 15.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 20.9 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+
+.pull-right[
+`$$\large y_{ijk} = \mu + \alpha_i + \beta_{ij}$$`
+
+&lt;img src="14_nested_files/figure-html/unnamed-chunk-12-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+# example
+
+.pull-left[
+&lt;table class="table table-condensed" style="font-size: 8px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Observation (k)&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Experimental unit within treatment (j)&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Treatment (i)&lt;/div&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Bt &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Dimilin &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Control &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 16.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 16.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 15.8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.7 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.4 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.9 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.7 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19.0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.8 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 14.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.0 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 17.5 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.5 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 12.8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 19.1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 15.4 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 13.8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 20.9 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+
+.pull-right[
+`$$\large y_{ijk} = \mu + \alpha_i + \beta_{ij} + \epsilon_{ijk}$$`
+
+&lt;img src="14_nested_files/figure-html/unnamed-chunk-14-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+# example
+
+.pull-left[
+&lt;table class="table table-condensed" style="font-size: 8px; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Observation (k)&lt;/div&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="1"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Experimental unit within treatment (j)&lt;/div&gt;&lt;/th&gt;
 &lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Treatment (i)&lt;/div&gt;&lt;/th&gt;
 &lt;/tr&gt;
   &lt;tr&gt;
@@ -594,6 +1049,54 @@ class: inverse, center, middle
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+]
+
+---
+# nested design in r
+
+If we use the `aov()` function like in previous examples, `R` will not use the correct df
+
+.vsmall-code[
+
+```r
+aov.wrong &lt;- aov(larvae ~ Treatment + Plot, data = mothdata2)
+summary(aov.wrong)
+```
+
+```
+##             Df Sum Sq Mean Sq F value Pr(&gt;F)    
+## Treatment    2  215.4   107.7  208.89 &lt;2e-16 ***
+## Plot         6   11.2     1.9    3.61 0.0093 ** 
+## Residuals   27   13.9     0.5                   
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+]
+
+--
+
+Instead, we have to use: 
+
+.vsmall-code[
+
+```r
+aov.correct &lt;- aov(larvae ~ Treatment + Error(Plot), data = mothdata2)
+summary(aov.correct)
+```
+
+```
+## 
+## Error: Plot
+##           Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+## Treatment  2  215.4   107.7    57.9 0.00012 ***
+## Residuals  6   11.2     1.9                    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Error: Within
+##           Df Sum Sq Mean Sq F value Pr(&gt;F)
+## Residuals 27   13.9   0.516
+```
 ]
 
 ---
