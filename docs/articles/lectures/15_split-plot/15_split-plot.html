@@ -252,13 +252,13 @@ So the "whole-unit effect" is the residual error in the whole unit "part" of the
 Because it is essentially the whole-unit residual variance, `\(\delta_{ik}\)` is treated as a random effect:  
 
 
-`$$\large \delta_{ik} \sim normal(0, \sigma^2_D)$$`
+`$$\large \delta_{ik} \sim normal(0, \sigma^2_\delta)$$`
 
 --
 
 We might view block as random too:
 
-`$$\large \gamma_k \sim normal(0, \sigma^2_C)$$`
+`$$\large \gamma_k \sim normal(0, \sigma^2_\gamma)$$`
 
 
 --
@@ -288,11 +288,11 @@ All other effects in the model are fixed effects
 
 `$$H_a : At \;least \;one \;inequality$$`
 
-#### Secondary hypothesis
+#### Secondary hypotheses
 
-`$$H_0 : \sigma^2_{D/C} = 0$$`
+`$$H_0 :\sigma^2_{\gamma} = 0\; or\;\sigma^2_\delta = 0$$`
 
-`$$H_a : \sigma^2_{D/C} &gt; 0$$`
+`$$H_a :\sigma^2_\gamma &gt; 0\;or\;\sigma^2_\delta &gt; 0$$`
 
 ---
 class: inverse, middle, center

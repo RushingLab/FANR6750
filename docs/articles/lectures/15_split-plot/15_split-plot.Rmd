@@ -263,13 +263,13 @@ $$\large y_{ijk} = \mu + \alpha_i + \beta_j + \alpha \beta_{ij} + \gamma_k + \de
 Because it is essentially the whole-unit residual variance, $\delta_{ik}$ is treated as a random effect:  
 
 
-$$\large \delta_{ik} \sim normal(0, \sigma^2_D)$$
+$$\large \delta_{ik} \sim normal(0, \sigma^2_\delta)$$
 
 --
 
 We might view block as random too:
 
-$$\large \gamma_k \sim normal(0, \sigma^2_C)$$
+$$\large \gamma_k \sim normal(0, \sigma^2_\gamma)$$
 
 
 --
@@ -299,11 +299,11 @@ $$H_0 : \alpha \beta_{ij} = 0 \; for \; all \; i \; and \; all \; j$$
 
 $$H_a : At \;least \;one \;inequality$$
 
-#### Secondary hypothesis
+#### Secondary hypotheses
 
-$$H_0 : \sigma^2_{D/C} = 0$$
+$$H_0 :\sigma^2_{\gamma} = 0\; or\;\sigma^2_\delta = 0$$
 
-$$H_a : \sigma^2_{D/C} > 0$$
+$$H_a :\sigma^2_\gamma > 0\;or\;\sigma^2_\delta > 0$$
 
 ---
 class: inverse, middle, center
