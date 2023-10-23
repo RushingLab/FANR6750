@@ -73,6 +73,8 @@ navbar:
           href: articles/lab08_model_selection.html
         - text: "Lab 9: Nested designs"
           href: articles/lab09_nested.html
+        - text: "Lab 10: Split-plot designs"
+          href: articles/lab10_split_plot.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:

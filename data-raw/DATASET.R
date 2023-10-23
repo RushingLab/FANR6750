@@ -298,7 +298,6 @@ fruitdata$Water <- as.factor(fruitdata$Water)
 eucalyptusdata <- read.csv("data-raw/Euc_data.csv")
 
 movementdata <- read.csv("data-raw/movementdata.csv")
-movementdata <- dplyr::select(movementdata, -X)
 usethis::use_data(aciditydata, acorndata, agingdata, aspectdata, biomassdata, burrowdata,
                   caterpillardata, chuckdata, crayfishdata, crowdata, cruzdata,
                   deerdata, departuredata, dietdata, eucalyptusdata, exploredata,
