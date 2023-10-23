@@ -245,15 +245,70 @@ grasslanddata <- read.csv("data-raw/grasslanddata.csv")
 
 mothdata2 <- read.csv("data-raw/gypsyData.csv")
 
-usethis::use_data(aciditydata, acorndata, agingdata, biomassdata, burrowdata,
-                  caterpillardata, chuckdata, crowdata, cruzdata,
-                  deerdata, departuredata, dietdata, exploredata, fishdata, frogdata,
+waspdata <- data.frame(Treatment = rep(c(1,2,3,4), each = 20),
+                       Cage = rep(1:16, each = 5),
+                       Observation = rep(1:5, 4*4),
+                       Eggs = c(32, 31, 31, 31, 31, 30, 29, 31, 30, 31, 31, 33, 29,
+                                33, 32, 30, 28, 33, 31, 32, 37, 38, 37, 38, 39, 38,
+                                39, 38, 38, 37, 35, 38, 36, 36, 37, 36, 34, 37, 36,
+                                35, 41, 43, 43, 42, 44, 39, 40, 40, 40, 39, 42, 40,
+                                40, 39, 41, 43, 40, 40, 41, 41, 42, 43, 41, 44, 42,
+                                41, 40, 41, 44, 42, 43, 43, 44, 43, 43, 40, 39, 41, 43, 40))
+waspdata$Treatment <- as.factor(waspdata$Treatment)
+waspdata$Cage <- as.factor(waspdata$Cage)
+
+aspectdata <- data.frame(aspect = rep(c("East", "North", "South", "West"), each = 40),
+                    age = c(65, 71, 62, 80, 88, 106, 152, 96, 94, 149, 135, 108, 131, 109, 101, 113, 107, 120, 141, 324, 117, 130, 103, 112, 79, 123, 104, 89, 76, 99, 100, 99, 108, 105, 88, 135, 101, 115, 118, 103, 140, 150, 136, 117, 138, 142, 150, 93, 141, 213, 181, 179, 201, 186, 208, 202, 197, 174, 167, 179, 302, 246, 248, 146, 130, 128, 189, 155, 109, 204, 183, 169, 202, 233, 230, 132, 230, 193, 144, 144, 140, 153, 141, 134, 114, 110, 132, 55, 60, 168, 128, 129, 182, 246, 163, 148, 274, 111, 299, 149, 275, 81, 102, 93, 118, 135, 77, 89, 91, 99, 86, 168, 172, 200, 132, 124, 115, 170, 73, 181, 185, 206, 155, 158, 75, 235, 163, 155, 204, 205, 212, 187, 203, 163, 228, 232, 179, 158, 187, 149, 196, 257, 254, 195, 181, 161, 169, 202, 193, 192, 188, 191, 166, 145, 226, 176, 157, 163, 201, 210),
+                    dbh = c(13.724, 14.56, 19.038, 13.39, 24.064, 24.002, 15.43, 27.8, 14.31, 19.344, 21.47, 10.166, 19.346, 17.02, 14.328, 13.53, 9.414, 10.868, 16.724, 25.918, 10.198, 17.548, 9.122, 20.86, 8.734, 17.11, 16.764, 11.742, 10.844, 11.554, 15.536, 17.886, 13, 18.218, 20.026, 14.202, 25.916, 11.212, 16.992, 11.944, 13.642, 20.87, 23.394, 20.35, 22.484, 13.99, 25.96, 12.222, 10.844, 20.328, 24.656, 15.872, 25.972, 14.896, 18.082, 14.258, 14.532, 14.818, 20.134, 23.076, 29.822, 20.082, 14.808, 17.852, 8.008, 14.274, 16.846, 18.192, 16.108, 14.394, 12.944, 17.692, 19.18, 28.6, 20.732, 11.982, 25.326, 10.864, 12.998, 14.946, 17.258, 13.03, 16.494, 17.848, 13.136, 12.576, 19.96, 12.894, 9.078, 20.114, 20.178, 25.196, 14.352, 14.094, 14.454, 17.152, 15.674, 10.188, 22.07, 16.652, 13.502, 13.806, 15.35, 10.006,14.15, 15.876, 10.748, 10.702, 11.832, 22.708, 8.63, 17.4, 13.464, 18.54, 11.238, 12.356, 12.93, 10.584, 14.232, 22.76, 16.608, 30.916, 19.804, 14.542, 11.228, 23.034, 14.76, 18.214, 9.192, 16.692, 18.504, 12.162, 13.978, 15.75, 15.798, 13.626, 15.562, 15.014, 12.516, 15.164, 13.232, 20.326, 17.38, 23.984, 14.626, 12.802, 16.256, 21.954, 18.462, 13.214, 16.38, 23.256, 10.188, 10.89, 19.728, 12.708, 14.566, 18.052, 14.2, 16.854))
+crayfishdata <- data.frame(count = c(0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0,
+                                 2, 3, 0, 0, 2, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0),
+                       habitat = rep(c("Urban", "Natural"), each = 15))
+turtledata <- data.frame(Survived = c(0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0),
+                      MCL = c(88.66, 49.45, 25.88, 2.56, 53.03, 55.07, 22.92, 95.73, 2.61, 49.75, 96.36, 26.44, 28.61, 39.63, 78.43, 74.61, 83.6, 79.33, 18.91, 90.68, 16.88, 80.34, 52.76, 61.84, 56.13, 50.65, 43.74, 60.41, 69.42, 80.13, 64.42, 9.76, 7.12, 44.09, 44.53, 74.48, 77.73, 78.32, 39.76, 55.35, 34.37, 2.14, 25.52, 90.85, 96.76, 72.74, 65.09, 42.89, 69.72, 25.44, 61.58, 2.97, 63.37, 71.5, 71.75, 46.22, 31.9, 8.29, 13.03, 86.98, 5.95, 80.54, 26.05, 77.1, 76.46, 8.82, 28.99, 71.64, 35.39, 42.94, 5.4, 10.03, 81.37, 34.89, 34.57, 54.15, 52.22, 22.94, 18.97, 89.72, 80.11, 33.44, 89.36, 75.38, 95.1, 89.15, 9.84, 15.87, 65.46, 79.37, 80.33, 18.75, 16.45, 33.1, 21.09, 84.13, 38.39, 78.09, 34.23, 94.87, 38.58, 81.13, 70.76, 94.27, 22.15, 7.11, 12.61, 55.94, 39.34, 74.98, 97.33, 48.49, 92.01, 58.15, 83.53, 0.99, 96.8, 64.1, 12.99, 63.76, 38.15, 1.34, 46.58, 92.92, 0.53, 66.51, 31.29, 4.62, 83.75, 85.52, 76.75, 91.97, 72.99, 2.14, 28.43, 96.57, 42.18, 19.89, 93.44, 99.75, 10.66, 2.91, 15.52, 80.6, 51.95, 66.13, 54.04,33.53,38.22, 10.23),
+                      Disturbance = c("High", "Moderate", "Low", "Moderate", "Moderate", "Low", "Low", "High", "Moderate", "Moderate", "Low", "Low", "High", "Moderate", "High", "Moderate", "Low", "Low", "Moderate", "Low", "High", "High", "High", "Moderate", "Low", "Moderate", "High", "Moderate", "High", "High", "High", "Low", "High", "Moderate", "High", "Low", "High", "Low", "Moderate", "Low", "Moderate", "High", "High", "High", "High", "High", "Moderate", "Low", "Moderate", "High", "High", "Moderate", "Moderate", "Moderate", "Moderate", "Moderate", "High", "Moderate", "Low", "Moderate", "High", "Moderate", "Low", "Moderate", "High", "Moderate", "High", "High", "High", "Low", "High", "Low", "Moderate", "Low", "Low", "Moderate", "High", "Moderate", "Low", "Low", "Moderate", "High", "High", "Low", "Low", "Low", "Low", "Moderate", "Low", "High", "High", "Moderate", "Low", "High", "Moderate", "High", "Low", "Moderate","Low", "Low", "Moderate", "High", "Moderate", "Moderate", "High", "Low", "Low", "Low", "Low", "Low", "Moderate", "Moderate", "Moderate", "High", "Moderate", "Moderate", "Moderate", "Moderate", "Low", "Moderate", "Moderate", "Low", "Low", "Low", "Low", "Low", "Low", "High", "Moderate", "High", "High", "High", "High", "High", "High", "Low", "High", "Low", "Low", "Moderate", "High", "Moderate", "Moderate", "High", "Moderate", "Low", "Moderate", "Moderate", "Moderate", "Moderate"),
+                      Openness = c(0.33, 0.35, 0.62, 0.82, 0.77, 0.64, 0.68, 0.86, 0.17, 0.07, 0.65, 0.36,
+                                   0.33, 0.03, 0.42, 0.68, 0.57, 0.38, 0.07, 0.78, 0.52, 0.67, 0.25, 0.14,
+                                   0.79, 0.65, 0.99, 0.17, 0.81, 0.58, 0.25, 0.9, 0.16, 0.36, 0.35, 0.64,
+                                   0.93, 0.58, 0.98, 0.91, 0.5, 0.81, 0.65, 0.04, 0.13, 0.61, 0.66, 0.33,
+                                   0.73, 0.95, 0.71, 0.06, 0.49, 0.91, 0.31, 0.4, 0.71, 0.89, 0.79, 0.66,
+                                   0.1, 0.22, 0.43, 0.32, 0.89, 0.23, 0.09, 0.16, 0.36, 0.91, 0.93, 0.26,
+                                   0.23, 0.83, 0.21, 0.95, 0.98, 0.59, 0, 0.52, 0.17, 0.07, 0.21, 0.48,
+                                   0.59, 0.63, 0.51, 0.94, 0.6, 0.65, 0.79, 0.94, 0.24, 0.48, 0.72, 0.85,
+                                   0.58, 0.21, 0.94, 0.28, 0.64, 0.83, 0.19, 0.32, 0.27, 0.12, 0.17, 0.72,
+                                   0.78, 0.81, 0.71, 0.22, 0.98, 0.89, 0.81, 0.8, 0.82, 0.32, 0.95, 0.22,
+                                   0.93, 0.89, 0.45, 0.17, 0.76, 0.72, 0.56, 0.42, 0.5, 0.86, 0.21, 1, 0.28,
+                                   0.34, 0.16, 0.55, 0.96, 0.09, 0.81, 0.2, 0.16, 0.75, 0.57, 0.48, 0.45,
+                                   0.27, 0.24, 0.21, 0.3, 0.19))
+saplingdata <- saplingData <- data.frame(WMU = rep(c("1", "2", "3"), each = 6),
+                                         Plot = rep(1:9, each = 2),
+                                         Disturbance = rep(rep(c("Control", "Fire", "Mechanical"), each = 2), 3),
+                                         Cage = rep(c("Yes", "No"), 9),
+                                         Saplings = c(67, 58, 63, 55, 56, 47, 77, 70, 70, 60, 69,
+                                                      59, 76, 68, 69, 61, 65, 56))
+fruitdata <- data.frame(Root_stock = rep(c("B.9", "EMLA7", "G.11"), each = 15),
+                        Water = rep(rep(1:3, each = 5), 3),
+                        Replicate = rep(1:5, 9),
+                        Fruit = c(83.59, 84.06, 83.76, 83.64, 84.56, 86.10, 85.42, 85.30, 85.91,
+                                  86.05, 86.06, 86.02, 86.07, 86.20, 85.44, 82.46, 83.82, 82.98,
+                                  82.79, 82.66, 85.08, 84.79, 84.41, 84.92, 85.15, 89.53, 90.08,
+                                  90.34, 88.45, 88.69, 80.25, 80.47, 80.22, 79.90, 80.42, 83.96,
+                                  84.40, 83.38, 83.89, 84.36, 89.32, 89.33, 87.70, 88.59, 88.31))
+fruitdata$Water <- as.factor(fruitdata$Water)
+
+eucalyptusdata <- read.csv("data-raw/Euc_data.csv")
+
+movementdata <- read.csv("data-raw/movementdata.csv")
+movementdata <- dplyr::select(movementdata, -X)
+usethis::use_data(aciditydata, acorndata, agingdata, aspectdata, biomassdata, burrowdata,
+                  caterpillardata, chuckdata, crayfishdata, crowdata, cruzdata,
+                  deerdata, departuredata, dietdata, eucalyptusdata, exploredata,
+                  fishdata, frogdata, fruitdata,
                   grasslanddata, hostadata, infectiondata,
                   inferencedata, jaydata, lengthdata, meatdata, microtusdata,
-                  mothdata, mothdata2, musseldata,
+                  mothdata, mothdata2, movementdata, musseldata,
                   pinedata, pesticidedata, plantdata, preydata, raindata,
-                  salamanderdata, salinitydata, sawdata, soybeandata, storkdata, studentsdata, swissdata,
-                  thrushdata, treedata, tunadata,
-                  warblerdata, weightdata, yielddata,
+                  salamanderdata, salinitydata, saplingdata, sawdata, soybeandata, storkdata, studentsdata, swissdata,
+                  thrushdata, treedata, tunadata, turtledata,
+                  waspdata, warblerdata, weightdata, yielddata,
                   overwrite = TRUE)
 
