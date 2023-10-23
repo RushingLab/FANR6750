@@ -272,8 +272,6 @@ Perform the appropriate analysis using `aov()` and `lme()` on the dataset. Answe
   
 5) Include a well formatted ANOVA table (with header) from the aov() results.
 
-6) Include a publication-quality plot of the estimated effect of salinity on fry growth, including 95% confidence intervals. The figure should also have a descriptive caption and any aesthetics (color, line type, etc.) should be clearly defined.
-
 You may format the report however you like but it should be well-organized, with relevant headers, plain text, and the elements described above.  
 
 As always:
