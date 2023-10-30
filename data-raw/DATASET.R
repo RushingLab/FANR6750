@@ -298,8 +298,11 @@ fruitdata$Water <- as.factor(fruitdata$Water)
 eucalyptusdata <- read.csv("data-raw/Euc_data.csv")
 
 movementdata <- read.csv("data-raw/movementdata.csv")
+
+chickdata <- read.csv("data-raw/chickdata.csv")
+chickdata$Chick <- rep(c(1:36), each = 10)
 usethis::use_data(aciditydata, acorndata, agingdata, aspectdata, biomassdata, burrowdata,
-                  caterpillardata, chuckdata, crayfishdata, crowdata, cruzdata,
+                  caterpillardata, chickdata, chuckdata, crayfishdata, crowdata, cruzdata,
                   deerdata, departuredata, dietdata, eucalyptusdata, exploredata,
                   fishdata, frogdata, fruitdata,
                   grasslanddata, hostadata, infectiondata,

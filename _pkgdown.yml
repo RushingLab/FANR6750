@@ -52,6 +52,8 @@ navbar:
           href: articles/lectures/14_nested/14_nested.html
         - text: "Lecture 15: Split-plot designs"
           href: articles/lectures/15_split-plot/15_split-plot.html
+        - text: "Lecture 16: Repeated measures"
+          href: articles/lectures/16_repeated_measures/16_repeated_measures.html
     - text: "Labs"
       icon: fas fa-desktop
       menu:
