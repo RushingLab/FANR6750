@@ -1,0 +1,251 @@
+---
+title: "Lab 10: Split plot designs"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2023"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lab10_splitplot}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.align = 'center', fig.height = 4, fig.width = 4,
+  fig.retina = 2,
+  warning = FALSE, message = FALSE,
+  collapse = TRUE,
+  comment = "#>",
+  cache= T
+)
+source(here::here("R/zzz.R"))
+library(kableExtra)
+```
+
+## Lab 
+
+- Nested ANOVA
+
+  + Random effects
+  
+  + Using lme() and aov()
+
+
+## Today's topics
+
+- Split Plot Design
+
+  + The additive model
+
+  + Using aov() and lme()
+  
+  + Exploring interactions
+  
+  + Multiple comparisons
+
+
+<br>
+
+# Scenario
+
+Remember from lecture that split-plot designs are used when we apply treatments to two levels of experimental units: whole-units and sub-units. We can conceptualize this as two blocked designs, one nested inside the other.
+
+For example
+
+- Ag fields are sprayed with herbicides, and fertilizers are applied to plots within fields  
+
+- Tenderizer is applied to roasts, and cooking times are applied to cores  
+
+In these cases, we’re interested in treatment effects at **both** levels
+
+<br>
+<br>
+
+# The additive model
+
+We can write the split plot model as:
+
+$$\Large y_{ijk} = \mu + \alpha_i + \beta_j + \alpha \beta_{ij} + \gamma_k + \delta_{ik} + \epsilon_{ijk}$$
+Where:
+
+$i = 1,...,a$: The whole unit treatment levels
+
+$j = 1,...,b$: The sub unit treatment levels
+
+$k = 1,...,c$: The number of blocks
+
+<br>
+
+The $\alpha$’s and $\beta$’s are fixed treatment effects where $\alpha_i$ represents the treatment applied to the whole unit and $\beta_j$ represents the treatment applied to the sub unit. Note the interaction.
+
+Because we want our inferences to apply to all whole units (e.g., roasts), $\delta_{ik}$ is random. Specifically:
+
+$$\Large \delta_{ik} \sim normal(0, \sigma^2_R)$$
+
+We might view block (e.g. carcass) as random too:
+
+$$\Large \gamma_k \sim normal(0, \sigma^2_C)$$
+
+And as always,
+
+$$\Large \epsilon_{ijk} \sim normal(0, \sigma^2)$$
+
+<br>
+<br>
+
+# Data example
+
+Below is a classic dataset which comes from a food science study. Six beef carcasses are obtained at random from a meat packaging plant. From the same section on each carcass, three rolled roasts are prepared as nearly alike as possible. Each of the roasts is assigned at random to one of three tenderizing treatments of particular interest: control, vinegar marinade, or papain marinade
+
+After treatment, a coring device is used to make four cores of meat near the center of each roast. The cores are left in place and the three roasts from the same carcass are placed together in a oven and allowed to cook. After 30 minutes, one of the cores is taken at random from each roast, another drawn randomly after 36 minutes, a third at 42 minutes, and the final at 48 minutes
+
+After cooling, the cores are measured for tenderness using the Warner-Bratzler device. The response variable is the WB score for each core.
+
+```{r setup}
+library(FANR6750)
+data("meatdata")
+str(meatdata)
+summary(meatdata)
+```
+
+As we've done with other examples, we need to convert each predictor to a factor (in this case, converting to factors is necessary to use the `mcp()` function, later in the analysis):
+
+```{r}
+meatdata$time <- factor(meatdata$time)
+meatdata$carcass <- factor(meatdata$carcass)
+meatdata$roast <- factor(meatdata$roast)
+meatdata$tenderizer <- factor(meatdata$tenderizer)
+```
+
+<br>
+<br>
+
+**What does it mean to treat time as a factor? How would you interpret the results from a model that treated time as a continuous predictor vs a factor?**
+
+<br>
+<br>
+
+Notice that all the roast column does is enumerate the tenderizer × carcass combinations (which explains why the corresponding term in the additive model is $\delta_{ik}$):
+
+```{r}
+head(meatdata, n=12)
+```
+
+## Using `aov()`
+
+Because only one `Error()` term is allowed in `aov()`, we can treat the block effect as fixed:
+
+```{r}
+aov.meat <- aov(Wbscore ~ tenderizer + time + tenderizer:time + carcass + Error(roast), data = meatdata)
+summary(aov.meat)
+```
+
+**Notice how the ANOVA table is split up into the whole unit error and the sub unit error. Which effects does this table tell us about? Are there any that it does not explain?**
+
+<br>
+<br>
+
+## Using `lme()`
+
+Using the `lme()` function, we are able to have multiple random effects in our model. The notation looks slightly different but we are able to essentially replicate our results from `aov()`.
+
+<br>
+
+```{r}
+library(nlme)
+lme.meat <- lme(Wbscore ~ tenderizer * time,
+                data = meatdata,
+                correlation = corCompSymm(), # To make results same as aov()
+                random = ~1|carcass/roast)
+```
+
+The first row of the ANOVA table is for the (Intercept) term, which we can ignore here (hence the `[-1,]` indexing operation):
+
+```{r}
+anova(lme.meat)[-1,]
+```
+
+## Exploring the interaction
+
+Is the time effect significant for each level of tenderizer?
+
+Similar to a few labs ago, we can create subsetted ANOVAs to look at the effect of one variable across multiple levels of another.
+
+```{r}
+lme.meatP <- lme(Wbscore ~ time, data = meatdata,
+                 random = ~1|carcass/roast, 
+                 correlation = corCompSymm(),
+                 subset = tenderizer=="P")
+anova(lme.meatP, Terms = "time")
+```
+
+
+```{r}
+lme.meatV <- lme(Wbscore ~ time, data = meatdata,
+                 random = ~1|carcass/roast, 
+                 correlation = corCompSymm(),
+                 subset = tenderizer=="V")
+anova(lme.meatV, Terms = "time")
+```
+
+```{r}
+lme.meatC <- lme(Wbscore ~ time, data = meatdata, 
+                 random = ~1|carcass/roast, 
+                 correlation = corCompSymm(),
+                 subset = tenderizer=="C")
+anova(lme.meatC, Terms = "time")
+```
+
+Yes it is.
+
+## Multiple comparisons using `glht()` (package `multcomp`)
+
+```{r}
+library(multcomp)
+mcP <- glht(lme.meatP, linfct = mcp(time="Tukey"))
+summary(mcP)
+```
+
+We can also easily plot the differences between cooking times for “P” tenderizer (and for the other 2 levels of tenderizer as well)
+
+```{r}
+plot(mcP)
+```
+
+
+# Assignment
+
+A Nested-and-Crossed Design is similar to a Split-Plot but without the block. Here we have a study where sweet potato yield is measured in response to ($a=3$) types of herbicide. Each herbicide is applied to 5 fields. Each field is divided into 4 plots where each plot is treated with one of ($b=4$) fertilizers.
+
+The data can be accessed using:
+
+```{r}
+library(FANR6750)
+data("yielddata")
+```
+
+1) Conduct the appropriate ANOVA using both the `aov()` and `lme()` functions.
+
+2) Give the appropriate additive model (this will be slightly different than the one for the split-plot design, since there is no blocking) and define each term. What are the associated null and alternative
+hypotheses?
+
+3) Does the effect of herbicide depend on fertilizer?
+
+4) Use Tukey’s test to determine which fertilizers differ
+
+Put your answers in an R Markdown report. Your report should include:
+
+1) A well-formatted ANOVA table (with header); and
+
+2) A publication-quality plot (or plots) of the estimated effect of herbicide and fertilizer on yield. Because we have not talked in class about estimating SE for this type of study, you can simply create a plot of the point estimates without error bars. The figure should also have a descriptive caption and any aesthetics (color, line type, etc.) should be clearly defined.
+
+You may format the report however you like but it should be well-organized, with relevant headers, plain text, and the elements described above. 
+
+As always:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Be sure to include your first and last name in the `author` section 
+
+- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
+
