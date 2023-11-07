@@ -301,6 +301,9 @@ movementdata <- read.csv("data-raw/movementdata.csv")
 
 chickdata <- read.csv("data-raw/chickdata.csv")
 chickdata$Chick <- rep(c(1:36), each = 10)
+
+seeddata <- read.csv("data-raw/seeddata.csv")
+spiderdata <- read.csv("data-raw/spiderdata.csv")
 usethis::use_data(aciditydata, acorndata, agingdata, aspectdata, biomassdata, burrowdata,
                   caterpillardata, chickdata, chuckdata, crayfishdata, crowdata, cruzdata,
                   deerdata, departuredata, dietdata, eucalyptusdata, exploredata,
@@ -309,7 +312,8 @@ usethis::use_data(aciditydata, acorndata, agingdata, aspectdata, biomassdata, bu
                   inferencedata, jaydata, lengthdata, meatdata, microtusdata,
                   mothdata, mothdata2, movementdata, musseldata,
                   pinedata, pesticidedata, plantdata, preydata, raindata,
-                  salamanderdata, salinitydata, saplingdata, sawdata, soybeandata, storkdata, studentsdata, swissdata,
+                  salamanderdata, salinitydata, saplingdata, sawdata, seeddata,
+                  spiderdata, soybeandata, storkdata, studentsdata, swissdata,
                   thrushdata, treedata, tunadata, turtledata,
                   waspdata, warblerdata, weightdata, yielddata,
                   overwrite = TRUE)

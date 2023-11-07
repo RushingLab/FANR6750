@@ -54,6 +54,8 @@ navbar:
           href: articles/lectures/15_split-plot/15_split-plot.html
         - text: "Lecture 16: Repeated measures"
           href: articles/lectures/16_repeated_measures/16_repeated_measures.html
+        - text: "Lecture 17: Generalized linear models"
+          href: articles/lectures/17_glm/17_glm.html
     - text: "Labs"
       icon: fas fa-desktop
       menu:

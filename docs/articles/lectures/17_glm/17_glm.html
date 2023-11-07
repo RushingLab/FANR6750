@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>LECTURE 17: generalized linear models</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="   Fall 2023" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="FANR6750.css" type="text/css" />
+    <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# LECTURE 17: generalized linear models
+]
+.subtitle[
+## FANR 6750 (Experimental design)
+]
+.author[
+### <br/><br/><br/>Fall 2023
+]
+
+---
+
+
+
+
+# outline 
+
+
+1) Motivation
+
+&lt;br/&gt;
+
+--
+
+2) Linear model review
+
+&lt;br/&gt;
+
+--
+
+3) Distributions
+
+&lt;br/&gt;
+--
+
+
+4) Link functions
+
+&lt;br/&gt;
+--
+
+5) Generalized linear models
+
+
+
+---
+# motivation
+
+#### Although the central limit theorem often allows us to meet the normality assumption, there are many cases where the assumption does not hold:  
+
+--
+
+- Presence-absence studies  
+
+- Studies of survival  
+
+- Seed germination studies  
+
+- Count-based surveys (especially when close to zero)
+
+---
+# linear model review
+
+&lt;br/&gt;
+&lt;br/&gt;
+`$$\Large response = deterministic\; part+stochastic\; part$$` 
+&lt;br/&gt;
+&lt;br/&gt;
+
+--
+`$$\underbrace{\LARGE E[y_i] = \beta_0 + \beta_1 \times x_i}_{Deterministic}$$`
+
+&lt;br/&gt;
+&lt;br/&gt;
+
+--
+`$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma)}_{Stochastic}$$`  
+
+---
+# example
+
+Imagine we are interested in the effects of seed size on germination rate
+
+--
+
+We measure 100 seeds and then plant them in a greenhouse. All seeds are kept at the same temperature, soil moisture, etc. After several weeks, we record which seeds germinated and which did not
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Size &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Fate &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 15.13 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 11.93 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 14.94 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 15.44 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+What is the response variable `\(y\)` in this example? What are the possible values it can take?
+
+--
+
+What is the predictor variable `\(x\)` in this example?
+
+---
+# example
+
+&lt;br/&gt;
+
+&lt;img src="17_glm_files/figure-html/unnamed-chunk-2-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+---
+# example
+
+.small-code[
+
+```r
+data("seeddata")
+fit &lt;- lm(fate ~ size, data = seeddata)
+summary(fit)
+```
+
+```
+## 
+## Call:
+## lm(formula = fate ~ size, data = seeddata)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -0.941 -0.168 -0.051  0.257  0.859 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  -1.1558     0.1895   -6.10  2.1e-08 ***
+## size          0.1140     0.0124    9.18  7.4e-15 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.369 on 98 degrees of freedom
+## Multiple R-squared:  0.462,	Adjusted R-squared:  0.457 
+## F-statistic: 84.2 on 1 and 98 DF,  p-value: 7.35e-15
+```
+]
+
+---
+# example
+
+&lt;br/&gt;
+
+&lt;img src="17_glm_files/figure-html/unnamed-chunk-4-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+--
+
+What's wrong with the expected values? What is an "expected value" in this example?
+
+---
+# another example
+
+We are interested in the effect of non-native Joro Spiders (*Trichonephila clavata*) on the number of native Golden Silk Orb Weaver Spiders (*Trichonephila clavipes*)
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; T. clavata &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; T. clavipes &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 17 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 13 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+What is the response variable `\(y\)` in this example? What are the possible values it can take?
+
+--
+
+What is the predictor variable `\(x\)` in this example?
+
+---
+# another example
+
+&lt;br/&gt;
+
+&lt;img src="17_glm_files/figure-html/unnamed-chunk-6-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+---
+# another example
+
+.small-code[
+
+```r
+data("spiderdata")
+fit &lt;- lm(clavipes ~ clavata, data = spiderdata)
+summary(fit)
+```
+
+```
+## 
+## Call:
+## lm(formula = clavipes ~ clavata, data = spiderdata)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -1.343 -0.633 -0.185  0.239  3.023 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   2.4513     0.4009    6.11  1.7e-07 ***
+## clavata      -0.1583     0.0358   -4.42  5.6e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.947 on 48 degrees of freedom
+## Multiple R-squared:  0.29,	Adjusted R-squared:  0.275 
+## F-statistic: 19.6 on 1 and 48 DF,  p-value: 5.56e-05
+```
+]
+
+---
+# another example
+
+&lt;br/&gt;
+
+&lt;img src="17_glm_files/figure-html/unnamed-chunk-8-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+---
+class: inverse, middle
+
+# generalized linear models
+
+---
+# generalized linear models
+
+GLMs are a class of models that extend the conventional linear model framework to include data-generating distributions other than the normal distribution
+
+--
+
+All GLMs are composed of:
+
+1) Distribution 
+
+`$$f(y_i|x_i)$$`
+
+--
+
+2) Linear predictor
+
+`$$\mu_i = \beta_0 + \beta_1 x_i...$$`
+
+--
+
+3) Link function
+
+`$$\eta_i = g(\mu_i)$$`
+
+--
+
+The distribution allows us to model response variables that are not normally distributed. The link function allows us to map the linear predictor to the expected values of the probability distribution
+
+---
+# the linear model as a glm
+
+#### Linear regression
+
+--
+
+- Distribution: `\(f(y_i|x_i) = normal(\mu_i, \sigma^2)\)`
+
+--
+
+- Linear predictor: `\(\mu_i = \beta_0 + \beta_1 x_i\)`
+
+--
+
+- Link function: `\(g(\mu_i) = \mu_i\)` (identity link)
+
+---
+class: inverse, middle
+
+# probability distributions
+
+---
+# probability distributions
+
+There are *many* probability distributions. We've seen several this semester (what are they?)
+
+--
+
+The three that we will focus on for the remainder of the course are:
+
+1) Poisson distribution
+
+2) Binomial distribution
+
+3) Bernoulli distribution
+
+---
+# poisson distribution
+
+The Poisson distribution is a *discrete* probability distribution (only integers) with support (i.e., possible values) from 0 to `\(+\infty\)`. It is often used to model count data
+
+--
+
+The Poisson distribution has one parameter `\(\lambda\)`, which is both the mean and the variance
+
+--
+
+&lt;img src="17_glm_files/figure-html/unnamed-chunk-9-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+--
+
+Note that although `\(y\)` must be an integer, `\(\lambda\)` only has to be positive 
+
+---
+# poisson distribution
+
+
+```r
+rpois(n = 10, lambda = 1.2)
+```
+
+```
+##  [1] 1 2 1 0 2 1 2 2 0 1
+```
+
+
+```r
+rpois(n = 10, lambda = 10.5)
+```
+
+```
+##  [1]  8 17  9  8 13 13 14 10 10 14
+```
+
+
+```r
+rpois(n = 10, lambda = 100.68)
+```
+
+```
+##  [1]  90 108  93  90 102 104 100 105  97 102
+```
+
+---
+# binomial distribution
+
+The binomial distribution is also a discrete probability distribution with support from 0 to `\(N\)`. It is often used to model count data where there is an upper limit (e.g., # of heads from `\(N\)` coin flips)
+
+--
+
+The binomial distribution has two parameters `\(N\)` (# of trials) and `\(p\)` (probability of success). The mean is `\(Np\)` and the variance is `\(np(1-p)\)`
+
+--
+
+&lt;img src="17_glm_files/figure-html/unnamed-chunk-13-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+--
+
+Note that `\(N\)` is often fixed and known. We are interested in estimating `\(p\)`
+
+---
+# binomial distribution
+
+
+```r
+rbinom(n = 10, size = 20, p = 0.25)
+```
+
+```
+##  [1] 4 2 4 5 5 5 7 5 5 6
+```
+
+
+```r
+rbinom(n = 10, size = 20, p = 0.75)
+```
+
+```
+##  [1] 15 15 13 17 16 16 17 15 13 17
+```
+
+
+```r
+rbinom(n = 10, size = 50, p = 0.5)
+```
+
+```
+##  [1] 15 25 27 26 24 22 26 21 23 23
+```
+
+---
+# bernoulli distribution
+
+The Bernoulli distribution is a special case of the binomial distribution where `\(N = 1\)`. What are the possible values of `\(y\)`? 
+
+--
+
+The Bernoulli distribution is very useful for data where the response variable is binary in nature (e.g., dead/alive, presence/absence, ). The parameter we estimate is `\(p\)` - the probability of "success"
+
+&lt;img src="17_glm_files/figure-html/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+---
+# bernoulli distribution
+
+
+```r
+rbinom(n = 10, size = 1, p = 0.1)
+```
+
+```
+##  [1] 0 0 0 0 0 0 0 0 0 0
+```
+
+
+```r
+rbinom(n = 10, size = 1, p = 0.5)
+```
+
+```
+##  [1] 0 0 0 0 1 1 1 1 1 0
+```
+
+
+```r
+rbinom(n = 10, size = 1, p = 0.9)
+```
+
+```
+##  [1] 1 1 1 1 1 0 1 1 1 1
+```
+
+---
+class: inverse, middle
+
+# link functions
+
+---
+# link functions
+
+In a conventional linear regression model, the expected value of `\(y_i\)` given `\(x_i\)` is simply:
+
+`$$\large E[y_i|x_i] = \mu_i = \beta_0 + \beta_1x_i$$`
+&lt;br/&gt;
+
+&lt;img src="17_glm_files/figure-html/unnamed-chunk-21-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+---
+# link functions
+
+When the data follow distributions other than the normal, we need to use a transformation to ensure that the linear predictor `\(\mu_i\)` is consistent with the parameters governing the mean of the distribution
+
+--
+
+- For the Poisson distribution, the expected value `\(\lambda_i\)` must be positive
+
+--
+
+- For the binomial/Bernoulli distributions, the probability of success `\(p_i\)` must be between 0 and 1
+
+--
+
+Link functions allow us to go back and forth between the linear scale ( `\(-\infty\)` to `\(+\infty\)` ) and the scale of the Poisson/binomial distributions
+
+
+---
+# link functions
+
+&lt;br/&gt;
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Distribution &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; link name &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; link equation &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; inverse link equation &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Binomial &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; logit &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\mu = log(\frac{p}{1-p})\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(p = \frac{e^{\mu}}{1+e^{\mu}}\) &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Poisson &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; log &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\mu = log(\lambda)\) &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; \(\lambda = e^{\mu}\) &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;br/&gt;
+
+--
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Distribution &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; link name &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; link in R &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; inverse link in R &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Binomial &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; logit &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; qlogis &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; plogis &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; Poisson &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; log &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; log &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; exp &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+# log link
+
+.small-code[
+
+```r
+beta0 &lt;- 5
+beta1 &lt;- -0.08
+(log.lambda &lt;- beta0 + beta1*100) # linear predictor for x = 100
+```
+
+```
+## [1] -3
+```
+]
+
+--
+
+How do we convert -3 to a positive value? Use the inverse-link:
+
+.small-code[
+
+```r
+(lambda &lt;- exp(log.lambda))
+```
+
+```
+## [1] 0.04979
+```
+]
+
+--
+
+To go back, use the link function itself:
+
+.small-code[
+
+```r
+log(lambda)
+```
+
+```
+## [1] -3
+```
+]
+
+---
+# log link
+
+&lt;br/&gt;
+
+&lt;img src="17_glm_files/figure-html/unnamed-chunk-27-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+---
+# log link example
+
+.pull-left[
+&lt;br/&gt;
+&lt;img src="17_glm_files/figure-html/unnamed-chunk-28-1.png" width="288" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+&lt;br/&gt;
+&lt;img src="17_glm_files/figure-html/unnamed-chunk-29-1.png" width="288" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# logit link
+
+.small-code[
+
+```r
+beta0 &lt;- 5
+beta1 &lt;- -0.08
+(logit.p &lt;- beta0 + beta1*100) # linear predictor for x = 100
+```
+
+```
+## [1] -3
+```
+]
+
+--
+
+How do we convert -3 to a probability? Use the inverse-link:
+
+.small-code[
+
+```r
+(p &lt;- exp(logit.p)/(1+exp(logit.p))) # same as plogis(logit.p)
+```
+
+```
+## [1] 0.04743
+```
+]
+
+--
+
+To go back, use the link function itself:
+
+.small-code[
+
+```r
+log(p/(1-p))
+```
+
+```
+## [1] -3
+```
+
+```r
+qlogis(p)
+```
+
+```
+## [1] -3
+```
+]
+
+---
+# log link
+
+&lt;br/&gt;
+
+&lt;img src="17_glm_files/figure-html/unnamed-chunk-33-1.png" width="432" style="display: block; margin: auto;" /&gt;
+
+---
+# logit link example
+
+.pull-left[
+&lt;br/&gt;
+&lt;img src="17_glm_files/figure-html/unnamed-chunk-34-1.png" width="288" style="display: block; margin: auto;" /&gt;
+]
+
+--
+
+.pull-right[
+&lt;br/&gt;
+&lt;img src="17_glm_files/figure-html/unnamed-chunk-35-1.png" width="288" style="display: block; margin: auto;" /&gt;
+]
+
+
+---
+# generalized linear models
+
+Putting the distribution and link functions together, we can write several of the most common GLMs
+
+--
+
+#### Logistic regression
+
+--
+
+- Distribution: `\(f(y_i|x_i) = Bernoulli(p_i)\)`
+
+--
+
+- Linear predictor: `\(\mu_i = \beta_0 + \beta_1 x_i\)`
+
+--
+
+- Link function: `\(g(p_i) = logit(p_i) = \mu_i\)` (or `\(p_i = ilogit(\mu_i)\)`)
+
+---
+# generalized linear models
+
+Putting the distribution and link functions together, we can write several of the most common GLMs
+
+
+#### Poisson regression
+
+--
+
+- Distribution: `\(f(y_i|x_i) = Poisson(\lambda_i)\)`
+
+--
+
+- Linear predictor: `\(\mu_i = \beta_0 + \beta_1 x_i\)`
+
+--
+
+- Link function: `\(g(\lambda_i) = log(\lambda_i) = \mu_i\)` (or `\(\lambda_i = exp(\mu_i)\)`)
+
+---
+# looking ahead
+
+&lt;br/&gt;
+
+### **Next time**: Logistic regression
+
+&lt;br/&gt;
+
+### **Reading**: [Fieberg chp. 16](https://statistics4ecologists-v1.netlify.app/logistic)
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
