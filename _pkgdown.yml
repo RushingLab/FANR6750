@@ -83,6 +83,8 @@ navbar:
           href: articles/lab10_split_plot.html
         - text: "Lab 11: Repeated measures"
           href: articles/lab11_repeated_measures.html
+        - text: "Lab 12: Logistic regression"
+          href: articles/lab12_glm_lr.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:
