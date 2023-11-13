@@ -56,6 +56,8 @@ navbar:
           href: articles/lectures/16_repeated_measures/16_repeated_measures.html
         - text: "Lecture 17: Generalized linear models"
           href: articles/lectures/17_glm/17_glm.html
+        - text: "Lecture 18: Logistic regression"
+          href: articles/lectures/18_logistic_regression/18_logistic_regression.html
     - text: "Labs"
       icon: fas fa-desktop
       menu:
