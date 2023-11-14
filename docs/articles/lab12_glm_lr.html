@@ -127,6 +127,9 @@
     <li>
       <a href="../articles/lectures/18_logistic_regression/18_logistic_regression.html">Lecture 18: Logistic regression</a>
     </li>
+    <li>
+      <a href="../articles/lectures/19_poisson_regression/19_poisson_regression.html">Lecture 19: Poisson regression</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -506,10 +509,6 @@ habitat, and elevation:</p>
 <span><span class="co">#&gt; glm(formula = presence ~ habitat + elevation, family = binomial(link = "logit"), </span></span>
 <span><span class="co">#&gt;     data = orchiddata)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Deviance Residuals: </span></span>
-<span><span class="co">#&gt;    Min      1Q  Median      3Q     Max  </span></span>
-<span><span class="co">#&gt; -1.884  -0.617   0.167   0.605   1.377  </span></span>
-<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficients:</span></span>
 <span><span class="co">#&gt;             Estimate Std. Error z value Pr(&gt;|z|)  </span></span>
 <span><span class="co">#&gt; (Intercept) -0.99598    1.21698   -0.82    0.413  </span></span>
@@ -730,7 +729,8 @@ described above.</p>
 <p>Georgia Department of Natural Resources (GADNR) is interested in
 understanding the relationship between several demographic variables and
 the likelihood that a deer hunter will reach their annual harvest limit
-(10 does and 2 bucks). The data collected by GADNR contains:</p>
+(10 does and 2 bucks). The data collected by GADNR (which can be found
+in the <code>harvestdata</code> dataset) contains:</p>
 <ul>
 <li>Limit: Whether or not the hunter harvested their limit (1- they did;
 0- they did not)</li>
@@ -851,7 +851,7 @@ for tips on formatting figures</p></li>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

@@ -58,6 +58,8 @@ navbar:
           href: articles/lectures/17_glm/17_glm.html
         - text: "Lecture 18: Logistic regression"
           href: articles/lectures/18_logistic_regression/18_logistic_regression.html
+        - text: "Lecture 19: Poisson regression"
+          href: articles/lectures/19_poisson_regression/19_poisson_regression.html
     - text: "Labs"
       icon: fas fa-desktop
       menu:

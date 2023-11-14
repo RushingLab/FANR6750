@@ -16,7 +16,7 @@
     <loc>/articles/index.html</loc>
   </url>
   <url>
-    <loc>/articles/lab01_Intro_to_R.html</loc>
+    <loc>/articles/lab01_intro_to_R.html</loc>
   </url>
   <url>
     <loc>/articles/lab02_Intro_project_and_Rmd.html</loc>
@@ -119,6 +119,12 @@
   </url>
   <url>
     <loc>/articles/lectures/17_glm/17_glm.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lectures/18_logistic_regression/18_logistic_regression.html</loc>
+  </url>
+  <url>
+    <loc>/articles/lectures/19_poisson_regression/19_poisson_regression.html</loc>
   </url>
   <url>
     <loc>/articles/projects_and_directories.html</loc>
