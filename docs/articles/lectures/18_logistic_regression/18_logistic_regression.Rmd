@@ -280,7 +280,7 @@ ggplot(orchiddata, aes(x = elevation, y = presence)) +
 ---
 # example
 
-What's the change in probability of occurrence at 1m vs 0m elevation (in oak habitat)?
+What's the change in probability of occurrence at 1m vs 0m elevation (in maple habitat)?
 
 - `plogis(-0.996 + 0.014 * 1) - plogis(-0.996 + 0.014 * 0)` = `r round(plogis(coef(fm1)[1] + coef(fm1)[4] * 1), 3) - round(plogis(coef(fm1)[1]), 3)`
 

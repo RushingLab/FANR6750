@@ -32,7 +32,8 @@ Imports:
     faux,
     olsrr,
     caret,
-    magicfor
+    magicfor,
+    pscl
 VignetteBuilder: knitr
 Depends: 
     R (>= 4.0)

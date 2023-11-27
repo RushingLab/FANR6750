@@ -308,14 +308,17 @@ orchiddata <- read.csv("data-raw/frogData.csv")
 harvestdata <- read.csv("data-raw/harvestdata.csv")
 foragingdata <- read.csv("data-raw/foragingdata.csv")
 foragingdata$predator <- factor(foragingdata$predator, levels = c("Absent", "Low", "High"))
-
-usethis::use_data(aciditydata, acorndata, agingdata, aspectdata, biomassdata, burrowdata,
+harbordata <- read.csv("data-raw/harbordata.csv")
+alligatordata <- read.csv("data-raw/alligatordata.csv")
+oysterdata <- read.csv("data-raw/oysterdata.csv")
+usethis::use_data(aciditydata, acorndata, agingdata, alligatordata,
+                  aspectdata, biomassdata, burrowdata,
                   caterpillardata, chickdata, chuckdata, crayfishdata, crowdata, cruzdata,
                   deerdata, departuredata, dietdata, eucalyptusdata, exploredata,
                   fishdata, foragingdata, frogdata, fruitdata,
-                  grasslanddata, harvestdata, hostadata, infectiondata,
+                  grasslanddata, harbordata, harvestdata, hostadata, infectiondata,
                   inferencedata, jaydata, lengthdata, meatdata, microtusdata,
-                  mothdata, mothdata2, movementdata, musseldata, orchiddata,
+                  mothdata, mothdata2, movementdata, musseldata, orchiddata, oysterdata,
                   pinedata, pesticidedata, plantdata, preydata, raindata,
                   salamanderdata, salinitydata, saplingdata, sawdata, seeddata,
                   spiderdata, soybeandata, storkdata, studentsdata, swissdata,
