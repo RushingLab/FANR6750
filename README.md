@@ -1,3 +1,5 @@
+**Note that this website is an archived version from the Fall 2023 semester**
+
 # Welcome to FANR6750: Experimental Methods in Forestry and Natural Resources Research
 
 This is the unofficial course website for the FALL 2023 offering of **FANR6750: Experimental Methods in Forestry and Natural Resources Research** at the University of Georgia. The "official" course website (for students enrolled in the course) is on eLC.  
