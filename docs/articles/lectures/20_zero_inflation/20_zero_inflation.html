@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>LECTURE 20: zero-inflated data</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="   Fall 2023" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="FANR6750.css" type="text/css" />
+    <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# LECTURE 20: zero-inflated data
+]
+.subtitle[
+## FANR 6750 (Experimental design)
+]
+.author[
+### <br/><br/><br/>Fall 2023
+]
+
+---
+
+
+
+
+# outline 
+
+
+1) Motivation
+
+&lt;br/&gt;
+
+--
+
+2) Negative binomial regression
+
+&lt;br/&gt;
+
+--
+
+3) Hurdle models
+
+&lt;br/&gt;
+
+--
+
+4) Zero-inflated mixture models
+
+
+---
+# poisson regression
+
+Poisson regression is a specific type of GLM in which the response variable follows a Poisson distribution and the link function is the log  
+
+--
+
+Poisson regression is used to model a positive, integer response variable as a function of explanatory variables
+
+--
+
+#### Examples:
+
+- Is the abundance of a focal species related to habitat type?  
+
+- Is the number of foraging bouts a function of predator density?  
+
+- Is flock size influenced by food availability?  
+
+---
+# poisson distribution
+
+&lt;br/&gt;
+
+&lt;img src="20_zero_inflation_files/figure-html/unnamed-chunk-1-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+---
+# example
+
+Imagine we are interested in restoring oyster beds along the Georgia coast. We "seed" experimental plots with larvae and then record the number of oysters that establish within a randomly-selected quadrat within each plot. We also record the substrate (rock vs sand), water temperature, water depth, salinity, and water clarity of each plot
+
+.pull-left[
+.vsmall-code[
+
+```r
+data("oysterdata")
+head(oysterdata)
+```
+
+```
+##   oyster temperature substrate depth clarity salinity
+## 1      0       50.32      rock 7.515 0.42599  0.81431
+## 2      0       43.20      rock 4.110 0.87892  0.93008
+## 3      1       52.15      rock 6.298 0.07195  0.23231
+## 4      4       59.88      rock 3.056 0.10583  0.65415
+## 5      1       51.23      rock 1.502 0.32987  0.83385
+## 6      6       48.53      rock 1.866 0.30914  0.09163
+```
+]
+]
+
+.pull-right[
+&lt;br/&gt;
+&lt;img src="20_zero_inflation_files/figure-html/unnamed-chunk-3-1.png" width="288" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# zero inflation
+
+Zero inflation occurs when there are more zeros in the response variable `\(y\)` than expected under the assumed probability distribution (usually the Poisson distribution)
+
+--
+
+.pull-left[
+.small-code[
+
+```r
+fit.pr &lt;- glm(oyster ~ .,
+              data = oysterdata,
+              family = "poisson")
+```
+]
+]
+
+.pull-right[
+.vvsmall-code[
+
+```r
+summary(fit.pr)
+```
+
+```
+## 
+## Call:
+## glm(formula = oyster ~ ., family = "poisson", data = oysterdata)
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    -4.6070     0.5910   -7.80  6.4e-15 ***
+## temperature     0.1158     0.0104   11.11  &lt; 2e-16 ***
+## substratesand  -0.9148     0.1124   -8.14  4.0e-16 ***
+## depth          -0.0703     0.0198   -3.56  0.00038 ***
+## clarity         0.0232     0.1834    0.13  0.89945    
+## salinity       -0.3483     0.1733   -2.01  0.04438 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for poisson family taken to be 1)
+## 
+##     Null deviance: 753.98  on 231  degrees of freedom
+## Residual deviance: 490.90  on 226  degrees of freedom
+##   (18 observations deleted due to missingness)
+## AIC: 841.9
+## 
+## Number of Fisher Scoring iterations: 6
+```
+]
+]
+
+
+---
+# zero inflation
+
+For models with with the `glm()` function, we can test for zero inflation:
+
+.vsmall-code[
+
+```r
+performance::check_zeroinflation(fit.pr)
+```
+
+```
+## # Check for zero-inflation
+## 
+##    Observed zeros: 119
+##   Predicted zeros: 73
+##             Ratio: 0.61
+```
+
+```
+## Model is underfitting zeros (probable zero-inflation).
+```
+]
+
+--
+
+If we suspect zero inflation, we have several options:
+
+- Negative binomial regression
+
+- Hurdle models
+
+- Zero-inflated mixture model
+
+---
+class: inverse, center, middle
+
+# negative binomial regression
+
+---
+# negative binomial distribution
+
+The negative binomial distribution is a *discrete* probability distribution (only integers) with support (i.e., possible values) from 0 to `\(+\infty\)`
+
+--
+
+The negative binomial distribution has two parameters: `\(\mu\)` and `\(\theta\)`
+
+--
+
+- The mean of the negative binomial distribution is `\(\mu\)`
+
+- The variance is `\(\mu + \frac{\mu^2}{\theta}\)`
+
+- As `\(\theta \to \infty\)`, the negative binomial distribution converges to the Poisson
+
+--
+
+In `R`:
+
+.vsmall-code[
+
+```r
+x &lt;- rnbinom(n = 1000, mu = 1, size = 1) # theta = size
+mean(x)
+```
+
+```
+## [1] 1.03
+```
+
+```r
+var(x)
+```
+
+```
+## [1] 1.887
+```
+]
+
+---
+# negative binomial distribution
+
+Because the variance is larger than the mean, the negative binomial distribution is often used to model over-dispersed data, including zero inflation
+
+--
+
+.left-nudge[
+.small-code[
+
+```r
+library(MASS)
+fit.nb &lt;- glm.nb(oyster ~ ., 
+                data = oysterdata)
+```
+]
+]
+
+.right-nudge[
+.vvsmall-code[
+
+```r
+summary(fit.nb)
+```
+
+```
+## 
+## Call:
+## glm.nb(formula = oyster ~ ., data = oysterdata, init.theta = 1.057151222, 
+##     link = log)
+## 
+## Coefficients:
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    -4.8872     0.9499   -5.14  2.7e-07 ***
+## temperature     0.1262     0.0173    7.29  3.2e-13 ***
+## substratesand  -0.9872     0.1813   -5.45  5.2e-08 ***
+## depth          -0.1059     0.0348   -3.04   0.0024 ** 
+## clarity        -0.1884     0.3287   -0.57   0.5665    
+## salinity       -0.2624     0.3055   -0.86   0.3905    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for Negative Binomial(1.057) family taken to be 1)
+## 
+##     Null deviance: 340.60  on 231  degrees of freedom
+## Residual deviance: 234.91  on 226  degrees of freedom
+##   (18 observations deleted due to missingness)
+## AIC: 756.9
+## 
+## Number of Fisher Scoring iterations: 1
+## 
+## 
+##               Theta:  1.057 
+##           Std. Err.:  0.225 
+## 
+##  2 x log-likelihood:  -742.860
+```
+]
+]
+
+---
+# negative binomial regression
+
+Did the negative binomial model address the zero inflation?
+
+--
+
+.small-code[
+
+```r
+performance::check_zeroinflation(fit.nb)
+```
+
+```
+## # Check for zero-inflation
+## 
+##    Observed zeros: 119
+##   Predicted zeros: 105
+##             Ratio: 0.88
+```
+
+```
+## Model is underfitting zeros (probable zero-inflation).
+```
+]
+
+--
+
+Although the `check_zeroinflation()` indicates some remaining zero inflation, the negative binomial model seems to fit relatively well 
+
+- additional tests are possible and probably warranted. See Fieberg chp. 17.3 for additional detail
+
+--
+
+Sometimes, rather than address zero inflation using a different distribution, we may suspect that (some of the) zero's are the result of a *different process* than the one generating the counts
+
+- What are some examples?
+
+- In these cases, models that treat zeros as a mixture of different distributions may be warranted
+
+---
+class: inverse, center, middle
+
+# hurdle models
+
+---
+# hurdle models
+
+Hurdle models are actually composed of two separate models, one estimating the probability that an observation is 0 and another modeling the non-zero counts
+
+--
+
+- What distribution do you think is used for the zero/non-zero part of the model?
+
+--
+
+    + Assume `\(z_i = 0\)` if `\(y_i = 0\)`, otherwise `\(z_i = 1\)`
+
+
+`$$z_i \sim Bernouli(p_i)$$`
+
+`$$logit(p_i) = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2}...$$`
+--
+
+- What distribution do you think is used for the non-zero observations?
+
+--
+
+    + zero-truncated Poisson/Negative binomial
+
+---
+# zero-truncated distributions
+
+&lt;br/&gt;
+
+&lt;img src="20_zero_inflation_files/figure-html/unnamed-chunk-11-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+---
+# hurdle models
+
+.left-nudge[
+.vsmall-code[
+
+```r
+library(pscl)
+fit.hrp &lt;- hurdle(oyster ~ ., 
+                 data = oysterdata)
+```
+]
+]
+
+.right-nudge[
+.vvsmall-code[
+
+```r
+summary(fit.hrp)
+```
+
+```
+## 
+## Call:
+## hurdle(formula = oyster ~ ., data = oysterdata)
+## 
+## Pearson residuals:
+##    Min     1Q Median     3Q    Max 
+## -1.651 -0.576 -0.343  0.483  4.656 
+## 
+## Count model coefficients (truncated poisson with log link):
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    -3.7032     0.6980   -5.31  1.1e-07 ***
+## temperature     0.0944     0.0124    7.59  3.3e-14 ***
+## substratesand  -0.0861     0.1248   -0.69     0.49    
+## depth           0.0135     0.0218    0.62     0.54    
+## clarity         0.0505     0.1936    0.26     0.79    
+## salinity       -0.2491     0.1780   -1.40     0.16    
+## Zero hurdle model coefficients (binomial with logit link):
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    -3.3330     1.5656   -2.13  0.03326 *  
+## temperature     0.1130     0.0299    3.78  0.00016 ***
+## substratesand  -1.8083     0.3158   -5.73    1e-08 ***
+## depth          -0.2192     0.0628   -3.49  0.00049 ***
+## clarity        -0.3924     0.5693   -0.69  0.49061    
+## salinity       -0.3552     0.5349   -0.66  0.50667    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+## 
+## Number of iterations in BFGS optimization: 15 
+## Log-likelihood: -334 on 12 Df
+```
+]
+]
+
+---
+# hurdle models
+
+.left-nudge[
+.vsmall-code[
+
+```r
+fit.hrnb &lt;- hurdle(oyster ~ ., 
+                 data = oysterdata,
+                 dist = "negbin")
+```
+]
+]
+
+.right-nudge[
+.vvsmall-code[
+
+```r
+summary(fit.hrnb)
+```
+
+```
+## 
+## Call:
+## hurdle(formula = oyster ~ ., data = oysterdata, dist = "negbin")
+## 
+## Pearson residuals:
+##    Min     1Q Median     3Q    Max 
+## -1.651 -0.576 -0.343  0.483  4.656 
+## 
+## Count model coefficients (truncated negbin with log link):
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    -3.7034     0.6981   -5.30  1.1e-07 ***
+## temperature     0.0944     0.0124    7.58  3.4e-14 ***
+## substratesand  -0.0861     0.1248   -0.69     0.49    
+## depth           0.0135     0.0218    0.62     0.54    
+## clarity         0.0505     0.1936    0.26     0.79    
+## salinity       -0.2491     0.1780   -1.40     0.16    
+## Log(theta)     10.1957    98.4641    0.10     0.92    
+## Zero hurdle model coefficients (binomial with logit link):
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    -3.3330     1.5656   -2.13  0.03326 *  
+## temperature     0.1130     0.0299    3.78  0.00016 ***
+## substratesand  -1.8083     0.3158   -5.73    1e-08 ***
+## depth          -0.2192     0.0628   -3.49  0.00049 ***
+## clarity        -0.3924     0.5693   -0.69  0.49061    
+## salinity       -0.3552     0.5349   -0.66  0.50667    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+## 
+## Theta: count = 26787.464
+## Number of iterations in BFGS optimization: 55 
+## Log-likelihood: -334 on 13 Df
+```
+]
+]
+
+
+---
+# hurdle models
+
+
+Sub-models can contain the same or different covariates
+
+--
+
+Parameters for sub-models are interpreted in the same way as for logistic/Poisson regression
+
+--
+
+`\(\lambda_i\)` is the expected value (i.e., mean) of the non-zero observations, not the overall mean of all observations (which is `\(\frac{1-p_i}{1-e^{\lambda_i}}\lambda_i\)`)
+
+--
+
+Models can be compared using AIC
+
+  - note that `performance::check_zeroinflation()` does not work for `hurdle` model objects
+
+--
+
+Generally, Hurdle models are most appropriate when the count-based process cannot generate zeros (i.e., zeros are determined by a separate process than counts)
+
+- Examples?
+
+---
+class: inverse, center, middle
+
+# zero-inflated mixture models
+
+---
+# zero-inflated mixture models
+
+Sometimes, zero observations can occur due to both the binomial process and the count process
+
+- Habitat may be suitable or unsuitable, but abundance may be zero at suitable locations (especially if density is low)
+
+- Individuals may be breeders or non-breeders, but some breeders will still fail to produce offspring (e.g., nest predation)
+
+--
+
+In these cases, the zero-truncated distribution used by the Hurdle model is not appropriate
+
+--
+
+Zero-inflated mixture models allow zero observations to arise from both a logistic/binomial process and a count model
+
+- Both Poisson and negative binomial count models are possible
+
+
+---
+# zero-inflated mixture models
+
+.left-nudge[
+.vsmall-code[
+
+```r
+fit.zip &lt;- zeroinfl(oyster ~ .|., 
+                 data = oysterdata)
+```
+]
+]
+
+.right-nudge[
+.vvsmall-code[
+
+```r
+summary(fit.zip)
+```
+
+```
+## 
+## Call:
+## zeroinfl(formula = oyster ~ . | ., data = oysterdata)
+## 
+## Pearson residuals:
+##    Min     1Q Median     3Q    Max 
+## -1.686 -0.574 -0.343  0.535  4.489 
+## 
+## Count model coefficients (poisson with log link):
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    -3.8550     0.6942   -5.55  2.8e-08 ***
+## temperature     0.0973     0.0125    7.80  6.0e-15 ***
+## substratesand  -0.0734     0.1229   -0.60     0.55    
+## depth           0.0139     0.0216    0.64     0.52    
+## clarity         0.0242     0.1912    0.13     0.90    
+## salinity       -0.2573     0.1750   -1.47     0.14    
+## 
+## Zero-inflation model coefficients (binomial with logit link):
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)     0.4511     2.0654    0.22  0.82711    
+## temperature    -0.0666     0.0371   -1.80  0.07222 .  
+## substratesand   2.0329     0.3784    5.37  7.8e-08 ***
+## depth           0.2554     0.0725    3.52  0.00043 ***
+## clarity         0.4385     0.6488    0.68  0.49917    
+## salinity        0.2308     0.6026    0.38  0.70176    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+## 
+## Number of iterations in BFGS optimization: 17 
+## Log-likelihood: -333 on 12 Df
+```
+]
+]
+
+---
+# zero-inflated mixture models
+
+.left-nudge[
+.vsmall-code[
+
+```r
+fit.zinb &lt;- zeroinfl(oyster ~ .|., 
+                 data = oysterdata,
+                 dist = "negbin")
+```
+]
+]
+
+.right-nudge[
+.vvsmall-code[
+
+```r
+summary(fit.zinb)
+```
+
+```
+## 
+## Call:
+## zeroinfl(formula = oyster ~ . | ., data = oysterdata, dist = "negbin")
+## 
+## Pearson residuals:
+##    Min     1Q Median     3Q    Max 
+## -1.686 -0.574 -0.343  0.535  4.489 
+## 
+## Count model coefficients (negbin with log link):
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)    -3.8552     0.6945   -5.55  2.8e-08 ***
+## temperature     0.0973     0.0125    7.80  6.1e-15 ***
+## substratesand  -0.0734     0.1230   -0.60     0.55    
+## depth           0.0139     0.0216    0.64     0.52    
+## clarity         0.0242     0.1912    0.13     0.90    
+## salinity       -0.2573     0.1750   -1.47     0.14    
+## Log(theta)      9.9406    97.7048    0.10     0.92    
+## 
+## Zero-inflation model coefficients (binomial with logit link):
+##               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)     0.4508     2.0658    0.22  0.82727    
+## temperature    -0.0666     0.0371   -1.80  0.07228 .  
+## substratesand   2.0330     0.3785    5.37  7.8e-08 ***
+## depth           0.2554     0.0725    3.52  0.00043 ***
+## clarity         0.4384     0.6488    0.68  0.49919    
+## salinity        0.2307     0.6026    0.38  0.70177    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1 
+## 
+## Theta = 20755.352 
+## Number of iterations in BFGS optimization: 17 
+## Log-likelihood: -333 on 13 Df
+```
+]
+]
+
+---
+# model comparison
+
+Generally, alternative zero-inflated models are compared using AIC
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; Model &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; k &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; AIC &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; delta AIC &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Zero-inflated Poisson &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 690.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Zero-inflated NegBig &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 692.4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.000 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Poisson Hurdle &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 692.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.078 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; NegBig Hurdle &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 694.5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 4.078 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; NegBin GLM &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 756.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 66.479 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Poisson GLM &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 841.9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 151.496 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+--
+
+Do AIC scores tell us if the models are "good"?
+
+--
+
+- NO!
+
+- Goodness-of-fit tests are also important for zero-inflated model. See [Fieberg 17.7](https://fw8051statistics4ecologists.netlify.app/zimodels#goodness-of-fit) for examples
+
+---
+# looking ahead
+
+&lt;br/&gt;
+
+### **Next time**: Exam 3 review
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

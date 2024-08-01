@@ -1,0 +1,469 @@
+---
+title: "LECTURE 20: zero-inflated data"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2023"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, fig.retina = 2)
+source(here::here("R/zzz.R"))
+library(emo)
+library(FANR6750)
+library(dplyr)
+library(kableExtra)
+# library(gganimate)
+```
+
+# outline 
+
+
+1) Motivation
+
+<br/>
+
+--
+
+2) Negative binomial regression
+
+<br/>
+
+--
+
+3) Hurdle models
+
+<br/>
+
+--
+
+4) Zero-inflated mixture models
+
+
+---
+# poisson regression
+
+Poisson regression is a specific type of GLM in which the response variable follows a Poisson distribution and the link function is the log  
+
+--
+
+Poisson regression is used to model a positive, integer response variable as a function of explanatory variables
+
+--
+
+#### Examples:
+
+- Is the abundance of a focal species related to habitat type?  
+
+- Is the number of foraging bouts a function of predator density?  
+
+- Is flock size influenced by food availability?  
+
+---
+# poisson distribution
+
+<br/>
+
+```{r fig.width=8, fig.height=4}
+x <- seq(0, 12, by = 1)
+df <- data.frame(y = c(dpois(x, lambda = 0.1), dpois(x, lambda = 1), dpois(x, lambda = 3)),
+                 x = x,
+                 lambda = factor(rep(c("lambda = 0.1", "lambda = 1", "lambda = 3"), each = length(x)),
+                                 levels = c("lambda = 0.1", "lambda = 1", "lambda = 3")))
+ggplot(df, aes(x = x, y = y, fill = lambda)) +
+  geom_col(alpha = 0.75, color = "grey", linewidth = 0.1, position = "dodge") +
+  scale_y_continuous("Probability density") +
+  scale_x_continuous("y") +
+  scale_fill_discrete(labels = c(expression(paste(lambda, "= 0.1")), 
+                                 expression(paste(lambda, "= 1")), 
+                                 expression(paste(lambda, "= 3"))))
+```
+
+---
+# example
+
+Imagine we are interested in restoring oyster beds along the Georgia coast. We "seed" experimental plots with larvae and then record the number of oysters that establish within a randomly-selected quadrat within each plot. We also record the substrate (rock vs sand), water temperature, water depth, salinity, and water clarity of each plot
+
+.pull-left[
+.vsmall-code[
+```{r echo = TRUE}
+data("oysterdata")
+head(oysterdata)
+```
+]
+]
+
+.pull-right[
+<br/>
+```{r fig.width=4, fig.height=3}
+ggplot(oysterdata, aes(x = oyster)) +
+  geom_histogram() +
+  scale_y_continuous("Frequency") +
+  scale_x_continuous("Number of oysters")
+```
+]
+
+---
+# zero inflation
+
+Zero inflation occurs when there are more zeros in the response variable $y$ than expected under the assumed probability distribution (usually the Poisson distribution)
+
+--
+
+.pull-left[
+.small-code[
+```{r echo = TRUE}
+fit.pr <- glm(oyster ~ .,
+              data = oysterdata,
+              family = "poisson")
+
+```
+]
+]
+
+.pull-right[
+.vvsmall-code[
+```{r echo = TRUE}
+summary(fit.pr)
+```
+]
+]
+
+
+---
+# zero inflation
+
+For models with with the `glm()` function, we can test for zero inflation:
+
+.vsmall-code[
+```{r echo = TRUE, message=TRUE}
+performance::check_zeroinflation(fit.pr)
+```
+]
+
+--
+
+If we suspect zero inflation, we have several options:
+
+- Negative binomial regression
+
+- Hurdle models
+
+- Zero-inflated mixture model
+
+---
+class: inverse, center, middle
+
+# negative binomial regression
+
+---
+# negative binomial distribution
+
+The negative binomial distribution is a *discrete* probability distribution (only integers) with support (i.e., possible values) from 0 to $+\infty$
+
+--
+
+The negative binomial distribution has two parameters: $\mu$ and $\theta$
+
+--
+
+- The mean of the negative binomial distribution is $\mu$
+
+- The variance is $\mu + \frac{\mu^2}{\theta}$
+
+- As $\theta \to \infty$, the negative binomial distribution converges to the Poisson
+
+--
+
+In `R`:
+
+.vsmall-code[
+```{r echo = TRUE}
+x <- rnbinom(n = 1000, mu = 1, size = 1) # theta = size
+mean(x)
+var(x)
+```
+]
+
+---
+# negative binomial distribution
+
+Because the variance is larger than the mean, the negative binomial distribution is often used to model over-dispersed data, including zero inflation
+
+--
+
+.left-nudge[
+.small-code[
+```{r echo = TRUE}
+library(MASS)
+fit.nb <- glm.nb(oyster ~ ., 
+                data = oysterdata)
+```
+]
+]
+
+.right-nudge[
+.vvsmall-code[
+```{r echo = TRUE}
+summary(fit.nb)
+```
+]
+]
+
+---
+# negative binomial regression
+
+Did the negative binomial model address the zero inflation?
+
+--
+
+.small-code[
+```{r echo = TRUE, message=TRUE}
+performance::check_zeroinflation(fit.nb)
+```
+]
+
+--
+
+Although the `check_zeroinflation()` indicates some remaining zero inflation, the negative binomial model seems to fit relatively well 
+
+- additional tests are possible and probably warranted. See Fieberg chp. 17.3 for additional detail
+
+--
+
+Sometimes, rather than address zero inflation using a different distribution, we may suspect that (some of the) zero's are the result of a *different process* than the one generating the counts
+
+- What are some examples?
+
+- In these cases, models that treat zeros as a mixture of different distributions may be warranted
+
+---
+class: inverse, center, middle
+
+# hurdle models
+
+---
+# hurdle models
+
+Hurdle models are actually composed of two separate models, one estimating the probability that an observation is 0 and another modeling the non-zero counts
+
+--
+
+- What distribution do you think is used for the zero/non-zero part of the model?
+
+--
+
+    + Assume $z_i = 0$ if $y_i = 0$, otherwise $z_i = 1$
+
+
+$$z_i \sim Bernouli(p_i)$$
+
+$$logit(p_i) = \beta_0 + \beta_1 x_{i,1} + \beta_2 x_{i,2}...$$
+--
+
+- What distribution do you think is used for the non-zero observations?
+
+--
+
+    + zero-truncated Poisson/Negative binomial
+
+---
+# zero-truncated distributions
+
+<br/>
+
+```{r fig.width=8, fig.height=5}
+dtpois<-function(x, lambda){
+    0 + I(x>0)*dpois(x, lambda)/(1-dpois(0, lambda))
+}
+x<-seq(0,10, by=1)
+ztp <- data.frame(x = x, 
+                  y = c(dpois(x, lambda = 2), dtpois(x, lambda = 2)),
+                  dist = rep(c("Poisson", "Zero-truncated Poisson"), each = length(x)))
+
+ggplot(ztp, aes(x = x, y = y, fill = dist)) +
+  geom_col(alpha = 0.75, color = "grey", linewidth = 0.1, position = "dodge")+
+  # facet_wrap(~dist, nrow = 1) +
+  labs(title = expression(paste(lambda, " = 2"))) +
+  scale_y_continuous("Density") +
+  scale_x_continuous("y", breaks = c(0, 2, 4, 6, 8, 10))
+```
+
+---
+# hurdle models
+
+.left-nudge[
+.vsmall-code[
+```{r echo = TRUE}
+library(pscl)
+fit.hrp <- hurdle(oyster ~ ., 
+                 data = oysterdata)
+```
+]
+]
+
+.right-nudge[
+.vvsmall-code[
+```{r echo = TRUE}
+summary(fit.hrp)
+```
+]
+]
+
+---
+# hurdle models
+
+.left-nudge[
+.vsmall-code[
+```{r echo = TRUE}
+fit.hrnb <- hurdle(oyster ~ ., 
+                 data = oysterdata,
+                 dist = "negbin")
+```
+]
+]
+
+.right-nudge[
+.vvsmall-code[
+```{r echo = TRUE}
+summary(fit.hrnb)
+```
+]
+]
+
+
+---
+# hurdle models
+
+
+Sub-models can contain the same or different covariates
+
+--
+
+Parameters for sub-models are interpreted in the same way as for logistic/Poisson regression
+
+--
+
+$\lambda_i$ is the expected value (i.e., mean) of the non-zero observations, not the overall mean of all observations (which is $\frac{1-p_i}{1-e^{\lambda_i}}\lambda_i$)
+
+--
+
+Models can be compared using AIC
+
+  - note that `performance::check_zeroinflation()` does not work for `hurdle` model objects
+
+--
+
+Generally, Hurdle models are most appropriate when the count-based process cannot generate zeros (i.e., zeros are determined by a separate process than counts)
+
+- Examples?
+
+---
+class: inverse, center, middle
+
+# zero-inflated mixture models
+
+---
+# zero-inflated mixture models
+
+Sometimes, zero observations can occur due to both the binomial process and the count process
+
+- Habitat may be suitable or unsuitable, but abundance may be zero at suitable locations (especially if density is low)
+
+- Individuals may be breeders or non-breeders, but some breeders will still fail to produce offspring (e.g., nest predation)
+
+--
+
+In these cases, the zero-truncated distribution used by the Hurdle model is not appropriate
+
+--
+
+Zero-inflated mixture models allow zero observations to arise from both a logistic/binomial process and a count model
+
+- Both Poisson and negative binomial count models are possible
+
+
+---
+# zero-inflated mixture models
+
+.left-nudge[
+.vsmall-code[
+```{r echo = TRUE}
+fit.zip <- zeroinfl(oyster ~ .|., 
+                 data = oysterdata)
+```
+]
+]
+
+.right-nudge[
+.vvsmall-code[
+```{r echo = TRUE}
+summary(fit.zip)
+```
+]
+]
+
+---
+# zero-inflated mixture models
+
+.left-nudge[
+.vsmall-code[
+```{r echo = TRUE}
+fit.zinb <- zeroinfl(oyster ~ .|., 
+                 data = oysterdata,
+                 dist = "negbin")
+```
+]
+]
+
+.right-nudge[
+.vvsmall-code[
+```{r echo = TRUE}
+summary(fit.zinb)
+```
+]
+]
+
+---
+# model comparison
+
+Generally, alternative zero-inflated models are compared using AIC
+
+```{r}
+aictab <- data.frame(Model = c("Poisson GLM", "NegBin GLM", "Poisson Hurdle",
+                                "NegBig Hurdle", "Zero-inflated Poisson", 
+                                "Zero-inflated NegBig"))
+aictab <- dplyr::bind_cols(aictab, AIC(fit.pr, fit.nb, fit.hrp, fit.hrnb, fit.zip, fit.zinb))
+aictab$dAIC <- aictab$AIC - min(aictab$AIC)
+aictab <- dplyr::arrange(aictab, dAIC)
+
+kable(aictab, col.names = c("Model", "k", "AIC", "delta AIC"), 
+      row.names = F) 
+```
+
+--
+
+Do AIC scores tell us if the models are "good"?
+
+--
+
+- NO!
+
+- Goodness-of-fit tests are also important for zero-inflated model. See [Fieberg 17.7](https://fw8051statistics4ecologists.netlify.app/zimodels#goodness-of-fit) for examples
+
+---
+# looking ahead
+
+<br/>
+
+### **Next time**: Exam 3 review
+
+
+

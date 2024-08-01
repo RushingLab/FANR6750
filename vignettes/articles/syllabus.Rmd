@@ -1,7 +1,7 @@
 ---
 title: "Syllabus"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2023"
+author: "Fall 2024"
 output: 
   rmarkdown::html_vignette:
     keep_md: yes
@@ -32,19 +32,23 @@ knitr::opts_chunk$set(
 Dr. Clark Rushing  
 clark.rushing@uga.edu  
 Office: Warnell 3-409   
-Office hours: M 12:30-2:00; Tu 9:00-10:00
+Office hours: M 12:30-2:00; Th 9:00-10:00
 
 # TEACHING ASSISTANTS
 Michael Baker  
 michael.baker2@uga.edu  
-Office: 1-102A  
-Office hours: W 9:00-11:00 or by appointment  
+Office: 1-102  
+Office hours: F 3:00-5:00 or by appointment  
   
 Kaili Gregory  
 k.gregory@uga.edu  
 Office: 3-422  
-Office hours: Th 11:00-12:00 & 2:15-3:15 or by appointment  
+Office hours: Tu 3:00-5:00 or by appointment  
 
+Alan Bond
+alan.bond1@uga.edu
+Office: 1-102
+Office hours: M 2:00-4:00 or by appointment
 
 # COURSE OBJECTIVES
 

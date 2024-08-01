@@ -1,8 +1,6 @@
-**Note that this website is an archived version from the Fall 2023 semester**
-
 # Welcome to FANR6750: Experimental Methods in Forestry and Natural Resources Research
 
-This is the unofficial course website for the FALL 2023 offering of **FANR6750: Experimental Methods in Forestry and Natural Resources Research** at the University of Georgia. The "official" course website (for students enrolled in the course) is on eLC.  
+This is the unofficial course website for the Fall 2024 offering of **FANR6750: Experimental Methods in Forestry and Natural Resources Research** at the University of Georgia. The "official" course website (for students enrolled in the course) is on eLC.  
 
 The goal of this website is to create a central repository for students to access all course materials - lecture slides, lab activities, code, data, etc. A secondary goal is to make those materials freely available to other students and instructors who may find them useful. If you encounter any issues or have any suggestions, feel free to contact me at clark.rushing [at] uga [dot] edu.     
 
@@ -21,4 +19,12 @@ devtools::install_github("RushingLab/FANR6750")
 
 ## Use of material  
 
-Materials included in this course is purposefully made available to anyone who finds it useful. Users are free to use, adapt, distribute, display, and communicate these materials freely. If you find these materials useful, please let me know, especially if you are using or adapting these materials for teaching. Tracking use of these materials outside of the official course is not only great validation for my effort, it helps me demonstrate "a positive professional reputation in teaching" (which happens to be useful for promotion). 
+Materials included in this course is purposefully made available to anyone who finds it useful. Users are free to use, adapt, distribute, display, and communicate these materials freely. If you find these materials useful, please let me know, especially if you are using or adapting these materials for teaching. Tracking use of these materials outside of the official course is not only great validation for my effort, it helps me demonstrate "a positive professional reputation in teaching."
+
+## Previous course materials
+
+The websites from previous versions of this course are archived here: 
+
+[Fall 2023](https://rushinglab.github.io/FANR6750.v2023/)
+
+[Fall 2022](https://rushinglab.github.io/FANR6750.2022/)

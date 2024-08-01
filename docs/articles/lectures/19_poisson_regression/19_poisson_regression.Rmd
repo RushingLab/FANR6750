@@ -1,0 +1,577 @@
+---
+title: "LECTURE 19: poisson regression"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2023"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, fig.retina = 2)
+source(here::here("R/zzz.R"))
+library(emo)
+library(FANR6750)
+library(dplyr)
+library(kableExtra)
+# library(gganimate)
+```
+
+# outline 
+
+
+1) Motivation
+
+<br/>
+
+--
+
+2) Model
+
+<br/>
+
+--
+
+3) Model fitting
+
+<br/>
+--
+
+
+4) Model interpretation
+
+<br/>
+--
+
+5) Over-dispersion
+
+---
+# poisson regression
+
+Poisson regression is a specific type of GLM in which the response variable follows a Poisson distribution and the link function is the log  
+
+--
+
+Poisson regression is used to model a positive, integer response variable as a function of explanatory variables
+
+--
+
+#### Examples:
+
+- Is the abundance of a focal species related to habitat type?  
+
+- Is the number of foraging bouts a function of predator density?  
+
+- Is flock size influenced by food availability?  
+
+
+---
+# poisson regression
+
+<br/>
+
+$$\large y_i \sim Poisson(\lambda_i)$$
+
+$$\large log(\lambda_i) = \beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + ...$$
+
+--
+
+#### where:
+
+- $\large y_i$ is the response   
+
+- $\large \lambda_i$ is the expected value of the response variable for sample unit *i*
+
+
+---
+# log link
+
+The log link allows us to transform the expected value $\lambda_i$ (constrained to $0$ to $\infty$) to the real scale ( $-\infty$ to $\infty$)
+
+$$\large \log(2) = 0.693$$
+--
+
+The exponential allows us to transform the linear predictor to the positive scale
+
+$$\large e^{0.693} = 2$$
+
+
+---
+# log link
+
+<br/>
+
+
+```{r fig.height=6, fig.width=10}
+x <- seq(-5, 5, by = 0.1)
+log_df2 <- data.frame(mu = c(0.5 -0.5 * x, 0.5 + 0.25*x, 0.5 + 0.75*x),
+                        lambda = c(exp(0.5 -0.5 * x), exp(0.5 + 0.25*x), exp(0.5 + 0.75*x)),
+                        x = x,
+                        beta = factor(rep(c("-0.5", "0.25", "0.75"), each = length(x)),
+                                      levels = c("-0.5", "0.25", "0.75")))
+r <- ggplot(log_df2, aes(x = x, y = mu, color = beta)) +
+  geom_path() +
+  scale_x_continuous("x") +
+  scale_y_continuous(expression(mu)) +
+  labs(subtitle = expression(paste("0.5 + ", beta[1], "*x"))) +
+    scale_color_discrete(labels = c(expression(paste(beta[1], "= -0.5")), 
+                                  expression(paste(beta[1], "= 0.25")), 
+                                  expression(paste(beta[1], "= 0.75")))) +
+  guides(color = "none")
+
+q <- ggplot(log_df2, aes(x = x, y = lambda, color = beta)) +
+  geom_path() +
+  scale_x_continuous("x") +
+  scale_y_continuous(expression(lambda)) +
+  labs(subtitle = expression(paste("exp(0.5 + ", beta[1], "*x)"))) +
+  scale_color_discrete(labels = c(expression(paste(beta[1], "= -0.5")), 
+                                  expression(paste(beta[1], "= 0.25")), 
+                                  expression(paste(beta[1], "= 0.75"))))
+cowplot::plot_grid(r, q, align = "hv", nrow = 1, rel_widths = c(0.425, 0.575))
+```
+
+
+---
+# example
+
+Imagine we are interested in the effects of elevation and habitat on the abundance of a rare orchid
+
+```{r echo = TRUE}
+data("orchidata")
+head(orchiddata, n=12)
+```
+
+---
+# raw data
+
+```{r echo = TRUE, fig.height=5, fig.width=7}
+ggplot(orchiddata, aes(x = elevation, y = abundance)) +
+  geom_point() +
+  scale_y_continuous("Orchid Count") + scale_x_continuous("Elevation")
+```
+
+---
+# raw data
+
+```{r echo = TRUE, fig.height=4, fig.width=7}
+library(dplyr)
+
+orchiddata %>% group_by(habitat) %>% summarise(group.prob = mean(abundance)) %>%
+  ggplot(., aes(x = habitat, y = group.prob)) +
+  geom_col(fill = "grey70", color = "black") +
+  scale_y_continuous("Mean number of orchids") + scale_x_discrete("Habitat")
+```
+
+---
+# the `glm` function
+
+<br/>
+
+```{r echo = TRUE, eval = FALSE}
+fm1 <- glm(abundance ~ habitat + elevation, 
+           family=poisson(link="log"), 
+           data = orchiddata)
+broom::tidy(fm1)
+```
+
+<br/>
+
+```{r echo = FALSE, eval = TRUE}
+fm1 <- glm(abundance ~ habitat + elevation, family=poisson(link="log"), data = orchiddata)
+kable(broom::tidy(fm1))
+```
+
+---
+# intepreting parameters
+
+```{r echo = FALSE, eval = TRUE}
+fm1 <- glm(abundance ~ habitat + elevation, family=poisson(link="log"), data = orchiddata)
+kable(broom::tidy(fm1)) %>%
+  kable_styling(font_size = 10)
+```
+
+--
+
+- The expected number of orchids in maple-dominated forest at sea level = `r round(exp(coef(fm1)[1]), 2)` (`exp(-0.787)`)
+
+--
+
+- The expected number of orchids in oak-dominated forest at sea level = `r round(exp(coef(fm1)[1] + coef(fm1)[2]), 2)` (`exp(-0.787 - 0.153)`)
+    
+--
+
+- The expected number of orchids in pine-dominated forest at sea level = `r round(exp(coef(fm1)[1] + coef(fm1)[3]), 2)` (`exp(-0.787 - 0.065)`)
+
+---
+# intepreting parameters
+
+```{r echo = FALSE, eval = TRUE}
+kable(broom::tidy(fm1)) %>%
+  kable_styling(font_size = 10)
+```
+
+--
+
+What about elevation? 
+
+--
+
+Again, let's visualize the fitted relationship
+
+---
+# example
+
+<br/>
+
+```{r fig.height=6, fig.width=8}
+newdat <- data.frame(elevation=seq(12, 489, length = 50), 
+                     habitat="Oak")
+pred.link <- predict(fm1, newdata=newdat, se.fit=TRUE, type="link")
+newdat$mu <- exp(pred.link$fit)
+newdat$lower <- exp(pred.link$fit - 1.96*pred.link$se.fit)
+newdat$upper <- exp(pred.link$fit + 1.96*pred.link$se.fit)
+
+ggplot(orchiddata, aes(x = elevation, y = abundance)) +
+  geom_point() +
+  scale_y_continuous("Number of orchids") + 
+  scale_x_continuous("Elevation") +
+  geom_line(data = newdat, aes(x = elevation, y = mu)) +
+  geom_line(data = newdat, aes(x = elevation, y = lower), linetype = "longdash") +
+  geom_line(data = newdat, aes(x = elevation, y = upper), linetype = "longdash")
+```
+
+---
+# example
+
+What's the change in abundance at 1m vs 0m elevation (in oak habitat)?
+
+- `exp(-0.786 + 0.009 * 1) - exp(-0.786 + 0.009 * 0)` = `r round(exp(coef(fm1)[1] + coef(fm1)[4] * 1), 3) - round(exp(coef(fm1)[1]), 3)`
+
+--
+
+What's the change in abundance at 101m vs 100m elevation ?
+
+- `exp(-0.786 + 0.009 * 101) - exp(-0.786 + 0.009 * 100)` = `r round(exp(coef(fm1)[1] + coef(fm1)[4] * 101), 3) - round(exp(coef(fm1)[1]+ coef(fm1)[4] * 100), 3)`
+
+--
+
+Change in abundance is not linear
+
+```{r fig.height=3.5, fig.width=8}
+ggplot(orchiddata, aes(x = elevation, y = abundance)) +
+    geom_point() +
+    scale_y_continuous("Orchid Abundance") + 
+    scale_x_continuous("Elevation", breaks = c(50, 100, 350, 400)) +
+    geom_line(data = newdat, aes(x = elevation, y = mu)) +
+    geom_segment(aes(x= 100, xend = 100, y = -Inf, yend = exp(coef(fm1)[1] + coef(fm1)[4]*93)), 
+                 linetype = "longdash", color = "grey25", linewidth = 0.25) +
+    geom_segment(aes(x= -Inf, xend = 100, y =  exp(coef(fm1)[1] + coef(fm1)[4]*93), 
+                     yend = exp(coef(fm1)[1] + coef(fm1)[4]*93)), 
+                 linetype = "longdash", color = "grey25", linewidth = 0.25) +
+    geom_segment(aes(x= 50, xend = 50, y = -Inf, yend = exp(coef(fm1)[1] + coef(fm1)[4]*43)), 
+                 linetype = "longdash", color = "grey25", linewidth = 0.25) +
+    geom_segment(aes(x= -Inf, xend = 50, y =  exp(coef(fm1)[1] + coef(fm1)[4]*43), 
+                     yend = exp(coef(fm1)[1] + coef(fm1)[4]*43)),
+                 linetype = "longdash", color = "grey25", linewidth = 0.25) +
+    geom_segment(aes(x= 400, xend = 400, y = -Inf, yend = exp(coef(fm1)[1] + coef(fm1)[4]*388)),
+                 linetype = "longdash", color = "grey25", linewidth = 0.25) +
+    geom_segment(aes(x= -Inf, xend = 400, y =  exp(coef(fm1)[1] + coef(fm1)[4]*388), 
+                     yend = exp(coef(fm1)[1] + coef(fm1)[4]*388)),
+                 linetype = "longdash", color = "grey25", linewidth = 0.25) +
+    geom_segment(aes(x= 350, xend = 350, y = -Inf, yend = exp(coef(fm1)[1] + coef(fm1)[4]*338)),
+                 linetype = "longdash", color = "grey25", linewidth = 0.25) +
+    geom_segment(aes(x= -Inf, xend = 350, y =  exp(coef(fm1)[1] + coef(fm1)[4]*338), 
+                     yend = exp(coef(fm1)[1] + coef(fm1)[4]*338)), 
+                 linetype = "longdash", color = "grey25", linewidth = 0.25)
+
+```
+
+
+---
+# example
+
+Change in $\lambda$ is not linear because exponential functions are multiplicative
+
+--
+
+Remember that $e^{(a + b)} = e^a e^b$, so $\lambda_i = exp(\beta_0 + \beta_1x_i) = exp(\beta_0)exp(\beta_1x_i)$
+
+--
+
+$$\frac{\lambda_2}{\lambda_1}=\frac{exp(\beta_0)exp(\beta_1(x_1+1))}{exp(\beta_0)exp(\beta_1x_1)} = exp(\beta_1)$$
+--
+
+.vsmall-code[
+```{r echo = TRUE}
+l1 <- exp(-0.786 + 0.009 * 0)
+l2 <- exp(-0.786 + 0.009 * 1)
+l2/l1
+
+l3 <- exp(-0.786 + 0.009 * 400)
+l4 <- exp(-0.786 + 0.009 * 401)
+l4/l3
+
+```
+]
+
+--
+
+What is the change in abundance for one unit change in elevation?
+
+--
+
+- $e^{\beta_{Elev}}$ = `exp(0.009)` = `r exp(0.009)` (about 1% increase per meter)
+
+---
+class: inverse, middle
+
+# over-dispersion
+
+---
+# over-dispersion
+
+Poisson regression assumes that the mean ( $E[y_i|x_i] = \lambda_i$) is equal to the residual variance ( $Var(y_i|x_i) = \lambda_i$)
+
+--
+
+This is assumption is often violated with real data. Specificallly, the residual variance is often larger than the mean (  $Var(y_i|x_i) > E[y_i|x_i]$). This is called **over-dispersion**
+
+--
+
+There are many possible reasons data will be over-dispersed:
+
+- Omission of important predictor variables
+
+- Measurement error in response and explanatory variables
+
+- Relationship between $log(\lambda)$ and $x$ may be non-linear
+
+- Data may contain outliers
+
+- Clustering (spatial, temporal, within-individual)
+
+- Response variable may be a mixture of random processes (e.g., is a site occupied? If occupied, how many individuals?)
+
+---
+# example
+
+Suppose we are interested in how predator abundance influences foraging behavior of eastern chipmunks (*Tamias striatus*).  
+
+--
+
+.pull-left[
+
+We place 100 chipmunks in individual enclosures with a small tray of food in the middle, letting each individual habituate to the enclosures before beginning the experiment. 
+
+We then randomly simulate one of 3 levels of aerial predator abundance (absent, low, high) using cardboard cutouts of raptor silhouettes. 
+
+While the predator silhouettes are in place, we record the number of times an individual visits the food tray within a 15-minute interval. 
+
+]
+
+.pull-right[
+```{r out.height=150, out.width=225}
+knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/9/9c/Tamias_striatus_UL_14.jpg")
+```
+
+
+After 15-minutes, the silhouettes are removed and the individuals are allowed to re-habituate before another the predator treatment is randomly applied (why is this useful?). 
+
+Due to logistical contraints, not every individual was measured the same number of time (unbalanced)
+]
+
+---
+# example
+
+.pull-left[
+```{r echo = TRUE}
+data("foragingdata")
+head(foragingdata)
+```
+]
+
+.pull-right[
+```{r}
+library(dplyr)
+f2 <- group_by(foragingdata, predator) %>%
+  summarise(mu = mean(foraging), stdv = sd(foraging))
+ggplot(f2, aes(x = predator, y = mu)) +
+  geom_point() +
+  scale_x_discrete("Predator abundance") +
+  scale_y_continuous("Mean foraging trips") +
+  geom_errorbar(aes(x = predator, ymin = mu - stdv, ymax = mu + stdv), width = 0)
+```
+]
+
+---
+# example
+
+.pull-left[
+
+Model fitting:
+
+
+.vsmall-code[
+```{r echo = TRUE}
+glm1 <- glm(foraging ~ predator, 
+            data = foragingdata, 
+            family = "poisson")
+summary(glm1)
+```
+]
+]
+
+--
+
+.pull-right[
+
+Checking for over-dispersion:
+
+.vsmall-code[
+
+```{r echo = TRUE}
+performance::check_overdispersion(glm1)
+```
+]
+]
+
+---
+# over-dispersion
+
+In general, over-dispersion will not bias parameter estimates but it will makes standard error's too small (what happens to *p*-values?)
+
+--
+
+So one way to deal with over-dispersion is to adjust standard errors using a variance inflation factor:
+
+- $E[y_i|x_i] = \lambda_i$
+
+- $Var[y_i|x_i] = \phi\lambda_i$
+
+--
+
+In `R`, this can be done using a *quasi-likelihood* approach
+
+.small-code[
+```{r echo = TRUE}
+glm2 <- glm(foraging ~ predator, data = foragingdata, family = quasipoisson())
+```
+]
+
+---
+# over-dispersion
+
+Let's compare the output of the two models:
+
+--
+
+
+.small-code[
+```{r echo = TRUE}
+broom::tidy(glm1) # Poisson model
+```
+]
+
+
+.small-code[
+```{r echo = TRUE}
+broom::tidy(glm2) # Quasi-Poisson model
+```
+]
+
+---
+# over-dispersion
+
+Did the quasi-Poisson method fix the over-dispersion?
+
+--
+
+```{r echo = TRUE}
+performance::check_overdispersion(glm2)
+```
+
+--
+
+No! It only adjusted the SE
+
+---
+# over-dispersion
+
+As mentioned, another reason for over-dispersion (and thus way to address it) is the omission of important predictor variables
+
+--
+
+In this example, is there a predictor variable missing? How should this variable be treated in the model?
+
+--
+
+.small-code[
+```{r echo = TRUE}
+library(lme4)
+glmm1 <- glmer(foraging ~ predator + (1|individual), 
+               data = foragingdata, family = "poisson")
+```
+]
+
+--
+
+What does it mean to treat individual as a random effect in this model? What additional information does this model provide?
+
+---
+# over-dispersion
+
+.vsmall-code[
+```{r echo = TRUE}
+summary(glmm1)
+```
+]
+
+---
+# over-dispersion
+
+Did that fix the over-dispersion?
+
+```{r echo = TRUE}
+performance::check_overdispersion(glmm1)
+```
+
+---
+# summary
+
+Poisson regression is used when we want to model a count-based response as a function of explanatory variables
+
+--
+
+The response $y_i$ is modeled as arising from a Poisson distribution with mean $\lambda_i$ and the log link is used to map the linear predictor to the positive scale
+
+--
+
+All of the linear modeling concepts we have learned this semester (continuous/categorical explanatory variables, multiple regression, interactions, random effects) can be used within the Poisson regression framework
+
+--
+
+Count data will often be over-dispersed, which can lead to biased standard error estimates
+
+  - Over-dispersion can be addressed by using quasi-likelihood methods or adding additional covariates
+  
+  - In some cases, other modeling approaches may be necessary to address over-dispersion. We will cover these methods in more detail in the coming weeks
+
+
+---
+# looking ahead
+
+<br/>
+
+### **Next time**: Zero-inflated count data
+
+<br/>
+
+### **Reading**: [Fieberg chp. 15.5](https://fw8051statistics4ecologists.netlify.app/poissonr#NBR) & [chp. 17](https://fw8051statistics4ecologists.netlify.app/zimodels)
+
+
