@@ -353,6 +353,7 @@ acf(mod1$residuals, plot= T, main= '')
 
 We can assess multicollinearity of predictors (only the continuous ones!) by creating a covariance matrix in `R`. There are numerous opinions by different researchers as far as how highly correlated predictors need to be before you consider throwing one of them out of the model. [Here](https://onlinelibrary.wiley.com/doi/epdf/10.1111/j.1600-0587.2012.07348.x) and [here](https://ia903007.us.archive.org/21/items/identifyingproxy470boot/identifyingproxy470boot.pdf) are two papers which have addressed this issue through extensive simulations.
 
+
 ```{r}
 library(corrplot)
 
@@ -370,7 +371,7 @@ corrplot(cor(deerdata[c(2,4,5)]), method= 'number', type = "upper")
 
 While we have made each of these plots individually (which makes them more easily edited), we can also get `R` to create all of these plots at once.
 
-```{r, fig.width= 8, fig.height= 4, fig.fullwidth= T, fig.align='left', fig.cap= '**Figure 10: Checking model assumptions for Model 1.**'}
+```{r, fig.width= 8, fig.height= 4, fig.fullwidth= F, fig.align='left', fig.cap= '**Figure 10: Checking model assumptions for Model 1.**'}
 library(performance)
 
 check_model(mod1, check= c('linearity', 'homogeneity', 'qq', 'normality'))

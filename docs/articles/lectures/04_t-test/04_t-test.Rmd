@@ -1,7 +1,7 @@
 ---
 title: "LECTURE 4: linear models part 1: categorical predictor w/ 2 levels"
 subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2023"
+author: "<br/><br/><br/>Fall 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
@@ -109,21 +109,55 @@ $$\LARGE \epsilon_i \sim normal(0, \sigma)$$
 
 - This is most simple linear model we can construct
 
+--
+
+- If our hypothesis is correct, $\large \beta_0 = 0$
+
+--
+
+- Question: What is the value of $\large \beta_0$ is our hypothesis is wrong?
+
 ---
-# linear model by hand
+# summary statistics
 
 .small-code[
 ```{r echo = TRUE}
 y <- c(-0.062, -0.38, 0.85, -0.58,  0.53,  0.09,  0.31,  0.77,  0.59,  -0.17)
-
-(beta0.hat <- mean(y))
-(stnderr <- sd(y)/sqrt(10))
 ```
 ]
 
 --
 
-```{r fig.height=4, fig.width=6}
+$\Large \bar{y}$
+
+```{r echo = TRUE}
+mean(y)
+```
+
+--
+
+$\Large s$
+
+```{r echo = TRUE}
+sd(y)
+```
+
+--
+
+?
+
+```{r echo = TRUE}
+sd(y)/sqrt(10)
+```
+
+---
+# visualizing the linear model
+
+<br/>
+
+```{r fig.height=5, fig.width=7}
+beta0.hat <- mean(y)
+stnderr <- sd(y)/sqrt(10)
 se_df <- data.frame(ymin = -Inf, ymax = Inf, 
                     xmin = beta0.hat - stnderr, 
                     xmax = beta0.hat + stnderr)
@@ -140,19 +174,12 @@ ggplot() +
 ```
 
 ---
-# linear model by hand
+# visualizing the linear model
 
-.small-code[
-```{r echo = TRUE}
-y <- c(-0.062, -0.38, 0.85, -0.58,  0.53,  0.09,  0.31,  0.77,  0.59,  -0.17)
-
-(beta0.hat <- mean(y))
-(stnderr <- sd(y)/sqrt(10))
-```
-]
+<br/>
 
 
-```{r fig.height=4, fig.width=6}
+```{r fig.height=5, fig.width=7}
 ci_df <- data.frame(ymin = -Inf, ymax = Inf, 
                     xmin = beta0.hat - stnderr*1.96, 
                     xmax = beta0.hat + stnderr*1.96)
@@ -176,8 +203,6 @@ ggplot() +
 #### Because this is a linear model, we can fit it using the `lm` function:
 
 ```{r echo = TRUE}
-y <- c(-0.062, -0.38, 0.85, -0.58,  0.53,  0.09,  0.31,  0.77,  0.59,  -0.17)
-
 fit1 <- lm(y ~ 1)
 
 broom::tidy(fit1)
@@ -211,7 +236,7 @@ broom::tidy(fit1)
 .pull-right[
 
 ```{r echo = TRUE}
-t.test(y)
+t.test(y, mu = 0)
 ```
 ]
 
@@ -260,7 +285,7 @@ Field procedure:
 ---
 # context, part 2
 
-.pull-left[
+.left-column[
 </br>
 ```{r out.width="80%"}
 knitr::include_graphics("fig/frog.png")
@@ -268,7 +293,7 @@ knitr::include_graphics("fig/frog.png")
 
 ]
 
-.pull-right[
+.right-column[
 #### Data:
 
 `Low development: 16, 14, 18, 17, 29, 31, 14, 16, 22, 15`
@@ -276,7 +301,7 @@ knitr::include_graphics("fig/frog.png")
 `High development: 2, 11, 6, 8, 0, 3, 19, 1, 6, 5`
 
 
-```{r fig.height=3, fig.width=5}
+```{r fig.height=3.5, fig.width=6.5}
 frog_df <- data.frame(z = seq(from = 0, to = 34, by = 0.1),
                       pr_z = c(dnorm(x = seq(from = 0, to = 34, by = 0.1), 20, 2),
                                dnorm(x = seq(from = 0, to = 34, by = 0.1), 12, 2)),
@@ -286,21 +311,23 @@ samp <- data.frame(y = c(16, 14, 18, 17, 29, 31, 14, 16, 22, 15, 2, 11, 6, 8, 0,
                    Development = rep(c("Low", "High"), each = 10))
 
 ggplot() + 
-  geom_path(data = frog_df, aes(x = z, y = pr_z, color = Development)) +
-  geom_vline(data = data.frame(x = c(20, 12), Development = c("Low", "High")), 
+  geom_histogram(data = frogdata, aes(x = Frogs, fill = Development),
+                 binwidth = 1, alpha = 0.7) +
+  geom_vline(data = data.frame(x = c(19.2, 6.1), Development = c("Low", "High")), 
              aes(xintercept = x, color = Development), alpha = 0.6) +
-  geom_rug(data = samp, aes(x = y, color = Development)) +
-  scale_y_continuous("Density") +
+  geom_rug(data = frogdata, aes(x = Frogs, color = Development)) +
+  scale_y_continuous("Frequency") +
   scale_x_continuous("Frogs per plot", expand = c(0, 0), breaks = c(12, 20), 
                      labels = expression(mu[H], mu[L]))
+
 ```
 
 ]
 
 ---
-# the linear model
+# quick review
 
-#### A "simple" example
+#### A "simple" linear model
 
 $$\underbrace{\LARGE E[y_i] = 7 + 3.5 \times x_i}_{Deterministic}$$
 
@@ -623,20 +650,15 @@ What is the interpretation of these standard errors?
 
 #### As before, the model we just fit has a corresponding "test" that you may encounter: the *two-sample t-test*
 
-.pull-left[
-- Two-sample t-tests are used to test whether the means of two population are different
-
-- there is a built-in function to fit t-tests
-
-- the group means (and the SE, t-statistic, p-value, confidence interval) are exactly the same in both approaches
-]
-
-.pull-right[
-
+.small-code[
 ```{r echo = TRUE}
 t.test(Frogs ~ Development, data = frogdata)
 ```
 ]
+
+- Used to test whether the means of two population are different
+
+- Results are exactly the same as `lm`
 
 ---
 # other ways to fit the model

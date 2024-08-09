@@ -3,7 +3,7 @@
   <head>
     <title>LECTURE 4: linear models part 1: categorical predictor w/ 2 levels</title>
     <meta charset="utf-8" />
-    <meta name="author" content="   Fall 2023" />
+    <meta name="author" content="   Fall 2024" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="FANR6750.css" type="text/css" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ## FANR 6750 (Experimental design)
 ]
 .author[
-### <br/><br/><br/>Fall 2023
+### <br/><br/><br/>Fall 2024
 ]
 
 ---
@@ -98,60 +98,77 @@ Data:
 
 - This is most simple linear model we can construct
 
+--
+
+- If our hypothesis is correct, `\(\large \beta_0 = 0\)`
+
+--
+
+- Question: What is the value of `\(\large \beta_0\)` is our hypothesis is wrong?
+
 ---
-# linear model by hand
+# summary statistics
 
 .small-code[
 
 ```r
 y &lt;- c(-0.062, -0.38, 0.85, -0.58,  0.53,  0.09,  0.31,  0.77,  0.59,  -0.17)
-
-(beta0.hat &lt;- mean(y))
-```
-
-```
-## [1] 0.1948
-```
-
-```r
-(stnderr &lt;- sd(y)/sqrt(10))
-```
-
-```
-## [1] 0.1557
 ```
 ]
 
 --
 
-&lt;img src="04_t-test_files/figure-html/unnamed-chunk-4-1.png" width="432" style="display: block; margin: auto;" /&gt;
+`\(\Large \bar{y}\)`
 
----
-# linear model by hand
-
-.small-code[
 
 ```r
-y &lt;- c(-0.062, -0.38, 0.85, -0.58,  0.53,  0.09,  0.31,  0.77,  0.59,  -0.17)
-
-(beta0.hat &lt;- mean(y))
+mean(y)
 ```
 
 ```
 ## [1] 0.1948
 ```
 
+--
+
+`\(\Large s\)`
+
+
 ```r
-(stnderr &lt;- sd(y)/sqrt(10))
+sd(y)
+```
+
+```
+## [1] 0.4925
+```
+
+--
+
+?
+
+
+```r
+sd(y)/sqrt(10)
 ```
 
 ```
 ## [1] 0.1557
 ```
-]
+
+---
+# visualizing the linear model
+
+&lt;br/&gt;
+
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-7-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+---
+# visualizing the linear model
+
+&lt;br/&gt;
 
 
-&lt;img src="04_t-test_files/figure-html/unnamed-chunk-6-1.png" width="432" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-8-1.png" width="504" style="display: block; margin: auto;" /&gt;
 
 ---
 # the linear model
@@ -160,8 +177,6 @@ y &lt;- c(-0.062, -0.38, 0.85, -0.58,  0.53,  0.09,  0.31,  0.77,  0.59,  -0.17)
 
 
 ```r
-y &lt;- c(-0.062, -0.38, 0.85, -0.58,  0.53,  0.09,  0.31,  0.77,  0.59,  -0.17)
-
 fit1 &lt;- lm(y ~ 1)
 
 broom::tidy(fit1)
@@ -203,7 +218,7 @@ broom::tidy(fit1)
 
 
 ```r
-t.test(y)
+t.test(y, mu = 0)
 ```
 
 ```
@@ -276,13 +291,13 @@ Field procedure:
 ---
 # context, part 2
 
-.pull-left[
+.left-column[
 &lt;/br&gt;
 &lt;img src="fig/frog.png" width="80%" style="display: block; margin: auto;" /&gt;
 
 ]
 
-.pull-right[
+.right-column[
 #### Data:
 
 `Low development: 16, 14, 18, 17, 29, 31, 14, 16, 22, 15`
@@ -290,20 +305,20 @@ Field procedure:
 `High development: 2, 11, 6, 8, 0, 3, 19, 1, 6, 5`
 
 
-&lt;img src="04_t-test_files/figure-html/unnamed-chunk-12-1.png" width="360" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-14-1.png" width="468" style="display: block; margin: auto;" /&gt;
 
 ]
 
 ---
-# the linear model
+# quick review
 
-#### A "simple" example
+#### A "simple" linear model
 
 `$$\underbrace{\LARGE E[y_i] = 7 + 3.5 \times x_i}_{Deterministic}$$`
 
 `$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}$$`
 
-&lt;img src="04_t-test_files/figure-html/unnamed-chunk-13-1.png" width="432" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-15-1.png" width="432" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -316,7 +331,7 @@ Field procedure:
 `$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}$$`
 
 
-&lt;img src="04_t-test_files/figure-html/unnamed-chunk-14-1.png" width="288" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-16-1.png" width="288" style="display: block; margin: auto;" /&gt;
 
 
 ---
@@ -328,7 +343,7 @@ Field procedure:
 
 `$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}$$`
 
-&lt;img src="04_t-test_files/figure-html/unnamed-chunk-15-1.png" width="288" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-17-1.png" width="288" style="display: block; margin: auto;" /&gt;
 
 ---
 # the linear model
@@ -528,12 +543,12 @@ broom::tidy(fit2)
 ---
 # visualizing the linear model
 
-&lt;img src="04_t-test_files/figure-html/unnamed-chunk-22-1.png" width="504" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-24-1.png" width="504" style="display: block; margin: auto;" /&gt;
 
 
 --
 
-&lt;img src="04_t-test_files/figure-html/unnamed-chunk-23-1.png" width="504" style="display: block; margin: auto;" /&gt;
+&lt;img src="04_t-test_files/figure-html/unnamed-chunk-25-1.png" width="504" style="display: block; margin: auto;" /&gt;
 
 ---
 # fitting the model by hand
@@ -623,16 +638,7 @@ What is the interpretation of these standard errors?
 
 #### As before, the model we just fit has a corresponding "test" that you may encounter: the *two-sample t-test*
 
-.pull-left[
-- Two-sample t-tests are used to test whether the means of two population are different
-
-- there is a built-in function to fit t-tests
-
-- the group means (and the SE, t-statistic, p-value, confidence interval) are exactly the same in both approaches
-]
-
-.pull-right[
-
+.small-code[
 
 ```r
 t.test(Frogs ~ Development, data = frogdata)
@@ -644,7 +650,7 @@ t.test(Frogs ~ Development, data = frogdata)
 ## 
 ## data:  Frogs by Development
 ## t = 5, df = 18, p-value = 1e-04
-## alternative hypothesis: true difference in means is not equal to 0
+## alternative hypothesis: true difference in means between group Low and group High is not equal to 0
 ## 95 percent confidence interval:
 ##   7.554 18.646
 ## sample estimates:
@@ -652,6 +658,10 @@ t.test(Frogs ~ Development, data = frogdata)
 ##               19.2                6.1
 ```
 ]
+
+- Used to test whether the means of two population are different
+
+- Results are exactly the same as `lm`
 
 ---
 # other ways to fit the model

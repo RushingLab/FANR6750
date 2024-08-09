@@ -1,7 +1,7 @@
 ---
 title: "LECTURE 1: introduction to statistics"
 subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2023"
+author: "<br/><br/><br/>Fall 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
@@ -242,7 +242,7 @@ class: inverse, middle, center
 
 - Increasing interest in causal inference from observational studies
 
-    + This is something we will discuss later in the semester
+    + This is something we may discuss later in the semester
     
 ---
 class: inverse, middle, center
@@ -302,7 +302,7 @@ ggplot(delta_df) +
 ```
 
 #### Note:
-1) This is the **population**  
+1) This is **the** *population*  
 
 2) There is **variation** within and among groups, but: 
 
@@ -389,11 +389,11 @@ ggplot() +
 --
 
 #### Note:
-1) This is *a* **sample**  
+1) This is **a** *sample*  
 
 2) The sample means are our best estimates of the population means  
 
-3) But the sample means will never equal the population means (Uncertainty!)  
+3) But the sample means will never equal the population means (uncertainty!)  
 
 
 

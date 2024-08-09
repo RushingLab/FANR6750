@@ -221,6 +221,9 @@ inferencedata <- dplyr::rename(inferencedata, agb = y)
 
 treedata <- read.csv("data-raw/treeHt.csv")
 
+loblollydata <- data.frame(Treatment = rep(c("A", "B", "C", "D"), each = 3),
+                           Replicate = rep(c(1, 2, 3), 4),
+                           Height = c(11, 10, 9, 9, 8, 7, 7, 6, 5, 5, 4, 3))
 
 storkdata <- read.csv("data-raw/storkdata.csv")
 
@@ -302,7 +305,7 @@ usethis::use_data(aciditydata, acorndata, agingdata, alligatordata,
                   deerdata, departuredata, dietdata, eucalyptusdata, exploredata,
                   fishdata, foragingdata, frogdata, fruitdata,
                   grasslanddata, harbordata, harvestdata, hostadata, infectiondata,
-                  inferencedata, jaydata, lengthdata, meatdata, microtusdata,
+                  inferencedata, jaydata, lengthdata, loblollydata, meatdata, microtusdata,
                   mothdata, mothdata2, movementdata, musseldata, orchiddata, oysterdata,
                   pinedata, pesticidedata, plantdata, preydata, raindata,
                   salamanderdata, salinitydata, saplingdata, sawdata, seeddata,

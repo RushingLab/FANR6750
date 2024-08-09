@@ -25,30 +25,30 @@ knitr::opts_chunk$set(
 **Lecture**: Monday, Wednesday, Friday 11:30-12:20  
 **Location**: 1-304  
 
-**Lab**: Monday 1:50 – 3:50 or Tuesday 2:20 – 4:20  
+**Lab**: Monday 1:50 – 3:45, Tuesday 2:20 – 4:20, or Wednesday 9:10 - 11:10  
 **Location**: 4-419  
 
 # INSTRUCTOR
 Dr. Clark Rushing  
 clark.rushing@uga.edu  
-Office: Warnell 3-409   
-Office hours: M 12:30-2:00; Th 9:00-10:00
+**Office**: Warnell 3-409   
+**Office hours**: M 12:30-2:00; Th 9:00-10:00
 
 # TEACHING ASSISTANTS
 Michael Baker  
 michael.baker2@uga.edu  
-Office: 1-102  
-Office hours: F 3:00-5:00 or by appointment  
+**Office**: 1-102  
+**Office hours**: F 3:00-5:00 or by appointment  
   
 Kaili Gregory  
 k.gregory@uga.edu  
-Office: 3-422  
-Office hours: Tu 3:00-5:00 or by appointment  
+**Office**: 3-422  
+**Office hours**: Tu 3:00-5:00 or by appointment  
 
-Alan Bond
-alan.bond1@uga.edu
-Office: 1-102
-Office hours: M 2:00-4:00 or by appointment
+Alan Bond  
+alan.bond1@uga.edu  
+**Office**: 1-102  
+**Office hours**: M 2:00-4:00 or by appointment  
 
 # COURSE OBJECTIVES
 

@@ -1,7 +1,7 @@
 ---
 title: "LECTURE 0: course overview"
 subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2023"
+author: "<br/><br/><br/>Fall 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
@@ -27,20 +27,32 @@ source(here::here("R/zzz.R"))
 ---
 # instructors
 
-#### Dr. Clark Rushing  
+.pull-left[
+Dr. Clark Rushing  
 [clark.rushing@uga.edu](clark.rushing@uga.edu)   
 **Office**: 3-409  
 **Office hours**: M 12:30-2:00; Tu 9:00-10:00
+]
 
-#### Michael Baker  
+.pull-right[
+
+**TAs**  
+
+Michael Baker  
 [michael.baker2@uga.edu](michael.baker2@uga.edu)  
 **Office**: 1-102A  
-**Office hours**: W 9:30-11:00 or by appointment  
-  
-#### Kaili Gregory  
+**Office hours**: F 3:00-5:00  
+
+Kaili Gregory  
 [k.gregory@uga.edu](k.gregory@uga.edu)  
 **Office**: 3-422  
-**Office hours**: Th 11:00-12:00 & 2:15-3:15 or by appointment  
+**Office hours**: Tu 3:00-5:00  
+
+Alan Bond  
+[alan.bond1@uga.edu](alan.bond1@uga.edu)  
+**Office**: 1-102  
+**Office hours**: M 2:00-4:00  
+]
 
 ---
 # course schedule and materials
@@ -73,7 +85,7 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
 
 --
 
-- You should have registered for either Monday **or** Tuesday
+- You should have registered for one and only one lab section
 
 --
 

@@ -3,7 +3,7 @@
   <head>
     <title>LECTURE 3: principles of stastical inference</title>
     <meta charset="utf-8" />
-    <meta name="author" content="   Fall 2023" />
+    <meta name="author" content="   Fall 2024" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <link rel="stylesheet" href="FANR6750.css" type="text/css" />
@@ -20,7 +20,7 @@ class: center, middle, inverse, title-slide
 ## FANR 6750 (Experimental design)
 ]
 .author[
-### <br/><br/><br/>Fall 2023
+### <br/><br/><br/>Fall 2024
 ]
 
 ---
@@ -319,6 +319,29 @@ class:inverse,center,middle
 &lt;img src="03_inference_files/figure-html/ci-1.png" width="576" style="display: block; margin: auto;" /&gt;
 
 ---
+# calculating confidence intervals
+
+--
+
+95% of a normal distribution falls between -1.96 and 1.96 standard deviation of the mean&lt;sup&gt;1&lt;/sup&gt;
+
+.footnote[[1] Can easily be calculated for other percentages using `R`]
+
+&lt;img src="03_inference_files/figure-html/unnamed-chunk-1-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+--
+
+Question - if this is the sampling distribution, what is the standard deviation? What is our estimate of the mean?
+
+--
+
+95% CI = `\(\large \bar{y} \pm 1.96 \times SE\)`
+
+
+
+
+
+---
 # confidence intervals
 
 #### What a confidence interval is **NOT**:
@@ -360,7 +383,7 @@ or...
 --
 
 .pull-right[
-<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@dunk/video/7218281145279220997" data-video-id="7218281145279220997" data-embed-from="oembed" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@dunk" href="https://www.tiktok.com/@dunk?refer=embed">@dunk</a> <p>Tag someone you could beat in reverse basketball 😭 (@creationsross)</p> <a target="_blank" title="♬ original sound - Chizi" href="https://www.tiktok.com/music/original-sound-7212359167532075782?refer=embed">♬ original sound - Chizi</a> </section> </blockquote> 
+<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@dunk/video/7218281145279220997" data-video-id="7218281145279220997" data-embed-from="oembed" style="max-width:605px; min-width:325px;"> <section> <a target="_blank" title="@dunk" href="https://www.tiktok.com/@dunk?refer=embed">@dunk</a> <p>Tag someone you could beat in reverse basketball 😭 (@creationsross)</p> <a target="_blank" title="♬ original sound - Chizi" href="https://www.tiktok.com/music/original-sound-7212359167532075782?refer=embed">♬ original sound - Chizi</a> </section> </blockquote> 
 <!--SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
 <script async data-external="1" src="https://www.tiktok.com/embed.js"></script>
 <style>blockquote.tiktok-embed {border:unset;padding:unset;}</style>
@@ -372,7 +395,7 @@ or...
 ---
 # confidence intervals
 
-I like to think of confidence intervals providing a range of values that, based on our sample, are consistent with the population mean (*plausible interval*?)
+I like to think of confidence intervals as providing a range of values that, based on our sample, are consistent with the population mean (*plausible interval*?)
 
 - If want to be more confident that the CI contains the parameter (e.g., 50% CI vs 95% CI), what happens to the size of the interval?
 

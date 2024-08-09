@@ -1,7 +1,7 @@
 ---
 title: "LECTURE 7: linear models part 2: categorical predictor > 2 levels"
 subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2023"
+author: "<br/><br/><br/>Fall 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
@@ -79,8 +79,8 @@ Foresters are studying the effect of 4 different fertilizers (treatments) on the
 .pull-left[
 <br/>
 ```{r echo = FALSE}
-data(pinedata)
-pine_wide <- tidyr::pivot_wider(pine, names_from = Treatment, values_from = Height)
+data(loblollydata)
+pine_wide <- tidyr::pivot_wider(loblollydata, names_from = Treatment, values_from = Height)
 
 pine_wide %>%
   kable("html", align = 'c') %>%
@@ -103,6 +103,8 @@ pine_wide %>%
 ]
 
 ---
+class: inverse
+
 # a brief tangent
 
 #### What counts as an observation?
@@ -141,8 +143,8 @@ Examples
 
 --
 ```{r pine1, fig.width=8, fig.height=6}
-pinedata$x <- c(0.8, 1, 1.2, 1.8, 2, 2.2, 2.8, 3, 3.2, 3.8, 4, 4.2)
-ggplot(pinedata, aes(x = x, y = Height)) + 
+loblollydata$x <- c(0.8, 1, 1.2, 1.8, 2, 2.2, 2.8, 3, 3.2, 3.8, 4, 4.2)
+ggplot(loblollydata, aes(x = x, y = Height)) + 
   geom_point(aes(color = Treatment), size = 5) +
   scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
   scale_y_continuous("Height") +
@@ -192,13 +194,13 @@ $$\large \epsilon_{ij} \sim normal(0, \sigma)$$
 # dummy variable coding
 
 ```{r echo = TRUE}
-data(pinedata)
-pinedata[c(1,4,7,10),]
+data(loblollydata)
+loblollydata[c(1,4,7,10),]
 ```
 
 
 ```{r echo = TRUE}
-fit1 <- lm(Height ~ Treatment, data = pinedata)
+fit1 <- lm(Height ~ Treatment, data = loblollydata)
 
 model.matrix(fit1)[c(1,4,7,10),]
 ```
@@ -267,7 +269,7 @@ The *F*-statistic tests whether all regression coefficients (other than the inte
 $$F = \frac{s^2_A}{s^2_B}$$
 - Null hypothesis is that population variances are equal ( $\sigma^2_A = \sigma^2_B$ )
 
-- Always positive (variances can be negative)
+- Always positive (variances cannot be negative)
 
 - Usually > 1 (by putting larger variance in the numerator)
 
@@ -290,14 +292,14 @@ $$\large \bar{y}. = \frac{\sum_i \sum_jy_{ij}}{a \times n}$$
 
 .pull-right[
 ```{r pine_grm, fig.width=4, fig.height=4}
-pinedata$x <- c(0.8, 1, 1.2, 1.8, 2, 2.2, 2.8, 3, 3.2, 3.8, 4, 4.2)
-ggplot(pinedata, aes(x = x, y = Height)) + 
+loblollydata$x <- c(0.8, 1, 1.2, 1.8, 2, 2.2, 2.8, 3, 3.2, 3.8, 4, 4.2)
+ggplot(loblollydata, aes(x = x, y = Height)) + 
   geom_point(aes(color = Treatment), size = 5) +
   scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
   scale_y_continuous("Height") +
   guides(color = FALSE) +
-  geom_hline(yintercept = mean(pinedata$Height)) +
-  annotate("text", label = "bar(y)[.]", x = 4.25, y = mean(pinedata$Height) + 0.6, 
+  geom_hline(yintercept = mean(loblollydata$Height)) +
+  annotate("text", label = "bar(y)[.]", x = 4.25, y = mean(loblollydata$Height) + 0.6, 
            parse = TRUE, size = 8)
 ```
 ]
@@ -319,21 +321,21 @@ $$\large \bar{y}_i = \frac{\sum_j y_{ij}}{n}$$
 ]
 
 .pull-right[
-```{r pinedata_gm, fig.width=4, fig.height=4}
+```{r loblollydata_gm, fig.width=4, fig.height=4}
 library(dplyr)
-ybari <- pinedata %>%
+ybari <- loblollydata %>%
   group_by(Treatment) %>%
   summarise(y = mean(Height)) %>%
   mutate(x = 1:4, 
          label = c("bar(y)[A]", "bar(y)[B]", "bar(y)[C]", "bar(y)[D]"))
 
-ggplot(pinedata, aes(x = x, y = Height)) + 
+ggplot(loblollydata, aes(x = x, y = Height)) + 
   geom_point(aes(color = Treatment), size = 5) +
   scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
   scale_y_continuous("Height") +
   guides(color = FALSE) +
-  geom_hline(yintercept = mean(pinedata$Height)) +
-  annotate("text", label = "bar(y)[.]", x = 4.25, y = mean(pinedata$Height) + 0.6, 
+  geom_hline(yintercept = mean(loblollydata$Height)) +
+  annotate("text", label = "bar(y)[.]", x = 4.25, y = mean(loblollydata$Height) + 0.6, 
            parse = TRUE, size = 8) +
   geom_segment(data = ybari, aes(x = x - 0.25, xend = x + 0.25, y = y, yend = y, color = Treatment)) +
   geom_text(data = ybari, aes(x = x + 0.5, y = y, label = label), 
@@ -362,17 +364,17 @@ $$\large y_{ij} = \color{#446E9B}{\bar{y}.} + \color{#D47500}{(\bar{y}_i - \ba
 ]
 
 .pull-right[
-```{r pinedata_var, fig.width=4, fig.height=4}
-pinedata$ybar <- rep(ybari$y, each = 3)
-ggplot(pinedata, aes(x = x, y = Height)) + 
+```{r loblollydata_var, fig.width=4, fig.height=4}
+loblollydata$ybar <- rep(ybari$y, each = 3)
+ggplot(loblollydata, aes(x = x, y = Height)) + 
   geom_point(size = 5) +
   scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
   scale_y_continuous("Height") +
   guides(color = FALSE) +
-  geom_hline(yintercept = mean(pinedata$Height), color = "#446E9B") +
+  geom_hline(yintercept = mean(loblollydata$Height), color = "#446E9B") +
   geom_segment(data = ybari, aes(x = x - 0.25, xend = x + 0.25, y = y, yend = y)) +
-  geom_segment(data = ybari, aes(x = x, xend = x, y = mean(pinedata$Height), yend = y), color = "#D47500") +
-  geom_segment(data = pinedata, aes(x = x, xend = x, y = ybar, yend = Height), color = "#3CB521")
+  geom_segment(data = ybari, aes(x = x, xend = x, y = mean(loblollydata$Height), yend = y), color = "#D47500") +
+  geom_segment(data = loblollydata, aes(x = x, xend = x, y = ybar, yend = Height), color = "#3CB521")
 ```
 ]
 
@@ -434,15 +436,15 @@ $$\Large SS_A = n \sum_i (\bar{y}_i - \bar{y}.)^2$$
 
 **Question:** Is there a difference in growth among the four treatment groups?
 
-```{r pinedata_ssa, fig.width=8, fig.height=6}
-ggplot(pinedata, aes(x = x, y = Height)) + 
+```{r loblollydata_ssa, fig.width=8, fig.height=6}
+ggplot(loblollydata, aes(x = x, y = Height)) + 
   geom_point(aes(color = Treatment), size = 5) +
   scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
   scale_y_continuous("Height") +
   guides(color = FALSE) +
-  geom_hline(yintercept = mean(pinedata$Height)) +
+  geom_hline(yintercept = mean(loblollydata$Height)) +
   geom_segment(data = ybari, aes(x = x - 0.25, xend = x + 0.25, y = y, yend = y, color = Treatment)) +
-  geom_segment(data = ybari, aes(x = x, xend = x, y= mean(pinedata$Height), yend = y))
+  geom_segment(data = ybari, aes(x = x, xend = x, y= mean(loblollydata$Height), yend = y))
 ```
 
 ---
@@ -461,16 +463,16 @@ $$\Large SS_W = \sum_i \sum_j (y_{ij} - \bar{y}_i)^2$$
 
 **Question:** Is there a difference in growth among the four treatment groups?
 
-```{r pinedata_ssw, fig.width=8, fig.height=6}
-pinedata$ybari <- rep(ybari$y, each = 3)
-ggplot(pinedata, aes(x = x, y = Height)) + 
+```{r loblollydata_ssw, fig.width=8, fig.height=6}
+loblollydata$ybari <- rep(ybari$y, each = 3)
+ggplot(loblollydata, aes(x = x, y = Height)) + 
   geom_point(aes(color = Treatment), size = 5) +
   scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
   scale_y_continuous("Height") +
   guides(color = FALSE) +
-  geom_hline(yintercept = mean(pinedata$Height)) +
+  geom_hline(yintercept = mean(loblollydata$Height)) +
   geom_segment(data = ybari, aes(x = x - 0.25, xend = x + 0.25, y = y, yend = y, color = Treatment)) +
-  geom_segment(data = pinedata, 
+  geom_segment(data = loblollydata, 
                aes(x = x, xend = x, y = ybari, yend = Height))
 ```
 
@@ -495,16 +497,16 @@ $$\Large SS_T = SS_A + SS_W = \sum_i \sum_j (y_{ij} - \bar{y}.)^2$$
 
 **Question:** Is there a difference in growth among the four treatment groups?
 
-```{r pinedata_sst, fig.width=8, fig.height=6}
-ggplot(pinedata, aes(x = x, y = Height)) + 
+```{r loblollydata_sst, fig.width=8, fig.height=6}
+ggplot(loblollydata, aes(x = x, y = Height)) + 
   geom_point(aes(color = Treatment), size = 5) +
   scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
   scale_y_continuous("Height") +
   guides(color = FALSE) +
-  geom_hline(yintercept = mean(pinedata$Height)) +
+  geom_hline(yintercept = mean(loblollydata$Height)) +
   geom_segment(data = ybari, aes(x = x - 0.25, xend = x + 0.25, y = y, yend = y, color = Treatment)) +
-  geom_segment(data = pinedata, 
-               aes(x = x, xend = x, y = mean(pinedata$Height), yend = Height))
+  geom_segment(data = loblollydata, 
+               aes(x = x, xend = x, y = mean(loblollydata$Height), yend = Height))
 ```
 
 ---

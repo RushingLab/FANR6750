@@ -1,7 +1,7 @@
 ---
 title: "LECTURE 3: principles of stastical inference"
 subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2023"
+author: "<br/><br/><br/>Fall 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
@@ -235,6 +235,19 @@ ggplot() +
   geom_rug(data = samp, aes(x = Estimate), color = "#D47500") +
   geom_path(data = wing_df, aes(x = z, y = pr_z), color = "#446E9B") +
   scale_y_continuous("Density") +
+  annotate("text", x = 65, y = 0.25, label = "population", color = "#446E9B") +
+  geom_segment(color = "#446E9B", aes(x = 65.25, y = 0.23, xend = 68, yend = 0.125),
+               arrow = arrow(length = unit(0.25, "cm"))) +
+  # geom_segment(aes(x = 15.25, y = 0.0215, xend = 45, yend = 0.015),
+  #              arrow = arrow(length = unit(0.25, "cm"))) +
+  annotate("text", x = 73.65, y = 0.28, label = "sample mean frequencies") +
+  geom_segment(aes(x = 72, y = 0.27, xend = 70.9, yend = 0.23),
+               arrow = arrow(length = unit(0.25, "cm"))) +
+  annotate("text", x = 75, y = 0.05, label = "sample means", color = "#D47500") +
+  geom_segment(aes(x = 74, y = 0.05, xend = 71.25, yend = -0.02),
+               arrow = arrow(length = unit(0.25, "cm")), color = "#D47500") +
+  # geom_segment(aes(x = 26.5, y = 0.049, xend = 53, yend = 0.041),
+  #              arrow = arrow(length = unit(0.25, "cm"))) +
   scale_x_continuous("Sample mean", expand = c(0, 0))
 ```
 
@@ -424,6 +437,39 @@ ggplot(samp, aes(x = Experiment, y = Estimate)) +
 ```
 
 ---
+# calculating confidence intervals
+
+--
+
+95% of a normal distribution falls between -1.96 and 1.96 standard deviation of the mean<sup>1</sup>
+
+.footnote[[1] Can easily be calculated for other percentages using `R`]
+
+```{r fig.width=7, fig.height=3}
+ggplot(NULL, aes(c(-3,3))) +
+  geom_area(stat = "function", fun = dnorm, fill = "grey80", xlim = c(-3, 3)) +
+  geom_area(stat = "function", fun = dnorm, fill = "#446E9B", 
+            xlim = c(-1.96, 1.96), alpha = 0.75) +
+  scale_x_continuous("", breaks = c(-1.96, 0, 1.96),
+                     labels = c(expression(-1.96 * sigma), 
+                                expression(mu), 
+                                expression(1.96 * sigma))) +
+  scale_y_continuous("Density") 
+```
+
+--
+
+Question - if this is the sampling distribution, what is the standard deviation? What is our estimate of the mean?
+
+--
+
+95% CI = $\large \bar{y} \pm 1.96 \times SE$
+
+
+
+
+
+---
 # confidence intervals
 
 #### What a confidence interval is **NOT**:
@@ -478,7 +524,7 @@ tt
 ---
 # confidence intervals
 
-I like to think of confidence intervals providing a range of values that, based on our sample, are consistent with the population mean (*plausible interval*?)
+I like to think of confidence intervals as providing a range of values that, based on our sample, are consistent with the population mean (*plausible interval*?)
 
 - If want to be more confident that the CI contains the parameter (e.g., 50% CI vs 95% CI), what happens to the size of the interval?
 
