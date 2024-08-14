@@ -48,19 +48,19 @@ schedule <- data.frame(WK = c("1", "", "",
       "Introduction to linear models",  "Introduction to linear models", "Principles of statistical inference", "",#2
       "Principles of statistical inference", "Linear models for simple categorical predictors (aka t-test)", "Linear models for simple categorical predictors (aka t-test)", "", #3
       "Labor Day", "Linear models for simple categorical predictors (aka t-test)", "Null hypothesis testing", "", # 4
-       "Null hypothesis testing", "Power", "Paper discussion: null hypothesis testing", "", #5
-       "Linear models for categorical predictor w/ >2 levels (aka ANOVA)", "Linear models for categorical predictor w/ >2 levels (aka ANOVA)", "Multiple comparisons", "", #6
-      "Exam 1 review", "Multiple regression", "Multiple regression", "", #7
-       "Interactions",  "Interactions", "Evaluating assumptions",  "", #8 
+       "Null hypothesis testing", "Power", "Troubleshooting R workshop", "", #5
+       "Linear models for categorical predictor w/ >2 levels (aka ANOVA)", "Linear models for categorical predictor w/ >2 levels (aka ANOVA)", "Paper discussion: null hypothesis testing", "", #6
+      "Multiple comparisons", "Exam 1 review", "Multiple regression",  "", #7
+       "Multiple regression","Interactions",  "Interactions",  "", #8 
              "Evaluating assumptions", "Model selection", "Paper discussion: model selection",  "", #9
       "Random effects", "Nested designs", "Exam 2 review", "", # 10
-          "Split-plot designs", "Split-plot designs", "Fall break", "", #11
-      "Repeated measures", "Repeated measures", "Paper discussion: Pseudoreplication", "",
+          "Split-plot designs", "Split-plot designs", "Repeated measures", "", #11
+       "Repeated measures", "Paper discussion: Pseudoreplication", "Fall break", "",
          "Generalized linear models", "GLM: Logistic regression", "GLM: Logistic regression", "", #13
           "GLM: Poisson regression", "GLM: Poisson regression", "Buffer", "", #14
-          "Thanksgiving break", "", "", "", #15
-           "GLM: Zero-inflated data", "GLM: Zero-inflated data", "Exam 3 review",  "", #16
-                                   "TBD"),
+      "GLM: Zero-inflated data", "GLM: Zero-inflated data", "Buffer", "", #15
+          "Exam 3 review", "Thanksgiving break", "", "", #16
+             "TDB"), 
                        Lab = c("", "", "",
                                "Introduction to R", "", "", "",
                                "Introduction to RMarkdown", "", "", "",
@@ -76,20 +76,20 @@ schedule <- data.frame(WK = c("1", "", "",
                                "Repeated measures*", "", "", "",
                                "Logistic regression*", "", "", "",
                                "Poisson regression*", "", "", "",
-                               "TBD*", "", "", "",
+                               "No lab", "", "", "",
                                "No lab"),
                        Notes = c("", "", "",
                                "", "", "", "",
                                "", "", "", "",
                                "", "", "", "",
-                               "", "", "Johnson 1999", "",
-                               "", "", "", "",
-                               "**Exam 1 distributed**", "", "", "",
-                               "**Exam 1 due**", "", "", "",
+                               "", "", "Reading (TBD)", "",
+                                "", "", "Johnson 1999", "",
+                               "", "**Exam 1 distributed**", "", "",
+                               "", "**Exam 1 due**", "", "",
                                "", "", "Tredennick et al. 2021", "",
                                "", "", "**Exam 2 distributed**", "",
                                "", "", "**Exam 2 due**", "",
-                               "", "",  "", "",
+                               "", "Reading (TDB)",  "", "",
                                "", "", "", "",
                                "", "", "", "",
                                "", "", "", "",

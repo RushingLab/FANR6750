@@ -21,7 +21,7 @@ source(here::here("R/zzz.R"))
 # logistics
 
 **Lecture**: Monday, Wednesday, Friday 11:30-12:20, 1-304  
-**Lab**: Monday or Tuesday  
+**Lab**: Monday **or** Tuesday **or** Wednesday 
 **Credits**: 3  
 
 ---
@@ -38,17 +38,17 @@ Dr. Clark Rushing
 
 **TAs**  
 
-Michael Baker  
-[michael.baker2@uga.edu](michael.baker2@uga.edu)  
-**Office**: 1-102A  
-**Office hours**: F 3:00-5:00  
-
-Kaili Gregory  
+Kaili Gregory (M) 
 [k.gregory@uga.edu](k.gregory@uga.edu)  
 **Office**: 3-422  
 **Office hours**: Tu 3:00-5:00  
 
-Alan Bond  
+Michael Baker (Tu) 
+[michael.baker2@uga.edu](michael.baker2@uga.edu)  
+**Office**: 1-102A  
+**Office hours**: F 3:00-5:00  
+
+Alan Bond (W) 
 [alan.bond1@uga.edu](alan.bond1@uga.edu)  
 **Office**: 1-102  
 **Office hours**: M 2:00-4:00  
@@ -116,7 +116,7 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
 
 --
 
-- 10 throughout semester 
+- 8 throughout semester 
 
 --
 
@@ -127,9 +127,9 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
     
 --
 
-- Worth 10 points each
-    + 6 points for turning in **complete** assignment **on time**
-    + 4 points for correctness  
+- Worth 12.5 points each
+    + 6.5 points for turning in **complete** assignment **on time**
+    + 6 points for correctness  
 
 ---
 # grading
@@ -146,7 +146,7 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
 
 --
 
-- 10 lab assignments, 10 points (4%) each
+- 8 lab assignments, 12.5 points (5%) each
 
 .footnote[[1] Material is somewhat cumulative by nature & some important concepts will be repeated]  
 

@@ -35,17 +35,18 @@ clark.rushing@uga.edu
 **Office hours**: M 12:30-2:00; Th 9:00-10:00
 
 # TEACHING ASSISTANTS
-Michael Baker  
-michael.baker2@uga.edu  
-**Office**: 1-102  
-**Office hours**: F 3:00-5:00 or by appointment  
-  
-Kaili Gregory  
+
+Kaili Gregory (Monday lab)  
 k.gregory@uga.edu  
 **Office**: 3-422  
 **Office hours**: Tu 3:00-5:00 or by appointment  
 
-Alan Bond  
+Michael Baker (Tuesday lab)  
+michael.baker2@uga.edu  
+**Office**: 1-102  
+**Office hours**: F 3:00-5:00 or by appointment  
+
+Alan Bond (Wednesday lab)  
 alan.bond1@uga.edu  
 **Office**: 1-102  
 **Office hours**: M 2:00-4:00 or by appointment  
@@ -121,7 +122,7 @@ Three take-home exams, 50 points (20%) each. Exam dates in the [schedule](https:
 
 The remaining 100 points (40%) of the grade will come from lab homework assignments. Homework assignments will build on concepts and skills that we cover in lecture and lab. Specific objectives and tasks for each assignment, along with any necessary data, will be provided at the end of each lab activity. These assignments are meant to ensure that you understand lecture and lab concepts, provide additional practice implementing relevant statistical methods in `R`, and provide experience interpreting and presenting model output. 
 
-Over the course of semester, there will be **10** of these assignments worth **10 points each**. Each assignment will be due before class the week after the assignment is posted and must be prepared as an R Markdown file that include all text, code, model output, and figures necessary to fully document your work and conclusions (we will spend the first several labs going over preparation of reports using R Markdown so, again, no previous experience is necessary). You will automatically receive 6 points for turning in a completed lab assignment by the assigned due date. Late assignments will receive a 1-point deduction for each day late and incomplete assignments will have points deducted in proportion to the degree of incompleteness (e.g., if 1/3 of the assignment is incomplete, 2-point deduction). The remaining points will be based on the correctness of your answers. 
+Over the course of semester, there will be **8** of these assignments worth **12.5 points each**. Each assignment will be due before class the week after the assignment is posted and must be prepared as an R Markdown file that include all text, code, model output, and figures necessary to fully document your work and conclusions (we will spend the first several labs going over preparation of reports using R Markdown so, again, no previous experience is necessary). You will automatically receive 6.5 points for turning in a completed lab assignment by the assigned due date. Late assignments will receive a 1-point deduction for each day late and incomplete assignments will have points deducted in proportion to the degree of incompleteness (e.g., if 1/3 of the assignment is incomplete, 2-point deduction). The remaining points will be based on the correctness of your answers. 
 
 All academic work must meet the standards contained in the University's academic [honesty policy](https://honesty.uga.edu/). All students are responsible for informing themselves about those standards before performing any academic work. The penalties for academic dishonesty are [severe](https://honesty.uga.edu/Academic-Honesty-Policy/Consequences_for_Honesty_Violations/), and ignorance is not an acceptable defense.  
 
