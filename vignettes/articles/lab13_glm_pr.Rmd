@@ -1,7 +1,7 @@
 ---
 title: "Lab 13: Generalized linear models: Poisson Regression"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2023"
+author: "Fall 2024"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{lab13_glm_pr}
@@ -250,15 +250,13 @@ data("alligatordata")
 
 Create an R markdown report to do the following:
 
-1)  Use both regression methods discussed in lab (Poisson and NB) to estimate clutch size as a function of the available predictors.
+1)  Use both regression methods discussed in lab (Poisson and NB) to estimate clutch size as a function of the available predictors (2 pt)
 
-2)  Include a well-formatted summary table of the parameter estimates from both models.
+2)  Include a well-formatted summary table of the parameter estimates from both models (1 pt)
 
-3)  Choose one of the models and provide a clear interpretation of the parameter estimates.
+3)  Choose one of the models and provide a clear interpretation of the parameter estimates (1 pt).
 
-4)  Use the poisson regression model to plot the relationship between number of eggs and female length,
-    for all three habitat types, on the same graph. The graph should
-    include:
+4)  Use the poisson regression model to plot the relationship between number of eggs and female length, for all three habitat types, on the same graph. The graph should include (1 pt):
 
     -   the observed data points (color coded by habitat)
 
@@ -266,7 +264,7 @@ Create an R markdown report to do the following:
 
     -   approximate 95% confidence intervals
     
-5)  Create a plot of the relationship between number of eggs and female length (at one of the three habitat types) using both regression methods on the same graph. The graph should include:
+5)  Create a plot of the relationship between number of eggs and female length (at one of the three habitat types) using both regression methods on the same graph. The graph should include (1 pt):
 
     -   the observed data points
     
@@ -274,7 +272,7 @@ Create an R markdown report to do the following:
     
     -   approximate 95% confidence intervals
     
-6)  Interpret the plot from Question 5. Which regression method do you think is most appropriate for this dataset? Justify your decision.
+6)  Interpret the plot from Question 5. Which regression method do you think is most appropriate for this dataset? Justify your decision (2 pt)
 
 As always:
 

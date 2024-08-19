@@ -32,13 +32,13 @@ knitr::opts_chunk$set(
 Dr. Clark Rushing  
 clark.rushing@uga.edu  
 **Office**: Warnell 3-409   
-**Office hours**: M 12:30-2:00; Th 9:00-10:00
+**Office hours**: M 12:30-2:00
 
 # TEACHING ASSISTANTS
 
 Kaili Gregory (Monday lab)  
 k.gregory@uga.edu  
-**Office**: 3-422  
+**Office**: 3-402  
 **Office hours**: Tu 3:00-5:00 or by appointment  
 
 Michael Baker (Tuesday lab)  

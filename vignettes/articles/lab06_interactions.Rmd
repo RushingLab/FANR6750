@@ -1,7 +1,7 @@
 ---
 title: "Lab 6: Interactions"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2023"
+author: "Fall 2024"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{lab06_interactions}
@@ -440,17 +440,17 @@ head(agingdata)
 
 **Questions/tasks**  
 
-1) Write out an equation for the linear model that would describe this scenario. Define each term.
+1) Write out an equation for the linear model that would describe this scenario. Define each term (1 pt).
 
-2) Analyze this dataset using an $A \times B \times C$ factorial ANOVA implemented with `aov()`. Because the student is not interested in the 3-way interaction, set up your model so that it does not include that term (only include the main effects and 2-way interactions of all variables). 
+2) Analyze this dataset using an $A \times B \times C$ factorial ANOVA implemented with `aov()`. Because the student is not interested in the 3-way interaction, set up your model so that it does not include that term (only include the main effects and 2-way interactions of all variables) (1 pt). 
 
-3) Interpret the model output. Which main effects and which interactions were significant?
+3) Interpret the model output. Which main effects and which interactions were significant? (2 pt)
 
-4) Does the effect of the mounting method depend on the speed of the saw? If so, how?
+4) Does the effect of the mounting method depend on the speed of the saw? If so, how? (1 pt)
 
-5) Which combination of mounting method, saw speed, and structure type resulted in the lowest average aging time?
+5) Which combination of mounting method, saw speed, and structure type resulted in the lowest average aging time? (0.5 pt)
 
-6) The student has decided that he is going to use fin spines in future studies because he does not want to use the lethal method of collecting otoliths. Given that, which combination of mounting method and saw speed would result in the lowest average aging time?
+6) The student has decided that he is going to use fin spines in future studies because he does not want to use the lethal method of collecting otoliths. Given that, which combination of mounting method and saw speed would result in the lowest average aging time? (0.5 pt)
 
 Put your answers in an R Markdown report. Your report should include:
 

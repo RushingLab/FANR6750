@@ -1,7 +1,7 @@
 ---
 title: "Lab 4: Completely randomized ANOVA"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2023"
+author: "Fall 2024"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{lab04_ANOVA}
@@ -388,13 +388,13 @@ library(FANR6750)
 data("treedata")
 ```
 
-2) Create a header called "Hypotheses" and under this header, indicate, in plain English, what the null and alternative hypotheses are. Also use R Markdown's equation features to write these hypotheses using mathematical notation.
+2) Create a header called "Hypotheses" and under this header, indicate, in plain English, what the null and alternative hypotheses are. Also use R Markdown's equation features to write these hypotheses using mathematical notation (1 pt).
 
-3) Create a header called "ANOVA by hand". Under this header, perform an ANOVA analysis (degrees of freedom, sums-of-squares, mean-squares, and *F*-value) without using `aov()`. Compute either the critical value of *F*, or the *p*-value. Be sure to **annotate your code**. 
+3) Create a header called "ANOVA by hand". Under this header, perform an ANOVA analysis (degrees of freedom, sums-of-squares, mean-squares, and *F*-value) without using `aov()`. Compute either the critical value of *F*, or the *p*-value. Be sure to **annotate your code** (1 pt). 
 
-4) Create a header called "ANOVA in R". Under this header, perform an ANOVA analysis on the data using the `lm()` function and then again using the `aov()` function. 
+4) Create a header called "ANOVA in R". Under this header, perform an ANOVA analysis on the data using the `lm()` function and then again using the `aov()` function (1 pt). 
 
-5) Under a subheader called "ANOVA results":
+5) Under a subheader called "ANOVA results" (2 pt):
 
     + indicate whether or not the null hypothesis can be rejected at the $\alpha = 0.05$ level  
 
@@ -402,7 +402,7 @@ data("treedata")
 
     + create a barplot showing the effect sizes and 95% confidence intervals around them
 
-6) Create a header called "Which means are different?". Use Tukey’s HSD test to determine which pairs of means differ at the $\alpha = 0.05$ level. Include a few sentences indicating which pairs are different. If there is an inconsistency between the initial ANOVA results and the post-hoc comparisons, explain why that might be the case.  
+6) Create a header called "Which means are different?". Use Tukey’s HSD test to determine which pairs of means differ at the $\alpha = 0.05$ level. Include a few sentences indicating which pairs are different. If there is an inconsistency between the initial ANOVA results and the post-hoc comparisons, explain why that might be the case (1 pt).  
 
 A few things to remember when creating the assignment:
 

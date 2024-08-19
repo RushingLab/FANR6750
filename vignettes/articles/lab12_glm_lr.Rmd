@@ -1,7 +1,7 @@
 ---
 title: "Lab 12: Generalized linear models: Logistic Regression"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2023"
+author: "Fall 2024"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{lab12_glm_lr}
@@ -251,13 +251,13 @@ data("crowdata")
 
 Create an R markdown report to do the following:
 
-1) Fit a logistic regression model to the crow data to assess the effects of latitude and landscape type
+1) Fit a logistic regression model to the crow data to assess the effects of latitude and landscape type (1.5 pt)
 
-2) Include a well-formatted summary table of the parameter estimates
+2) Include a well-formatted summary table of the parameter estimates (1.5 pt)
 
-3) Provide a clear interpretation of the parameter estimates in the text
+3) Provide a clear interpretation of the parameter estimates in the text (1.5 pt)
 
-4) Plot the relationship between infection probability and latitude, for rural and urban landscapes, on the same graph. The graph should include:
+4) Plot the relationship between infection probability and latitude, for rural and urban landscapes, on the same graph. The graph should include (1.5 pt):
 
     + the observed data points (color coded by landscape)  
     
@@ -271,52 +271,6 @@ You may format the report however you like but it should be well-organized, with
 <br>
 <br>
 <br>
-
-
-# Bonus Assignment
-
-
-Georgia Department of Natural Resources (GADNR) is interested in understanding the relationship between several demographic variables and the likelihood that a deer hunter will reach their annual harvest limit (10 does and 2 bucks). The data collected by GADNR (which can be found in the `harvestdata` dataset) contains:
-
-* Limit: Whether or not the hunter harvested their limit (1- they did; 0- they did not)
-* Age: Age of hunter
-* Fam_veh: The number of vehicles owned by the household
-* Drive_dist: The average drive distance from the hunter's home to their hunting spot
-* Sick12: The number of available sick days accumulated by the hunter in the past 12 months
-* Sick24: The number of available sick days accumulated by the hunter in the past 24 months
-* Range_hrs: The number of hours spent by the hunter at the shooting range prior to the start of the season
-* Muzzleloader: Whether or not the hunter participated in the muzzleloader season (1- they did; 0- they did not)
-* Archery: Whether or not the hunter participated in the archery season (1- they did; 0- they did not)
-* Utilized: The percent of available days during the hunting season which the hunter utilized
-* Past_max: Whether or not the hunter has harvested their limit in a past season (1- they did; 0- they did not)
-* COUNTY: The hunter's county of residence
-
-You have been tasked with constructing a parsimonious model which can accurately predict whether or not a hunter will harvest their limit. In addition to constructing the model, GADNR would like you to be able to tell them the model accuracy (i.e. what percentage of time did the model correctly assign a 0 or 1).
-
-While there are several ways you may approach this research question, a rough outline is below:
-
-1. Explore your dataset
-  i. Check for missing values or typos
-  ii. Consider which variables ought to be considered numerical vs factors
-  iii. Check for correlation among predictors and consider removing them if necessary (justify your reasons for the removed predictors)
-  
-2. Split your dataset into a reasonably sized training and testing set.
-  i. Consider using the functions `sample()` and `setdiff()`
-  
-3. Use reasonable model selection procedures to construct a parsimonious model using your training data set.
-  i. You may use quadratic effects or interaction terms but you are not required to.
-  
-4. Test your model using the `predict()` function on your test dataset.
-  i. At this point, you can get predictions for all of the observations in your test dataset (using the `predict()` function) and you will already have the actual observations from that set
-  ii. Next you can convert your predictions (which are values of probability) to ones and zeros as factors. Consider using the `ifelse()` function for this.
-  iii. Now you can test to see how many values in your predictions dataframe match the corresponding value in your test set.
-  
-5. Create a short report to GADNR explaining the model that you constructed and your assessment of its accuracy. 
-  i. Include in your report at least one figure which shows the relationship between "Limit" and one of the continuous predictor variables.
-  ii. Make sure to include model predictions and 95% confidence intervals
-  iii. To do this you can set all other variables to either a reference level (if categorical) or to their mean (if continuous)  
-  iv. Make sure that your figure displays multiple levels of one categorical variable
-  
 
 
 As always:

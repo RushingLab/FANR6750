@@ -1,7 +1,7 @@
 ---
 title: "Lab 7: Evaluating assumptions of Linear Models"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2023"
+author: "Fall 2024"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{lab07_linear_model_assumptions}
@@ -507,29 +507,31 @@ mod <- lm(Depth~ Species + Temp + Flow, data= burrowdata)
 summary(mod)
 ```
 
-2. Formulate the linear model in R and interpret the results of the model. Which predictors appear to be significant? Explain these results in the context of the biological system.
+2. Formulate the linear model in R and interpret the results of the model. Which predictors appear to be significant? Explain these results in the context of the biological system (1 pt).
 
 3. Let's start thinking about model assumptions by considering outliers and highly influential points.
 
-  a. Create a plot of the studentized residuals as a function of leverage and interpret the results.
+  a. Create a plot of the studentized residuals as a function of leverage and interpret the results (0.5 pt).
   
-  b. Are there any values which appear to be outliers? If so, can you identify which TagID corresponds to that individual animal?  
+  b. Are there any values which appear to be outliers? If so, can you identify which TagID corresponds to that individual animal? (0.5 pt) 
     Here we are presented with a problem. An outlier exists in the dataset but we have no way of knowing whether or not it is a valid data point. Did the data recorder mean to type 9.9? Did they enter a '99' to represent a missing value similar to how some datasets might contain a '-999' or other impossible value? Did the mussel actually burrow 99cm into the substrate?  
-    For the purposes of this analysis, remove the outlier and rerun the model. Note whether or not this changes the significance of any of the predictors.
+    For the purposes of this analysis, remove the outlier and rerun the model. 
+    
+  c. Note whether or not this changes the significance of any of the predictors. (0.5 pt)
 
 4. Next, let's consider the `Drought` variable in the model. 
 
-  a. Although this is a categorical variable so we cannot formally assess multicollinearity, do you think that this variable is redundant with any other predictors? 
+  a. Although this is a categorical variable so we cannot formally assess multicollinearity, do you think that this variable is redundant with any other predictors? (0.5 pt)
   
-  b. Create a plot of `Depth` as a function of `Flow` where the color of the data points in the plot represent the `Drought` condition.
+  b. Create a plot of `Depth` as a function of `Flow` where the color of the data points in the plot represent the `Drought` condition (0.5 pt)
   
-  c. Explain why you think the researchers should or should not include `Drought` in the final model.
+  c. Explain why you think the researchers should or should not include `Drought` in the final model (0.5 pt)
   
-  d. Remove `Drought` from the linear model and analyze the data again. Did any variables change in their significance? Explain why you think this happened. Having seen this result, did your opinion change about the utility of including `Drought` in the model?
+  d. Remove `Drought` from the linear model and analyze the data again. Did any variables change in their significance? Explain why you think this happened. Having seen this result, did your opinion change about the utility of including `Drought` in the model? (0.5 pt)
 
 5. For all of the following questions, leave `Drought` out of the linear model such that the model now appears as `Depth = Species + Temp + Flow`.
 
-6. Assess the linear model assumptions by creating the following series of plots. Below each plot, explain what assumption is being assessed using that plot and your conclusions.
+6. Assess the linear model assumptions by creating the following series of plots. Below each plot, explain what assumption is being assessed using that plot and your conclusions (1.5 pt).
 
   a. Residual vs fitted plot
   

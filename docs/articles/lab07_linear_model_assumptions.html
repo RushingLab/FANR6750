@@ -225,7 +225,7 @@
 Models</h1>
             <h3 data-toc-skip class="subtitle">FANR 6750: Experimental
 Methods in Forestry and Natural Resources Research</h3>
-                        <h4 data-toc-skip class="author">Fall 2023</h4>
+                        <h4 data-toc-skip class="author">Fall 2024</h4>
             
       
       
@@ -896,15 +896,15 @@ assumptions which are assumed in the model they have constructed.</p>
 <ol start="2" style="list-style-type: decimal">
 <li><p>Formulate the linear model in R and interpret the results of the
 model. Which predictors appear to be significant? Explain these results
-in the context of the biological system.</p></li>
+in the context of the biological system (1 pt).</p></li>
 <li><p>Let’s start thinking about model assumptions by considering
 outliers and highly influential points.</p></li>
 </ol>
 <ol style="list-style-type: lower-alpha">
 <li><p>Create a plot of the studentized residuals as a function of
-leverage and interpret the results.</p></li>
+leverage and interpret the results (0.5 pt).</p></li>
 <li><p>Are there any values which appear to be outliers? If so, can you
-identify which TagID corresponds to that individual animal?<br>
+identify which TagID corresponds to that individual animal? (0.5 pt)
 Here we are presented with a problem. An outlier exists in the dataset
 but we have no way of knowing whether or not it is a valid data point.
 Did the data recorder mean to type 9.9? Did they enter a ‘99’ to
@@ -912,8 +912,9 @@ represent a missing value similar to how some datasets might contain a
 ‘-999’ or other impossible value? Did the mussel actually burrow 99cm
 into the substrate?<br>
 For the purposes of this analysis, remove the outlier and rerun the
-model. Note whether or not this changes the significance of any of the
-predictors.</p></li>
+model.</p></li>
+<li><p>Note whether or not this changes the significance of any of the
+predictors. (0.5 pt)</p></li>
 </ol>
 <ol start="4" style="list-style-type: decimal">
 <li>Next, let’s consider the <code>Drought</code> variable in the
@@ -922,17 +923,17 @@ model.</li>
 <ol style="list-style-type: lower-alpha">
 <li><p>Although this is a categorical variable so we cannot formally
 assess multicollinearity, do you think that this variable is redundant
-with any other predictors?</p></li>
+with any other predictors? (0.5 pt)</p></li>
 <li><p>Create a plot of <code>Depth</code> as a function of
 <code>Flow</code> where the color of the data points in the plot
-represent the <code>Drought</code> condition.</p></li>
+represent the <code>Drought</code> condition (0.5 pt)</p></li>
 <li><p>Explain why you think the researchers should or should not
-include <code>Drought</code> in the final model.</p></li>
+include <code>Drought</code> in the final model (0.5 pt)</p></li>
 <li><p>Remove <code>Drought</code> from the linear model and analyze the
 data again. Did any variables change in their significance? Explain why
 you think this happened. Having seen this result, did your opinion
-change about the utility of including <code>Drought</code> in the
-model?</p></li>
+change about the utility of including <code>Drought</code> in the model?
+(0.5 pt)</p></li>
 </ol>
 <ol start="5" style="list-style-type: decimal">
 <li><p>For all of the following questions, leave <code>Drought</code>
@@ -940,7 +941,7 @@ out of the linear model such that the model now appears as
 <code>Depth = Species + Temp + Flow</code>.</p></li>
 <li><p>Assess the linear model assumptions by creating the following
 series of plots. Below each plot, explain what assumption is being
-assessed using that plot and your conclusions.</p></li>
+assessed using that plot and your conclusions (1.5 pt).</p></li>
 </ol>
 <ol style="list-style-type: lower-alpha">
 <li><p>Residual vs fitted plot</p></li>

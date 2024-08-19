@@ -1,7 +1,7 @@
 ---
 title: "Lab 8: Model Selection"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2023"
+author: "Fall 2024"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{lab08_model_selection}
@@ -329,17 +329,17 @@ library(FANR6750)
 data('jaydata')
 ```
 
-2. Use the data available to fit 5 linear models which predict jay abundance. Each model should include at least one interaction and at least one model should have a quadratic term.
+2. Use the data available to fit 5 linear models which predict jay abundance. Each model should include at least one interaction and at least one model should have a quadratic term (1 pt).
 
-3. Compare the AIC values of each model and determine which model appears best.
+3. Compare the AIC values of each model and determine which model appears best (1 pt).
 
-4. Construct an AIC table by hand using the equations found in the lecture notes.
+4. Construct an AIC table by hand using the equations found in the lecture notes (2 pt).
 
     a. Use the equation AIC = -2log-likelihood + 2k (the log-likelihood can be calculated using the R function logLik())
     
     b. Determine the Akaike weight for the best performing model and explain what that weight means in comparison to the second best performing model
 
-5. Perform a k-fold cross validation on your top two performing models.
+5. Perform a k-fold cross validation on your top two performing models (2 pt).
 
     a. Use 5 folds
     

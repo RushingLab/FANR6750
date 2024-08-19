@@ -1,7 +1,7 @@
 ---
 title: "Lab 11: Repeated measures"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2023"
+author: "Fall 2024"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{lab11_repeated_measures}
@@ -310,16 +310,16 @@ library(FANR6750)
 data("fishdata")
 ```
 
-1) Conduct the repeated measures ANOVA using `aov()`. Calculate the adjusted *p*-values using the Huynh-Feldt method. Does the effect of density on growth change over time?
+1) Conduct the repeated measures ANOVA using `aov()`. Calculate the adjusted *p*-values using the Huynh-Feldt method. Does the effect of density on growth change over time? (2 pt)
 
 2) Conduct a profile analysis. In which time intervals is the effect of density
-on growth rate significant?
+on growth rate significant? (2 pt)
 
 Put your answers in an R Markdown report. Your report should include:
 
-1) A well-formatted ANOVA table (with header); and
+1) A well-formatted ANOVA table (with header) (1 pt); and
 
-2) A publication quality plot showing the effects of crowding on the toadfish weight across each of the time intervals in the study. The figure should have a descriptive caption and any aesthetics (color, line type, etc.) should be clearly defined.
+2) A publication quality plot showing the effects of crowding on the toadfish weight across each of the time intervals in the study. The figure should have a descriptive caption and any aesthetics (color, line type, etc.) should be clearly defined (1 pt)
 
 You may format the report however you like but it should be well-organized, with relevant headers, plain text, and the elements described above. 
 
