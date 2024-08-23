@@ -300,7 +300,7 @@ ggplot(growthDF, aes(x = interval, y = growth, color = fertilizer)) +
 <br>
 <br>
 
-# Assignment
+# Assignment (optional)
 
 A researcher wants to assess the effects of crowding on the growth of the dark toadfish (*Neophrynichthys latus*). Fifteen fish tanks are stocked with three densities of toadfish. Five tanks have low density (1 fish), 5 tanks have medium density (5 fish), and 5 tanks have high density (10 fish). In each tank, the weight of one “focal fish” is recorded on 6 consecutive weeks. 
 The data can be loaded using:
@@ -310,16 +310,16 @@ library(FANR6750)
 data("fishdata")
 ```
 
-1) Conduct the repeated measures ANOVA using `aov()`. Calculate the adjusted *p*-values using the Huynh-Feldt method. Does the effect of density on growth change over time? (2 pt)
+1) Conduct the repeated measures ANOVA using `aov()`. Calculate the adjusted *p*-values using the Huynh-Feldt method. Does the effect of density on growth change over time? 
 
 2) Conduct a profile analysis. In which time intervals is the effect of density
-on growth rate significant? (2 pt)
+on growth rate significant? 
 
 Put your answers in an R Markdown report. Your report should include:
 
-1) A well-formatted ANOVA table (with header) (1 pt); and
+1) A well-formatted ANOVA table (with header); and
 
-2) A publication quality plot showing the effects of crowding on the toadfish weight across each of the time intervals in the study. The figure should have a descriptive caption and any aesthetics (color, line type, etc.) should be clearly defined (1 pt)
+2) A publication quality plot showing the effects of crowding on the toadfish weight across each of the time intervals in the study. The figure should have a descriptive caption and any aesthetics (color, line type, etc.) should be clearly defined
 
 You may format the report however you like but it should be well-organized, with relevant headers, plain text, and the elements described above. 
 
