@@ -608,7 +608,7 @@ t.test(caterpillardata$diff, mu= 0, alternative= 'greater')
 ```
 
 
-# Excercise (**not for a grade!**)
+# Excercise
 
 This dataset comes from fisheries landings data for Yellowfin tuna (*Thunnus albacares*). The weight in pounds was recorded for each fish as well as presence of the larval form of a Lacistorhynchidae tapeworm (*Dasyrhynchus talismani*). The researcher believes that the presence of the tapeworm likely results in a less healthy and therefore lighter fish.
 

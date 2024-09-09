@@ -139,7 +139,7 @@ If development does influence frog abundance, `\(\beta_1 \neq 0\)`
 
 --
 
-- Note that we could make the alternative more specific and say development negatively effects abundance ( `\(\beta_0 &lt; 0\)` )
+- Note that we could make the alternative more specific and say development negatively effects abundance ( `\(\beta_1 &lt; 0\)` )
 
 ---
 # null hypothesis testing
@@ -249,7 +249,7 @@ mean(y) - 0
 ```
 
 ```
-## [1] -0.0719
+## [1] -0.003423
 ```
 
 
@@ -269,7 +269,7 @@ se.y &lt;- sd(y)/sqrt(10)
 ```
 
 ```
-## [1] -0.2194
+## [1] -0.008712
 ```
 
 --
@@ -605,7 +605,7 @@ t.test(Frogs ~ Development, data = frogdata)
 ## 
 ## data:  Frogs by Development
 ## t = 5, df = 18, p-value = 1e-04
-## alternative hypothesis: true difference in means between group Low and group High is not equal to 0
+## alternative hypothesis: true difference in means is not equal to 0
 ## 95 percent confidence interval:
 ##   7.554 18.646
 ## sample estimates:
