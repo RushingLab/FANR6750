@@ -1,7 +1,7 @@
 ---
 title: "LECTURE 9: multiple regression"
 subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2023"
+author: "<br/><br/><br/>Fall 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
@@ -260,20 +260,44 @@ anova(fit.lm3)
 ---
 # another example
 
-We are interested in comparing the alternative gypsy moth control strategies (Bt, Dimilin, no spray) in their effectiveness in controlling gypsy moth. Because sprayed areas are large, and
-different treatments are applied on different ridges, extraneous variability due to location is expected. Data are the average number of moths captured in pheromone traps placed in the plots.
+In 1960, Herbert Stoddard established an experiment at Tall Timbers Research Station to study the effects of fire frequency on long-leaf pine forests in the Red Hills region of north Florida and southwest Georgia. The experiment originally consisted of eighty four, 0.5ha plots, each of which was assigned one of four treatments: 1-year, 2-year, or 3-year fire intervals or unburned. Stoddard recognized the soil type likely influenced response to fire, so treatment plots were allocated across the 3 primary soil types found on Tall Timbers
 
-```{r}
-gm <- data.frame(Region = 1:4,
-                  Control = c(25, 10, 15, 32),
-                  Bt = c(16, 3, 10, 18),
-                  Dimilin = c(14, 2, 16, 12))
+.pull-left[
 
-gm %>%
-  kable(format = 'html', col.names = c(" ",  "Control","Bt", "Dimilin")) %>%
-  add_header_above(c("Region" = 1, "Treatment" = 3)) %>%
-  kable_styling(full_width = FALSE, bootstrap_options = "condensed", font_size = 10)
+```{r stoddard_pic, out.width="60%", fig.align="c"}
+knitr::include_graphics("fig/herb_stoddard_1.jpg")
 ```
+
+]
+
+.pull-right[
+
+```{r fire_pic, out.width="80%", fig.align="c"}
+knitr::include_graphics("fig/fire.jpg")
+```
+
+]
+---
+# another example
+
+We will use a made-up data set from this real experiment, with the goal of understanding whether understory plant richness (measured as the number of understory vascular plants recorded on each plot) differs among burn treatments.
+
+```{r fire1, echo = FALSE}
+fire_tab <- data.frame(Replicate = c("1", "2", "3"),
+           Unburned = as.character(c(30, 28, 18)),
+           One = as.character(c(43, 37, 27)),
+           Two = as.character(c(36, 30, 24)),
+           Three = as.character(c(37, 27, 21)),
+           Soil = c("Loamy sand", "Sandy loam", "Upland"))
+
+fire_tab %>%
+  kable("html", align = 'c', 
+        col.names = c("Replicate", "Unburned", "1-year", "2-year", "3-year", "Soil")) %>%
+  kable_styling(bootstrap_options = c("condensed"),
+                full_width = FALSE, font_size = 14) %>%
+  add_header_above(c(" " = 1, "Fire frequency" = 4, " " = 1))
+```
+
 
 --
 
@@ -285,8 +309,8 @@ What are the experimental units? What are the observational units?
 Fit the model with treatment only:
 
 ```{r echo = TRUE}
-data(mothdata)
-fm1 <- lm(Larvae ~ Treatment, data = mothdata)
+data(firedata)
+fm1 <- lm(species ~ interval, data = firedata)
 anova(fm1)
 ```
 
@@ -296,14 +320,14 @@ Conclusions?
 ---
 # another example
 
-Because the ridges differ in a variety of ways that may influence moth abundance, we probably want to control for this variability in our analysis
+Because the soil types differ in a variety of ways that may influence plant communities, we probably want to control for this variability in our analysis
 
 We do that by adding it to the model:
 
 .small-code[
 ```{r echo = TRUE}
-data(mothdata)
-fm2 <- lm(Larvae ~ Treatment + Region, data = mothdata)
+data(firedata)
+fm2 <- lm(species ~ interval + soil, data = firedata)
 anova(fm2)
 ```
 ]
@@ -313,17 +337,17 @@ Conclusions?
 ---
 # another example
 
-Note that in this case, each treatment is applied exactly once within each region
+Note that in this case, each treatment is applied exactly once within each soil type
 
 --
 
-Region itself is not a experimental treatment and is not replicated
+Soil type itself is not a experimental treatment and is not replicated
 
 --
 
 This design is often referred to as a "randomized complete blocking" design (RCBD)
 
-- The regions are called "blocks" and should be identified as a source of variability **before** the experiment is conducted
+- The soil types are called "blocks" and should be identified as a source of variability **before** the experiment is conducted
 
 - "Complete" refers to each treatment being represented in each block
 
@@ -332,6 +356,7 @@ This design is often referred to as a "randomized complete blocking" design (RCB
 --
 
 Again, blocks must be identified during the design phase. You should not "search" for blocks after the fact (why?)
+
 ---
 # multiple regression
 
@@ -408,7 +433,7 @@ broom::tidy(fit.lm2)
 ```{r fig.height=5, fig.width=7}
 ancova <- lm(weight ~ diet + length - 1, data = dietdata)
 
-ancova_df <- data.frame(diet = factor(unique(dietdata$diet), 
+ancova_df <- data.frame(diet = factor(c("Control", "Low", "Med", "High"), 
                                       levels = c("Control", "Low", "Med", "High")),
                         slope = coef(ancova)[5],
                         intercept = coef(ancova)[1:4])
@@ -418,24 +443,24 @@ ggplot(dietdata, aes(x = length, y = weight, color = diet)) +
   scale_y_continuous("Weight") +
   geom_abline(data = ancova_df, aes(slope = slope, intercept = intercept, color = diet)) +
   geom_vline(xintercept = 0) +
-  geom_segment(aes(x = 1.5, xend = 0, y = 18.5, yend = 19.14), 
+  geom_segment(aes(x = 1.5, xend = 0, y = 180, yend = 191.4), 
                alpha = 0.5, linewidth = 0.2, color = "#446E9B") +
-  annotate("text", label = "(Intercept)", x = 1.6, y = 18.5, hjust = 0, color = "#446E9B") +
-  geom_segment(aes(x = 1, xend = 1, y = 19.7, yend = 21.07),
+  annotate("text", label = "(Intercept)", x = 1.60, y = 180, hjust = 0, color = "#446E9B") +
+  geom_segment(aes(x = 1, xend = 1, y = 194.7, yend = 207.7),
                arrow = arrow(length = unit(0.02, "npc"), ends = "both"), color = "#D47500") +
-  geom_segment(aes(x = 2.2, xend = 1, y = 19.3, yend = 20.5),
+  geom_segment(aes(x = 2.2, xend = 1, y = 188, yend = 202),
                color = "#D47500", alpha = 0.5, linewidth = 0.2) +
-  annotate("text", label = "dietLow", x = 2.3, y = 19.3, hjust = 0, color = "#D47500") +
-  geom_segment(aes(x = 2, xend = 2, y = 20.25, yend = 22.78),
+  annotate("text", label = "dietLow", x = 2.3, y = 188, hjust = 0, color = "#D47500") +
+  geom_segment(aes(x = 2, xend = 2, y = 197, yend = 221.5),
                arrow = arrow(length = unit(0.02, "npc"), ends = "both"), color = "#3CB521") +
-  geom_segment(aes(x = 3.2, xend = 2, y = 19.95, yend = 21),
+  geom_segment(aes(x = 3.2, xend = 2, y = 195, yend = 210),
                color = "#3CB521", alpha = 0.5, linewidth = 0.2) +
-  annotate("text", label = "dietMed", x = 3.3, y = 19.95, hjust = 0, color = "#3CB521") +
-  geom_segment(aes(x = 3, xend = 3, y = 20.81, yend = 23.9),
+  annotate("text", label = "dietMed", x = 3.3, y = 195, hjust = 0, color = "#3CB521") +
+  geom_segment(aes(x = 3, xend = 3, y = 200, yend = 230),
                arrow = arrow(length = unit(0.02, "npc"), ends = "both"), color = "#CD0200") +
-  geom_segment(aes(x = 4.3, xend = 3, y = 20.61, yend = 22),
+  geom_segment(aes(x = 4.3, xend = 3, y = 248.1, yend = 220),
                color = "#CD0200", alpha = 0.5, linewidth = 0.2) +
-  annotate("text", label = "dietHigh", x = 4.4, y = 20.61, hjust = 0, color = "#CD0200") 
+  annotate("text", label = "dietHigh", x = 4.4, y = 248.1, hjust = 0, color = "#CD0200") 
 ```
 
 --
@@ -472,31 +497,31 @@ model.matrix(fm2)
 ---
 # interpreting the rcbd model
 
-- `Intercept` = predicted number of larvae of control treatment in region 1
+- `Intercept` = predicted number of species in the unburned treatment in loamy sand
 
 --
 
-- `TreatmentBt` = difference between control and Bt treatments
+- `interval1` = difference between unburned and 1-year fire interval
 
 --
 
-- `TreatmentDimilin` = difference between control and dimilin treatments
+- `interval2` = difference between unburned and 2-year fire interval
 
 --
 
-- `Region2` = difference region 1 and region 2
+- `interval3` = difference between unburned and 3-year fire interval
 
 --
 
-- `Region 3` = difference region 1 and region 3
+- `soilsandy loam` = difference between loamy sand and sandy loam soils
 
 --
 
-- `Region 4` = difference region 1 and region 4
+- `soilupland` = difference between loamy sand and upland soils
 
 --
 
-Again, because there is no interaction between `Treatment` and `Region`, the model assumes that the effects of pesticide treatments are the same in every region (and that the regional differences are the same for every treatment level)
+Again, because there is no interaction between `interval` and `soil`, the model assumes that the effects of fire frequency are the same in every soil type (and that the soil differences are the same for every fire frequency)
 
 ---
 # one more example 

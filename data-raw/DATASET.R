@@ -299,11 +299,20 @@ foragingdata$predator <- factor(foragingdata$predator, levels = c("Absent", "Low
 harbordata <- read.csv("data-raw/harbordata.csv")
 alligatordata <- read.csv("data-raw/alligatordata.csv")
 oysterdata <- read.csv("data-raw/oysterdata.csv")
+
+firedata <- structure(list(interval = structure(c(1L, 1L, 1L, 2L, 2L, 2L,
+                                                  3L, 3L, 3L, 4L, 4L, 4L), .Label = c("unburned", "1", "2", "3"
+                                                  ), class = "factor"), soil = c("sandy loam", "loamy sand", "upland",
+                                                                                 "sandy loam", "loamy sand", "upland", "sandy loam", "loamy sand",
+                                                                                 "upland", "sandy loam", "loamy sand", "upland"), species = structure(c(28,
+                                                                                                                                                        30, 18, 37, 43, 27, 30, 36, 24, 26, 37, 21), .Dim = c(12L, 1L
+                                                                                                                                                        ), .Dimnames = list(c("1", "2", "3", "4", "5", "6", "7", "8",
+                                                                                                                                                                              "9", "10", "11", "12"), NULL))), row.names = c(NA, -12L), class = "data.frame")
 usethis::use_data(aciditydata, acorndata, agingdata, alligatordata,
                   aspectdata, biomassdata, burrowdata,
                   caterpillardata, chickdata, chuckdata, crayfishdata, crowdata, cruzdata,
                   deerdata, departuredata, dietdata, eucalyptusdata, exploredata,
-                  fishdata, foragingdata, frogdata, fruitdata,
+                  firedata, fishdata, foragingdata, frogdata, fruitdata,
                   grasslanddata, harbordata, harvestdata, hostadata, infectiondata,
                   inferencedata, jaydata, lengthdata, loblollydata, meatdata, microtusdata,
                   mothdata, mothdata2, movementdata, musseldata, orchiddata, oysterdata,

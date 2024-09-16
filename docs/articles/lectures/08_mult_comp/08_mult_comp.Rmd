@@ -1,7 +1,7 @@
 ---
 title: "LECTURE 8: multiple comparisons"
 subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2023"
+author: "<br/><br/><br/>Fall 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
@@ -114,7 +114,7 @@ One can always fall back on pairwise, two-sample *t*-tests (or linear models)...
 
 --
 
-Running multiple tests increases the probability of finding one that is significant, even if it is not (remember the jellybean!)
+Running multiple tests increases the probability of finding one that is significant, even if it is not (remember the jellybeans!)
 
 ```{r fig.height = 3.5, fig.width=5}
 n <- 1:100

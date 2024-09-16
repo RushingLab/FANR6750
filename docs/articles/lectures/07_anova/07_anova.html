@@ -3,7 +3,7 @@
   <head>
     <title>LECTURE 7: linear models part 2: categorical predictor &gt; 2 levels</title>
     <meta charset="utf-8" />
-    <meta name="author" content="   Fall 2023" />
+    <meta name="author" content="   Fall 2024" />
     <script src="libs/header-attrs/header-attrs.js"></script>
     <link href="libs/remark-css/default.css" rel="stylesheet" />
     <script src="libs/kePrint/kePrint.js"></script>
@@ -22,7 +22,7 @@ class: center, middle, inverse, title-slide
 ## FANR 6750 (Experimental design)
 ]
 .author[
-### <br/><br/><br/>Fall 2023
+### <br/><br/><br/>Fall 2024
 ]
 
 ---
@@ -138,6 +138,8 @@ Foresters are studying the effect of 4 different fertilizers (treatments) on the
 ]
 
 ---
+class: inverse
+
 # a brief tangent
 
 #### What counts as an observation?
@@ -221,22 +223,22 @@ But this would alter the overall (experiment-wise) `\(\large \alpha\)` level bec
 
 
 ```r
-data(pinedata)
-pinedata[c(1,4,7,10),]
+data(loblollydata)
+loblollydata[c(1,4,7,10),]
 ```
 
 ```
-##    Replicate Treatment Height
-## 1          1         A     11
-## 4          1         B      9
-## 7          1         C      7
-## 10         1         D      5
+##    Treatment Replicate Height
+## 1          A         1     11
+## 4          B         1      9
+## 7          C         1      7
+## 10         D         1      5
 ```
 
 
 
 ```r
-fit1 &lt;- lm(Height ~ Treatment, data = pinedata)
+fit1 &lt;- lm(Height ~ Treatment, data = loblollydata)
 
 model.matrix(fit1)[c(1,4,7,10),]
 ```
@@ -293,7 +295,7 @@ broom::tidy(fit1)
 ## 1 (Intercept)    10.0      0.577     17.3  0.000000126
 ## 2 TreatmentB     -2.00     0.816     -2.45 0.0400     
 ## 3 TreatmentC     -4.00     0.816     -4.90 0.00120    
-## 4 TreatmentD     -6.00     0.816     -7.35 0.0000801
+## 4 TreatmentD     -6        0.816     -7.35 0.0000801
 ```
 
 --
@@ -320,7 +322,7 @@ summary(fit1)
 ```
 ## 
 ## Call:
-## lm(formula = Height ~ Treatment, data = pinedata)
+## lm(formula = Height ~ Treatment, data = loblollydata)
 ## 
 ## Residuals:
 ##    Min     1Q Median     3Q    Max 
@@ -357,13 +359,13 @@ The *F*-statistic tests whether all regression coefficients (other than the inte
 `$$F = \frac{s^2_A}{s^2_B}$$`
 - Null hypothesis is that population variances are equal ( `\(\sigma^2_A = \sigma^2_B\)` )
 
-- Always positive (variances can be negative)
+- Always positive (variances cannot be negative)
 
 - Usually &gt; 1 (by putting larger variance in the numerator)
 
 --
 
-Where to the variances come from in the linear model and what do they tell us about differences among groups?
+Where do the variances come from in the linear model and what do they tell us about differences among groups?
 
 ---
 # regression F-statistic
@@ -399,7 +401,7 @@ Where to the variances come from in the linear model and what do they tell us ab
 ]
 
 .pull-right[
-&lt;img src="07_anova_files/figure-html/pinedata_gm-1.png" width="288" style="display: block; margin: auto;" /&gt;
+&lt;img src="07_anova_files/figure-html/loblollydata_gm-1.png" width="288" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -423,7 +425,7 @@ We can now decompose the observations as
 ]
 
 .pull-right[
-&lt;img src="07_anova_files/figure-html/pinedata_var-1.png" width="288" style="display: block; margin: auto;" /&gt;
+&lt;img src="07_anova_files/figure-html/loblollydata_var-1.png" width="288" style="display: block; margin: auto;" /&gt;
 ]
 
 ---
@@ -484,7 +486,7 @@ We can now decompose the observations as
 
 **Question:** Is there a difference in growth among the four treatment groups?
 
-&lt;img src="07_anova_files/figure-html/pinedata_ssa-1.png" width="576" style="display: block; margin: auto;" /&gt;
+&lt;img src="07_anova_files/figure-html/loblollydata_ssa-1.png" width="576" style="display: block; margin: auto;" /&gt;
 
 ---
 # sums of squares
@@ -502,7 +504,7 @@ We can now decompose the observations as
 
 **Question:** Is there a difference in growth among the four treatment groups?
 
-&lt;img src="07_anova_files/figure-html/pinedata_ssw-1.png" width="576" style="display: block; margin: auto;" /&gt;
+&lt;img src="07_anova_files/figure-html/loblollydata_ssw-1.png" width="576" style="display: block; margin: auto;" /&gt;
 
 ---
 # sums of squares
@@ -525,7 +527,7 @@ We can now decompose the observations as
 
 **Question:** Is there a difference in growth among the four treatment groups?
 
-&lt;img src="07_anova_files/figure-html/pinedata_sst-1.png" width="576" style="display: block; margin: auto;" /&gt;
+&lt;img src="07_anova_files/figure-html/loblollydata_sst-1.png" width="576" style="display: block; margin: auto;" /&gt;
 
 ---
 # mean squares

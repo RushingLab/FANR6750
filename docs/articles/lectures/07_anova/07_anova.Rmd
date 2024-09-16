@@ -275,7 +275,7 @@ $$F = \frac{s^2_A}{s^2_B}$$
 
 --
 
-Where to the variances come from in the linear model and what do they tell us about differences among groups?
+Where do the variances come from in the linear model and what do they tell us about differences among groups?
 
 ---
 # regression F-statistic
