@@ -1,7 +1,7 @@
 ---
 title: "LECTURE 11: evaluating assumptions"
 subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2023"
+author: "<br/><br/><br/>Fall 2024"
 output:
   xaringan::moon_reader:
     css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
@@ -340,7 +340,7 @@ Non-independence of residuals is more difficult to test but is often related to 
 
 Often, non-independence can be judged based on knowledge of the sampling design/system
 
-- sometimes be seen as "clustering" in residual plots
+- sometimes can be seen as "clustering" in residual plots
 
 ```{r fig.width = 4, fig.height=2.5}
 x <- rnorm(50)

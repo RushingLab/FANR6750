@@ -228,17 +228,17 @@ We wrote the model formula with diet first and length second (`weight ~ diet + l
 
 - Notice that the diet SS in the two previous tables are the same
 
-- This is called the Type I sums of squares
-
 --
 
 If we wrote `weight ~ length + diet`, `R` calculates the length SS first, then the diet SS
 
 - The diet SS tells us how much variation is explained by the treatment variable **after** accounting for the covariate
 
-- This is called the Type III sums of squares
+--
 
-- In experimental settings, Type III is generally preferred
+This *sequential* method of calculating is called the Type I sums of squares
+
+- Type I SS is the default used by `R`
 
 
 ---
@@ -256,6 +256,29 @@ fit.lm3 <- lm(weight ~ length + diet, data = dietdata)
 anova(fit.lm3)
 ```
 ]
+
+---
+class:inverse
+# sums of squares
+
+
+Type I SS is only one of several ways of calculating sums of squares
+
+--
+
+- Type II and Type III SS use slightly different methods that do not depend on order
+
+--
+
+- For balanced designs, all three approaches will give the same answers
+
+--
+
+- For unbalanced designs, the correct approach depends on the hypotheses being tested
+
+--
+
+- Other software programs (SAS, SPSS) default to Type III so may give different results than `R` (but all programs have methods to calculate SS using each method)
 
 ---
 # another example
@@ -368,17 +391,18 @@ As these examples show, one reason to use a multiple regression model is to incr
 
 --
 
-When one predictor is a factor and the other(s) is continuous (as in this example), this model is often referred to as an *ANCOVA* (**An**alysis of **Cova**riance)
+- When one predictor is a factor and the other(s) is continuous, this model is often referred to as an *ANCOVA* (**An**alysis of **Cova**riance)
 
 --
 
-In experimental setting, ANCOVA is often used when there is an extraneous source of information that we cannot control during the design phase
-
-- the continuous predictor is often not of interest, it is only included to increase power (similar to blocks)
+- When both predictors are factors and each treatment is included within each block, this model is often referred to a randomized complete block design
 
 --
 
-In observational settings, the same model may be used but we often have have interest in both predictors
+In experimental setting, ANCOVA and blocking are used when there is extraneous variation that we cannot control during the design phase
+
+- Predictor/blocks are not of interest; only included to increase power
+
 
 
 ---
@@ -386,9 +410,13 @@ In observational settings, the same model may be used but we often have have int
 
 If we are only interested in the treatment effect and not the blocks/continuous predictor, the ANOVA table (possibly in combination with multiple comparisons) is often sufficient for interpreting the model
 
+- This is often the case in experimental settings  
+
 --
 
-However, if we are interested in the effects of both predictors, it helps to understand the model structure and parameter interpretation in more detail 
+However, in observational studies, we are often interested in the effects of both predictors
+
+- In this case, it helps to understand the model structure and parameter interpretation in more detail 
 
 --
 
