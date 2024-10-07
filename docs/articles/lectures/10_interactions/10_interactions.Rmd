@@ -478,7 +478,7 @@ $$\color{#D47500}{\beta_0} + (\color{#D47500}{\beta_1 + \beta_3}^*1)^*moon_i + \
 
 
 ```{r fig.height = 6, fig.width = 8}
-pred_df <- data.frame(a = c(2.582, (2.582-0.228*0.5), (2.582-0.228*1)),
+pred_df <- data.frame(a = c(2.582, (2.582+0.228*0.5), (2.582+0.228*1)),
                       b = c(2.734, (2.734-2.387*0.5), (2.734-2.387*1)),
                       cloud = factor(c("0", "0.5", "1"), levels = c("0", "0.5", "1")))
 
@@ -488,29 +488,29 @@ ggplot(chuckdata, aes(x = moon, y = call.rate)) +
   scale_y_continuous("Call Rate", limits = c(2, 6)) +
   scale_x_continuous("Moon (% of full)") +
   geom_vline(xintercept = 0, linetype = "dashed", color = "grey40") +
-  annotate("text", label = "Intercept", x = 0.01, y = 3.35, hjust = 0, 
+  annotate("text", label = "Intercept", x = 0.01, y = 2, hjust = 0, 
            color = "#446E9B") +
-  geom_segment(aes(y = 3.25, yend = 2.6, x = 0.025, xend = 0),
+  geom_segment(aes(y = 2.1, yend = 2.55, x = 0.025, xend = 0),
                arrow = arrow(length = unit(0.02, "npc")), color = "#446E9B") +
-  annotate("text", label = "Intercept + cloud*0.5", x = 0.21, y = 2.65, hjust = 0, 
+  annotate("text", label = "Intercept + cloud*0.5", x = 0.21, y = 2.45, hjust = 0, 
            color = "#D47500") +
-  geom_segment(aes(y = 2.65, yend = 2.45, x = 0.2, xend = 0),
+  geom_segment(aes(y = 2.45, yend = 2.68, x = 0.2, xend = 0),
                arrow = arrow(length = unit(0.02, "npc")), color ="#D47500") +
-  annotate("text", label = "Intercept + cloud*1", x = 0.21, y = 2, hjust = 0, 
+  annotate("text", label = "Intercept + cloud*1", x = 0.06, y = 3.7, hjust = 0, 
            color = "#3CB521") +
-  geom_segment(aes(y = 2, yend = 2.32, x = 0.2, xend = 0),
+  geom_segment(aes(y = 3.7, yend = 2.82, x = 0.05, xend = 0),
                arrow = arrow(length = unit(0.02, "npc")), color ="#3CB521") +
-  annotate("text", label = "moon", x = 0.29, y = 4.22, hjust = 1, 
+  annotate("text", label = "moon", x = 0.39, y = 4.22, hjust = 1, 
            color = "#446E9B") +
-  geom_segment(aes(y = 4.2, yend = 4, x = 0.3, xend = 0.5),
+  geom_segment(aes(y = 4.2, yend = 4, x = 0.4, xend = 0.5),
                arrow = arrow(length = unit(0.02, "npc")), color = "#446E9B") +
-  annotate("text", label = "moon + moon:cloud*0.5", x = 0.9, y = 4, hjust = 1, 
+  annotate("text", label = "moon + moon:cloud*0.5", x = 0.9, y = 3.4, hjust = 1, 
            color = "#D47500") +
-  geom_segment(aes(y = 3.9, yend = 3.6, x = 0.65, xend = 0.7),
+  geom_segment(aes(y = 3.45, yend = 3.7, x = 0.7, xend = 0.68),
                arrow = arrow(length = unit(0.02, "npc")), color ="#D47500") +
-  annotate("text", label = "moon + moon:cloud*1", x = 0.9, y = 3, hjust = 1, 
+  annotate("text", label = "moon + moon:cloud*1", x = 0.9, y = 2.7, hjust = 1, 
            color = "#3CB521") +
-  geom_segment(aes(y = 2.9, yend = 2.63, x = 0.65, xend = 0.7),
+  geom_segment(aes(y = 2.75, yend = 3.02, x = 0.72, xend = 0.7),
                arrow = arrow(length = unit(0.02, "npc")), color ="#3CB521")
 ```
 
