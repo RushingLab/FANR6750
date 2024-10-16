@@ -53,9 +53,9 @@ schedule <- data.frame(WK = c("1", "", "",
       "Multiple comparisons", "Exam 1 review", "Multiple regression",  "", #7
        "Multiple regression","Interactions",  "Interactions",  "", #8 
              "Evaluating assumptions", "Model selection", "Paper discussion: model selection",  "", #9
-      "Random effects", "Nested designs", "Exam 2 review", "", # 10
-          "Split-plot designs", "Split-plot designs", "Repeated measures", "", #11
-       "Repeated measures", "Paper discussion: Pseudoreplication", "Fall break", "",
+      "Random effects", "Exam 1 discussion", "Nested designs", "", # 10
+          "Split-plot designs", "Split-plot designs", "Exam 2 review", "", #11
+       "Repeated measures", "Repeated measures", "Fall break", "",
          "Generalized linear models", "GLM: Logistic regression", "GLM: Logistic regression", "", #13
           "GLM: Poisson regression", "GLM: Poisson regression", "Buffer", "", #14
       "GLM: Zero-inflated data", "GLM: Zero-inflated data", "Buffer", "", #15
@@ -87,9 +87,9 @@ schedule <- data.frame(WK = c("1", "", "",
                                "", "**Exam 1 distributed**", "", "",
                                "", "**Exam 1 due**", "", "",
                                "", "", "Tredennick et al. 2021", "",
+                               "", "", "", "",
                                "", "", "**Exam 2 distributed**", "",
-                               "", "", "**Exam 2 due**", "",
-                               "", "Reading (TDB)",  "", "",
+                               "", "",  "**Exam 2 due**", "",
                                "", "", "", "",
                                "", "", "", "",
                                "", "", "", "",
