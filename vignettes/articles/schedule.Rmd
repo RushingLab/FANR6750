@@ -56,9 +56,9 @@ schedule <- data.frame(WK = c("1", "", "",
       "Random effects", "Exam 1 discussion", "Nested designs", "", # 10
           "Split-plot designs", "Split-plot designs", "Exam 2 review", "", #11
        "Repeated measures", "Repeated measures", "Fall break", "",
-         "Generalized linear models", "GLM: Logistic regression", "GLM: Logistic regression", "", #13
-          "GLM: Poisson regression", "GLM: Poisson regression", "Buffer", "", #14
-      "GLM: Zero-inflated data", "GLM: Zero-inflated data", "Buffer", "", #15
+         "Repeated measures", "Exam 2 review", "Generalized linear models", "", #13 
+      "GLM: Logistic regression", "GLM: Logistic regression", "GLM: Poisson regression", "", #14
+          "GLM: Poisson regression", "GLM: Zero-inflated data", "GLM: Zero-inflated data", "", #15
           "Exam 3 review", "Thanksgiving break", "", "", #16
              "TDB"), 
                        Lab = c("", "", "",
