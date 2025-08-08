@@ -38,10 +38,20 @@ Dr. Clark Rushing
 
 **TAs**  
 
+Anna Willoughby (TBD)  
+[anna.willoughby@uga.edu](Anna.Willoughby@uga.edu)  
+**Office**: TBD  
+**Office hours**: TBD  
+
+Himasree Kolla (TBD)  
+[himasree.kolla@uga.edu](himasree.kolla@uga.edu)  
+**Office**: TBD  
+**Office hours**: W 10:00-11:30  
+
 Alan Bond (W)  
 [alan.bond1@uga.edu](alan.bond1@uga.edu)  
 **Office**: 1-102  
-**Office hours**: M 2:00-4:00  
+**Office hours**: M 10:00-12:00  
 ]
 
 ---
@@ -118,8 +128,8 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
 --
 
 - Worth 10 points each
-    + 5 points for turning in **complete** assignment **on time**
-    + 5 points for correctness  
+    + Grade based on turning in **complete** assignment **on time**
+    + Answer keys will be posted after all assignments have been submitted
 
 ---
 # grading
