@@ -53,7 +53,7 @@ MWF <- function(first.day, last.day){
     first.w <- as.Date(first.day) + lubridate::days(4 - lubridate::wday(as.Date(first.day)))
     first.f <- as.Date(first.day) + lubridate::days(6 - lubridate::wday(as.Date(first.day)))
 
-    Md <- lubridate::day(seq(first.m, last.m, "7 days"))
+    Md <- lubridate::day(seq(from = as.Date(first.m), to = as.Date(last.m), by = "7 days"))
     Mm <- lubridate::month(seq(first.m, last.m, "7 days"), label = TRUE)
 
     Wd <- lubridate::day(seq(first.m + 2, last.w, "7 days"))
@@ -89,5 +89,3 @@ MWF <- function(first.day, last.day){
 
   return(dates)
 }
-
-MWF(first.day = "2021/08/20", last.day = "2021/12/10")

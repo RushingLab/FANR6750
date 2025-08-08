@@ -264,7 +264,8 @@ The researchers who set up this study already have a model in mind. Before they 
 
 ```{r}
 options(scipen = 999)
-mod1 <- lm(Movement~ Temp + Wind + I(Wind^2) + Season + Patch + Season:Patch, data= deerdata)
+deerdata$Wind.sq <- deerdata$Wind^2
+mod1 <- lm(Movement~ Temp + Wind + Wind.sq + Season + Patch + Season:Patch, data= deerdata)
 summary(mod1)
 ```
 
@@ -371,10 +372,10 @@ corrplot(cor(deerdata[c(2,4,5)]), method= 'number', type = "upper")
 
 While we have made each of these plots individually (which makes them more easily edited), we can also get `R` to create all of these plots at once.
 
-```{r, fig.width= 8, fig.height= 4, fig.fullwidth= F, fig.align='left', fig.cap= '**Figure 10: Checking model assumptions for Model 1.**'}
+```{r, fig.width= 8, fig.height= 4, fig.fullwidth= F, fig.align='left', fig.cap= '**Figure 10: Checking model assumptions for Model 1.**', eval = F}
 library(performance)
 
-check_model(mod1, check= c('linearity', 'homogeneity', 'qq', 'normality'))
+performance::check_model(mod1, check= c('linearity', 'homogeneity', 'qq', 'normality'))
 ```
 
 <br>

@@ -1,7 +1,7 @@
 ---
 title: "LECTURE 2: introduction to linear models"
 subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2024"
+author: "<br/><br/><br/>Fall 2025"
 output:
   xaringan::moon_reader:
     css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
@@ -40,9 +40,9 @@ class: inverse
 <br/> 
 
 ---
-class: inverse
+class: inverse, middle
 
-# statistics = information $\small +$ uncertainty
+### Statistics = Information + Uncertainty
 
 #### In the last lecture, we learned that statistics is what allows us to make inferences about a population in the face of uncertainty
 
@@ -201,7 +201,7 @@ class:inverse, middle, center
 # the linear model
 
 ---
-# Statistics cookbook
+# statistics cookbook
 
 ```{r out.width="50%"}
 knitr::include_graphics("stats_flow_chart.png")
@@ -366,7 +366,7 @@ ggplot(df, aes(x, y)) +
   geom_segment(aes(x = x, xend = x, y = mu, yend = y), color = "#3CB521", size = 1) +
   geom_abline(slope = 0.5, intercept = -2, color = "#446E9B", size = 1.5) +
   scale_y_continuous("y") +
-  geom_point(color = "#D47500", alpha = 0.75)
+  geom_point(color = "#D47500", alpha = 0.9)
 ```
 
 ---
@@ -670,5 +670,5 @@ cowplot::plot_grid(xy2, y, r, nrow = 1, ncol = 3)
 
 <br/>
 
-### **Reading**: [Feiberg chp. 1.6-1.8](https://statistics4ecologists-v1.netlify.app/linreg.html#sampdist)
+### **Reading**: [Feiberg chp. 1.6-1.8](https://statistics4ecologists-v3.netlify.app/01-linearregression#sec-sampdist)
 

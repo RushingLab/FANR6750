@@ -1,7 +1,7 @@
 ---
 title: "Checklist and tips for publication-quality graphics in R"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2023"
+author: "Fall 2025"
 output: 
   rmarkdown::html_vignette:
     keep_md: yes
@@ -83,7 +83,7 @@ Below is a list of considerations for making high-quality figures for publicatio
 
 # Saving high-resolution figures for publication
 
-In many cases, you will need to save your figures rather than render them directly in your .rmd file. The `ggsave()` function is (in my opinion) the easiest way to save high-resolution figures. By default, `ggsave()` will save the last plot that you created in `R` using the ssame size as your graphics device. All you have to tell the function is where to save the figure and what to name the file. So, for example, the following code would save 
+In many cases, you will need to save your figures rather than render them directly in your .rmd file. The `ggsave()` function is (in my opinion) the easiest way to save high-resolution figures. By default, `ggsave()` will save the last plot that you created in `R` using the same size as your graphics device. All you have to tell the function is where to save the figure and what to name the file. So, for example, the following code would save 
 
 ```{r eval = FALSE}
 libary(ggplot2)

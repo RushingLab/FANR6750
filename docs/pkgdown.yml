@@ -1,26 +1,29 @@
-pandoc: 3.1.1
-pkgdown: 2.0.6
+pandoc: 3.1.4
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  RMarkdown: RMarkdown.html
-  bonus_assignment: bonus_assignment.html
-  graphics: graphics.html
-  homework: homework.html
-  lab01_intro_to_R: lab01_intro_to_R.html
-  lab02_Intro_project_and_Rmd: lab02_Intro_project_and_Rmd.html
-  lab03_t-tests: lab03_t-tests.html
-  lab04_ANOVA: lab04_ANOVA.html
-  lab05_multiple_regression: lab05_multiple_regression.html
-  lab06_interactions: lab06_interactions.html
-  lab07_linear_model_assumptions: lab07_linear_model_assumptions.html
-  lab08_model_selection: lab08_model_selection.html
-  lab09_nested: lab09_nested.html
-  lab10_split_plot: lab10_split_plot.html
-  lab11_repeated_measures: lab11_repeated_measures.html
-  lab12_glm_lr: lab12_glm_lr.html
-  lab13_glm_pr: lab13_glm_pr.html
-  projects_and_directories: projects_and_directories.html
-  schedule: schedule.html
-  syllabus: syllabus.html
-last_built: 2024-11-11T22:07Z
-
+  articles/bonus_assignment: bonus_assignment.html
+  articles/graphics: graphics.html
+  articles/homework: homework.html
+  articles/lab01_intro_to_R: lab01_intro_to_R.html
+  articles/lab02_Intro_project_and_Rmd: lab02_Intro_project_and_Rmd.html
+  articles/lab03_inference: lab03_inference.html
+  articles/lab04_t-tests: lab04_t-tests.html
+  articles/lab05_ANOVA: lab05_ANOVA.html
+  articles/lab05_multiple_regression: lab05_multiple_regression.html
+  articles/lab06_interactions: lab06_interactions.html
+  articles/lab07_linear_model_assumptions: lab07_linear_model_assumptions.html
+  articles/lab08_model_selection: lab08_model_selection.html
+  articles/lab09_nested: lab09_nested.html
+  articles/lab10_split_plot: lab10_split_plot.html
+  articles/lab11_repeated_measures: lab11_repeated_measures.html
+  articles/lab12_glm_lr: lab12_glm_lr.html
+  articles/lab13_glm_pr: lab13_glm_pr.html
+  articles/projects_and_directories: projects_and_directories.html
+  articles/RMarkdown: RMarkdown.html
+  articles/schedule: schedule.html
+  articles/syllabus: syllabus.html
+last_built: 2025-08-07T13:40Z
+urls:
+  reference: http://rushinglab.github.io/FANR6750/reference
+  article: http://rushinglab.github.io/FANR6750/articles

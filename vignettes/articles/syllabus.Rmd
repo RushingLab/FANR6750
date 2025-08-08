@@ -1,7 +1,7 @@
 ---
 title: "Syllabus"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2024"
+author: "Fall 2025"
 output: 
   rmarkdown::html_vignette:
     keep_md: yes
@@ -32,28 +32,18 @@ knitr::opts_chunk$set(
 Dr. Clark Rushing  
 clark.rushing@uga.edu  
 **Office**: Warnell 3-409   
-**Office hours**: M 12:30-2:00
+**Office hours**: M 1:00-2:30
 
 # TEACHING ASSISTANTS
 
-Kaili Gregory (Monday lab)  
-k.gregory@uga.edu  
-**Office**: 3-402  
-**Office hours**: Tu 3:00-5:00 or by appointment  
-
-Michael Baker (Tuesday lab)  
-michael.baker2@uga.edu  
-**Office**: 1-102  
-**Office hours**: F 9:00-11:00 or by appointment  
-
-Alan Bond (Wednesday lab)  
+Alan Bond (? lab)  
 alan.bond1@uga.edu  
 **Office**: 1-102  
 **Office hours**: M 2:00-4:00 or by appointment  
 
 # COURSE OBJECTIVES
 
-To understand: (1) the logical structure of experiments, especially the design of manipulative experiments, (2) the analysis of such experiments, focusing on analysis of variance procedures, (3) the use of models in ecological studies (experimental and observational).
+To understand: (1) the logical structure of experiments, including both manipulative and observational experiments, (2) the analysis of such experiments, with a focus on linear models, (3) the use of models in ecological studies (experimental and observational).
 
 # PREREQUISITES
 
@@ -62,7 +52,7 @@ All lab activities for this course will rely heavily on the statistical programm
 
 # COURSE FORMAT
 
-The components of a scientific study need to be considered together rather than separately; design and analysis aspects will be completely blended in this course. Emphasis will be on application, and will include instruction on the use of the `R` statistical software. Important points will be reinforced by readings from the scientific literature and by discussions. Homework assignments and exams (take home) are intended to keep the material fresh in the students' minds. The syllabus is subject to change, but the order of material is correct. 
+The components of a scientific study need to be considered together rather than separately; design and analysis aspects will be completely blended in this course. Emphasis will be on application, and will include instruction on the use of the `R` statistical software. Important points will be reinforced by readings from the scientific literature and by discussions. Homework assignments and exams are intended to keep the material fresh in the students' minds. The syllabus is subject to change, but the order of material is correct. 
 
 # COURSE RESOURCES
 
@@ -76,7 +66,7 @@ and
 
 **Quinn, G.P. & Keough, M.J. 2002. Experimental Design and Data Analysis for Biologists. Cambridge University Press**  
 
-The Fieberg (2022) textbook can be accessed [here](https://fw8051statistics4ecologists.netlify.app/). Purchasing the Quinn (2002) textbook is not required but may be helpful for clarifying some concepts. A pdf of the book can be downloaded [here](https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&%20Keough.pdf).  
+The Fieberg (2022) textbook can be accessed [here](https://statistics4ecologists-v3.netlify.app/). Purchasing the Quinn (2002) textbook is not required but may be helpful for clarifying some concepts. A pdf of the book can be downloaded [here](https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&%20Keough.pdf).  
 
 Additional readings will come from a variety of sources, including other textbooks and scientific journals, and will be posted on eLC.
 
@@ -105,6 +95,15 @@ devtools::install_github("RushingLab/FANR6750")
 
 If you encounter any problems with the previous steps, please contact me prior to the first class.  
 
+# COURSE POLICY ON GENERATIVE AI
+
+Focus on this course is on the conceptual basis of modern experimental design and statistical inference, with the primary objective of providing students with the skills and confidence to design, conduct, and report the statistical analyses needed to conduct their own research. For many students, this is the only statistics class they will take in graduate school. For others, this class is only the beginning of progression towards more advanced statistical analyses. In either case, my goal is to provide a firm foundation for conducting and evaluating scientific research.
+
+One of the core philosophies of this course is that there is no one-size-fits-all approach to experimental design and statistical inference. There is no recipe book that students can follow when conducting research and there will often be multiple ways to approach experimental design and data analyses. Successful research therefore requires combining ecological knowledge with thoughtful application of statistical methods. In the complex systems within which we work, critical thinking, domain expertise, and skepticism are paramount. Developing these skills is why you are in graduate school.
+
+Computers are integral to modern statistical inference, allowing researchers to perform complex data formatting, modeling, and visualization tasks that would otherwise be impractical or impossible. As with other resources (textbooks, message boards, blog posts, etc.), AI can help make some tasks (e.g., coding) easier or more efficient when used appropriately. For this reason, the use of AI on homework assignments is not banned in this class (unless specifically noted in the instructions). **However, students must document their use of AI by providing the prompts used and the AI responses for every task for which AI is used.** 
+
+Furthermore, there is increasing evidence that AI may [harm intellectual development](https://thebullshitmachines.com/lesson-11-transforming-education/index.html) if used improperly. In particular, there is a risk that AI *replaces* learning rather than augmenting the learning process. Developing research skills, including statistical analysis, takes practice. Failure, setbacks, and frustration are not only inevitable, they are critical to learning. In my view, the biggest risk of generative AI is that it can provide a shortcut to avoid the short-term challenges associated with learning new concepts or skills. Although that may seem convenient or even helpful, the long term harm of using AI to replace *learning* is detrimental to your development as a researcher, scholar, and citizen. For this reason, exams are structured in a way that AI cannot be used. Some homework questions will also state that AI cannot be used and students are expected to follow these instructions. **Suspected cases of unacknowledged use of AI will be treated as violations of the honor code.** 
 
 # ATTENDANCE
 
@@ -116,17 +115,23 @@ I realize that many students have field work obligations during the semester. If
 
 # GRADING
 
-250 total points.  
+200 total points.  
 
-Three take-home exams, 50 points (20%) each. Exam dates in the [schedule](https://rushinglab.github.io/FANR6750/articles/schedule.html) are approximate days when the exam will be provided. 
+Three exams, 40 points (20%) each. Exams will be completed during normal lecture periods using eLC/Lockdown Browser. Students must complete the exams in person during the scheduled exam period, unless otherwise approved by the instructor at least 1 week before the exam. Remote students must arrange to take exams with a proctor present and exam arrangements must be approved by the instructor prior to the exam. Students will need a laptop with Lockdown Browser installed to complete the exams.
 
-The remaining 100 points (40%) of the grade will come from lab homework assignments. Homework assignments will build on concepts and skills that we cover in lecture and lab. Specific objectives and tasks for each assignment, along with any necessary data, will be provided at the end of each lab activity. These assignments are meant to ensure that you understand lecture and lab concepts, provide additional practice implementing relevant statistical methods in `R`, and provide experience interpreting and presenting model output. 
+Exams will primarily be focused on concepts, not coding. At least 1 week prior to the exam, students will be given a pool of 8-10 potential questions. The exam itself will consist of 2 questions from this list chosen by the instructor and 2 questions chosen by student. Exam dates on the [schedule](https://rushinglab.github.io/FANR6750/articles/schedule.html) are approximate and subject to change. 
 
-Over the course of semester, there will be **8** of these assignments worth **12.5 points each**. Each assignment will be due before class the week after the assignment is posted and must be prepared as an R Markdown file that include all text, code, model output, and figures necessary to fully document your work and conclusions (we will spend the first several labs going over preparation of reports using R Markdown so, again, no previous experience is necessary). You will automatically receive 6.5 points for turning in a completed lab assignment by the assigned due date. Late assignments will receive a 1-point deduction for each day late and incomplete assignments will have points deducted in proportion to the degree of incompleteness (e.g., if 1/3 of the assignment is incomplete, 2-point deduction). The remaining points will be based on the correctness of your answers. 
+The remaining 80 points (40%) of the grade will come from lab homework assignments. Homework assignments will build on concepts and skills that we cover in lecture and lab. Specific objectives and tasks for each assignment, along with any necessary data, will be provided at the end of each lab activity. These assignments are meant to ensure that you understand lecture and lab concepts, provide additional practice implementing relevant statistical methods in `R`, and provide experience interpreting and presenting model output. 
+
+Over the course of semester, there will be **8** of these assignments worth **10 points each**. Each assignment will be due before class the week after the assignment is posted and must be prepared as an R Markdown file that include all text, code, model output, and figures necessary to fully document your work and conclusions (we will spend the first several labs going over preparation of reports using R Markdown so, again, no previous experience is necessary). You will automatically receive 5 points for turning in a completed lab assignment by the assigned due date. Late assignments will receive a 1-point deduction for each day late and incomplete assignments will have points deducted in proportion to the degree of incompleteness (e.g., if 1/3 of the assignment is incomplete, 2-point deduction). The remaining points will be based on the correctness of your answers. 
 
 All academic work must meet the standards contained in the University's academic [honesty policy](https://honesty.uga.edu/). All students are responsible for informing themselves about those standards before performing any academic work. The penalties for academic dishonesty are [severe](https://honesty.uga.edu/Academic-Honesty-Policy/Consequences_for_Honesty_Violations/), and ignorance is not an acceptable defense.  
 
 If you know ahead of time that you will miss an assignment or exam, please let me know as soon as possible so that we can arrange a make up. If you do not let me or a TA know ahead of time, missed/late assignments will lose 10% of the final grade per day that they are late.
+
+# PRE- AND POST-COURSE ASSESSMENTS
+
+In an effort to help track learning outcomes, students are asked to complete optional pre-course and post-course assessments. Both assessments can be accessed on eLC during the first week (pre-assessment) and last week (post-assessment) of the semester. The assessments are short (~20 questions) and consist primarily of multiple choice and true/false questions that cover a range of topics from throughout the semester, plus several self-assessment questions aimed at gauging students' experience with statistical methods. Responses to these assessments do not count towards the final grade and will be only be used to assess trends in learning outcomes. To incentivize participation, students will receive 2 bonus points for completing the pre-assessment, 2 bonus points for completing the post-assessment, and 1 additional bonus point for completing both (5 bonus points total). 
 
 # GRADING SCALE
 

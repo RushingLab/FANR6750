@@ -1,7 +1,7 @@
 ---
 title: "LECTURE 0: course overview"
 subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2024"
+author: "<br/><br/><br/>Fall 2025"
 output:
   xaringan::moon_reader:
     css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
@@ -37,16 +37,6 @@ Dr. Clark Rushing
 .pull-right[
 
 **TAs**  
-
-Kaili Gregory (M)  
-[k.gregory@uga.edu](k.gregory@uga.edu)  
-**Office**: 3-422  
-**Office hours**: Tu 3:00-5:00  
-
-Michael Baker (Tu)  
-[michael.baker2@uga.edu](michael.baker2@uga.edu)  
-**Office**: 1-102A  
-**Office hours**: F 3:00-5:00  
 
 Alan Bond (W)  
 [alan.bond1@uga.edu](alan.bond1@uga.edu)  
@@ -105,11 +95,11 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
 
 --
 
-- You can use your own laptop but make sure you have R and RStudio installed prior the first lab<sup>1</sup>
+- You can use your own laptop but make sure you have R and RStudio installed prior the first lab<sup>2</sup>
 
 
 
-.footnote[[1] See [here](https://rushinglab.github.io/FANR6750/articles/syllabus.html#course-resources-1) for instructions]
+.footnote[[2] See [here](https://rushinglab.github.io/FANR6750/articles/syllabus.html#course-resources-1) for instructions]
 
 ---
 # lab assignments
@@ -122,55 +112,92 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
 
 - Meant to help with:
     + Understanding lecture/lab concepts
-    + Implementing models in R
+    + Implementing statistical procedures in R
     + Interpreting and presenting results
     
 --
 
-- Worth 12.5 points each
-    + 6.5 points for turning in **complete** assignment **on time**
-    + 6 points for correctness  
+- Worth 10 points each
+    + 5 points for turning in **complete** assignment **on time**
+    + 5 points for correctness  
 
 ---
 # grading
 
-#### 250 points total
+#### 200 points total
 
 --
 
-- 3 lecture exams, 50 points (20%) each
+- 3 lecture exams, 40 points (20%) each
 
-    + Take-home, open-note format
-    + Not (explicitly) cummulative<sup>1</sup>
+    + In-class format using eLC/Lockdown Browser<sup>3</sup>
+    + Primarily focused on concepts, not coding
+    + Pool of 8-10 potential questions provided in advance
+    + Exam consists of 2 questions chosen by me, 2 questions chosen by student
+    + Not (explicitly) cumulative
     + See schedule for approximate dates (subject to change)
 
+.footnote[[3] Remote students must take exams during class period in an approved setting]
+
 --
 
-- 8 lab assignments, 12.5 points (5%) each
-
-.footnote[[1] Material is somewhat cumulative by nature & some important concepts will be repeated]  
+- 8 lab assignments, 10 points (5%) each
 
 ---
-# a note on AI
+# a note on ai
 
-#### AI tools (e.g., ChatGPT) have advanced very rapidly in a very short time  
+AI tools (e.g., ChatGPT) have advanced very rapidly in a very short time  
 
 --
 - AI can increasingly help answer questions about statistical concepts, coding, etc.  
 
 --
 
-#### AI = resource (similar to Google, Cross Validated, etc.)  
+AI = resource (similar to Google, Cross Validated, etc.)  
 
 - AI can help you perform statistical analyses but **it cannot replace your own statistical knowledge**  
 
 --
 
-#### My goal is not to fight AI, but instead to incorporate it into exams and assignments  
+My goal is not to fight AI, but instead focus on responsible and appropriate use   
 
-- Learn to properly and ethically use AI, including when to be skeptical  
+- Students may use AI to assist with lab assignments but must acknowledge, document, and assess all AI use  
 
-- This will be a learning experience for all of us
+- Students may use AI to assist with exam preparation but must complete exams without the use of AI
+
+- Unacknowledged use of AI will be considered a violation of course policy. Suspected violations will be referred to the Office of Academic Honesty
+
+---
+# a note on ai
+
+Later in the semester, we will have a class discussion on the role of AI in research/statistical analysis
+
+--
+
+In preparation for that discussion, I highly recommend reading [Bull$&!t Machines](https://thebullshitmachines.com/table-of-contents/index.html), a short, self-paced course on the LLM
+
+```{r, echo = FALSE}
+knitr::include_graphics("fig/bs_machines.png")
+```
+
+---
+# remote students
+
+Although we do our best to make instruction and materials accessible to remote students, *this is not officially a hybrid class*. That has several implications:
+
+- Teaching to in-person and remote students is hard, especially labs. Technology problems are inevitable  
+
+- Remote students should be prepared to spend extra effort engaging with course materials if they   
+
+- Remote students must arrange to take exams with a proctor present and exam arrangements must be approved by the instructor prior to the exam
+
+- MAKE SURE YOU HAVE ACCESS TO THE PRIMARY eLC PAGE!
+
+--
+
+**A note to in-person students:**  
+
+In my experience, lab and lecture attendance are strong predictors of performance. Although zoom links can be used for brief or unanticipated absences, students based in Athens should attend classes in person
 
 ---
 # course objectives
@@ -179,7 +206,7 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
 <br/>
 
 --
-1) the logical structure of experiments, especially the design of manipulative experiments;  
+1) the logical structure of experiments, including the design of manipulative and observational experiments;  
 <br/>
 
 --
@@ -196,7 +223,7 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
 
 --
 
-1) Foundational concepts for statistical inference
+1) Foundational concepts for statistical inference and experimental design
 
 --
 
@@ -215,9 +242,30 @@ knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologist
 5) Generalized linear models and model selection
 
 ---
+# pre- and post-course assessment
+
+Two short quizzes used to assess collective learning outcomes
+
+- Posted under `Quizzes` on eLC
+
+- Require Lockdown Browser extension
+
+- Pre-assessment available until 8/17/2025
+
+--
+
+The assessments do not count towards your grade, but students who complete them will receive extra credit on their final grade
+
+- 2 points for completing pre-assessment
+
+- 2 points for completing post-assessment
+
+- 1 points for completing both assessments (5 points total) 
+
+---
 # looking ahead
 
 ### Next time: Basic Concepts in Statistics
 
-### Reading: Quinn chp. 1
+### Reading: [Quinn chp. 1](https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&%20Keough.pdf#page=21.08)
 

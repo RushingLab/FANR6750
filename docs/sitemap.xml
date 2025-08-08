@@ -1,156 +1,51 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/articles/RMarkdown.html</loc>
-  </url>
-  <url>
-    <loc>/articles/bonus_assignment.html</loc>
-  </url>
-  <url>
-    <loc>/articles/graphics.html</loc>
-  </url>
-  <url>
-    <loc>/articles/homework.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab01_Intro_to_R.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab02_Intro_project_and_Rmd.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab02_intro_project_RMD.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab03_linear_models.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab03_t-tests.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab04_ANOVA.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab04_t-tests.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab05_anova.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab05_multiple_regression.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab06_blocking.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab06_interactions.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab07_linear_model_assumptions.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab08_model_selection.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab09_nested.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab10_split_plot.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab11_repeated_measures.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab12_glm_lr.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lab13_glm_pr.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/00_course_intro/00_course_intro.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/01_intro_to_stats/01_intro_to_stats.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/02_intro_to_lm/02_intro_to_lm.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/03_inference/03_inference.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/04_t-test/04_t-test.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/05_nht/05_nht.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/06_power/06_power.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/07_anova/07_anova.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/08_mult_comp/08_mult_comp.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/09_regression/09_regression.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/10_interactions/10_interactions.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/11_assumptions/11_assumptions.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/12_model_selection/12_model_selection.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/13_random_effects/13_random_effects.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/14_nested/14_nested.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/15_split-plot/15_split-plot.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/16_repeated_measures/16_repeated_measures.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/17_glm/17_glm.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/18_logistic_regression/18_logistic_regression.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/19_poisson_regression/19_poisson_regression.html</loc>
-  </url>
-  <url>
-    <loc>/articles/lectures/20_zero_inflation/20_zero_inflation.html</loc>
-  </url>
-  <url>
-    <loc>/articles/projects_and_directories.html</loc>
-  </url>
-  <url>
-    <loc>/articles/schedule.html</loc>
-  </url>
-  <url>
-    <loc>/articles/syllabus.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>http://rushinglab.github.io/FANR6750/404.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/RMarkdown.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/bonus_assignment.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/graphics.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/homework.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/index.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab01_Intro_to_R.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab02_Intro_project_and_Rmd.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab02_intro_project_RMD.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab03_inference.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab03_linear_models.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab03_t-tests.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab04_ANOVA.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab04_t-tests.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab05_anova.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab05_multiple_regression.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab06_blocking.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab06_interactions.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab07_linear_model_assumptions.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab08_model_selection.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab09_nested.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab10_split_plot.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab11_repeated_measures.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab12_glm_lr.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lab13_glm_pr.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/00_course_intro/00_course_intro.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/01_intro_to_stats/01_intro_to_stats.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/02_intro_to_lm/02_intro_to_lm.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/03_inference/03_inference.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/07_power/07_power.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/10_interactions/10_interactions.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/10_regression/09_regression.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/11_assumptions/11_assumptions.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/12_model_selection/12_model_selection.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/13_random_effects/13_random_effects.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/14_nested/14_nested.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/15_split-plot/15_split-plot.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/16_repeated_measures/16_repeated_measures.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/17_glm/17_glm.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/18_logistic_regression/18_logistic_regression.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/19_poisson_regression/19_poisson_regression.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/lectures/20_zero_inflation/20_zero_inflation.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/projects_and_directories.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/schedule.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/articles/syllabus.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/authors.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/index.html</loc></url>
+<url><loc>http://rushinglab.github.io/FANR6750/reference/index.html</loc></url>
 </urlset>
+

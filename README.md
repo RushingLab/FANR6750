@@ -1,6 +1,6 @@
 # Welcome to FANR6750: Experimental Methods in Forestry and Natural Resources Research
 
-This is the unofficial course website for the Fall 2024 offering of **FANR6750: Experimental Methods in Forestry and Natural Resources Research** at the University of Georgia. The "official" course website (for students enrolled in the course) is on eLC.  
+This is the unofficial course website for the Fall 2025 offering of **FANR6750: Experimental Methods in Forestry and Natural Resources Research** at the University of Georgia. The "official" course website (for students enrolled in the course) is on eLC.  
 
 The goal of this website is to create a central repository for students to access all course materials - lecture slides, lab activities, code, data, etc. A secondary goal is to make those materials freely available to other students and instructors who may find them useful. If you encounter any issues or have any suggestions, feel free to contact me at clark.rushing [at] uga [dot] edu.     
 
@@ -24,6 +24,8 @@ Materials included in this course is purposefully made available to anyone who f
 ## Previous course materials
 
 The websites from previous versions of this course are archived here: 
+
+[Fall 2024](https://rushinglab.github.io/FANR6750.v2024/)
 
 [Fall 2023](https://rushinglab.github.io/FANR6750.v2023/)
 

@@ -1,6 +1,7 @@
 title: FANR6750
-#url: http://rushinglab.github.io/WILD6900
+url: http://rushinglab.github.io/FANR6750
 template:
+  bootstrap: 5
   params:
     bootswatch: spacelab
 
@@ -28,40 +29,42 @@ navbar:
           href: articles/lectures/02_intro_to_lm/02_intro_to_lm.html
         - text: "Lecture 3: Principles of inference"
           href: articles/lectures/03_inference/03_inference.html
-        - text: "Lecture 4: Linear models part 1: categorical predictor w/ 2 levels"
-          href: articles/lectures/04_t-test/04_t-test.html
-        - text: "Lecture 5: Null hypothesis significance testings"
-          href: articles/lectures/05_nht/05_nht.html
-        - text: "Lecture 6: Statistical power"
-          href: articles/lectures/06_power/06_power.html
-        - text: "Lecture 7: Linear models part 2: categorical predictor > 2 levels"
-          href: articles/lectures/07_anova/07_anova.html
-        - text: "Lecture 8: Multiple Comparisons"
-          href: articles/lectures/08_mult_comp/08_mult_comp.html
-        - text: "Lecture 9: Multiple Regression"
-          href: articles/lectures/09_regression/09_regression.html
-        - text: "Lecture 10: Interactions"
-          href: articles/lectures/10_interactions/10_interactions.html
-        - text: "Lecture 11: Evaluating assumptions"
-          href: articles/lectures/11_assumptions/11_assumptions.html
-        - text: "Lecture 12: Model selection"
-          href: articles/lectures/12_model_selection/12_model_selection.html
-        - text: "Lecture 13: Random effects"
-          href: articles/lectures/13_random_effects/13_random_effects.html
-        - text: "Lecture 14: Nested designs"
-          href: articles/lectures/14_nested/14_nested.html
-        - text: "Lecture 15: Split-plot designs"
-          href: articles/lectures/15_split-plot/15_split-plot.html
-        - text: "Lecture 16: Repeated measures"
-          href: articles/lectures/16_repeated_measures/16_repeated_measures.html
-        - text: "Lecture 17: Generalized linear models"
-          href: articles/lectures/17_glm/17_glm.html
-        - text: "Lecture 18: Logistic regression"
-          href: articles/lectures/18_logistic_regression/18_logistic_regression.html
-        - text: "Lecture 19: Poisson regression"
-          href: articles/lectures/19_poisson_regression/19_poisson_regression.html
-        - text: "Lecture 20: Zero-inflated regression"
-          href: articles/lectures/20_zero_inflation/20_zero_inflation.html
+        - text: "Lecture 4: Principles of experimental design"
+          href: articles/lectures/04_principles_of_expdesign/04_expdesign.html
+        - text: "Lecture 5: Linear models part 1: categorical predictor w/ 2 levels"
+          href: articles/lectures/05_t-test/05_t-test.html
+        - text: "Lecture 6: Null hypothesis significance testings"
+          href: articles/lectures/06_nht/06_nht.html
+        - text: "Lecture 7: Statistical power"
+          href: articles/lectures/07_power/07_power.html
+        - text: "Lecture 8: Linear models part 2: categorical predictor > 2 levels"
+          href: articles/lectures/08_anova/08_anova.html
+        - text: "Lecture 9: Multiple Comparisons"
+          href: articles/lectures/09_mult_comp/09_mult_comp.html
+        - text: "Lecture 10: Multiple Regression"
+          href: articles/lectures/10_regression/10_regression.html
+        # - text: "Lecture 11: Interactions"
+        #   href: articles/lectures/11_interactions/11_interactions.html
+        # - text: "Lecture 12: Evaluating assumptions"
+        #   href: articles/lectures/12_assumptions/12_assumptions.html
+        # - text: "Lecture 13: Model selection"
+        #   href: articles/lectures/13_model_selection/13_model_selection.html
+        # - text: "Lecture 14: Random effects"
+        #   href: articles/lectures/14_random_effects/14_random_effects.html
+        # - text: "Lecture 15: Nested designs"
+        #   href: articles/lectures/15_nested/15_nested.html
+        # - text: "Lecture 16: Split-plot designs"
+        #   href: articles/lectures/16_split-plot/16_split-plot.html
+        # - text: "Lecture 17: Repeated measures"
+        #   href: articles/lectures/17_repeated_measures/17_repeated_measures.html
+        # - text: "Lecture 18: Generalized linear models"
+        #   href: articles/lectures/18_glm/18_glm.html
+        # - text: "Lecture 19: Logistic regression"
+        #   href: articles/lectures/19_logistic_regression/19_logistic_regression.html
+        # - text: "Lecture 20: Poisson regression"
+        #   href: articles/lectures/20_poisson_regression/20_poisson_regression.html
+        # - text: "Lecture 21: Zero-inflated regression"
+        #   href: articles/lectures/21_zero_inflation/21_zero_inflation.html
     - text: "Labs"
       icon: fas fa-desktop
       menu:
@@ -69,28 +72,28 @@ navbar:
           href: articles/lab01_intro_to_R.html
         - text: "Lab 2: Introduction to projects and RMarkdown"
           href: articles/lab02_Intro_project_and_Rmd.html
-        - text: "Lab 3: t-tests"
-          href: articles/lab03_t-tests.html
-        - text: "Lab 4: ANOVA"
-          href: articles/lab04_ANOVA.html
-        - text: "Lab 5: Multiple Regression"
-          href: articles/lab05_multiple_regression.html
-        - text: "Lab 6: Interactions"
-          href: articles/lab06_interactions.html
-        - text: "Lab 7: Evaluating assumptions"
-          href: articles/lab07_linear_model_assumptions.html
-        - text: "Lab 8: Model selection"
-          href: articles/lab08_model_selection.html
-        - text: "Lab 9: Nested designs"
-          href: articles/lab09_nested.html
-        - text: "Lab 10: Split-plot designs"
-          href: articles/lab10_split_plot.html
-        - text: "Lab 11: Repeated measures"
-          href: articles/lab11_repeated_measures.html
-        - text: "Lab 12: Logistic regression"
-          href: articles/lab12_glm_lr.html
-        - text: "Lab 13: Poisson regression"
-          href: articles/lab13_glm_pr.html
+        - text: "Lab 3: Using R to explore sampling error"
+          href: articles/lab03_inference.html
+        - text: "Lab 4: t-tests"
+          href: articles/lab04_t-tests.html
+        - text: "Lab 5: ANOVA"
+          href: articles/lab05_ANOVA.html
+        # - text: "Lab 6: Multiple Regression"
+        #   href: articles/lab06_multiple_regression.html
+        # - text: "Lab 7: Interactions"
+        #   href: articles/lab07_interactions.html
+        # - text: "Lab 8: Evaluating assumptions"
+        #   href: articles/lab08_linear_model_assumptions.html
+        # - text: "Lab 9: Model selection"
+        #   href: articles/lab09_model_selection.html
+        # - text: "Lab 10: Nested designs"
+        #   href: articles/lab10_nested.html
+        # - text: "Lab 11: Split-plot designs"
+        #   href: articles/lab11_split_plot.html
+        # - text: "Lab 12: Repeated measures"
+        #   href: articles/lab12_repeated_measures.html
+        # - text: "Lab 13: Generalized linear models"
+        #   href: articles/lab13_glm.html
     - icon: fas fa-pencil-square-o
       text: "References"
       menu:

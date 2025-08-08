@@ -1,7 +1,7 @@
 ---
 title: "LECTURE 1: introduction to statistics"
 subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2024"
+author: "<br/><br/><br/>Fall 2025"
 output:
   xaringan::moon_reader:
     css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
@@ -185,7 +185,7 @@ $$Statistics = Information + Uncertainty$$
 4) Data collection
 
 5) Models and testing  
-- Model is mathematical abstraction of hypothesis
+- Model = mathematical abstraction of hypothesis
 - Model used to "confront" hypothesis with data (via predictions)
 - Draw conclusions: Does data support hypothesis?  
 
@@ -302,9 +302,9 @@ ggplot(delta_df) +
 ```
 
 #### Note:
-1) This is **the** *population*  
+1) These are **the** *populations*  
 
-2) There is **variation** within and among groups, but: 
+2) There is **variation** within and among populations, but: 
 
 3) The hypothesis is correct (mean prevalence is lower in new vs. current variety)
 
@@ -352,7 +352,7 @@ ggplot() +
   geom_vline(data = mean_df, aes(xintercept = x, color = Variety), size = 1) +
   scale_x_continuous("% of leaves infected") +
   scale_y_continuous("") +
-  labs(subtitle = "Disease prevalence in sample (n = 15)")
+  labs(subtitle = "Disease prevalence in samples (n = 15)")
 ```
 
 ---
@@ -382,14 +382,14 @@ ggplot() +
                arrow = arrow(length = unit(0.25, "cm"))) +
   geom_segment(aes(x = 26.5, y = 0.049, xend = 53, yend = 0.041),
                arrow = arrow(length = unit(0.25, "cm"))) +
-  labs(subtitle = "Disease prevalence in sample (n = 15)")
+  labs(subtitle = "Disease prevalence in samples (n = 15)")
 ```
 
 
 --
 
 #### Note:
-1) This is **a** *sample*  
+1) These are *samples*  
 
 2) The sample means are our best estimates of the population means  
 
@@ -505,5 +505,5 @@ ggplot() +
 
 <br/>
 
-### **Reading**: [Fieberg chp. 1.2-1.4](https://statistics4ecologists-v1.netlify.app/linreg.html#data-example-sustainable-trophy-hunting-of-male-african-lions)
+### **Reading**: [Fieberg chp. 1.2-1.4](https://statistics4ecologists-v3.netlify.app/01-linearregression)
 
