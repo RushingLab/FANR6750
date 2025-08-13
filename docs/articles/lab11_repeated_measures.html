@@ -29,7 +29,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item"><a class="nav-link" href="../index.html"><span class="fa fa-home"></span></a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html" aria-label="Home"><span class="fa fa-home"></span></a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><a class="nav-link" href="../articles/syllabus.html"><span class="fa fas fa-book"></span> Syllabus</a></li>
@@ -206,7 +206,7 @@ model</p></li>
 subjected to different fertilizer treatments. Leaf growth on each plant
 was measured weekly for 5 weeks.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">FANR6750</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://rushinglab.github.io/FANR6750">FANR6750</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"plantdata"</span><span class="op">)</span></span></code></pre></div>
 <p>Before begining the analysis, we will want to convert some variables
 to factors.</p>
@@ -476,7 +476,7 @@ density (1 fish), 5 tanks have medium density (5 fish), and 5 tanks have
 high density (10 fish). In each tank, the weight of one “focal fish” is
 recorded on 6 consecutive weeks. The data can be loaded using:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">FANR6750</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://rushinglab.github.io/FANR6750">FANR6750</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"fishdata"</span><span class="op">)</span></span></code></pre></div>
 <ol style="list-style-type: decimal">
 <li><p>Conduct the repeated measures ANOVA using <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code>.

@@ -29,7 +29,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item"><a class="nav-link" href="../index.html"><span class="fa fa-home"></span></a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html" aria-label="Home"><span class="fa fa-home"></span></a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><a class="nav-link" href="../articles/syllabus.html"><span class="fa fas fa-book"></span> Syllabus</a></li>
@@ -176,7 +176,7 @@ did not differ from eachother, we can simplify to a one-way ANOVA.</p>
 <p>For this lab, we’ll use another data set on the response of gypsy
 moth larvae to pesticide treatments:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">FANR6750</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://rushinglab.github.io/FANR6750">FANR6750</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"mothdata2"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">mothdata2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    36 obs. of  3 variables:</span></span>
@@ -424,7 +424,7 @@ salinity levels: low, medium, and high, or a control tank. A week after
 birth, two offspring (fry) are measured.</p>
 <p>The data can be accessed using:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">FANR6750</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://rushinglab.github.io/FANR6750">FANR6750</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"salinitydata"</span><span class="op">)</span></span></code></pre></div>
 <p>Perform the appropriate analysis using <code><a href="https://rdrr.io/r/stats/aov.html" class="external-link">aov()</a></code> and
 <code><a href="https://rdrr.io/pkg/nlme/man/lme.html" class="external-link">lme()</a></code> on the dataset. Answer the following questions:</p>

@@ -592,7 +592,7 @@ Create an R Markdown file titled "Assignment 1". Within that document, do the fo
 
 2) Create a header called "Standardizing the magnitude of sampling error" and under this header create another R chunk. Within this chunk, calculate the standard deviation of `r`. Next, create a new object (call it `t`) by dividing each element of `r` by the standard deviation of `r`. Note that you should do this using a single line of code and you *should not* hard code the standard deviation (in other words, use the `sd()` function rather than typing the actual value you calculated in the previous step). Next, use ggplot2 to create a histogram of these values. Below the chunk, explain what the values in this histogram represent, in particular what positive and negative values represent. Also, explain where the variation in these values comes from. In other words, why do the samples not all have the same value?
 
-3) A friend of yours from another university also happens to be studying gray squirrels (what are the chances!) and claims that their squirrels are bigger than your squirrels. This friend has a history of exaggeration and you certainly don't want them to think their squirrels are better than your squirrels, so you are skeptical. You ask your friend to capture and weight 15 squirrels on their campus and send you the data, which is included below:
+3) A friend of yours from another university also happens to be studying gray squirrels (what are the chances!) and claims that their squirrels are bigger than your squirrels. This friend has a history of exaggeration and you certainly don't want them to think their squirrels are better than your squirrels, so you are skeptical. You ask your friend to capture and weigh 15 squirrels on their campus and send you the data, which is included below:
 
 ```{r}
 new_data <- c(575.5, 513.1, 509.4, 527.1, 485.6, 473.9, 467.3, 535.9, 527.5, 
@@ -607,7 +607,7 @@ Create a new header called "Are their squirrels really bigger than my squirrels?
 
 - divide `r_samp` by the standard deviation of `r` that you calculated above (call this `t_samp`)
 
-Next, create a new figure that includes the histogram you create in the previous step plus a dashed, vertical bar corresponding to `t_samp`. 
+Next, create a new figure that includes the histogram you created in the previous step plus a dashed, vertical bar corresponding to `t_samp`. 
 
 Finally, do think your friend is right? Are the squirrels on their campus bigger? Discuss how the information in this figure informs your conclusions. Remember that this assignment is focused on sampling error, so be sure your answer relates back to this concept. What does sampling error have to do with the histogram and your friend's data? 
 
@@ -633,3 +633,4 @@ A few things to remember when creating the document:
 
 - See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
 
+- If you use AI on any part of your assignment, you must include the full prompt(s) you used and it's full answer(s) in a **separate section** titled "AI assistance" at the end of this document.

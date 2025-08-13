@@ -242,7 +242,7 @@ class: inverse, middle, center
 
 - Increasing interest in causal inference from observational studies
 
-    + This is something we may discuss later in the semester
+    + This is something we will discuss later in the semester
     
 ---
 class: inverse, middle, center

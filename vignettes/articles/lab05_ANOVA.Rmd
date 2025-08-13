@@ -376,9 +376,9 @@ plot(TukeyHSD(aov1))
 
 # Optional exercise (not graded)
 
-A biologist wants to compare the growth of four different tree species she is considering for use in reforestation efforts. All 32 seedlings of the four species are planted at the same time in a large plot. Heights in meters are recorded after several years. 
+A biologist wants to compare the growth of four different tree species she is considering for use in reforestation efforts. Thirty two seedlings of each species are planted at the same time in a large plot. Heights in meters are recorded after several years. 
 
-Create an R Markdown file titled "Assignment 3". Within that document, do the following:
+Within a RMarkdown document, do the following:
 
 1) Create an `R` chunk to load the data using:
 
@@ -412,3 +412,5 @@ A few things to remember when finishing the exercise:
 - Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
 
 - See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+
+- If you use AI on any part of your assignment, you must include the full prompt(s) you used and it's full answer(s) in a **separate section** titled "AI assistance" at the end of this document.

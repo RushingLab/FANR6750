@@ -8,6 +8,7 @@ Description: Course materials for FANR6750: Experimental Methods in Forestry and
 License: CC0
 Encoding: UTF-8
 LazyData: true
+URL: http://rushinglab.github.io/FANR6750
 Suggests: 
     gganimate
 Imports: 

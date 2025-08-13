@@ -29,7 +29,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item"><a class="nav-link" href="../index.html"><span class="fa fa-home"></span></a></li>
+<li class="nav-item"><a class="nav-link" href="../index.html" aria-label="Home"><span class="fa fa-home"></span></a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><a class="nav-link" href="../articles/syllabus.html"><span class="fa fas fa-book"></span> Syllabus</a></li>
@@ -156,7 +156,7 @@ a little about base &lt;code&gt;R&lt;/code&gt; graphics.&lt;/p&gt;"><sup>1</sup>
 <p>For this exercise, we will use a small data set that comes with the
 <code>FANR6750</code> package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">FANR6750</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://rushinglab.github.io/FANR6750">FANR6750</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"thrushdata"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">thrushdata</span><span class="op">)</span></span>
@@ -780,7 +780,7 @@ studying gray squirrels (what are the chances!) and claims that their
 squirrels are bigger than your squirrels. This friend has a history of
 exaggeration and you certainly don’t want them to think their squirrels
 are better than your squirrels, so you are skeptical. You ask your
-friend to capture and weight 15 squirrels on their campus and send you
+friend to capture and weigh 15 squirrels on their campus and send you
 the data, which is included below:</p></li>
 </ol>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
@@ -798,7 +798,7 @@ squirrels (call this <code>r_samp</code>)</p></li>
 <code>r</code> that you calculated above (call this
 <code>t_samp</code>)</p></li>
 </ul>
-<p>Next, create a new figure that includes the histogram you create in
+<p>Next, create a new figure that includes the histogram you created in
 the previous step plus a dashed, vertical bar corresponding to
 <code>t_samp</code>.</p>
 <p>Finally, do think your friend is right? Are the squirrels on their
@@ -835,6 +835,10 @@ document</p></li>
 errors</p></li>
 <li><p>See the R Markdown reference sheet for help with creating
 <code>R</code> chunks, equations, tables, etc.</p></li>
+<li><p>If you use AI on any part of your assignment, you must include
+the full prompt(s) you used and it’s full answer(s) in a
+<strong>separate section</strong> titled “AI assistance” at the end of
+this document.</p></li>
 </ul>
 </div>
 

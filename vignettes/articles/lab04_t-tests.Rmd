@@ -415,14 +415,6 @@ var.test(yH, yL)
 
 **What do we conclude? Was it appropriate for us to assume equality of variances? What could we have done if this assumption was not met?**
 
-We can also formulate our t-test using some different syntax. It will give us exactly the same results though.
-
-```{r echo = TRUE}
-t.test(calls ~ wind, data = thrushdata, 
-       var.equal = TRUE, paired = FALSE, 
-       alternative = "less")
-```
-
 
 We have performed the t-test for this dataset but it would be nice if we could plot the data. This section below provides a brief introduction to plotting in `R`.
 
@@ -545,17 +537,37 @@ library(FANR6750)
 data("tunadata")
 ```
 
-2) Make a figure to show the weights of both infected and healthy tuna. You should spend some time considering what type of figure would best display this data (1 pt).
+2) Make a figure to show the weights of both infected and healthy tuna. You should spend some time considering what type of figure would best display this data
 
-3) Create a header called "Hypotheses" and under this header, in plain English indicate what the null and alternative hypotheses are for the t-test. Also use R Markdown's equation features to write these hypotheses using mathematical notation. In order to do this, you will need to consider what type of test would be appropriate for this data and how many tails the test will have (1 pt).
+3) Create a header called "Hypotheses" and under this header, in plain English indicate what the null and alternative hypotheses are for the t-test. Also use R Markdown's equation features to write these hypotheses using mathematical notation. In order to do this, you will need to consider what type of test would be appropriate for this data and how many tails the test will have
 
-4) Create a header called "t-test by hand". Under this header, do a t-test on the tuna data without using the `t.test()` function. Use only the functions `mean`, `sd`, and possibly `length`. Be sure to **annotate your code** (either within the `R` chunk using `#` or as plain text within the R Markdown file) and **state the decision** (reject or fail to reject the null) based on your results (2 pt). 
+4) Create a header called "t-test by hand". Under this header, add a R chunk that includes the following code. Change the `?` inside the `set.seed()` function to any number of your choosing, then run the code. you should get either a 0 or a 1
 
-5) Create a header called "t-test in R". Under this header, do the t-test again, but this time using the `t.test` function (1 pt).
+```{r eval = F}
+set.seed(?)
+rbinom(1, 1, 0.5)
+```
 
-    - Assume variances are equal  
+- If the code above returned 0, do the following:  
 
-6) Add a section at the end of your file called "Discussion" and explain why you think the t-test failed to reject the null hypothesis even though the sample means were ~60 pounds different (almost a 20% difference in weight). What about the data may have caused this result? (1 pt)
+ > Do a t-test on the tuna data without using the `t.test()` function. Use only the functions `mean`, `sd`, and possibly `length`. Be sure to annotate your code (either within the `R` chunk using `#` or as plain text within the R Markdown file) and state the decision (reject or fail to reject the null) based on your results  
+
+- If the code above returned 1, do the following:  
+
+> Ask AI to perform a t-test without using the `t.test()` function. The code may only use the functions `mean`, `sd`, and possibly `length`. The final code must be annotated and must state the decision of the test. Provide all prompts and output you used to get a final, working version of the code that meets the criteria above.
+
+- Regardless of which option you completed, **keep track of how long it took you to complete the question and include the time taken at the end of your answer**.
+
+5) Create a header called "t-test in R". Under this header, do the t-test again, but this time using the `t.test` function (assume variances are equal). Did you get the same answer as the previous question. Explain why you think the t-test failed to reject the null hypothesis even though the sample means were ~60 pounds different (almost a 20% difference in weight). What about the data may have caused this result? 
+
+
+6) Create a new header called "Reflection". Under this header, answer the following questions: 
+
+- On a 1-10 scale, how would you rate your confidence in the topics covered in this lab? 
+
+- What lingering questions/confusion about these topics do you still have?
+
+- If you used AI to answer question 4, do you think it helped? Did it save time? If you did not use AI, do you think it would have helped?
 
 A few things to remember when creating the document:
 
@@ -569,3 +581,4 @@ A few things to remember when creating the document:
 
 - See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
 
+- If you use AI on any part of your assignment, you must include the full prompt(s) you used and it's full answer(s) in a **separate section** titled "AI assistance" at the end of this document.
