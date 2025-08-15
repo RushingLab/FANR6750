@@ -58,6 +58,55 @@ class: inverse
 > Since data are sampled at random, there is always a risk of reaching a wrong conclusion, and things can go wrong in two ways - Dalgaard (2008)
 
 ---
+# null hypothesis testing
+
+```{r, echo = FALSE, out.height=450, out.width=800}
+knitr::include_graphics("fig/NHT.png")
+```
+
+---
+# null hypothesis testing
+
+```{r, echo = FALSE, out.height=450, out.width=800}
+knitr::include_graphics("fig/NHT_reject.png")
+```
+
+---
+# null hypothesis testing
+
+```{r, echo = FALSE, out.height=450, out.width=800}
+knitr::include_graphics("fig/NHT_ftr.png")
+```
+
+---
+# null hypothesis testing
+
+```{r, echo = FALSE, out.height=450, out.width=800}
+knitr::include_graphics("fig/NHT_typeI.png")
+```
+
+---
+# null hypothesis testing
+
+```{r, echo = FALSE, out.height=450, out.width=800}
+knitr::include_graphics("fig/NHT_alpha.png")
+```
+
+---
+# null hypothesis testing
+
+```{r, echo = FALSE, out.height=450, out.width=800}
+knitr::include_graphics("fig/NHT_typeII.png")
+```
+
+---
+# null hypothesis testing
+
+```{r, echo = FALSE, out.height=450, out.width=800}
+knitr::include_graphics("fig/NHT_q.png")
+```
+
+---
 # type i & type ii errors
 
 #### Type I error (i.e., false positive)

@@ -118,7 +118,7 @@ class: inverse, middle
 ---
 # elements of experimental design
 
-### If the goal of experiments is to test a hypothesis, a good experiment must:
+#### If the goal of experiments is to test a hypothesis, a good experiment must:
 
 1) Isolate the effects of the hypothesized treatment variables from other sources of variation 
 
@@ -126,7 +126,7 @@ class: inverse, middle
 
 --
 
-The first goal can be generally be met by careful consideration of:
+#### The first goal can be generally be met by careful consideration of:
 
 1) Replication
 

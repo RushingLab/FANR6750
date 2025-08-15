@@ -20,6 +20,10 @@ library(emo)
 library(FANR6750)
 library(dplyr)
 library(kableExtra)
+loblollydata <- structure(list(Treatment = c("A", "A", "A", "B", "B", "B", "C", 
+"C", "C", "D", "D", "D"), Replicate = c(1, 2, 3, 1, 2, 3, 1, 
+2, 3, 1, 2, 3), Height = c(11, 10, 9, 9, 8, 7, 7, 6, 5, 5, 4, 
+3)), class = "data.frame", row.names = c(NA, -12L))
 # library(gganimate)
 ```
 
@@ -55,7 +59,7 @@ class: inverse
 ---
 # categorical predictors
 
-#### In lecture 4, we learned about fitting models with categorical predictors with 1 (measurement error) or 2 (frog) levels
+#### In lecture 5, we learned about fitting models with categorical predictors with 1 (measurement error) or 2 (frog) levels
 
 --
 
@@ -212,7 +216,7 @@ model.matrix(fit1)[c(1,4,7,10),]
 model.matrix(fit1)[c(1,4,7,10),]
 ```
 
-Remember that the model matrix has one column for every parameter in the model
+The model matrix has one column for every parameter in the model
 
 - How many parameters is this model estimating?
 
@@ -245,7 +249,7 @@ broom::tidy(fit1)
 - But wait, the null hypothesis was $\mu_A = \mu_B = \mu_C = \mu_D$
 
 ---
-# regression F-statistic
+# regression f-statistic
 
 .small-code[
 ```{r echo = TRUE}
@@ -254,7 +258,7 @@ summary(fit1)
 ]
 
 ---
-# regression F-statistic
+# regression f-statistic
 
 The *F*-statistic tests whether all regression coefficients (other than the intercept) are all 0
 
@@ -278,7 +282,7 @@ $$F = \frac{s^2_A}{s^2_B}$$
 Where do the variances come from in the linear model and what do they tell us about differences among groups?
 
 ---
-# regression F-statistic
+# regression f-statistic
 
 #### To understand why the test is based on variance, it is helpful to consider several types of means:
 
@@ -305,7 +309,7 @@ ggplot(loblollydata, aes(x = x, y = Height)) +
 ]
 
 ---
-# regression F-statistic
+# regression f-statistic
 
 #### To understand why the test is based on variance, it is helpful to consider several types of means:
 
@@ -344,7 +348,7 @@ ggplot(loblollydata, aes(x = x, y = Height)) +
 ]
 
 ---
-# regression F-statistic
+# regression f-statistic
 
 #### To understand why the test is based on variance, it is helpful to consider several types of means:
 
@@ -525,7 +529,7 @@ $$\Large MS_A = \frac{SS_A}{a-1}$$
 $$\Large MS_W = \frac{SS_W}{a(n-1)}$$
 
 ---
-# F-statistic
+# f-statistic
 
 <br/>
 <br/>
@@ -553,7 +557,7 @@ $$\LARGE F = \frac{MS_A}{MS_W}$$
 - Large values of $F$ indicate treatment effects are large relative to residual variation, but can we conclude there is a treatment effect? 
 
 ---
-# the F-distribution
+# the f-distribution
 
 #### **If the null hypothesis is true** ( $\sigma^2_A = \sigma^2_B$), the ratio of sample variances follows an *F*-distribution
 
@@ -750,7 +754,7 @@ MSe <- sum(fit.lm$residuals^2)/9
 ```
 
 ---
-# recap
+# summary
 
 1) Models with categorical variables can be fit using either `lm()` or `aov()`
 

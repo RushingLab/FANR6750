@@ -36,7 +36,7 @@ class: inverse
 <br/> 
 --
 
-#### 3) Dummy variables and model matrices
+#### 3) Dummy variables
 
 <br/> 
 
@@ -144,7 +144,7 @@ sd(y)
 
 --
 
-?
+SE 
 
 ```{r echo = TRUE}
 sd(y)/sqrt(10)
@@ -211,11 +211,11 @@ broom::tidy(fit1)
 
 --
 
-- The `(Intercept)` estimate corresponds to $\beta_0$ and is simply the mean value of $y$
+- The `(Intercept)` estimate corresponds to $\large \beta_0$ and is simply the mean value of $\large y$
 
 --
 
-- The standard error is calculated simply as $\frac{s}{\sqrt{n}}$
+- The standard error is calculated simply as $\large \frac{s}{\sqrt{n}}$
 --
 
 - We will discuss whether there is evidence that $\beta_0 \neq 0$ in the next lecture
@@ -243,7 +243,7 @@ t.test(y, mu = 0)
 ---
 # the one-sample t-test by hand
 
-#### Because this is such a simple model, we can calculate $\beta_0$ and the standard error by hand very easily
+#### Because this is such a simple model, we can calculate $\large \beta_0$ and the standard error by hand very easily
 
 ```{r echo = TRUE}
 (beta0 <- mean(y))
@@ -252,7 +252,7 @@ t.test(y, mu = 0)
 
 --
 
-Again, we will discuss how to use this information to determine whether $\beta_0$ is or is not equal to 0 in the next lecture
+Again, we will discuss how to use this information to determine whether $\large \beta_0$ is or is not equal to 0 in the next lecture
 
 
 ---
@@ -317,7 +317,7 @@ ggplot() +
              aes(xintercept = x, color = Development), alpha = 0.6) +
   geom_rug(data = frogdata, aes(x = Frogs, color = Development)) +
   scale_y_continuous("Frequency") +
-  scale_x_continuous("Frogs per plot", expand = c(0, 0), breaks = c(12, 20), 
+  scale_x_continuous("Frogs per plot", expand = c(0, 0), breaks = c(6.1, 19.2), 
                      labels = expression(mu[H], mu[L]))
 
 ```
@@ -442,72 +442,6 @@ To interpret this output, we need to know how `R` codes categorical predictors..
 ```{r echo = TRUE}
 str(frogdata)
 ```
-
----
-# model matrix
-
-#### We can always check how `R` coded a linear model using the `model.matrix()` function
-
-- the model matrix (also called the *design matrix*) will always have one row for every observation and one column for every parameter in the model
-
-```{r echo = TRUE}
-### View rows 1, 2, 11, and 12 of the model matrix
-model.matrix(fit)[c(1,2,11,12),]
-```
-
---
-
-To interpret this output (and see why it's useful), we need to review matrix algebra
-
----
-# matrix multiplication
-
-$$\begin{bmatrix}
-    a & b & c \\
-    d & e & f \\
-    g & h & i 
-\end{bmatrix}\;\;
-\mathbf \times \begin{bmatrix}
-    x \\
-    y \\
-    z
-\end{bmatrix}=\large \begin{bmatrix}
-    a\times x + b\times y + c\times z\\
-    d\times x + e\times y + f\times z\\
-    g\times x + h\times y + i\times z
-\end{bmatrix}$$
-
---
-
-$$\begin{bmatrix}
-    1 & x_1 \\
-    1 & x_2 \\
-    1 & x_3 
-\end{bmatrix}\;\;
-\mathbf \times \begin{bmatrix}
-    \beta_0 \\
-    \beta_1 
-\end{bmatrix}=\large \begin{bmatrix}
-    \beta_0 \times 1 + \beta_1 \times x_1\\
-    \beta_0 \times 1 + \beta_1 \times x_2\\
-    \beta_0 \times 1 + \beta_1 \times x_3
-\end{bmatrix}$$
-
---
-
-.pull-left[
-```{r echo = TRUE}
-### View rows 1, 2, 11, and 12 of the model matrix
-model.matrix(fit)[c(1,2,11,12),]
-```
-]
-
-.pull-right[
-```{r echo = TRUE}
-### View rows 1, 2, 11, and 12 of the data
-frogdata[c(1,2,11,12),]
-```
-]
 
 ---
 # fitting the model in `R`
@@ -681,21 +615,27 @@ broom::tidy(fit3)
 
 
 ---
-# other ways to fit the model
+# summary
 
-#### Challenge question: What do you think the model matrix looks like for the means parameterization of the model?
+- The simplest linear model we can construct tests whether the mean of a sample is different from some null value (usually 0)
 
+    + This model is the same as a one-sample t-test
+    
 --
 
-```{r echo = TRUE}
-model.matrix(fit3)[c(1,2,11,12),]
-```
+- The same linear model can be extended to test whether the mean of two groups differ from each other
 
+    + The `lm()` function uses dummy variables, i.e., coding one treatment level as 0 and the other as 1
+    
+    + By default, the intercept is the mean of the reference group and the slope parameter is the difference between the group means
+    
+    + This model is the same as a two-sample t-test
+    
 --
 
-The key thing to recognize is that these alternative (t-test, effects parameterization, means parameterization) provide the *exact same information*, just presented in different ways
+- The alternative ways to fit this model (t-test, effects parameterization, means parameterization) provide the *exact same information*
 
-- In other words, they do not change your conclusions!
+    + In other words, they do not change your conclusions!
 
 
 ---
