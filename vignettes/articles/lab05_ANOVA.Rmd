@@ -4,7 +4,7 @@ subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Res
 author: "Fall 2025"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{lab04_ANOVA}
+  %\VignetteIndexEntry{lab05_ANOVA}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
