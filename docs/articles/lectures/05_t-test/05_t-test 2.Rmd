@@ -1,0 +1,651 @@
+---
+title: "LECTURE 5: linear models part 1: categorical predictor w/ 2 levels"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2025"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, fig.retina = 2)
+source(here::here("R/zzz.R"))
+library(emo)
+library(FANR6750)
+# library(gganimate)
+```
+
+class: inverse
+
+# outline
+
+<br/>
+#### 1) Categorical predictor with 1 level (linear model vs t-test formulations)
+
+<br/>  
+--
+
+#### 2) Categorical predictor with 2 levels (linear model vs t-test formulations)
+
+<br/> 
+--
+
+#### 3) Dummy variables
+
+<br/> 
+
+
+---
+# context, part 1
+
+#### We are interested in whether a certain brand of scale provides accurate mass measurements
+
+--
+
+Hypothesis
+
+> Measurement error, measured as the difference between the mass indicated by the scale and the true mass of an object, is 0 (on average)
+
+--
+
+```{r fig.height=4, fig.width=6}
+measure_df <- data.frame(z = seq(from = -1, to = 1, by = 0.01),
+                         pr_z = dnorm(x = seq(from = -1, to = 1, by = 0.01), 0, 0.2))
+
+ggplot() + 
+  geom_path(data = measure_df, aes(x = z, y = pr_z), color = "#446E9B") +
+  geom_vline(xintercept = 0) +
+  scale_y_continuous("Density") +
+  scale_x_continuous("Measurement error", expand = c(0, 0))
+```
+
+---
+# context, part 1
+
+Field procedure:
+
+- randomly sample 10 scales of the same make and model
+
+- weigh a test object (of known mass) on each scale and record the difference between the measured and true mass 
+
+
+--
+
+Data:
+
+`-0.062, -0.38, 0.85, -0.58,  0.53,  0.09,  0.31,  0.77,  0.59,  -0.17`
+
+```{r fig.height=4, fig.width=6}
+samp <- data.frame(y = c(-0.062, -0.38, 0.85, -0.58,  0.53,  0.09,  0.31,  0.77,  0.59,  -0.17))
+
+ggplot() + 
+  geom_path(data = measure_df, aes(x = z, y = pr_z), color = "#446E9B") +
+  geom_vline(xintercept = 0) +
+  geom_rug(data = samp, aes(x = y), color = "#D47500") +
+  scale_y_continuous("Density") +
+  scale_x_continuous("Measurement error", expand = c(0, 0))
+```
+
+---
+# the linear model
+
+$$\LARGE y_i = \beta_0 + \epsilon_i$$
+
+$$\LARGE \epsilon_i \sim normal(0, \sigma)$$
+
+--
+
+- $\large \beta_0$ is the expected (or average) measurement error across all scales
+
+- $\epsilon_i$ is residual error associated with each measurement
+
+--
+
+- This is most simple linear model we can construct
+
+--
+
+- If our hypothesis is correct, $\large \beta_0 = 0$
+
+--
+
+- Question: What is the value of $\large \beta_0$ if our hypothesis is wrong?
+
+---
+# summary statistics
+
+.small-code[
+```{r echo = TRUE}
+y <- c(-0.062, -0.38, 0.85, -0.58,  0.53,  0.09,  0.31,  0.77,  0.59,  -0.17)
+```
+]
+
+--
+
+$\Large \bar{y}$
+
+```{r echo = TRUE}
+mean(y)
+```
+
+--
+
+$\Large s$
+
+```{r echo = TRUE}
+sd(y)
+```
+
+--
+
+SE 
+
+```{r echo = TRUE}
+sd(y)/sqrt(10)
+```
+
+---
+# visualizing the linear model
+
+<br/>
+
+```{r fig.height=5, fig.width=7}
+beta0.hat <- mean(y)
+stnderr <- sd(y)/sqrt(10)
+se_df <- data.frame(ymin = -Inf, ymax = Inf, 
+                    xmin = beta0.hat - stnderr, 
+                    xmax = beta0.hat + stnderr)
+ggplot() + 
+    geom_rect(data = se_df, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), 
+                 fill = "#D47500", alpha = 0.25) +
+  geom_path(data = measure_df, aes(x = z, y = pr_z), color = "#446E9B") +
+  geom_vline(xintercept = 0) +
+  geom_vline(xintercept = beta0.hat, color = "#D47500", linetype = "dashed") +
+  geom_rug(data = samp, aes(x = y), color = "#D47500") +
+  scale_y_continuous("Density") +
+  scale_x_continuous("Measurement error", expand = c(0, 0)) +
+  labs(subtitle = "Sample mean + standard error")
+```
+
+---
+# visualizing the linear model
+
+<br/>
+
+
+```{r fig.height=5, fig.width=7}
+ci_df <- data.frame(ymin = -Inf, ymax = Inf, 
+                    xmin = beta0.hat - stnderr*1.96, 
+                    xmax = beta0.hat + stnderr*1.96)
+ggplot() +
+      geom_rect(data = ci_df, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), 
+                 fill = "#D47500", alpha = 0.25) +
+    geom_rect(data = se_df, aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax), 
+                 fill = "#D47500", alpha = 0.25) +
+  geom_path(data = measure_df, aes(x = z, y = pr_z), color = "#446E9B") +
+  geom_vline(xintercept = 0) +
+  geom_vline(xintercept = beta0.hat, color = "#D47500", linetype = "dashed") +
+  geom_rug(data = samp, aes(x = y), color = "#D47500") +
+  scale_y_continuous("Density") +
+  scale_x_continuous("Measurement error", expand = c(0, 0)) +
+  labs(subtitle = "Sample mean + standard error (dark) and 95% CI (light)")
+```
+
+---
+# the linear model
+
+#### Because this is a linear model, we can fit it using the `lm` function:
+
+```{r echo = TRUE}
+fit1 <- lm(y ~ 1)
+
+broom::tidy(fit1)
+```
+
+
+--
+
+- The `(Intercept)` estimate corresponds to $\large \beta_0$ and is simply the mean value of $\large y$
+
+--
+
+- The standard error is calculated simply as $\large \frac{s}{\sqrt{n}}$
+--
+
+- We will discuss whether there is evidence that $\beta_0 \neq 0$ in the next lecture
+
+---
+# the linear model as a t-test
+
+#### The model we just fit has a corresponding "test" that you may encounter: the *one-sample t-test*
+
+.pull-left[
+- One-sample t-tests are used to test whether the mean of a population differs from some value (in this case 0)
+
+- there is a built-in function to fit t-tests
+
+- the mean (and the SE, t-statistic, p-value, confidence interval) are exactly the same in both approaches
+]
+
+.pull-right[
+
+```{r echo = TRUE}
+t.test(y, mu = 0)
+```
+]
+
+---
+# the one-sample t-test by hand
+
+#### Because this is such a simple model, we can calculate $\large \beta_0$ and the standard error by hand very easily
+
+```{r echo = TRUE}
+(beta0 <- mean(y))
+(SE <- sd(y)/sqrt(10))
+```
+
+--
+
+Again, we will discuss how to use this information to determine whether $\large \beta_0$ is or is not equal to 0 in the next lecture
+
+
+---
+class:inverse
+
+# context, part 2
+
+#### We are interested in determining how urban development influences the abundance of strawberry poison-dart frog (*Oophaga pumilio*)
+
+.left-column[
+</br>
+```{r}
+knitr::include_graphics("fig/frog2.png")
+```
+]
+
+.right-column[
+Hypothesis
+
+> Strawberry frog abundance will differ between islands with high urban development and island with low urban development
+
+Field procedure:
+
+- $\large n=10$ plots are established on one high-development island and one low-development island
+
+- Within each plot, strawberry frogs are counted within 5 randomly-located quadrats 
+
+]
+
+---
+# context, part 2
+
+.left-column[
+</br>
+```{r out.width="80%"}
+knitr::include_graphics("fig/frog.png")
+```
+
+]
+
+.right-column[
+#### Data:
+
+`Low development: 16, 14, 18, 17, 29, 31, 14, 16, 22, 15`
+
+`High development: 2, 11, 6, 8, 0, 3, 19, 1, 6, 5`
+
+
+```{r fig.height=3.5, fig.width=6.5}
+frog_df <- data.frame(z = seq(from = 0, to = 34, by = 0.1),
+                      pr_z = c(dnorm(x = seq(from = 0, to = 34, by = 0.1), 20, 2),
+                               dnorm(x = seq(from = 0, to = 34, by = 0.1), 12, 2)),
+                      Development = rep(c("Low", "High"), each = 341))
+
+samp <- data.frame(y = c(16, 14, 18, 17, 29, 31, 14, 16, 22, 15, 2, 11, 6, 8, 0, 3, 19, 1, 6, 5),
+                   Development = rep(c("Low", "High"), each = 10))
+
+ggplot() + 
+  geom_histogram(data = frogdata, aes(x = Frogs, fill = Development),
+                 binwidth = 1, alpha = 0.7) +
+  geom_vline(data = data.frame(x = c(19.2, 6.1), Development = c("Low", "High")), 
+             aes(xintercept = x, color = Development), alpha = 0.6) +
+  geom_rug(data = frogdata, aes(x = Frogs, color = Development)) +
+  scale_y_continuous("Frequency") +
+  scale_x_continuous("Frogs per plot", expand = c(0, 0), breaks = c(6.1, 19.2), 
+                     labels = expression(mu[H], mu[L]))
+
+```
+
+]
+
+---
+# quick review
+
+#### A "simple" linear model
+
+$$\underbrace{\LARGE E[y_i] = 7 + 3.5 \times x_i}_{Deterministic}$$
+
+$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}$$
+
+```{r fig.height=3.5, fig.width=6}
+x <- rnorm(100)
+y <- 7 + 3.5 * x + rnorm(100, 0, 1)
+mu <- 7 + 3.5 * x
+resid <- y - mu
+df <- data.frame(x = x, y = y, mu = mu, Residuals = resid)
+
+ggplot(df, aes(x, y)) + 
+  geom_abline(slope = 3.5, intercept = 7, color = "#446E9B", size = 1.5) +
+  scale_y_continuous(expression(mu)) +
+  geom_point(color = "#D47500", alpha = 0.75)
+```
+
+
+---
+# the linear model
+
+#### Same model, different $\Large x$
+
+$$\underbrace{\LARGE E[y_i] = 7 + 3.5 \times x_i}_{Deterministic}$$
+
+$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}$$
+
+
+```{r fig.height=3.5, fig.width=4}
+x <- rbinom(100, size = 1, prob = 0.5)
+y <- 7 + 3.5 * x + rnorm(100, 0, 1)
+
+df <- data.frame(x = x, y = y)
+
+ggplot(df, aes(x, y)) + geom_boxplot(color = "white") +
+  geom_segment(aes(x = -0.1, xend = 0.1, y = 7, yend = 7), color = "#446E9B", size = 1.5) +
+  geom_segment(aes(x = 0.9, xend = 1.1, y = 10.5, yend = 10.5), color = "#446E9B", size = 1.5) +
+  scale_y_continuous(expression(mu)) +
+  scale_x_continuous(breaks = c(0, 1))
+```
+
+
+---
+# the linear model
+
+#### Same model, different $\Large x$
+
+$$\underbrace{\LARGE E[y_i] = 7 + 3.5 \times x_i}_{Deterministic}$$
+
+$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}$$
+
+```{r fig.height=3.5, fig.width=4}
+ggplot(df, aes(x, y, group = as.factor(x))) + geom_boxplot(color = "white", width = 0.25) +
+  geom_segment(aes(x = -0.1, xend = 0.1, y = 7, yend = 7), color = "#446E9B", size = 1.5) +
+  geom_segment(aes(x = 0.9, xend = 1.1, y = 10.5, yend = 10.5), color = "#446E9B", size = 1.5) +
+  scale_y_continuous(expression(mu)) +
+  scale_x_continuous(breaks = c(0, 1)) +
+  geom_point(color = "#D47500", alpha = 0.25)
+```
+
+---
+# the linear model
+
+</br>
+
+$$\LARGE E[y_i] = \beta_0 + \beta_1  x_i$$
+
+--
+
+#### When $\large x = 0$:
+
+- $\large E[y] = \beta_0$
+
+- What is the interpretation of $\large \beta_0$?
+
+--
+
+#### When $\large x = 1$:
+
+- $\large E[y] = \beta_0 + \beta_1$
+
+- What is the interpretation of $\large \beta_1$?
+
+---
+# fitting the model in `R`
+
+```{r echo=TRUE}
+data(frogdata)
+
+fit <- lm(Frogs ~ Development, data = frogdata)
+
+broom::tidy(fit)
+```
+
+--
+To interpret this output, we need to know how `R` codes categorical predictors...
+
+---
+# categorical predictors in `R`
+
+#### When you include a categorical predictor (factor or character object) in your model, `R` recodes it is a **dummy variable**
+
+- For a predictor with two levels, one level gets coded as $\large 0$ and the other as $\large 1$
+
+- For unordered factors or character objects, levels are determined by alphabetical order
+
+- For ordered factors, levels are determined by factor levels
+
+--
+
+```{r echo = TRUE}
+str(frogdata)
+```
+
+---
+# fitting the model in `R`
+
+```{r echo=TRUE}
+data(frogdata)
+
+fit2 <- lm(Frogs ~ Development, data = frogdata)
+
+broom::tidy(fit2)
+```
+
+--
+
+- The `(Intercept)` estimate ( $\beta_0$ ) is the expected number of frogs in a low-development plot
+
+--
+
+- The `DevelopmentHigh` estimate ( $\beta_1$ ) is the *difference* between low-development and high-development plots
+
+--
+
+- **Question**: Are there fewer frogs in high-development plots?
+
+---
+# visualizing the linear model
+
+```{r fig.height=3.5, fig.width=7}
+frog_df <- data.frame(z = seq(from = 0, to = 34, by = 0.1),
+                      pr_z = c(dnorm(x = seq(from = 0, to = 34, by = 0.1), 15, 2)))
+
+samp <- data.frame(y = rnorm(20, 15, 2),
+                   Development = rep(c("Low", "High"), each = 10))
+
+ggplot() + 
+  geom_path(data = frog_df, aes(x = z, y = pr_z)) +
+  geom_vline(aes(xintercept = 15), alpha = 0.6) +
+  geom_rug(data = samp, aes(x = y, color = Development)) +
+  scale_y_continuous("Density") +
+  scale_x_continuous("Frogs per plot", expand = c(0, 0), breaks = 15, 
+                     labels = expression(beta[0]))
+```
+
+
+--
+
+```{r fig.height=3.5, fig.width=7}
+frog_df <- data.frame(z = seq(from = 0, to = 34, by = 0.1),
+                      pr_z = c(dnorm(x = seq(from = 0, to = 34, by = 0.1), 20, 2),
+                               dnorm(x = seq(from = 0, to = 34, by = 0.1), 12, 2)),
+                      Development = rep(c("Low", "High"), each = 341))
+
+samp <- data.frame(y = c(16, 14, 18, 17, 29, 31, 14, 16, 22, 15, 2, 11, 6, 8, 0, 3, 19, 1, 6, 5),
+                   Development = rep(c("Low", "High"), each = 10))
+
+ggplot() + 
+  geom_path(data = frog_df, aes(x = z, y = pr_z, color = Development)) +
+  geom_vline(data = data.frame(x = c(20, 12), Development = c("Low", "High")), 
+             aes(xintercept = x, color = Development), alpha = 0.6) +
+  geom_rug(data = samp, aes(x = y, color = Development)) +
+  scale_y_continuous("Density") +
+  scale_x_continuous("Frogs per plot", expand = c(0, 0), breaks = c(12, 20), 
+                     labels = expression(beta[0] + beta[1], beta[0]))
+```
+
+---
+# fitting the model by hand
+
+In this case, we can also fit the model "by hand"
+
+--
+
+The parameter estimates are:
+
+```{r echo = TRUE}
+mu_high <- mean(frogdata$Frogs[frogdata$Development == "High"])
+mu_low <- mean(frogdata$Frogs[frogdata$Development == "Low"])
+
+(beta_0.hat <- mu_low)
+(beta_1.hat <- mu_high - mu_low)
+```
+
+--
+
+How do we calculate the standard errors?
+
+---
+# fitting the model by hand
+
+How do we calculate the standard errors?
+
+--
+
+Because we have samples from two populations (low and high development), we have to use the *pooled* variance of both samples to calculate the correct standard errors:
+
+$$\large s^2_p = \frac{(n_L − 1)s^2_L + (n_H − 1)s^2_H}{n_L + n_H − 2}$$
+
+--
+
+```{r}
+var_low <- var(frogdata$Frogs[frogdata$Development == "Low"])
+var_high <- var(frogdata$Frogs[frogdata$Development == "High"])
+
+# Pooled variance
+(s2.p <- (9*var_low + 9*var_high)/18)
+```
+
+---
+# fitting the model by hand
+
+How do we calculate the standard errors?
+
+--
+
+With the pooled variance calculated, we can calculate the standard errors. For the intercept:
+
+$$\large SE_{\beta_0} = \sqrt{\frac{s^2_p}{n_L}}$$
+
+```{r}
+(SE_beta0 <- sqrt(s2.p/10))
+```
+
+--
+
+For the slope:
+
+$$\large SE_{\beta_1} = \sqrt{\frac{s^2_p}{n_L} + \frac{s^2_p}{n_H}}$$
+
+```{r}
+(SE_beta1 <- sqrt(s2.p/10 + s2.p/10))
+```
+
+--
+
+What is the interpretation of these standard errors?
+
+
+---
+# the linear model as a t-test
+
+#### As before, the model we just fit has a corresponding "test" that you may encounter: the *two-sample t-test*
+
+.small-code[
+```{r echo = TRUE}
+t.test(Frogs ~ Development, data = frogdata)
+```
+]
+
+- Used to test whether the means of two population are different
+
+- Results are exactly the same as `lm`
+
+---
+# other ways to fit the model
+
+#### By default, the linear model approach provides the mean of the reference group and the difference in the group means
+
+--
+- This version of the linear model formulation is usually referred to as the *effects parameterization*
+
+- We can easily calculate the mean of group 2 from the linear model as $\beta_0 + \beta_1$
+
+--
+
+- We can also recode the model in `R` to provide the group means (the *means parameterization*)
+
+```{r echo = TRUE}
+fit3 <- lm(Frogs ~ Development - 1, data = frogdata)
+broom::tidy(fit3)
+```
+
+
+---
+# summary
+
+- The simplest linear model we can construct tests whether the mean of a sample is different from some null value (usually 0)
+
+    + This model is the same as a one-sample t-test
+    
+--
+
+- The same linear model can be extended to test whether the mean of two groups differ from each other
+
+    + The `lm()` function uses dummy variables, i.e., coding one treatment level as 0 and the other as 1
+    
+    + By default, the intercept is the mean of the reference group and the slope parameter is the difference between the group means
+    
+    + This model is the same as a two-sample t-test
+    
+--
+
+- The alternative ways to fit this model (t-test, effects parameterization, means parameterization) provide the *exact same information*
+
+    + In other words, they do not change your conclusions!
+
+
+---
+# looking ahead
+
+<br/>
+
+### **Next time**: Null hypothesis testing
+
+<br/>
+
+### **Reading**: [Fieberg chp. 1.10](https://statistics4ecologists-v3.netlify.app/01-linearregression#hypothesis-tests-and-p-values)
+

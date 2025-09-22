@@ -1,0 +1,665 @@
+---
+title: "LECTURE 7: statistical power"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2025"
+output:
+  xaringan::moon_reader:
+    css: ["default", "FANR6750.css", "FANR6750-fonts.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, echo = FALSE, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning=FALSE, message=FALSE, fig.retina = 2)
+source(here::here("R/zzz.R"))
+library(emo)
+library(FANR6750)
+# library(gganimate)
+```
+
+# outline 
+
+<br/>
+
+1) Motivation
+
+<br/>
+
+--
+
+2) Type I and Type II error
+
+<br/>
+
+--
+
+3) Two-sample *t*-test
+
+<br/>
+
+--
+
+4) ANOVA
+
+---
+class: inverse
+
+# motivation
+
+<br/>
+<br/>
+
+> A statistical test will not be able to detect a true difference if the sample size is too small compared with the magnitude of the difference.
+
+> Since data are sampled at random, there is always a risk of reaching a wrong conclusion, and things can go wrong in two ways - Dalgaard (2008)
+
+---
+# null hypothesis testing
+
+```{r, echo = FALSE, out.height=450, out.width=800}
+knitr::include_graphics("fig/NHT.png")
+```
+
+---
+# null hypothesis testing
+
+```{r, echo = FALSE, out.height=450, out.width=800}
+knitr::include_graphics("fig/NHT_reject.png")
+```
+
+---
+# null hypothesis testing
+
+```{r, echo = FALSE, out.height=450, out.width=800}
+knitr::include_graphics("fig/NHT_ftr.png")
+```
+
+---
+# null hypothesis testing
+
+```{r, echo = FALSE, out.height=450, out.width=800}
+knitr::include_graphics("fig/NHT_typeI.png")
+```
+
+---
+# null hypothesis testing
+
+```{r, echo = FALSE, out.height=450, out.width=800}
+knitr::include_graphics("fig/NHT_alpha.png")
+```
+
+---
+# null hypothesis testing
+
+```{r, echo = FALSE, out.height=450, out.width=800}
+knitr::include_graphics("fig/NHT_typeII.png")
+```
+
+---
+# null hypothesis testing
+
+```{r, echo = FALSE, out.height=450, out.width=800}
+knitr::include_graphics("fig/NHT_q.png")
+```
+
+---
+# type i & type ii errors
+
+#### Type I error (i.e., false positive)
+
+> The null hypothesis is correct, but the test rejects it.
+
+$$\large \alpha = Pr(Type\;I\;error)$$
+
+--
+
+#### Type II error (i.e., false negative)
+
+> The null hypothesis is wrong, but the test fails to reject it.
+
+$$\large \beta = Pr(Type\;II\;error)$$
+
+--
+
+#### Power
+
+> The test's ability to reject a false null hypothesis.
+
+$$\large Power = 1 - \beta$$
+
+---
+# type i & type ii errors
+
+#### The type I error rate is set by the scientist
+
+--
+
+#### The type II error rate, and hence the power of the test, depends on many factors  
+
+--
+
+#### In the context of a linear model, these are:
+
+1) Magnitude of the slope coefficients ( $\beta$ )  
+
+2) Standard deviation (or variance) of population ( $\sigma$ )  
+
+3) The sample size ( $n$ )  
+
+4) The Type I error rate ( $\alpha$ )  
+
+---
+# magnitude of the difference
+
+```{r echo = FALSE, fig.align="c"}
+x <- seq(from = 0, to = 200, length.out = 200)
+
+delta_df <- data.frame(x = x, 
+                       y1 = c(dnorm(x, 98, 10), dnorm(x, 102, 10)),
+                       y2 = c(dnorm(x, 80, 10), dnorm(x, 120, 10)),
+                       y3 = c(dnorm(x, 80, 40), dnorm(x, 120, 40)),
+                       population = rep(c("A", "B"), each = 200))
+
+ggplot(delta_df, aes(x = x, y = y1, color = population)) +
+  geom_path(size = 1.75) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  labs(subtitle = "Hard to detect a difference")
+```
+
+---
+# magnitude of the difference
+
+```{r echo = FALSE, fig.align="c"}
+
+ggplot(delta_df, aes(x = x, y = y2, color = population)) +
+  geom_path(size = 1.75) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  labs(subtitle = "Easier to detect a difference")
+```
+
+---
+# standard deviation
+
+```{r echo = FALSE, fig.align="c"}
+
+ggplot(delta_df, aes(x = x, y = y2, color = population)) +
+  geom_path(size = 1.75) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  labs(subtitle = "Easier to detect a difference")
+```
+
+
+---
+# standard deviation
+
+```{r echo = FALSE, fig.align="c"}
+
+ggplot(delta_df, aes(x = x, y = y3, color = population)) +
+  geom_path(size = 1.75) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  labs(subtitle = "Hard to detect a difference")
+```
+
+---
+# sample size
+
+.pull-left[
+```{r echo = FALSE, fig.align="c"}
+delta_df <- data.frame(x = x, 
+                       y1 = c(dnorm(x, 90, 10), dnorm(x, 100, 10)),
+                       population = rep(c("A", "B"), each = 200))
+
+n1 <- data.frame(x1 = c(rnorm(10, 90, 10), rnorm(10, 100, 10)),
+                # x2 = c(rnorm(100, 97, 10), rnorm(100, 103, 10)),
+                y = rep(c(0, 0.001), each = 10),
+                population = rep(c("A", "B"), each = 10))
+
+ggplot(delta_df, aes(x = x, y = y1, color = population)) +
+  geom_path(size = 1.75) +
+  geom_point(data = n1, aes(x = x1, y = y, color = population), alpha = 0.5) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  labs(subtitle = "Hard to detect a difference (n = 10)")
+```
+]
+
+.pull-right[
+```{r echo = FALSE, fig.align="c"}
+
+ggplot() +
+  geom_boxplot(data = n1, aes(y = x1, x = y, color = population), alpha = 0.5) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  guides(color = "none") 
+```
+]
+
+---
+# sample size
+
+.pull-left[
+```{r echo = FALSE, fig.align="c"}
+n2 <- data.frame(x1 = c(rnorm(1000, 90, 10), rnorm(1000, 100, 10)),
+                y = rep(c(0, 0.001), each = 1000),
+                population = rep(c("A", "B"), each = 1000))
+
+ggplot(delta_df, aes(x = x, y = y1, color = population)) +
+  geom_path(size = 1.75) +
+  geom_point(data = n2, aes(x = x1, y = y, color = population), alpha = 0.25) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  labs(subtitle = "Easier to detect a difference (n = 1000)")
+```
+]
+
+.pull-right[
+```{r echo = FALSE, fig.align="c"}
+
+ggplot() +
+  geom_boxplot(data = n2, aes(y = x1, x = y, color = population), alpha = 0.5) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  guides(color = "none") 
+```
+]
+
+---
+# type i error rate
+
+#### $\large \alpha = 0.05$
+
+```{r cv, fig.height = 6, fig.width=8}
+ggplot(NULL, aes(c(-5,5))) +
+  geom_area(stat = "function", fun = dnorm, fill = "#00998a", xlim = c(-5, qnorm(0.025, 0, 1))) +
+  geom_area(stat = "function", fun = dnorm, fill = "grey80", xlim = c(qnorm(0.025, 0, 1), qnorm(0.975, 0, 1))) +
+  geom_area(stat = "function", fun = dnorm, fill = "#00998a", xlim = c(qnorm(0.975, 0, 1), 5)) +
+  labs(subtitle = "Easier to detect difference", x = "t", y = "") +
+  scale_y_continuous(breaks = NULL) +
+  scale_x_continuous(breaks = c(qnorm(0.025, 0, 1), qnorm(0.975, 0, 1)))
+```
+
+---
+# type i error rate
+
+#### $\large \alpha = 0.001$
+
+```{r cv2, fig.height = 6, fig.width=8}
+ggplot(NULL, aes(c(-5,5))) +
+  geom_area(stat = "function", fun = dnorm, fill = "#00998a", xlim = c(-5, qnorm(0.005, 0, 1))) +
+  geom_area(stat = "function", fun = dnorm, fill = "grey80", xlim = c(qnorm(0.005, 0, 1), qnorm(0.995, 0, 1))) +
+  geom_area(stat = "function", fun = dnorm, fill = "#00998a", xlim = c(qnorm(0.995, 0, 1), 5)) +
+  labs(subtitle = "Harder to detect difference", x = "t", y = "") +
+  scale_y_continuous(breaks = NULL) +
+  scale_x_continuous(breaks = c(qnorm(0.005, 0, 1), qnorm(0.995, 0, 1)))
+```
+
+---
+# factors affecting power
+
+#### In general, power increases when:
+
+1) The difference in means/magnitude of slope increases  
+
+2) The standard deviation **of the population** decreases  
+
+3) The sample size increases  
+
+4) The Type I error rate increases  
+
+--
+
+#### Which of these, as researchers, do we have control over?
+
+---
+# example in `R`
+
+.pull-left[
+
+#### $\large \mu_1 = 90$, $\large \mu_2 = 100$
+
+#### $\large \sigma = 5$
+
+```{r}
+delta_df <- data.frame(x = x, 
+                       y1 = c(dnorm(x, 90, 5), dnorm(x, 100, 5)),
+                       population = rep(c("A", "B"), each = 200))
+
+n2 <- data.frame(x1 = c(rnorm(5, 90, 5), rnorm(5, 100, 5)),
+                 y = rep(c(0, 0.001), each = 5),
+                 population = rep(c("A", "B"), each = 5))
+mu_df <- data.frame(population = c("A", "B"),
+                    mu = c(90, 100))
+
+ggplot(delta_df, aes(x = x, y = y1, color = population)) +
+  geom_path(size = 1.75) +
+  # geom_point(data = n2, aes(x = x1, y = y, color = population), alpha = 0.75) +
+  geom_vline(data = mu_df, aes(xintercept = mu, color = population), 
+             linetype = "dashed", size = 1) +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  scale_x_continuous("", limits = c(70, 120), breaks = c(90, 100)) +
+  theme(axis.text.x = element_text(size = 20))
+```
+
+]
+
+---
+# example in `R`
+
+.pull-left[
+
+#### $\large \mu_1 = 90$, $\large \mu_2 = 100$
+
+#### $\large \sigma = 5$
+
+```{r}
+delta_df <- data.frame(x = x, 
+                       y1 = c(dnorm(x, 90, 5), dnorm(x, 100, 5)),
+                       population = rep(c("A", "B"), each = 200))
+
+n2 <- data.frame(x1 = c(rnorm(5, 90, 5), rnorm(5, 100, 5)),
+                 y = rep(c(0, 0.001), each = 5),
+                 population = rep(c("A", "B"), each = 5))
+mu_df <- data.frame(population = c("A", "B"),
+                    mu = c(90, 100))
+
+ggplot(delta_df, aes(x = x, y = y1, color = population)) +
+  geom_path(size = 1.75) +
+  geom_point(data = n2, aes(x = x1, y = y, color = population), alpha = 0.75) +
+  geom_vline(data = mu_df, aes(xintercept = mu, color = population), 
+             linetype = "dashed", size = 1) +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  scale_x_continuous("", limits = c(70, 120), breaks = c(90, 100)) +
+  theme(axis.text.x = element_text(size = 20))
+```
+]
+
+--
+
+.pull-right[
+#### $\large n = 5$
+.small-code[
+```{r echo = TRUE}
+power.t.test(n = 5, 
+             delta = 10, 
+             sd = 5, 
+             sig.level = 0.05, 
+             power = NULL)
+```
+]
+]
+
+---
+# example in `R`
+
+.pull-left[
+
+#### $\large \mu_1 = 90$, $\large \mu_2 = 100$
+
+#### $\large \sigma = 5$
+
+```{r}
+delta_df <- data.frame(x = x, 
+                       y1 = c(dnorm(x, 90, 5), dnorm(x, 100, 5)),
+                       population = rep(c("A", "B"), each = 200))
+
+n2 <- data.frame(x1 = c(rnorm(15, 90, 5), rnorm(15, 100, 5)),
+                 y = rep(c(0, 0.001), each = 15),
+                 population = rep(c("A", "B"), each = 15))
+mu_df <- data.frame(population = c("A", "B"),
+                    mu = c(90, 100))
+
+ggplot(delta_df, aes(x = x, y = y1, color = population)) +
+  geom_path(size = 1.75) +
+  geom_point(data = n2, aes(x = x1, y = y, color = population), alpha = 0.75) +
+  geom_vline(data = mu_df, aes(xintercept = mu, color = population), 
+             linetype = "dashed", size = 1) +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  scale_x_continuous("", limits = c(70, 120), breaks = c(90, 100)) +
+  theme(axis.text.x = element_text(size = 20))
+```
+]
+
+.pull-right[
+#### $\large n = 15$
+.small-code[
+```{r echo = TRUE}
+power.t.test(n = 15, 
+             delta = 10, 
+             sd = 5, 
+             sig.level = 0.05, 
+             power = NULL)
+```
+]
+]
+
+---
+# example in `R`
+
+.pull-left[
+
+#### $\large \mu_1 = 90$, $\large \mu_2 = 100$
+
+#### $\large \sigma = 5$
+
+```{r}
+delta_df <- data.frame(x = x, 
+                       y1 = c(dnorm(x, 90, 5), dnorm(x, 100, 5)),
+                       population = rep(c("A", "B"), each = 200))
+
+n2 <- data.frame(x1 = c(rnorm(15, 90, 5), rnorm(15, 100, 5)),
+                 y = rep(c(0, 0.001), each = 15),
+                 population = rep(c("A", "B"), each = 15))
+mu_df <- data.frame(population = c("A", "B"),
+                    mu = c(90, 100))
+
+ggplot(delta_df, aes(x = x, y = y1, color = population)) +
+  geom_path(size = 1.75) +
+  geom_point(data = n2, aes(x = x1, y = y, color = population), alpha = 0.75) +
+  geom_vline(data = mu_df, aes(xintercept = mu, color = population), 
+             linetype = "dashed", size = 1) +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  scale_x_continuous("", limits = c(70, 120), breaks = c(90, 100)) +
+  theme(axis.text.x = element_text(size = 20))
+```
+]
+
+.pull-right[
+#### $\large \alpha = 0.001$
+.small-code[
+```{r echo = TRUE}
+power.t.test(n = 15, 
+             delta = 10, 
+             sd = 5, 
+             sig.level = 0.001, 
+             power = NULL)
+```
+]
+]
+
+---
+# example in `R`
+
+.pull-left[
+
+#### $\large \mu_1 = 94$, $\large \mu_2 = 97$
+
+#### $\large \sigma = 5$
+
+```{r}
+delta_df <- data.frame(x = x, 
+                       y1 = c(dnorm(x, 94, 5), dnorm(x, 97, 5)),
+                       population = rep(c("A", "B"), each = 200))
+
+n2 <- data.frame(x1 = c(rnorm(15, 94, 5), rnorm(15, 97, 5)),
+                 y = rep(c(0, 0.001), each = 15),
+                 population = rep(c("A", "B"), each = 15))
+mu_df <- data.frame(population = c("A", "B"),
+                    mu = c(94, 97))
+
+ggplot(delta_df, aes(x = x, y = y1, color = population)) +
+  geom_path(size = 1.75) +
+  geom_point(data = n2, aes(x = x1, y = y, color = population), alpha = 0.75) +
+  geom_vline(data = mu_df, aes(xintercept = mu, color = population), 
+             linetype = "dashed", size = 1) +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  scale_x_continuous("", limits = c(70, 120), breaks = c(94, 97)) +
+  theme(axis.text.x = element_text(size = 20))
+```
+]
+
+.pull-right[
+#### $\large n = 15$
+.small-code[
+```{r echo = TRUE}
+power.t.test(n = 15, 
+             delta = 3, 
+             sd = 5, 
+             sig.level = 0.001, 
+             power = NULL)
+```
+]
+]
+
+---
+# example in `R`
+
+.pull-left[
+
+#### $\large \mu_1 = 94$, $\large \mu_2 = 97$
+
+#### $\large \sigma = 5$
+
+```{r}
+delta_df <- data.frame(x = x, 
+                       y1 = c(dnorm(x, 94, 5), dnorm(x, 97, 5)),
+                       population = rep(c("A", "B"), each = 200))
+
+n2 <- data.frame(x1 = c(rnorm(100, 94, 5), rnorm(100, 97, 5)),
+                 y = rep(c(0, 0.001), each = 100),
+                 population = rep(c("A", "B"), each = 100))
+mu_df <- data.frame(population = c("A", "B"),
+                    mu = c(94, 97))
+
+ggplot(delta_df, aes(x = x, y = y1, color = population)) +
+  geom_path(size = 1.75) +
+  geom_point(data = n2, aes(x = x1, y = y, color = population), alpha = 0.75) +
+  geom_vline(data = mu_df, aes(xintercept = mu, color = population), 
+             linetype = "dashed", size = 1) +
+  scale_y_continuous("") +
+  guides(color = "none") +
+  scale_x_continuous("", limits = c(70, 120), breaks = c(94, 97)) +
+  theme(axis.text.x = element_text(size = 20))
+```
+]
+
+.pull-right[
+#### $\large n = 100$
+.small-code[
+```{r echo = TRUE}
+power.t.test(n = 100, 
+             delta = 3, 
+             sd = 5, 
+             sig.level = 0.001, 
+             power = NULL)
+```
+]
+]
+
+---
+## When should I do a power analysis?
+
+#### Prospective is always better than retrospective!
+
+--
+
+**Retrospective** (conducted after experiment) 
+
+- If you failed to reject the null, then your power was low  
+
+- But you can't use this as an excuse!  
+
+- Only useful as a way of planning a subsequent experiment  
+
+--
+
+**Prospective** (Done before the experiment)  
+
+- Used to determine sample size or power, given $\beta$ and $\sigma$
+
+- How can $\beta$  and/or $\sigma$ be known ahead of time?  
+
+    + Requires prior knowledge, perhaps from a pilot study
+
+    + Requires clear-headed thinking about what consitutes a biologically signiffcant difference
+
+---
+## What level of power should I aim for?
+
+<br/>
+
+#### We want power to be as close to 1 as possible
+
+<br/>
+
+--
+
+#### Sometimes it may be prohibitively expensive to obtain a sample size large enough to achieve power close to 1
+
+<br/>
+
+--
+
+#### In practice, we are usually satisfied with power > 0.8
+
+
+---
+# summary
+
+- Power analysis let's you determine the necessary sample size (or power) for testing an effect size of interest
+
+--
+
+- Power is influenced by the magnitude of the effect, the standard deviation of the population, the Type I error rate, and the sample size
+
+--
+
+- Retrospective power analysis isn't useful unless you are planning a subsequent experiment
+ 
+--
+
+- `R` has several functions for conducting power analysis, but only for simple tests
+
+--
+
+- More complicated power analysis can be performed using simulation (not covered in this course)
+
+---
+# looking ahead
+
+<br/>
+
+
+### **Next time**: Linear models part 2: categorical predictor >2 levels
+
+<br/>
+
+### **Reading**: [Fieberg chp. 3.7](https://statistics4ecologists-v3.netlify.app/03-multipleregression#sec-ancova)

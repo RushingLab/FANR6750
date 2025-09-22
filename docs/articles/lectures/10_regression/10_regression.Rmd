@@ -20,6 +20,7 @@ library(emo)
 library(FANR6750)
 library(dplyr)
 library(kableExtra)
+data("firedata")
 # library(gganimate)
 ```
 
@@ -60,11 +61,11 @@ So far, we have learned about linear models that contain only a single predictor
 
 1) Single continuous variable = "simple" regression (lecture 2)
 
-2) Single categorical predictor w/ one level = one-sample *t*-test (lecture 4)
+2) Single categorical predictor w/ one level = one-sample *t*-test (lecture 5)
 
-3) Single categorical predictor w/ two levels = two-sample *t*-test (lecture 4)
+3) Single categorical predictor w/ two levels = two-sample *t*-test (lecture 5)
 
-4) Single categorical predictor w/ > 2 levels = ANOVA (lecture 7)
+4) Single categorical predictor w/ > 2 levels = ANOVA (lecture 8)
 
 --
 
@@ -73,7 +74,7 @@ More often than not, your models will need to contain more than one predictor
 ---
 # multiple regression
 
-Models with more than one predictor go by many names (blocking, ANCOVA, factorial, etc) but are all forms of *multiple regression* of the form:
+Models with more than one predictor go by many names (blocking, ANCOVA, factorial, etc) but are all types of *multiple regression* of the form:
 
 $$\Large y_i = \beta_0 + \beta_1 \times X1_i + \beta_2 \times X2_i + \epsilon_i$$
 $$\Large \epsilon_i \sim normal(0, \sigma)$$
@@ -303,7 +304,7 @@ knitr::include_graphics("fig/fire.jpg")
 ---
 # another example
 
-We will use a made-up data set from this real experiment, with the goal of understanding whether understory plant richness (measured as the number of understory vascular plants recorded on each plot) differs among burn treatments.
+We will use a made-up data set from this real experiment, with the goal of understanding whether understory plant richness (measured as the number of understory vascular plant species recorded on each plot) differs among burn treatments.
 
 ```{r fire1, echo = FALSE}
 fire_tab <- data.frame(Replicate = c("1", "2", "3"),
@@ -332,7 +333,7 @@ What are the experimental units? What are the observational units?
 Fit the model with treatment only:
 
 ```{r echo = TRUE}
-data(firedata)
+data("firedata")
 fm1 <- lm(species ~ interval, data = firedata)
 anova(fm1)
 ```
