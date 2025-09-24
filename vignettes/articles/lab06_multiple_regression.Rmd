@@ -23,7 +23,7 @@ source(here::here("R/zzz.R"))
 
 1) ANOVA
 
-2) Performing an ANOVA with `lm()` and `aov()`
+2) Performing an ANOVA with lm() and aov()
   
 3) Performing an ANOVA by hand
   
@@ -50,7 +50,7 @@ source(here::here("R/zzz.R"))
 
 2) We would like to perform an ANOVA but there is another grouping variable other than our treatment that is likely contributing to some of the variation in the response.
 
-3) We would like to perform linear regression but we have more than one continuous predictor.
+3) We would like to perform linear regression but we have more than one continuous predictor (HW assignment).
 
 <br>
 
@@ -461,7 +461,7 @@ summary(lm1)
 
 # Assignment
 
-Some time ago, plantings of *Pinus caribaea* were established at four locations on Puerto Rico. As part of a study, four spacing intervals were used at each location to determine the effect of spacing on tree height. Twenty years after the plantings were established, measurements (height in ft) were made in the study plots. Additionally, soil chemistry was analyzed to determine average pH and nitrogen content (mg N/kg soil) for each tree. Note that although spacing interval is a number, it must be treated as a factor since these 4 spacing intervals (and only these 4) are of interest to the researcher.
+Some time ago, plantations of *Pinus caribaea* were established at four locations on Puerto Rico. As part of a study, four spacing intervals were used at each location to determine the effect of spacing on tree height. Twenty years after the plantations were established, measurements (height in ft) were made in the study plots. Additionally, soil chemistry was analyzed to determine average pH and nitrogen content (mg N/kg soil) for each tree. Note that although spacing interval is a number, it must be treated as a factor since these 4 spacing intervals (and only these 4) are of interest to the researcher.
 
 You can access these data using:
 
@@ -470,7 +470,10 @@ library(FANR6750)
 data("pinedata")
 ```
 
-Create an R Markdown file titled "Assignment 3". Within that document, do the following:
+**Questions/tasks**  
+
+The researcher would like you to develop several models to investigate the variables affecting tree height in the plantations. When you have done this, she asks that you submit a report of your findings. Instructions for the report are shown below.
+
 
 
 1) Construct a model using the lm() function which predicts tree height as a function of spacing and, because the researcher is also interested in seeing if soil pH is contributing to differences in tree height, include pH as a predictor as well. You may choose to center the continuous variable or not, but remember that it will affect the way you interpret the results.
@@ -481,11 +484,11 @@ Create an R Markdown file titled "Assignment 3". Within that document, do the fo
     
     c) State your model conclusions in the context of the data. Does there appear to be a relationship between tree height and tree spacing.
     
-    d) Determine which tree spacings differ from each other with regard to their effect on tree height.
+    d) Determine which tree spacings differ from eachother with regard to their effect on tree height.
     
     e) Create a publication quality plot displaying the effect that pH and tree spacing has on tree height. The figure should have a descriptive caption and any aesthetics (color, line type, etc.) should be clearly defined.
  
-2) Construct an ANOVA table that shows the relationship between tree height and spacing as well as the other categorical variable of location. The researcher is not particularly interested in geographic location and she's not sure of the exact mechanism, but she thinks it may affect the results.
+2) Construct an ANOVA table by hand which shows the relationship between tree height and spacing as well as the other categorical variable of location. The researcher is not particularly interested in geographic location and she's not sure of the exact mechanism, but she thinks it may affect the results.
 
     a) Create a well formatted ANOVA table with a table header using available R functions.
 
@@ -499,12 +502,18 @@ Create an R Markdown file titled "Assignment 3". Within that document, do the fo
     
     c) Interpret each parameter estimate in the model output
 
-4) Create a new header called "Reflection". Under this header, answer the following questions: 
+4) Discussion: Up to now, we have discussed how we might construct several types of models which are all being used to predict tree height in this data scenario. Later in the semester we will talk about 'model selection' which is the process of choosing one model out of several that somehow best represents the research system. Having no formal instruction on this topic yet (or perhaps you do) explain how you think model selection might be done. What kinds of metrics might you use to decide which model best represents the data? (There is no one right answer here and all reasonably thought out answers will be accepted.)
+
+
+You may format the report however you like but it should be well-organized, with relevant headers, plain text, and the elements described above.  
+
+5) At the end of your document, create a new header called "Reflection". Under this header, answer the following questions: 
 
 - On a 1-10 scale, how would you rate your confidence in the topics covered in this lab? 
 
 - What lingering questions/confusion about these topics do you still have?
 
+- If you used AI to assist with this assignment, do you think it helped? Did it save time? If you did not use AI, do you think it would have helped?
 
 A few things to remember when creating the document:
 

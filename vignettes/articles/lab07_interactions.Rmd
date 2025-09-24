@@ -452,18 +452,17 @@ head(agingdata)
 
 6) The student has decided that he is going to use fin spines in future studies because he does not want to use the lethal method of collecting otoliths. Given that, which combination of mounting method and saw speed would result in the lowest average aging time?
 
-7) Under a header titled "Reflection", answer the following questions: 
+Put your answers in an R Markdown report. Your report should include:
+
+    + A well-formatted ANOVA table (with header); and
+
+    + A publication-quality plot of the estimated effect of mounting method on aging time for both types of hard structures, including 95% confidence intervals. Rather than making 3 plots (one for each saw speed), use the predictions for 'high speed' only. The figure should also have a descriptive caption and any aesthetics (color, line type, etc.) should be clearly defined. 
+
+7) At the end of your report, under a header titled "Reflection", answer the following questions: 
 
 - On a 1-10 scale, how would you rate your confidence in the topics covered in this lab? 
 
 - What lingering questions/confusion about these topics do you still have?
-
-Put your answers in an R Markdown report. Your report should include:
-
-1) A well-formatted ANOVA table (with header); and
-
-2) A publication-quality plot of the estimated effect of mounting method on aging time for both types of hard structures, including 95% confidence intervals. Rather than making 3 plots (one for each saw speed), use the predictions for 'high speed' only. The figure should also have a descriptive caption and any aesthetics (color, line type, etc.) should be clearly defined. 
-
 
 A few things to remember when creating the document:
 
