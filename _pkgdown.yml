@@ -78,7 +78,7 @@ navbar:
         - text: "Lab 4: t-tests"
           href: articles/lab04_t-tests.html
         - text: "Lab 5: ANOVA"
-          href: articles/lab05_anova.html
+          href: articles/lab05_ANOVA.html
         - text: "Lab 6: Multiple Regression"
           href: articles/lab06_multiple_regression.html
         - text: "Lab 7: Interactions"

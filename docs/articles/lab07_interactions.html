@@ -8,8 +8,8 @@
 <title>Lab 7: Interactions • FANR6750</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
-<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.0/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.4.0/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Lab 7: Interactions">
 </head>
 <body>
@@ -61,10 +61,10 @@
     <li><a class="dropdown-item" href="../articles/lab02_Intro_project_and_Rmd.html">Lab 2: Introduction to projects and RMarkdown</a></li>
     <li><a class="dropdown-item" href="../articles/lab03_inference.html">Lab 3: Using R to explore sampling error</a></li>
     <li><a class="dropdown-item" href="../articles/lab04_t-tests.html">Lab 4: t-tests</a></li>
-    <li><a class="dropdown-item" href="../articles/lab05_anova.html">Lab 5: ANOVA</a></li>
+    <li><a class="dropdown-item" href="../articles/lab05_ANOVA.html">Lab 5: ANOVA</a></li>
     <li><a class="dropdown-item" href="../articles/lab06_multiple_regression.html">Lab 6: Multiple Regression</a></li>
     <li><a class="dropdown-item" href="../articles/lab07_interactions.html">Lab 7: Interactions</a></li>
-    <li><a class="dropdown-item" href="../articles/lab08_linear_model_assumptions.html">Lab 8: Evaluating assumptions</a></li>
+    <li><a class="dropdown-item" href="../articles/lab08_model_assumptions.html">Lab 8: Evaluating assumptions</a></li>
   </ul>
 </li>
 <li class="nav-item dropdown">
@@ -201,13 +201,13 @@ values of one predictor may alter the effects of the other.</p>
 <span><span class="co">#&gt;  $ moon     : num  0.241 0.56 0.56 0.855 0.24 ...</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">chuckdata</span><span class="op">)</span></span>
-<span><span class="co">#&gt;        X          call.rate         cloud             moon        </span></span>
-<span><span class="co">#&gt;  Min.   : 1.0   Min.   :0.736   Min.   :0.0394   Min.   :0.00058  </span></span>
-<span><span class="co">#&gt;  1st Qu.:15.8   1st Qu.:2.840   1st Qu.:0.2242   1st Qu.:0.22001  </span></span>
-<span><span class="co">#&gt;  Median :30.5   Median :3.441   Median :0.4965   Median :0.43986  </span></span>
-<span><span class="co">#&gt;  Mean   :30.5   Mean   :3.361   Mean   :0.5171   Mean   :0.44644  </span></span>
-<span><span class="co">#&gt;  3rd Qu.:45.2   3rd Qu.:3.840   3rd Qu.:0.8123   3rd Qu.:0.71315  </span></span>
-<span><span class="co">#&gt;  Max.   :60.0   Max.   :5.594   Max.   :0.9697   Max.   :0.99301</span></span></code></pre></div>
+<span><span class="co">#&gt;        X          call.rate         cloud             moon       </span></span>
+<span><span class="co">#&gt;  Min.   : 1.0   Min.   :0.736   Min.   :0.0394   Min.   :0.0006  </span></span>
+<span><span class="co">#&gt;  1st Qu.:15.8   1st Qu.:2.840   1st Qu.:0.2242   1st Qu.:0.2200  </span></span>
+<span><span class="co">#&gt;  Median :30.5   Median :3.441   Median :0.4965   Median :0.4399  </span></span>
+<span><span class="co">#&gt;  Mean   :30.5   Mean   :3.361   Mean   :0.5171   Mean   :0.4464  </span></span>
+<span><span class="co">#&gt;  3rd Qu.:45.2   3rd Qu.:3.840   3rd Qu.:0.8123   3rd Qu.:0.7131  </span></span>
+<span><span class="co">#&gt;  Max.   :60.0   Max.   :5.594   Max.   :0.9697   Max.   :0.9930</span></span></code></pre></div>
 <p><br></p>
 <p>Notice that several of the variables in the dataset are recorded as
 percentages. This fact will affect the way that we interpret the model
@@ -364,41 +364,83 @@ levels</li>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">microtusdata</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
-<thead><tr class="header">
-<th align="center">voles</th>
-<th align="center">food</th>
-<th align="center">predators</th>
+<thead><tr>
+<th style="text-align:center;">
+voles
+</th>
+<th style="text-align:center;">
+food
+</th>
+<th style="text-align:center;">
+predators
+</th>
 </tr></thead>
 <tbody>
-<tr class="odd">
-<td align="center">10</td>
-<td align="center">0</td>
-<td align="center">Present</td>
+<tr>
+<td style="text-align:center;">
+10
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+Present
+</td>
 </tr>
-<tr class="even">
-<td align="center">12</td>
-<td align="center">0</td>
-<td align="center">Present</td>
+<tr>
+<td style="text-align:center;">
+12
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+Present
+</td>
 </tr>
-<tr class="odd">
-<td align="center">8</td>
-<td align="center">0</td>
-<td align="center">Present</td>
+<tr>
+<td style="text-align:center;">
+8
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+Present
+</td>
 </tr>
-<tr class="even">
-<td align="center">14</td>
-<td align="center">0</td>
-<td align="center">Present</td>
+<tr>
+<td style="text-align:center;">
+14
+</td>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+Present
+</td>
 </tr>
-<tr class="odd">
-<td align="center">18</td>
-<td align="center">1</td>
-<td align="center">Present</td>
+<tr>
+<td style="text-align:center;">
+18
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+Present
+</td>
 </tr>
-<tr class="even">
-<td align="center">20</td>
-<td align="center">1</td>
-<td align="center">Present</td>
+<tr>
+<td style="text-align:center;">
+20
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+Present
+</td>
 </tr>
 </tbody>
 </table>
@@ -497,8 +539,8 @@ predators are present</em> using the <code>subset</code> argument:</p>
 <span>            data <span class="op">=</span> <span class="va">microtusdata</span>, </span>
 <span>            subset <span class="op">=</span> <span class="va">predators</span> <span class="op">==</span> <span class="st">"Present"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;             Df Sum Sq Mean Sq F value Pr(&gt;F)   </span></span>
-<span><span class="co">#&gt; food         2  193.5    96.8    14.8 0.0014 **</span></span>
-<span><span class="co">#&gt; Residuals    9   58.8     6.5                  </span></span>
+<span><span class="co">#&gt; food         2  193.5    96.7    14.8 0.0014 **</span></span>
+<span><span class="co">#&gt; Residuals    9   58.7     6.5                  </span></span>
 <span><span class="co">#&gt; ---</span></span>
 <span><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div>
 <p>Or when predators are absent:</p>
@@ -797,7 +839,7 @@ this document.</p></li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>

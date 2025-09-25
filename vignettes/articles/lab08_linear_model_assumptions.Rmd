@@ -1,10 +1,10 @@
 ---
-title: "Lab 7: Evaluating assumptions of Linear Models"
+title: "Lab 8: Evaluating Assumptions of Linear Models"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
 author: "Fall 2024"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{lab07_linear_model_assumptions}
+  %\VignetteIndexEntry{lab08_model_assumptions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
