@@ -2,7 +2,6 @@ pandoc: 3.1.4
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  articles/bonus_assignment: bonus_assignment.html
   articles/graphics: graphics.html
   articles/homework: homework.html
   articles/lab01_intro_to_R: lab01_intro_to_R.html
@@ -10,20 +9,19 @@ articles:
   articles/lab03_inference: lab03_inference.html
   articles/lab04_t-tests: lab04_t-tests.html
   articles/lab05_ANOVA: lab05_ANOVA.html
-  articles/lab05_multiple_regression: lab05_multiple_regression.html
-  articles/lab06_interactions: lab06_interactions.html
-  articles/lab07_linear_model_assumptions: lab07_linear_model_assumptions.html
+  articles/lab06_multiple_regression: lab06_multiple_regression.html
+  articles/lab07_interactions: lab07_interactions.html
+  articles/lab08_linear_model_assumptions: lab08_linear_model_assumptions.html
   articles/lab08_model_selection: lab08_model_selection.html
   articles/lab09_nested: lab09_nested.html
   articles/lab10_split_plot: lab10_split_plot.html
   articles/lab11_repeated_measures: lab11_repeated_measures.html
-  articles/lab12_glm_lr: lab12_glm_lr.html
   articles/lab13_glm_pr: lab13_glm_pr.html
   articles/projects_and_directories: projects_and_directories.html
   articles/RMarkdown: RMarkdown.html
   articles/schedule: schedule.html
   articles/syllabus: syllabus.html
-last_built: 2025-08-13T15:05Z
+last_built: 2025-09-25T15:33Z
 urls:
   reference: http://rushinglab.github.io/FANR6750/reference
   article: http://rushinglab.github.io/FANR6750/articles
