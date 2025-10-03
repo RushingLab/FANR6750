@@ -1,10 +1,10 @@
 ---
-title: "Lab 9: Model Selection"
+title: "Lab 8: Model Selection"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
-author: "Fall 2025"
+author: "Fall 2024"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{lab09_model_selection}
+  %\VignetteIndexEntry{lab08_model_selection}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -23,7 +23,7 @@ library(tidyr)
 library(faux)
 ```
 
-## Lab 8
+## Lab 7
 
 - Review of linear model assumptions
 

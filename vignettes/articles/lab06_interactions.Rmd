@@ -1,0 +1,473 @@
+---
+title: "Lab 6: Interactions"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2024"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lab06_interactions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.align = 'center', fig.height = 4, fig.width = 4,
+  fig.retina = 2,
+  warning = FALSE, message = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+source(here::here("R/zzz.R"))
+library(kableExtra)
+```
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(cache = TRUE)
+```
+
+## Lab 5
+
+1) Multiple Regression
+
+    a) ANCOVA
+  
+    b) Blocking
+  
+2) Centering predictors
+  
+  
+
+## Today's topics
+
+1) Interactions
+
+    a) Definition
+    
+    b) Identifying interactions visually
+    
+    c) Types of interactions
+
+2) Factorial Designs
+
+    a) 2-way Factorial Designs using aov()
+    
+    b) Post-hoc analyses
+  
+    c) Visualizing a 2-way Factorial Design
+    
+    d) 2-way Factorial Designs using lm()
+
+<br>
+<br>
+
+# Interactions
+
+## Scenario
+
+So far we have talked about models with one categorical predictor (ANOVA), models with one continuous predictor (simple linear regression), models with a categorical predictor while accounting for a continuous predictor (ANCOVA), and models with two categorical predictors where one is not of interest (Blocked design). Now we will discuss scenarios where there are multiple predictors and they are all of interest to the researcher. Additionally, and most importantly for this lab, the relationship between/among these predictors is also of interest. This relationship mentioned above is referred to as an **interaction**.
+
+<br>
+
+An **interaction** in model design terms refers to the phenomenon when the effect of one predictor variable depends on the values of one or more other predictor variables.
+
+<br>
+
+## Visualizing an Interaction
+
+```{r echo= F}
+library(gridExtra)
+library(tidyverse)
+library(grid)
+library(png)
+library(downloader)
+library(grDevices)
+df1 <- data.frame(X = runif(100, 0, 10),
+                  group = sample(c(0, 1), size = 100, replace = TRUE))
+df1 <- dplyr::mutate(df1, lp.x = -2 + 3 * group + 1.2 * X - 0.9 * group * X,
+                     lp = -2 + 3 * group + 1.2 * X,
+                     eps = rnorm(100))
+df1 <- dplyr::mutate(df1, y.x = lp.x + eps,
+                     y = lp + eps)
+df1 <- dplyr::mutate(df1, Treatment = ifelse(group == 0, "A", "B"))
+```
+
+```{r, echo= F, fig.width=8, fig.height=4, fig.align='left', fig.cap= '**Figure 1: Relationship between predictor variable (x) and response variable (y) across two levels of second predictor variable. Left figure represents no interaction while right figure represents presence of an interaction.**'}
+grid.arrange(ggplot(df1, aes(x = X, y = y, color = Treatment)) + 
+  geom_point() + 
+  geom_abline(intercept = -2, slope = 1.2, color = "#446E9B") +
+  geom_abline(intercept = 1, slope = 1.2, color = "#D47500"),
+
+ggplot(df1, aes(x = X, y = y.x, color = Treatment)) + 
+  geom_point() + 
+  geom_abline(intercept = -2, slope = 1.2, color = "#446E9B") +
+  geom_abline(intercept = 1, slope = 0.3, color = "#D47500") +
+  scale_y_continuous(""), ncol= 2)
+
+
+```
+
+<br>
+
+As we saw in lecture, interactions can take many forms but the overall interpretation is the same. An interaction could be between two continuous variables, a continuous and categorical variable, or between two categorical variables. We will look at a few examples of these below.
+
+<br>
+<br>
+
+
+## Data Example 1
+
+In this dataset, two continuous predictor variables (moon phase and percent cloud cover) are being used to predict the call rate of Chuck-will's-widow. Although the researchers are interested in each of these variables alone, they are also interested in determining how the values of one predictor may alter the effects of the other.
+
+Load the `chuckdata` dataset and examine the data
+
+```{r}
+library(FANR6750)
+data('chuckdata')
+
+str(chuckdata)
+
+summary(chuckdata)
+```
+
+<br>
+
+Notice that several of the variables in the dataset are recorded as percentages. This fact will affect the way that we interpret the model output. As they are defined now, our interpretation of a slope means that call rate will change some amount for **each unit** change in cloud cover or moon phase. Currently, one unit of these variables represents the difference between 0% and 100%. It would be more intuitive for us to talk about changes in call rate for each percent change in the predictors. To do this, we can simply modify our dataset.
+
+```{r}
+chuckdata$cloud <- chuckdata$cloud*100
+chuckdata$moon <- chuckdata$moon*100
+```
+
+Now a one unit change in these predictors represents a one percent change.
+
+<br>
+<br>
+
+Next, it would be a good idea to plot the relationship between the response variable and each predictor.
+
+```{r, fig.width=8, fig.height=4, fig.align='left', fig.cap= '**Figure 2: Relationship between call rate of Chuck wills widow and two predictor variables, cloud cover and moon phase.**'}
+# ```{r, fig.width=8, fig.height=4} R code chunk options for making this plot
+# install.packages('gridExtra') Check your package library to see if you already have this package
+library(gridExtra)
+library(ggplot2)
+grid.arrange(
+  ggplot(data= chuckdata, aes(x= cloud, y= call.rate)) +
+    geom_point(),
+  
+  ggplot(data= chuckdata, aes(x= moon, y= call.rate)) +
+    geom_point(), ncol= 2)
+```
+
+<br>
+
+**Does there appear to be a relationship between call rate and either of these predictor variables?**
+
+<br>
+<br>
+<br>
+<br>
+
+Let's use a linear model to look at the relationships. First, we need to define our linear model:
+
+$$
+y_i = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \beta_3x_{1i}x_{2i} + \epsilon_i
+$$
+
+**How would you interpret each of these terms? Which ones represent the main effects and which represents the interaction?**
+
+<br>
+<br>
+
+Now we are ready to specify our model in `R`^[There are two ways to denote interactions in the model statement. The more broad method is shown above using an asterisk between the two predictors. This tells `R` to include all of the main effects of these predictors as well as the interactions. In the case of a 3-way Factorial Design we could have something like A\*B\*C which would be interpreted as main effect of A, main effect of B, main effect of C, interaction between A and B, interaction between A and C, interaction between B and C, and interaction among A,B, and C. While the notation above saves time and space, we are not always actually interested in all of the possible interactions available to be estimated. Instead, we may want to include several main effects but only investigate a subset of interaction. For example, in a 3-way design if we were only interested in the interactions between A and B, we could write `response~ A + B + C + A:B`. This would tell `R` to only include that specific interaction term.].
+
+```{r}
+mod1 <- lm(call.rate~ moon*cloud, data= chuckdata)
+summary(mod1)
+```
+**How would you interpret these parameter estimates? Were the main effects significant? Was the interaction significant? Given the results you see here, would it be appropriate for the researcher to consider the main effects independently of each other?**
+
+
+<br>
+<br>
+
+```{r}
+nd1 <- data.frame(moon = seq(min(chuckdata$moon), max(chuckdata$moon), length = 100),
+                 cloud = rep(0,100))
+nd2 <- data.frame(moon = seq(min(chuckdata$moon), max(chuckdata$moon), length = 100),
+                 cloud = rep(100,100))
+
+E1 <- predict(mod1, newdata = nd1, se.fit = TRUE, interval="confidence")
+predictionData1 <- data.frame(E1$fit, nd1)
+
+E2 <- predict(mod1, newdata = nd2, se.fit = TRUE, interval="confidence")
+predictionData2 <- data.frame(E2$fit, nd2)
+
+colors <- c('0' = 'black', '100' = 'red')
+```
+
+
+```{r, fig.width= 8, fig.align='left', fig.cap= '**Figure 3: Predicted call rate of Chuck wills widow as a function of moon phase. Solid lines represent fitted values and dashed lines represent 95% confidence bands. Predictions shown for two values of cloud cover (0 = black, 100 = red).**'}
+ggplot() +
+  geom_point(data = chuckdata, aes(x = moon, y = call.rate)) +
+  geom_ribbon(data = predictionData1, aes(x = moon, ymin = lwr, ymax = upr),
+              color = "black", linetype = "longdash", fill = NA) +
+  geom_path(data = predictionData1, aes(x = moon, y = fit, color= '0')) +
+  geom_ribbon(data= predictionData2, aes(x = moon, ymin = lwr, ymax = upr),
+              color = 'red', linetype = 'longdash', fill = NA) +
+  geom_path(data = predictionData2, aes(x = moon, y = fit, color= '100')) + 
+  scale_color_manual(values= colors) +
+  labs(color= 'Cloud cover')
+```
+<br>
+<br>
+
+
+## Data example 2
+
+Below is a dataset which contains information about a species of *microtus* vole. Voles are small rodents found throughout the world which generally feed on grasses, grains, and seeds. In this experiment, a population of voles has been introduced into 24 enclosures. Each enclosure is randomly assigned to two treatments- food (three levels) and predator presence (two levels). After a specified period of time the number of surviving voles in each enclosure is counted. The researcher is particularly interested in understanding how food availability affects the vole population while also taking into account the presence or absence of predators.
+
+The dataset described above can best be approached through a particular kind of ANOVA which is referred to as a **Factorial Design**. 
+
+A factorial design is commonly used when:
+
+1. There are multiple categorical predictors
+2. The interactions between/among predictors is of interest
+3. There are replicates within each combination of treatment levels
+
+Load the `microtusdata` dataset and examine the data:
+
+```{r eval = FALSE}
+library(FANR6750)
+library(ggplot2)
+data("microtusdata")
+
+head(microtusdata)
+```
+
+```{r echo = FALSE}
+library(FANR6750)
+library(ggplot2)
+data("microtusdata")
+
+kable(head(microtusdata), align = "c")
+```
+
+```{r}
+str(microtusdata)
+```
+
+Before proceeding, we need to convert `food` and `predators` to factors:
+
+```{r}
+microtusdata$food <- factor(microtusdata$food)
+microtusdata$predators <- factor(microtusdata$predators)
+str(microtusdata)
+```
+
+How many replicates do we have?
+
+```{r}
+table(microtusdata[,c("predators","food")])
+```
+
+## Visualizing the data
+
+Visualizing multiple factors at once can sometimes be tricky. We'll use the `fill` aestethic to make separate boxplots for each predation level, within each food treatment:
+
+```{r fig.width=6, fig.height=5, fig.align='left', fig.cap= '**Figure 4: Number of voles in each enclosure as a function of food treatment levels. Colors represent predator treatment.**'}
+ggplot(microtusdata, aes(x = food, y = voles, fill = predators)) +
+  geom_boxplot() +
+  scale_x_discrete("Food treatment") +
+  scale_y_continuous("Number of voles")
+```
+
+<br>
+
+It's clear from this figure that 1) food supplementation influences vole abundance, and 2) the effects of food treatment depend on whether predators are present or absent. 
+
+## Defining the model
+
+Below is the equation we might use to define our linear model for a 2-way factorial design:
+
+$$
+y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk} \ \ \ \ \ \text{where} \ \ \ \ \ \epsilon_i \sim \text{N}(0,\sigma)
+$$
+
+**Notice the increased complexity of the subscripting. What does each represent? What does the $\alpha\beta_{ij}$ term represent?**
+
+**Can you list all of the relevant null and alternative hypotheses?**
+
+<br>
+<br>
+
+## Factorial design using `aov()`
+
+We can analyze the *microtus* data using the `aov()` function that we're already familiar with.
+
+```{r}
+aov1 <- aov(voles ~ food * predators, data = microtusdata)
+summary(aov1)
+```
+
+***
+
+On your own, fit the model without the interaction (`food + predators`). How do the results compare?
+
+***
+
+## Follow ups
+
+Often in your own analysis, you will not stop at a significant ANOVA result. For example, maybe you want to further explore the effects of one factor while holding the other factor constant. In this case, we can further test whether food supplements influence vole abundance *when predators are present* using the `subset` argument:
+
+```{r}
+summary(aov(voles ~ food, 
+            data = microtusdata, 
+            subset = predators == "Present"))
+```
+
+Or when predators are absent:
+
+```{r}
+summary(aov(voles ~ food, 
+            data = microtusdata, 
+            subset = predators == "Absent"))
+```
+
+Or maybe we want to test which levels are different using our old friend the Tukey HSD test, which for the factorial design will return both the "main" effect differences and the interaction^[Depending on the number of factors and levels, we may not want to view all of the pairwise comparisons at once. Adding the `which=` argument to the `TukeyHSD` function tells `R` which factors we are interested in having displayed.]:
+
+```{r}
+TukeyHSD(aov1)
+```
+
+## Visualizing the results
+
+Another follow up that will often be important is visualizing the results of the ANOVA model. In the case of the factorial design, this will generally involve making a graph of the predicted response (and associated uncertainty!) for each combination of factors. 
+
+To create the data that will form the basis of this visualization, we'll first use the `model.tables()` function to compute the relevant means (i.e., predicted values) and standard errors:
+
+```{r}
+(tab <- model.tables(aov1, type="means", se = TRUE))
+```
+
+Next, we'll extract the group means
+
+```{r}
+(ybar_ij. <- tab$tables$"food:predators")
+```
+
+What about confidence intervals? Notice that `model.tables()` returns "Standard errors for
+differences of means".  
+
+Extending the formulas to the $A \times B$ factorial case, the confidence interval for the difference in two $A \times B$ means is:
+
+$$\Large CI_{1−\alpha} : \bar{y}_{ij.} − \bar{y}_{ij.′} \pm t_{1−\alpha/2,ab(n−1)}\times \sqrt{\frac{2MSE}{n}}$$
+
+where $n = 4$ in the vole example.
+
+To set up a plot of the group means, however, we need a confidence interval for each mean. We take out the ‘2’ from the SE expression:
+
+$$\Large CI_{1−\alpha} : \bar{y}_{ij.} \pm t_{1−\alpha/2,ab(n−1)}\times \sqrt{\frac{MSE}{n}}$$
+
+Where can we find MSE?
+
+Answer: in the output of `summary()` of our `aov1` object:
+
+```{r}
+summary(aov1)
+```
+
+Calculate the width of the confidence intervals:
+
+```{r}
+MSE <- summary(aov1)[[1]]$`Mean Sq`[4] ## 16.5
+ybar_ij.SE <- sqrt(MSE/4)
+CI.half <- qt(0.975, 18) * ybar_ij.SE
+(CI <- c(-CI.half, CI.half))
+```
+
+Now we can create a data frame and plot the group means and confidence intervals. Remember to always check how you have defined the order of your dataframe and make sure that it matches with the order that the group means have been displayed in the `model.tables()` function.
+
+```{r fig.width=6, fig.height=5}
+predicted.voles <- data.frame(Food = rep(c(0, 1, 2), 2),
+                              Predators = rep(c("Absent", "Present"), each = 3),
+                              voles = c(ybar_ij.))
+
+## Add lower and upper confidence intervals
+predicted.voles <- dplyr::mutate(predicted.voles, 
+                                 LCI = voles + CI[1],
+                                 UCI = voles + CI[2])
+```
+
+```{r fig.width=6, fig.height=5, fig.align='left', fig.cap='**Figure 5: Predicted number of voles in each enclosure as a function of food treatment level. Point estimates shown with 95% confidence intervals. Colors represent predator treatment levels.**'}
+ggplot(predicted.voles, aes(x = Food, y = voles, 
+                            color = Predators)) +
+  geom_path(aes(linetype = Predators)) +
+  geom_errorbar(aes(ymin = LCI, ymax = UCI), width = 0) +
+  geom_point() +
+  scale_y_continuous("Predicted number of voles")
+```
+
+<br>
+<br>
+
+## Factorial Design using `lm()`
+
+Although we have already completed the analysis, lets also look at how we could have built this model using the `lm()` function.
+
+```{r}
+lm1 <- lm(voles~ food*predators, data= microtusdata)
+summary(lm1)
+```
+
+**There is a lot going on here. Can you interpret each of the parameter estimates (especially the interaction term)? What do we conclude about the original set of hypotheses related to our model?**
+
+<br>
+<br>
+<br>
+
+# Assignment
+
+In the field of fisheries, hard calcified structures such as otoliths and fin spines are frequently used to age individual animals. Similar to trees, these structures lay down annual growth rings which can be counted to estimate age. The use of spines instead of the more traditional aging structure in fish, otoliths, has the advantage that it usually does not require killing the fish. Otoliths, however, typically produce higher quality images since they are less susceptible to being damaged during the life of the fish.    
+
+A graduate student at UGA is conducting studies on Lake Sturgeon (*Acipenser fulvescens*), a large river dwelling fish which in Georgia is only found in the northwestern corner of the state. The student plans to use the calcified structures from these fish to better understand the population age-distribution. Before examining growth annuli, however, the student needs to cut the structures and mount them on microscope slides.
+
+In the dataset below, the student has processed 36 structures (some spines and some otoliths) using 3 different mounting methods (A, B, and C) and 3 different saw speeds (low, medium, and high). Once mounted, the time required (seconds) to accurately age each structure was recorded for each fish. 
+
+```{r eval= F}
+data("agingdata")
+head(agingdata)
+```
+
+**Questions/tasks**  
+
+1) Write out an equation for the linear model that would describe this scenario. Define each term (1 pt).
+
+2) Analyze this dataset using an $A \times B \times C$ factorial ANOVA implemented with `aov()`. Because the student is not interested in the 3-way interaction, set up your model so that it does not include that term (only include the main effects and 2-way interactions of all variables) (1 pt). 
+
+3) Interpret the model output. Which main effects and which interactions were significant? (2 pt)
+
+4) Does the effect of the mounting method depend on the speed of the saw? If so, how? (1 pt)
+
+5) Which combination of mounting method, saw speed, and structure type resulted in the lowest average aging time? (0.5 pt)
+
+6) The student has decided that he is going to use fin spines in future studies because he does not want to use the lethal method of collecting otoliths. Given that, which combination of mounting method and saw speed would result in the lowest average aging time? (0.5 pt)
+
+Put your answers in an R Markdown report. Your report should include:
+
+1) A well-formatted ANOVA table (with header); and
+
+2) A publication-quality plot of the estimated effect of mounting method on aging time for both types of hard structures, including 95% confidence intervals. Rather than making 3 plots (one for each saw speed), use the predictions for 'high speed' only. The figure should also have a descriptive caption and any aesthetics (color, line type, etc.) should be clearly defined. 
+
+You may format the report however you like but it should be well-organized, with relevant headers, plain text, and the elements described above.  
+
+As always:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Be sure to include your first and last name in the `author` section 
+
+- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
+
+- See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+
+- See the "Creating publication-quality graphics" reference sheet for tips on formatting figures

@@ -44,14 +44,14 @@ navbar:
           href: articles/lectures/09_mult_comp/09_mult_comp.html
         - text: "Lecture 10: Multiple Regression"
           href: articles/lectures/10_regression/10_regression.html
-        - text: "Lecture 11: Interactions"
-          href: articles/lectures/11_interactions/11_interactions.html
-        - text: "Lecture 12: Evaluating assumptions"
-          href: articles/lectures/12_assumptions/12_assumptions.html
-        - text: "Lecture 13: Model selection"
-          href: articles/lectures/13_model_selection/13_model_selection.html
-        - text: "Lecture 14: Random effects"
-          href: articles/lectures/14_random_effects/14_random_effects.html
+        # - text: "Lecture 11: Interactions"
+        #   href: articles/lectures/11_interactions/11_interactions.html
+        # - text: "Lecture 12: Evaluating assumptions"
+        #   href: articles/lectures/12_assumptions/12_assumptions.html
+        # - text: "Lecture 13: Model selection"
+        #   href: articles/lectures/13_model_selection/13_model_selection.html
+        # - text: "Lecture 14: Random effects"
+        #   href: articles/lectures/14_random_effects/14_random_effects.html
         # - text: "Lecture 15: Nested designs"
         #   href: articles/lectures/15_nested/15_nested.html
         # - text: "Lecture 16: Split-plot designs"
@@ -79,12 +79,12 @@ navbar:
           href: articles/lab04_t-tests.html
         - text: "Lab 5: ANOVA"
           href: articles/lab05_ANOVA.html
-        - text: "Lab 6: Multiple Regression"
-          href: articles/lab06_multiple_regression.html
-        - text: "Lab 7: Interactions"
-          href: articles/lab07_interactions.html
-        - text: "Lab 8: Evaluating assumptions"
-          href: articles/lab08_linear_model_assumptions.html
+        # - text: "Lab 6: Multiple Regression"
+        #   href: articles/lab06_multiple_regression.html
+        # - text: "Lab 7: Interactions"
+        #   href: articles/lab07_interactions.html
+        # - text: "Lab 8: Evaluating assumptions"
+        #   href: articles/lab08_linear_model_assumptions.html
         # - text: "Lab 9: Model selection"
         #   href: articles/lab09_model_selection.html
         # - text: "Lab 10: Nested designs"

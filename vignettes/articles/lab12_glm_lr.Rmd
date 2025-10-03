@@ -1,0 +1,338 @@
+---
+title: "Lab 12: Generalized linear models: Logistic Regression"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research"
+author: "Fall 2024"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{lab12_glm_lr}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Lab 11
+
+- Repeated Measures
+
+  + The additive model
+
+  + Univariate approach
+  
+  + Multivariate approach
+
+
+
+## Today's topics
+
+- Logistic Regression
+
+  + Link functions
+  
+  + Using glm()
+  
+  + Creating plots
+
+  
+<br>
+<br>
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.align = 'center', fig.height = 4, fig.width = 6, cache= T,
+  fig.retina = 2,
+  warning = FALSE, message = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+source(here::here("R/zzz.R"))
+library(kableExtra)
+```
+
+# Generalized Linear Models
+
+Remember from lecture that generalized linear models (GLMs) are useful when the response variable and predictor variables do not have an underlying linear relationship. In this situation, instead of modeling the response as a function of the predictors we can instead model a function of the response (known as the link function) as a function of the predictors. This method has many benefits including:
+
+- The residuals don’t have to be normally distributed  
+
+- The response variable can be binary, integer, strictly-positive, etc...  
+
+- The variance is not assumed to be constant 
+
+<br>
+<br>
+
+# Logistic regression
+
+One situation where a generalized linear model is useful is when we are attempting to model a binary response variable. In this case, the only values that our response can take on are coded as a 0 or a 1 (which takes on which value is up to the researcher for easier interpretation).
+
+**What are some examples?**
+
+<br>
+<br>
+
+* Presence/Absence
+* Survived/Died
+* Male/Female
+* Diseased/Healthy
+* Breeding/Nonbreeding
+* Migration/Nonmigration
+* Extinction/Nonextinction
+
+<br>
+<br>
+
+Let's take a look at a data example that demonstrates this concept.
+
+## Example: Orchid data
+
+
+```{r eval = TRUE}
+library(FANR6750)
+data("orchiddata")
+head(orchiddata)
+```
+
+```{r echo = FALSE}
+kable(head(orchiddata))
+```
+
+First, lets visualize our data.
+
+```{r, fig.cap='**Figure 1: Observations of orchid presence and absence across a range of elevation.**'}
+library(ggplot2)
+
+ggplot() +
+  geom_point(data = orchiddata, aes(x = elevation, y = presence)) +
+  scale_y_continuous("Presence") +
+  scale_x_continuous("Elevation (m)")
+```
+
+<br>
+
+Here we are interested in estimating presence. We could start by constructing a model that estimates presence as a function of elevation. 
+
+
+```{r}
+mod1 <- lm(presence~ elevation, data= orchiddata)
+summary(mod1)
+```
+
+Now let's add our model predictions to the plot from above.
+
+```{r, fig.cap='**Figure 2: Observations of orchid presence and absence across a range of elevation. Line represents model predictions from simple linear regression (mod1)**'}
+model_pred <- predict(mod1)
+
+ggplot() +
+  geom_point(data = orchiddata, aes(x = elevation, y = presence)) +
+  geom_line(aes(orchiddata$elevation, model_pred)) + 
+  scale_y_continuous("Presence") +
+  scale_x_continuous("Elevation (m)")
+```
+<br>
+
+**What issues do you see with this plot? Does this look like a reasonable way to model this response variable?**
+
+In this case, we are presented with a problem. We have a binary response variable ($y_i$) but it makes more sense for us to predict probability ($p_i$) rather than the response itself. We could derive an equation that estimates probability as a function of our predictor variables. This is referred to as the logistic function:
+
+$$
+p(x) = \frac{1}{1 + e^{-\beta_0 + \beta_1x1 + ... + \beta_zx_z}}
+$$
+
+<br>
+<br>
+Now we've run into another problem. **What is the issue with this equation in the context of linear modeling?**
+
+<br>
+<br>
+
+Instead, we can use a link function (in this case the logit link) to create a linear relationship between the response and the predictors.
+
+Remember from lecture the logistic regression model:
+
+$$\Large logit(p_i) = \beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + · · · + \beta_zx_{iz}$$
+
+$$\Large y_i \sim binomial(N, p_i)$$
+where:
+
+- $N$ is the number of ‘trials’ (e.g. coin flips)  
+
+- $p_i$ is the probability of a success for sample unit $i$
+
+- $z$ is the number of predictors in our model
+
+
+
+Let's start by using the `glm()` function to model the relationship between orchid detections (0 = not detected, 1 = detected), habitat, and elevation:
+
+```{r}
+fm1 <- glm(presence ~ habitat + elevation, family = binomial(link = "logit"), data = orchiddata)
+summary(fm1)
+model.matrix(fm1)
+```
+
+Notice that we use the `family =` argument to tell `R` that this is a logistic (i.e., binomial) glm with a logit link function. 
+
+**What do the parameter estimates from this model represent, including the intercept? What can we say about the effects of habitat and elevation on the probability of detecting an orchid?** 
+
+<br>
+<br>
+
+As we have seen previously, we can use `predict()` to estimate occurrence probability at different combinations of elevation and habitat. For example, how does probability of occurrence differ across elevations in oak habitat:
+
+```{r eval = FALSE}
+predData.elev <- data.frame(elevation = seq(min(orchiddata$elevation), max(orchiddata$elevation), length = 50),habitat = "Oak")
+head(predData.elev)
+```
+
+```{r echo = FALSE}
+predData.elev <- data.frame(elevation = seq(min(orchiddata$elevation), max(orchiddata$elevation), length = 50),habitat = "Oak")
+kable(head(predData.elev))
+```
+
+
+By default, the predictions are on the link scale so to get confidence intervals on the probability scale, we have to back transform using the inverse-link (`plogis()`):
+
+```{r}
+pred.link <- predict(fm1, newdata = predData.elev, se.fit = TRUE)
+predData.elev$p <- plogis(pred.link$fit) # back transform to probability scale
+predData.elev$lower <- plogis(pred.link$fit - 1.96 * pred.link$se.fit)
+predData.elev$upper <- plogis(pred.link$fit + 1.96 * pred.link$se.fit)
+```
+
+<br>
+<br>
+
+And now plot the predictions and observations:
+
+```{r, fig.cap='**Figure 3: Observations of orchid presence and absence across a range of elevation. Line represents model predictions from logistic regression for Oak habitat. Dashed lines represent 95% confidence bands.**'}
+ggplot() +
+  geom_point(data = orchiddata, aes(x = elevation, y = presence)) +
+  geom_path(data = predData.elev, aes(x = elevation, y = p)) +
+  geom_ribbon(data = predData.elev, aes(x = elevation, ymin = lower, ymax = upper),
+              fill = NA, color = "black", linetype = "longdash") +
+  scale_y_continuous("Probability of occurrence") +
+  scale_x_continuous("Elevation (m)")
+```
+
+<br>
+<br>
+
+What about occurrence probability in each habitat type at a particular elevation:
+
+```{r, fig.cap='**Figure 4: Probability of occurence for orchids across multiple habitat types at elevation= 250m. Error bars represent approximate 95% confidence intervals.**'}
+predData.hab <- data.frame(habitat = c("Oak", "Maple", "Pine"), elevation = 250)
+pred.hab <- predict(fm1, newdata = predData.hab, se.fit = TRUE)
+predData.hab$p <- plogis(pred.hab$fit) # back transform to probability scale
+predData.hab$lower <- plogis(pred.hab$fit - pred.hab$se.fit)
+predData.hab$upper <- plogis(pred.hab$fit + pred.hab$se.fit)
+
+ggplot() +
+  geom_col(data = predData.hab, aes(x = habitat, y = p), fill = "grey60") +
+  geom_errorbar(data = predData.hab, aes(x = habitat, ymin = lower, ymax = upper),
+                width = 0.1) +
+  scale_y_continuous("Probability of occurrence") +
+  scale_x_discrete("Habitat type")
+```
+
+<br>
+<br>
+<br>
+
+# Assignment
+
+Researchers want to know how latitude and landscape type influence the probability that American Crows are infected by West Nile Virus. One hundred crows are captured and tested for West Nile Virus in urban and rural landscapes spanning a latitude gradient.
+
+The data can be loaded using:
+
+```{r}
+library(FANR6750)
+data("crowdata")
+```
+
+Create an R markdown report to do the following:
+
+1) Fit a logistic regression model to the crow data to assess the effects of latitude and landscape type (1.5 pt)
+
+2) Include a well-formatted summary table of the parameter estimates (1.5 pt)
+
+3) Provide a clear interpretation of the parameter estimates in the text (1.5 pt)
+
+4) Plot the relationship between infection probability and latitude, for rural and urban landscapes, on the same graph. The graph should include (1.5 pt):
+
+    + the observed data points (color coded by landscape)  
+    
+    + a legend  
+    
+    + confidence intervals  
+
+You may format the report however you like but it should be well-organized, with relevant headers, plain text, and the elements described above.
+
+<br>
+<br>
+<br>
+<br>
+
+
+As always:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Be sure to include your first and last name in the `author` section 
+
+- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
+
+- See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+
+- See the "Creating publication-quality graphics" reference sheet for tips on formatting figures
+
+# Bonus Assignment
+
+Georgia Department of Natural Resources (GADNR) is interested in understanding the relationship between several demographic variables and the likelihood that a deer hunter will reach their annual harvest limit (10 does and 2 bucks). The data collected by GADNR (which can be found in the `harvestdata` dataset) contains:
+
+> `Limit`: Whether or not the hunter harvested their limit (1- they did; 0- they did not)  
+> `Age`: Age of hunter  
+> `Fam_veh`: The number of vehicles owned by the household  
+> `Drive_dist`: The average drive distance from the hunter's home to their hunting spot  
+> `Sick12`: The number of available sick days accumulated by the hunter in the past 12 months  
+> `Sick24`: The number of available sick days accumulated by the hunter in the past 24 months  
+> `Range_hrs`: The number of hours spent by the hunter at the shooting range prior to the start of the season  
+> `Muzzleloader`: Whether or not the hunter participated in the muzzleloader season (1- they did; 0- they did not)  
+> `Archery`: Whether or not the hunter participated in the archery season (1- they did; 0- they did not)  
+>`Utilized`: The percent of available days during the hunting season which the hunter utilized  
+>`Past_max`: Whether or not the hunter has harvested their limit in a past season (1- they did; 0- they did not)  
+>`COUNTY`: The hunter's county of residence
+
+You have been tasked with constructing a parsimonious model which can accurately predict whether or not a hunter will harvest their limit. In addition to constructing the model, GADNR would like you to be able to tell them the model accuracy (i.e. what percentage of time did the model correctly assign a 0 or 1).
+
+While there are several ways you may approach this research question, a rough outline is below:
+
+1.  Explore your dataset
+    -   Check for missing values or typos
+    -   Consider which variables ought to be considered numerical vs factors
+    -   Check for correlation among predictors and consider removing them if necessary (justify your reasons for the removed predictors)
+
+```{=html}
+<!-- -->
+```
+2.  Split your dataset into a reasonably sized training and testing set.
+    -   Consider using the functions `sample()` and `setdiff()`
+
+```{=html}
+<!-- -->
+```
+3.  Use reasonable model selection procedures to construct a parsimonious model using your training data set.
+    -   You may use quadratic effects or interaction terms but you are not required to.
+
+```{=html}
+<!-- -->
+```
+4.  Test your model using the `predict()` function on your test dataset.
+    -   At this point, you can get predictions for all of the observations in your test dataset (using the `predict()` function) and you will already have the actual observations from that set
+    -   Next you can convert your predictions (which are values of probability) to ones and zeros as factors. Consider using the `ifelse()` function for this.
+    -   Now you can test to see how many values in your predictions dataframe match the corresponding value in your test set.
+5.  Create a short report to GADNR explaining the model that you constructed and your assessment of its accuracy.
+    -   Include in your report at least one figure which shows the relationship between "Limit" and one of the continuous predictor variables.
+    -   Make sure to include model predictions and 95% confidence intervals
+    -   To do this you can set all other variables to either a reference level (if categorical) or to their mean (if continuous)
+    -   Make sure that your figure displays multiple levels of one categorical variable
+
