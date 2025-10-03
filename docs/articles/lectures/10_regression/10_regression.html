@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>LECTURE 10: multiple regression</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="   Fall 2025" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <script src="libs/kePrint/kePrint.js"></script>
+    <link href="libs/lightable/lightable.css" rel="stylesheet" />
+    <link rel="stylesheet" href="FANR6750.css" type="text/css" />
+    <link rel="stylesheet" href="FANR6750-fonts.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# LECTURE 10: multiple regression
+]
+.subtitle[
+## FANR 6750 (Experimental design)
+]
+.author[
+### <br/><br/><br/>Fall 2025
+]
+
+---
+
+
+
+
+class: inverse
+
+# outline
+
+#### 1) Model structure
+
+&lt;br/&gt;  
+--
+
+#### 2) Factor + continuous predictor (ANCOVA)
+
+&lt;br/&gt; 
+--
+
+#### 3) Two factors (blocking design)
+
+&lt;br/&gt; 
+
+--
+
+#### 4) Two continuous predictors
+
+&lt;br/&gt; 
+
+--
+
+#### 5) Centering predictors
+
+---
+# review
+
+`$$\large y_i = \beta_0 + \beta_1 \times X_i + \epsilon_i$$`
+`$$\large \epsilon_i \sim normal(0, \sigma)$$`
+So far, we have learned about linear models that contain only a single predictor variable `\(X\)`:
+
+1) Single continuous variable = "simple" regression (lecture 2)
+
+2) Single categorical predictor w/ one level = one-sample *t*-test (lecture 5)
+
+3) Single categorical predictor w/ two levels = two-sample *t*-test (lecture 5)
+
+4) Single categorical predictor w/ &gt; 2 levels = ANOVA (lecture 8)
+
+--
+
+More often than not, your models will need to contain more than one predictor
+
+---
+# multiple regression
+
+Models with more than one predictor go by many names (blocking, ANCOVA, factorial, etc) but are all types of *multiple regression* of the form:
+
+`$$\Large y_i = \beta_0 + \beta_1 \times X1_i + \beta_2 \times X2_i + \epsilon_i$$`
+`$$\Large \epsilon_i \sim normal(0, \sigma)$$`
+
+\*Note that this model only contains two predictors but multiple regression models often contain many predictors 
+
+--
+
+Interpretation of the intercept `\(\beta_0\)`, residual error `\(\epsilon_i\)`, and residual variance `\(\sigma\)` remains the same as before
+
+--
+
+Interpretation of the slope coefficients `\(\beta_1\)`, `\(\beta_2\)`, etc. changes *slightly*
+
+--
+
+- Slopes are the expected change in the response variable `\(y_i\)` for a unit change in the corresponding predictor variable *while holding all other predictors constant*
+
+--
+
+- This is a subtle difference but an important one
+
+
+---
+# example
+
+One of the most common reasons for using multiple regression models is to control for extraneous sources of variation (i.e., sources of variation that influence the response variable but are not of interest in and of themselves)
+
+--
+
+Why would we want to control for extraneous variation? 
+
+--
+
+Perhaps we are raising desert tortoises (*Gopherus agassizii*) for release into the wild and are interested in whether different diets influence their weight gain
+
+.pull-left[
+&lt;img src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Desert_Tortoise_%28Gopherus_agassizii%292.jpg" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+&lt;img src="10_regression_files/figure-html/unnamed-chunk-2-1.png" width="360" style="display: block; margin: auto;" /&gt;
+]
+
+---
+# example
+
+A tortoises final weight, however, is not influenced only by diet. For example, it may also be influenced by it's starting body size
+
+&lt;img src="10_regression_files/figure-html/unnamed-chunk-3-1.png" width="360" style="display: block; margin: auto;" /&gt;
+
+--
+
+As we will see, accurately measuring the effect of diet requires taking into account each individual's initial body size. Multiple regression allows us to do this
+
+---
+# anova
+
+Let's start by fitting a model we've already learned about:
+
+--
+
+.vsmall-code[
+
+
+```r
+fit.lm &lt;- lm(weight ~ diet, data = dietdata)
+summary(fit.lm)
+```
+
+```
+## 
+## Call:
+## lm(formula = weight ~ diet, data = dietdata)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -76.39 -19.29  -0.37  19.78  54.61 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   261.19       7.69   33.94   &lt;2e-16 ***
+## dietLow         4.56      10.88    0.42    0.677    
+## dietMed        11.02      10.88    1.01    0.316    
+## dietHigh       25.28      10.88    2.32    0.024 *  
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 29.8 on 56 degrees of freedom
+## Multiple R-squared:  0.0989,	Adjusted R-squared:  0.0506 
+## F-statistic: 2.05 on 3 and 56 DF,  p-value: 0.117
+```
+
+]
+
+--
+
+Conclusions?
+
+---
+# "ancova"
+
+Now let's fit a slightly different model:
+
+--
+
+.vsmall-code[
+
+
+```r
+fit.lm2 &lt;- lm(weight ~ diet + length, data = dietdata)
+summary(fit.lm2)
+```
+
+```
+## 
+## Call:
+## lm(formula = weight ~ diet + length, data = dietdata)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -38.25 -12.18  -2.53  12.15  49.23 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  191.364      8.862   21.59  &lt; 2e-16 ***
+## dietLow       13.727      6.878    2.00  0.05091 .  
+## dietMed       25.226      6.974    3.62  0.00065 ***
+## dietHigh      30.784      6.833    4.51  3.5e-05 ***
+## length         2.789      0.297    9.38  5.2e-13 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 18.6 on 55 degrees of freedom
+## Multiple R-squared:  0.654,	Adjusted R-squared:  0.628 
+## F-statistic: 25.9 on 4 and 55 DF,  p-value: 4.14e-12
+```
+
+]
+
+
+--
+What changed?
+
+---
+# signal vs. noise
+
+`$$\large y_i = \beta_0 + \beta_1 X1_i + \beta_2 X2_i + \epsilon_i$$`
+
+In any statistical test, our goal is to detect a signal ( `\(\beta\)` ) in the presence of noise (residual variation `\(\epsilon\)`)
+
+--
+
+Our ability to do that depends on the strength of the signal (usually beyond our control) and the amount of noise (partially within our control)
+
+--
+
+- In the first model, where was all the variation in weight caused by variation in length?
+
+- We can see this clearly by looking at the ANOVA tables for the two models
+
+---
+# anova tables
+
+.small-code[
+
+```r
+anova(fit.lm)
+```
+
+```
+## Analysis of Variance Table
+## 
+## Response: weight
+##           Df Sum Sq Mean Sq F value Pr(&gt;F)
+## diet       3   5459    1820    2.05   0.12
+## Residuals 56  49734     888
+```
+
+
+```r
+anova(fit.lm2)
+```
+
+```
+## Analysis of Variance Table
+## 
+## Response: weight
+##           Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+## diet       3   5459    1820    5.23   0.003 ** 
+## length     1  30615   30615   88.07 5.2e-13 ***
+## Residuals 55  19119     348                    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+]
+
+--
+
+Note the residual sum of squares and mean square error of the two models 
+
+---
+class:inverse
+# sums of squares
+
+When calculating the sums of squares for multiple regression models, the order that we write the model matters
+
+--
+
+We wrote the model formula with diet first and length second (`weight ~ diet + length`). `R` calculates the sums of squares for diet first, then length 
+
+- Notice that the diet SS in the two previous tables are the same
+
+--
+
+If we wrote `weight ~ length + diet`, `R` calculates the length SS first, then the diet SS
+
+- The diet SS tells us how much variation is explained by the treatment variable **after** accounting for the covariate
+
+--
+
+This *sequential* method of calculating is called the Type I sums of squares
+
+- Type I SS is the default used by `R`
+
+
+---
+class:inverse
+# sums of squares
+
+.small-code[
+
+
+```r
+anova(fit.lm2)
+```
+
+```
+## Analysis of Variance Table
+## 
+## Response: weight
+##           Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+## diet       3   5459    1820    5.23   0.003 ** 
+## length     1  30615   30615   88.07 5.2e-13 ***
+## Residuals 55  19119     348                    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+
+```r
+fit.lm3 &lt;- lm(weight ~ length + diet, data = dietdata)
+anova(fit.lm3)
+```
+
+```
+## Analysis of Variance Table
+## 
+## Response: weight
+##           Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+## length     1  27882   27882   80.21 2.5e-12 ***
+## diet       3   8192    2731    7.86 0.00019 ***
+## Residuals 55  19119     348                    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+]
+
+---
+class:inverse
+# sums of squares
+
+
+Type I SS is only one of several ways of calculating sums of squares
+
+--
+
+- Type II and Type III SS use slightly different methods that do not depend on order
+
+--
+
+- For balanced designs, all three approaches will give the same answers
+
+--
+
+- For unbalanced designs, the correct approach depends on the hypotheses being tested
+
+--
+
+- Other software programs (SAS, SPSS) default to Type III so may give different results than `R` (but all programs have methods to calculate SS using each method)
+
+---
+# another example
+
+In 1960, Herbert Stoddard established an experiment at Tall Timbers Research Station to study the effects of fire frequency on long-leaf pine forests in the Red Hills region of north Florida and southwest Georgia. The experiment originally consisted of eighty four, 0.5ha plots, each of which was assigned one of four treatments: 1-year, 2-year, or 3-year fire intervals or unburned. Stoddard recognized the soil type likely influenced response to fire, so treatment plots were allocated across the 3 primary soil types found on Tall Timbers
+
+.pull-left[
+
+&lt;img src="fig/herb_stoddard_1.jpg" width="60%" /&gt;
+
+]
+
+.pull-right[
+
+&lt;img src="fig/fire.jpg" width="80%" /&gt;
+
+]
+---
+# another example
+
+We will use a made-up data set from this real experiment, with the goal of understanding whether understory plant richness (measured as the number of understory vascular plant species recorded on each plot) differs among burn treatments.
+
+&lt;table class="table table-condensed" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+&lt;tr&gt;
+&lt;th style="empty-cells: hide;border-bottom:hidden;" colspan="1"&gt;&lt;/th&gt;
+&lt;th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="4"&gt;&lt;div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; "&gt;Fire frequency&lt;/div&gt;&lt;/th&gt;
+&lt;th style="empty-cells: hide;border-bottom:hidden;" colspan="1"&gt;&lt;/th&gt;
+&lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:center;"&gt; Replicate &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Unburned &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 1-year &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 2-year &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; 3-year &lt;/th&gt;
+   &lt;th style="text-align:center;"&gt; Soil &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 43 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 36 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 37 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Loamy sand &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 28 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 37 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 30 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 27 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Sandy loam &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:center;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 18 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 27 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 24 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; 21 &lt;/td&gt;
+   &lt;td style="text-align:center;"&gt; Upland &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
+--
+
+What are the experimental units? What are the observational units?
+
+---
+# another example
+
+Fit the model with treatment only:
+
+
+```r
+data("firedata")
+fm1 &lt;- lm(species ~ interval, data = firedata)
+anova(fm1)
+```
+
+```
+## Analysis of Variance Table
+## 
+## Response: species
+##           Df Sum Sq Mean Sq F value Pr(&gt;F)
+## interval   3    173    57.6     1.1    0.4
+## Residuals  8    419    52.4
+```
+
+Conclusions?
+
+
+---
+# another example
+
+Because the soil types differ in a variety of ways that may influence plant communities, we probably want to control for this variability in our analysis
+
+We do that by adding it to the model:
+
+.small-code[
+
+```r
+data(firedata)
+fm2 &lt;- lm(species ~ interval + soil, data = firedata)
+anova(fm2)
+```
+
+```
+## Analysis of Variance Table
+## 
+## Response: species
+##           Df Sum Sq Mean Sq F value  Pr(&gt;F)    
+## interval   3    173    57.6    13.4 0.00456 ** 
+## soil       2    393   196.7    45.7 0.00023 ***
+## Residuals  6     26     4.3                    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+]
+
+Conclusions?
+
+---
+# another example
+
+Note that in this case, each treatment is applied exactly once within each soil type
+
+--
+
+Soil type itself is not a experimental treatment and is not replicated
+
+--
+
+This design is often referred to as a "randomized complete blocking" design (RCBD)
+
+- The soil types are called "blocks" and should be identified as a source of variability **before** the experiment is conducted
+
+- "Complete" refers to each treatment being represented in each block
+
+- "Randomized" means that treatments are assigned randomly to each experimental unit
+
+--
+
+Again, blocks must be identified during the design phase. You should not "search" for blocks after the fact (why?)
+
+---
+# multiple regression
+
+As these examples show, one reason to use a multiple regression model is to increase power to detect treatment effects
+
+- Remember that `\(F = MS_{treatment}/MS_{error}\)` 
+
+- By explaining some of the residual variation, including predictors in the model reduces `\(MS_{errer}\)` and thereby increases `\(F\)`
+
+--
+
+- When one predictor is a factor and the other(s) is continuous, this model is often referred to as an *ANCOVA* (**An**alysis of **Cova**riance)
+
+--
+
+- When both predictors are factors and each treatment is included within each block, this model is often referred to a randomized complete block design
+
+--
+
+In experimental setting, ANCOVA and blocking are used when there is extraneous variation that we cannot control during the design phase
+
+- Predictor/blocks are not of interest; only included to increase power
+
+
+
+---
+# interpreting model output
+
+If we are only interested in the treatment effect and not the blocks/continuous predictor, the ANOVA table (possibly in combination with multiple comparisons) is often sufficient for interpreting the model
+
+- This is often the case in experimental settings  
+
+--
+
+However, in observational studies, we are often interested in the effects of both predictors
+
+- In this case, it helps to understand the model structure and parameter interpretation in more detail 
+
+--
+
+- Understanding how multiple regression models are structured will also help when you need to include different combinations of factors and continuous predictors
+
+--
+
+Luckily, you already have the tools exploring these models in detail...
+
+---
+# interpreting the ancova model
+
+.small-code[
+
+```r
+broom::tidy(fit.lm2)
+```
+
+```
+## # A tibble: 5 × 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   191.       8.86      21.6  1.56e-28
+## 2 dietLow        13.7      6.88       2.00 5.09e- 2
+## 3 dietMed        25.2      6.97       3.62 6.48e- 4
+## 4 dietHigh       30.8      6.83       4.51 3.50e- 5
+## 5 length          2.79     0.297      9.38 5.16e-13
+```
+]
+
+--
+
+- `Intercept` = predicted weight of control group **when length = 0**
+
+--
+
+- `dietLow` = difference between control and low diet
+
+--
+
+- `dietMed` = difference between control and medium diet
+
+--
+
+- `dietHigh` = difference between control and high diet
+
+--
+
+- `length` = predicted increase in weight for one unit increase in length
+
+---
+# interpreting the ancova model
+
+&lt;img src="10_regression_files/figure-html/unnamed-chunk-13-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+--
+
+#### Question: does the effect of length depend on diet treatment?
+
+--
+
+#### Answer: No. The model assumes the effect of length is the same for every treatment
+
+
+---
+# interpreting the rcbd model
+
+.vsmall-code[
+
+```r
+summary(fm2)
+```
+
+```
+## 
+## Call:
+## lm(formula = species ~ interval + soil, data = firedata)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.5000 -0.9167  0.0833  0.9375  2.2500 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       32.08       1.47   21.87  6.0e-07 ***
+## interval1         10.33       1.69    6.10  0.00088 ***
+## interval2          4.67       1.69    2.75  0.03310 *  
+## interval3          2.67       1.69    1.57  0.16656    
+## soilsandy loam    -6.25       1.47   -4.26  0.00532 ** 
+## soilupland       -14.00       1.47   -9.54  7.6e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.07 on 6 degrees of freedom
+## Multiple R-squared:  0.956,	Adjusted R-squared:  0.92 
+## F-statistic: 26.3 on 5 and 6 DF,  p-value: 0.000518
+```
+]
+
+--
+
+This scenario (two factors) is a little more tricky. But, as before, we'll use the design matrix to help understand what each parameter means
+
+---
+# interpreting the rcbd model
+
+.small-code[
+
+```r
+model.matrix(fm2)
+```
+
+```
+##    (Intercept) interval1 interval2 interval3 soilsandy loam soilupland
+## 1            1         0         0         0              1          0
+## 2            1         0         0         0              0          0
+## 3            1         0         0         0              0          1
+## 4            1         1         0         0              1          0
+## 5            1         1         0         0              0          0
+## 6            1         1         0         0              0          1
+## 7            1         0         1         0              1          0
+## 8            1         0         1         0              0          0
+## 9            1         0         1         0              0          1
+## 10           1         0         0         1              1          0
+## 11           1         0         0         1              0          0
+## 12           1         0         0         1              0          1
+## attr(,"assign")
+## [1] 0 1 1 1 2 2
+## attr(,"contrasts")
+## attr(,"contrasts")$interval
+## [1] "contr.treatment"
+## 
+## attr(,"contrasts")$soil
+## [1] "contr.treatment"
+```
+]
+
+---
+# interpreting the rcbd model
+
+- `Intercept` = predicted number of species in the unburned treatment in loamy sand
+
+--
+
+- `interval1` = difference between unburned and 1-year fire interval
+
+--
+
+- `interval2` = difference between unburned and 2-year fire interval
+
+--
+
+- `interval3` = difference between unburned and 3-year fire interval
+
+--
+
+- `soilsandy loam` = difference between loamy sand and sandy loam soils
+
+--
+
+- `soilupland` = difference between loamy sand and upland soils
+
+--
+
+Again, because there is no interaction between `interval` and `soil`, the model assumes that the effects of fire frequency are the same in every soil type (and that the soil differences are the same for every fire frequency)
+
+---
+# one more example 
+
+We have looked at multiple regression examples with two factors and with one factor and one continuous covariate, but what about multiple continuous covariates?
+
+--
+
+The `biomassdata` object contains (made up) biomass measurements (kg) as a function of rainfall (mm) and elevation (km)
+
+
+```r
+data("biomassdata")
+head(biomassdata)
+```
+
+```
+##   biomass rainfall elevation
+## 1   96.12    166.0    4.4397
+## 2  122.89    150.3    4.9462
+## 3   69.14    195.3    5.8502
+## 4   47.02    192.0    0.5679
+## 5   20.56    211.6    2.5554
+## 6   10.77    218.0    1.0106
+```
+
+---
+# multiple regression model
+
+
+.vsmall-code[
+
+```r
+fit.lm &lt;- lm(biomass ~ rainfall + elevation, data = biomassdata)
+broom::tidy(fit.lm)
+```
+
+```
+## # A tibble: 3 × 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)   320.      4.11        78.0 2.31e-51
+## 2 rainfall       -1.44    0.0217     -66.4 3.97e-48
+## 3 elevation       3.97    0.241       16.5 3.77e-21
+```
+]
+
+- `Intercept` = predicted biomass when rainfall = 0 and elevation = 0
+
+--
+
+- `rainfall` = predicted change in biomass for 1mm increase in rainfall while holding elevation constant
+
+--
+
+- `elevation` = predicted change in biomass for 1km increase in elevation while holding rainfall constant
+
+---
+# centering and standardizing data
+
+When fitting models to continuous covariates, it is common to center or standardize covariates. 
+
+--
+
+Centering is done by subtracting the mean
+
+.small-code[
+
+```r
+biomassdata$elevation.c &lt;- biomassdata$elevation - mean(biomassdata$elevation)
+biomassdata$rainfall.c &lt;- biomassdata$rainfall - mean(biomassdata$rainfall)
+```
+]
+
+--
+
+When interpreting centered data:
+
+- positive values indicate observations larger than the mean
+
+- negative values indicate observation smaller than the mean
+
+- units don't change
+
+---
+# multiple regression model
+
+
+.vsmall-code[
+
+```r
+fit.lm &lt;- lm(biomass ~ rainfall.c + elevation.c, data = biomassdata)
+broom::tidy(fit.lm)
+```
+
+```
+## # A tibble: 3 × 5
+##   term        estimate std.error statistic  p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)    62.0     0.414      150.  1.24e-64
+## 2 rainfall.c     -1.44    0.0217     -66.4 3.97e-48
+## 3 elevation.c     3.97    0.241       16.5 3.77e-21
+```
+]
+
+- `Intercept` = predicted biomass when rainfall and elevation are **at their mean**
+
+--
+
+- `rainfall` = predicted change in biomass for 1mm increase in rainfall while holding elevation constant
+
+--
+
+- `elevation` = predicted change in biomass for 1km increase in elevation while holding rainfall constant
+
+
+---
+# multiple regression model
+
+&lt;img src="10_regression_files/figure-html/unnamed-chunk-20-1.png" width="576" style="display: block; margin: auto;" /&gt;
+
+---
+# looking ahead
+
+&lt;br/&gt;
+
+### **Next time**: Interactions
+
+&lt;br/&gt;
+
+### **Reading**: [Fieberg chp. 3.8](https://statistics4ecologists-v3.netlify.app/03-multipleregression#models-with-interactions)
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
