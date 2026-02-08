@@ -1,0 +1,167 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "FANR6750"
+  site-url: "https://djklement.github.io/FANR6750/"
+
+  navbar:
+    left:
+      - icon: house
+        href: index.qmd
+
+    right:
+
+      - text: "Syllabus"
+        icon: book
+        href: syllabus.qmd
+
+      - text: "Schedule"
+        icon: calendar
+        href: schedule.qmd
+
+      - text: "Lectures"
+        icon: file-pdf
+        menu:
+
+          - text: "Lecture 0: Course introduction"
+            href: lectures/00_course_intro.qmd
+
+          - text: "Lecture 1: Introduction to statistics"
+            href: lectures/01_intro_to_stats.qmd
+
+          - text: "Lecture 2: Introduction to linear models"
+            href: lectures/02_intro_to_lm.qmd
+
+          - text: "Lecture 3: Principles of inference"
+            href: lectures/03_inference.qmd
+
+          - text: "Lecture 4: Principles of experimental design"
+            href: lectures/04_expdesign.qmd
+
+          - text: "Lecture 5: Linear models part 1"
+            href: lectures/05_t_test.qmd
+
+          - text: "Lecture 6: Null hypothesis testing"
+            href: lectures/06_nht.qmd
+
+          - text: "Lecture 7: Statistical power"
+            href: lectures/07_power.qmd
+
+          - text: "Lecture 8: ANOVA"
+            href: lectures/08_anova.qmd
+
+          - text: "Lecture 9: Multiple Comparisons"
+            href: lectures/09_mult_comp.qmd
+
+          - text: "Lecture 10: Multiple Regression"
+            href: lectures/10_regression.qmd
+
+          - text: "Lecture 11: Interactions"
+            href: lectures/11_interactions.qmd
+
+          - text: "Lecture 12: Evaluating assumptions"
+            href: lectures/12_assumptions.qmd
+
+          - text: "Lecture 13: Model selection"
+            href: lectures/13_model_selection.qmd
+
+          - text: "Lecture 14: Random effects"
+            href: lectures/14_random_effects.qmd
+
+          - text: "Lecture 15: Nested designs"
+            href: lectures/15_nested.qmd
+
+          - text: "Lecture 16: Split-plot designs"
+            href: lectures/16_split_plot.qmd
+
+          - text: "Lecture 17: Repeated measures"
+            href: lectures/17_repeated_measures.qmd
+
+          - text: "Lecture 18: Generalized linear models"
+            href: lectures/18_glm.qmd
+
+          - text: "Lecture 19: Logistic regression"
+            href: lectures/19_logistic_regression.qmd
+
+          - text: "Lecture 20: Poisson regression"
+            href: lectures/20_poisson_regression.qmd
+
+          - text: "Lecture 21: Zero-inflated regression"
+            href: lectures/21_zero_inflation.qmd
+
+
+      - text: "Labs"
+        icon: display
+        menu:
+
+          - text: "Lab 1: Introduction to R"
+            href: labs/lab01_intro_to_R.qmd
+
+          - text: "Lab 2: Introduction to projects and RMarkdown"
+            href: labs/lab02_Intro_project_and_Rmd.qmd
+
+          - text: "Lab 3: Using R to explore sampling error"
+            href: labs/lab03_inference.qmd
+
+          - text: "Lab 4: t-tests"
+            href: labs/lab04_t_tests.qmd
+
+          - text: "Lab 5: ANOVA"
+            href: labs/lab05_ANOVA.qmd
+
+          - text: "Lab 6: Multiple Regression"
+            href: labs/lab06_multiple_regression.qmd
+
+          - text: "Lab 7: Interactions"
+            href: labs/lab07_interactions.qmd
+
+          - text: "Lab 8: Evaluating assumptions"
+            href: labs/lab08_linear_model_assumptions.qmd
+
+          - text: "Lab 9: Model selection"
+            href: labs/lab09_model_selection.qmd
+
+          - text: "Lab 10: Nested designs"
+            href: labs/lab10_nested.qmd
+
+          - text: "Lab 11: Split-plot designs"
+            href: labs/lab11_split_plot.qmd
+
+          - text: "Lab 12: Logistic regression"
+            href: labs/lab13_glm_lr.qmd
+
+          - text: "Lab 13: Poisson regression"
+            href: labs/lab14_glm_pr.qmd
+
+          - text: "Bonus lab: Repeated measures"
+            href: labs/lab12_repeated_measures.qmd
+
+
+      - text: "References"
+        icon: pencil-square
+        menu:
+
+          - text: "Assignment instructions"
+            href: references/homework.qmd
+
+          - text: "Projects and directories"
+            href: references/projects_and_directories.qmd
+
+          - text: "R Markdown reference"
+            href: references/RMarkdown.qmd
+
+          - text: "Creating publication-quality graphics"
+            href: references/graphics.qmd
+
+
+format:
+  html:
+    theme: spacelab
+    toc: true
+    code-copy: true
+
+
+
+
