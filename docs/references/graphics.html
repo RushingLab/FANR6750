@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Checklist and tips for publication-quality graphics in R – FANR6750</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a786baa6f14ee79d175f6472c084195c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">FANR6750</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> <i class="bi bi-house" role="img">
+</i> 
+<span class="menu-text">FANR6750</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> <i class="bi bi-book" role="img">
+</i> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> <i class="bi bi-calendar" role="img">
+</i> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lectures" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-file-pdf" role="img">
+</i> 
+ <span class="menu-text">Lectures</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-lectures">    
+        <li>
+    <a class="dropdown-item" href="../lectures/00_course_intro.qmd">
+ <span class="dropdown-text">Lecture 0: Course introduction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/01_intro_to_stats.qmd">
+ <span class="dropdown-text">Lecture 1: Introduction to statistics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/02_intro_to_lm.qmd">
+ <span class="dropdown-text">Lecture 2: Introduction to linear models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/03_inference.qmd">
+ <span class="dropdown-text">Lecture 3: Principles of inference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/04_expdesign.qmd">
+ <span class="dropdown-text">Lecture 4: Principles of experimental design</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/05_t_test.qmd">
+ <span class="dropdown-text">Lecture 5: Linear models part 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/06_nht.qmd">
+ <span class="dropdown-text">Lecture 6: Null hypothesis testing</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/07_power.qmd">
+ <span class="dropdown-text">Lecture 7: Statistical power</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/08_anova.qmd">
+ <span class="dropdown-text">Lecture 8: ANOVA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/09_mult_comp.qmd">
+ <span class="dropdown-text">Lecture 9: Multiple Comparisons</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/10_regression.qmd">
+ <span class="dropdown-text">Lecture 10: Multiple Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/11_interactions.qmd">
+ <span class="dropdown-text">Lecture 11: Interactions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/12_assumptions.qmd">
+ <span class="dropdown-text">Lecture 12: Evaluating assumptions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/13_model_selection.qmd">
+ <span class="dropdown-text">Lecture 13: Model selection</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/14_random_effects.qmd">
+ <span class="dropdown-text">Lecture 14: Random effects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/15_nested.qmd">
+ <span class="dropdown-text">Lecture 15: Nested designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/16_split_plot.qmd">
+ <span class="dropdown-text">Lecture 16: Split-plot designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/17_repeated_measures.qmd">
+ <span class="dropdown-text">Lecture 17: Repeated measures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/18_glm.qmd">
+ <span class="dropdown-text">Lecture 18: Generalized linear models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/19_logistic_regression.qmd">
+ <span class="dropdown-text">Lecture 19: Logistic regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/20_poisson_regression.qmd">
+ <span class="dropdown-text">Lecture 20: Poisson regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/21_zero_inflation.qmd">
+ <span class="dropdown-text">Lecture 21: Zero-inflated regression</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-labs" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-display" role="img">
+</i> 
+ <span class="menu-text">Labs</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-labs">    
+        <li>
+    <a class="dropdown-item" href="../labs/lab01_intro_to_R.html">
+ <span class="dropdown-text">Lab 1: Introduction to R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab02_Intro_project_and_Rmd.html">
+ <span class="dropdown-text">Lab 2: Introduction to projects and RMarkdown</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab03_inference.html">
+ <span class="dropdown-text">Lab 3: Using R to explore sampling error</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab04_t_tests.qmd">
+ <span class="dropdown-text">Lab 4: t-tests</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab05_ANOVA.html">
+ <span class="dropdown-text">Lab 5: ANOVA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab06_multiple_regression.html">
+ <span class="dropdown-text">Lab 6: Multiple Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab07_interactions.html">
+ <span class="dropdown-text">Lab 7: Interactions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab08_linear_model_assumptions.html">
+ <span class="dropdown-text">Lab 8: Evaluating assumptions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab09_model_selection.html">
+ <span class="dropdown-text">Lab 9: Model selection</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab10_nested.html">
+ <span class="dropdown-text">Lab 10: Nested designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab11_split_plot.html">
+ <span class="dropdown-text">Lab 11: Split-plot designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab12_glm_lr.qmd">
+ <span class="dropdown-text">Lab 12: Logistic regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab13_glm_pr.qmd">
+ <span class="dropdown-text">Lab 13: Poisson regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab12_repeated_measures.html">
+ <span class="dropdown-text">Bonus lab: Repeated measures</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-references" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-pencil-square" role="img">
+</i> 
+ <span class="menu-text">References</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-references">    
+        <li>
+    <a class="dropdown-item" href="../references/homework.html">
+ <span class="dropdown-text">Assignment instructions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/projects_and_directories.html">
+ <span class="dropdown-text">Projects and directories</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/RMarkdown.html">
+ <span class="dropdown-text">R Markdown reference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/graphics.html">
+ <span class="dropdown-text">Creating publication-quality graphics</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#attributes-of-good-figures" id="toc-attributes-of-good-figures" class="nav-link active" data-scroll-target="#attributes-of-good-figures">Attributes of good figures</a></li>
+  <li><a href="#what-type-of-figure-should-i-use" id="toc-what-type-of-figure-should-i-use" class="nav-link" data-scroll-target="#what-type-of-figure-should-i-use">What type of figure should I use?</a></li>
+  <li><a href="#visualization-checklist" id="toc-visualization-checklist" class="nav-link" data-scroll-target="#visualization-checklist">Visualization checklist</a></li>
+  <li><a href="#saving-high-resolution-figures-for-publication" id="toc-saving-high-resolution-figures-for-publication" class="nav-link" data-scroll-target="#saving-high-resolution-figures-for-publication">Saving high-resolution figures for publication</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources">Additional resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Checklist and tips for publication-quality graphics in R</h1>
+<p class="subtitle lead">FANR 6750: Experimental Methods in Forestry and Natural Resources Research<br><small>Fall 2026</small></p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="attributes-of-good-figures" class="level1">
+<h1>Attributes of good figures</h1>
+<p>Effective data visualizations should:</p>
+<ol type="1">
+<li><p><strong>Tell a story</strong>. Each figure in a manuscript or report should communicate one of the main findings you want readers to know. A casual reader should be able to understand the primary findings by looking at the figures.</p></li>
+<li><p><strong>Be intuitive</strong>. Strive for figures that readers can understand without having to read the caption or text. Readers should at least grasp the main gist of the figure just by looking at it.</p></li>
+<li><p><strong>Err towards simplicity</strong>. Avoid clutter. Avoid gratuitous use of visual attributes (color, size, shape) that do not show attributes of the data. Avoid background colors. Use grid lines sparingly and only when they make interpretation of the data easier.</p></li>
+<li><p><strong>Be readable</strong>. The default sizes for axis labels and text are rarely big enough. You will almost always need to make them bigger.</p></li>
+<li><p><strong>Maximize data-ink ratio, within reason</strong>. Related to point 3, most of the “ink” in your figure should show data rather than non-data (axis ticks/labels, titles, legends, grid lines, etc.). Maximize ink that shows data relative to non-data, <a href="https://clauswilke.com/dataviz/balance-data-context.html">within reason</a>.</p></li>
+<li><p><strong>Have a visual hierarchy</strong>. The most important information in the plot should be the most visible. Use layering, color, brightness, size, transparency, etc. to make important attributes (generally data, sometimes even specific portions of the data) jump out and less important attributes (axis ticks/lines, grid lines, less important data points) fade into the background.</p></li>
+</ol>
+</section>
+<section id="what-type-of-figure-should-i-use" class="level1">
+<h1>What type of figure should I use?</h1>
+<p><strong>Trends or time series</strong> - line chart</p>
+<p><strong>Amounts/comparisons of discrete groups</strong> - bar chart, dot plot with error bars</p>
+<p><strong>Frequencies/distributions</strong> - histogram</p>
+<p><strong>Associations of 2 or more continuous variables</strong> - scatterplot</p>
+<p><strong>Comparing distributions of discrete groups</strong> - box-and-whisker plot, violin plt</p>
+<p><strong>Spatial relationships</strong> - map</p>
+</section>
+<section id="visualization-checklist" class="level1">
+<h1>Visualization checklist</h1>
+<p>Below is a list of considerations for making high-quality figures for publications. This is not a complete list and these should be considered suggestions.</p>
+<ul>
+<li><p>Does your figure include a caption that clearly explains all elements needed to interpret the visualization? Remember that the caption and figure should be understandable without referencing the main text.</p></li>
+<li><p>Does your figure accurately show variability in the data or uncertainty in estimates?</p></li>
+<li><p>Do your axes start and stop at reasonable values?</p></li>
+<li><p>Do your axis titles clearly indicate what variables are being shown? Do they include units?</p></li>
+<li><p>Are your axis labels, axis titles, and text annotations appropriately sized?</p></li>
+<li><p>If your figure includes different colors, shapes, or sizes, do these attributes communicate properties of the data?</p></li>
+<li><p>If your figure includes different colors, shapes, or sizes, do you have a legend to show what values are represented by these attributes?</p></li>
+<li><p>Are color palettes colorblind-friendly?</p></li>
+<li><p>If you have overlapping elements (points, bars, etc.), can they be clearly distinguished?</p></li>
+<li><p>If your figure includes multiple panels, are the axis limits consistent?</p></li>
+<li><p>If your figure includes multiple panels, is each panel labeled?</p></li>
+<li><p>Do you have grid lines? If so, do they show relevant information needed to interpret the figure?</p></li>
+<li><p>Do you have grid lines? If so, are they appropriately sized and colored to not distract from the data?</p></li>
+<li><p>Did you use a 3D pie chart? 😠</p></li>
+</ul>
+</section>
+<section id="saving-high-resolution-figures-for-publication" class="level1">
+<h1>Saving high-resolution figures for publication</h1>
+<p>In many cases, you will need to save your figures rather than render them directly in your .rmd file. The <code>ggsave()</code> function is (in my opinion) the easiest way to save high-resolution figures. By default, <code>ggsave()</code> will save the last plot that you created in <code>R</code> using the same size as your graphics device. All you have to tell the function is where to save the figure and what to name the file. So, for example, the following code would save</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">libary</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>), </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="st">"figs/scatterplot.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>ggsave()</code> also uses whatever file type you name the figure file to guess what format to save the figure as (in this case, png). Options include: “eps”, “ps”, “tex”, “pdf”, “jpeg”, “tiff”, “png”, “bmp”, and “svg”.</p>
+<p>You can also change the defaults to, for example, save a specific figure object, change the figure size, and change the figure resolution. For example,</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">libary</span>(ggplot2)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>), </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>))</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">geom_point</span>()</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">"figs/scatterplot.png"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">plot =</span> p,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">width =</span> <span class="dv">5</span>, </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">height =</span> <span class="dv">8</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">units =</span> <span class="st">"in"</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">dpi =</span> <span class="dv">600</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Easy!</p>
+</section>
+<section id="additional-resources" class="level1">
+<h1>Additional resources</h1>
+<p><a href="https://clauswilke.com/dataviz/">Fundamentals of Data Visualization</a>, by Claus Wilke. A comprehensive book on data visualization, with lots of <code>R</code> code.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/djklement\.github\.io\/FANR6750\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 5: Completely randomized ANOVA – FANR6750</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a786baa6f14ee79d175f6472c084195c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
+
+<link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">FANR6750</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> <i class="bi bi-house" role="img">
+</i> 
+<span class="menu-text">FANR6750</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> <i class="bi bi-book" role="img">
+</i> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> <i class="bi bi-calendar" role="img">
+</i> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lectures" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-file-pdf" role="img">
+</i> 
+ <span class="menu-text">Lectures</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-lectures">    
+        <li>
+    <a class="dropdown-item" href="../lectures/00_course_intro.qmd">
+ <span class="dropdown-text">Lecture 0: Course introduction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/01_intro_to_stats.qmd">
+ <span class="dropdown-text">Lecture 1: Introduction to statistics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/02_intro_to_lm.qmd">
+ <span class="dropdown-text">Lecture 2: Introduction to linear models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/03_inference.qmd">
+ <span class="dropdown-text">Lecture 3: Principles of inference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/04_expdesign.qmd">
+ <span class="dropdown-text">Lecture 4: Principles of experimental design</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/05_t_test.qmd">
+ <span class="dropdown-text">Lecture 5: Linear models part 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/06_nht.qmd">
+ <span class="dropdown-text">Lecture 6: Null hypothesis testing</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/07_power.qmd">
+ <span class="dropdown-text">Lecture 7: Statistical power</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/08_anova.qmd">
+ <span class="dropdown-text">Lecture 8: ANOVA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/09_mult_comp.qmd">
+ <span class="dropdown-text">Lecture 9: Multiple Comparisons</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/10_regression.qmd">
+ <span class="dropdown-text">Lecture 10: Multiple Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/11_interactions.qmd">
+ <span class="dropdown-text">Lecture 11: Interactions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/12_assumptions.qmd">
+ <span class="dropdown-text">Lecture 12: Evaluating assumptions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/13_model_selection.qmd">
+ <span class="dropdown-text">Lecture 13: Model selection</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/14_random_effects.qmd">
+ <span class="dropdown-text">Lecture 14: Random effects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/15_nested.qmd">
+ <span class="dropdown-text">Lecture 15: Nested designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/16_split_plot.qmd">
+ <span class="dropdown-text">Lecture 16: Split-plot designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/17_repeated_measures.qmd">
+ <span class="dropdown-text">Lecture 17: Repeated measures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/18_glm.qmd">
+ <span class="dropdown-text">Lecture 18: Generalized linear models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/19_logistic_regression.qmd">
+ <span class="dropdown-text">Lecture 19: Logistic regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/20_poisson_regression.qmd">
+ <span class="dropdown-text">Lecture 20: Poisson regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/21_zero_inflation.qmd">
+ <span class="dropdown-text">Lecture 21: Zero-inflated regression</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-labs" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-display" role="img">
+</i> 
+ <span class="menu-text">Labs</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-labs">    
+        <li>
+    <a class="dropdown-item" href="../labs/lab01_intro_to_R.html">
+ <span class="dropdown-text">Lab 1: Introduction to R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab02_Intro_project_and_Rmd.html">
+ <span class="dropdown-text">Lab 2: Introduction to projects and RMarkdown</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab03_inference.html">
+ <span class="dropdown-text">Lab 3: Using R to explore sampling error</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab04_t_tests.qmd">
+ <span class="dropdown-text">Lab 4: t-tests</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab05_ANOVA.html">
+ <span class="dropdown-text">Lab 5: ANOVA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab06_multiple_regression.qmd">
+ <span class="dropdown-text">Lab 6: Multiple Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab07_interactions.qmd">
+ <span class="dropdown-text">Lab 7: Interactions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab08_linear_model_assumptions.qmd">
+ <span class="dropdown-text">Lab 8: Evaluating assumptions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab09_model_selection.qmd">
+ <span class="dropdown-text">Lab 9: Model selection</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab10_nested.qmd">
+ <span class="dropdown-text">Lab 10: Nested designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab11_split_plot.qmd">
+ <span class="dropdown-text">Lab 11: Split-plot designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab13_glm_lr.qmd">
+ <span class="dropdown-text">Lab 12: Logistic regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab14_glm_pr.qmd">
+ <span class="dropdown-text">Lab 13: Poisson regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab12_repeated_measures.qmd">
+ <span class="dropdown-text">Bonus lab: Repeated measures</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-references" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-pencil-square" role="img">
+</i> 
+ <span class="menu-text">References</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-references">    
+        <li>
+    <a class="dropdown-item" href="../references/homework.qmd">
+ <span class="dropdown-text">Assignment instructions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/projects_and_directories.qmd">
+ <span class="dropdown-text">Projects and directories</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/RMarkdown.qmd">
+ <span class="dropdown-text">R Markdown reference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/graphics.qmd">
+ <span class="dropdown-text">Creating publication-quality graphics</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#lab-4" id="toc-lab-4" class="nav-link active" data-scroll-target="#lab-4">Lab 4</a></li>
+  <li><a href="#todays-topics" id="toc-todays-topics" class="nav-link" data-scroll-target="#todays-topics">Today’s topics</a></li>
+  <li><a href="#one-way-anova-as-a-linear-model" id="toc-one-way-anova-as-a-linear-model" class="nav-link" data-scroll-target="#one-way-anova-as-a-linear-model">One-way ANOVA as a linear model</a>
+  <ul class="collapse">
+  <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1">Exercise 1</a></li>
+  <li><a href="#two-anova-functions-in-r-aov-and-lm" id="toc-two-anova-functions-in-r-aov-and-lm" class="nav-link" data-scroll-target="#two-anova-functions-in-r-aov-and-lm">Two ANOVA functions: in <code>R</code>: <code>aov()</code> and <code>lm()</code></a></li>
+  <li><a href="#using-lm" id="toc-using-lm" class="nav-link" data-scroll-target="#using-lm">Using <code>lm()</code></a></li>
+  <li><a href="#using-aov" id="toc-using-aov" class="nav-link" data-scroll-target="#using-aov">Using <code>aov()</code></a></li>
+  <li><a href="#constructing-an-anova-table-by-hand" id="toc-constructing-an-anova-table-by-hand" class="nav-link" data-scroll-target="#constructing-an-anova-table-by-hand">Constructing an ANOVA table by hand</a></li>
+  <li><a href="#plotting-group-means-and-confidence-intervals" id="toc-plotting-group-means-and-confidence-intervals" class="nav-link" data-scroll-target="#plotting-group-means-and-confidence-intervals">Plotting group means and confidence intervals</a></li>
+  <li><a href="#multiple-comparisons" id="toc-multiple-comparisons" class="nav-link" data-scroll-target="#multiple-comparisons">Multiple comparisons</a></li>
+  </ul></li>
+  <li><a href="#optional-exercise-not-graded" id="toc-optional-exercise-not-graded" class="nav-link" data-scroll-target="#optional-exercise-not-graded">Optional exercise (not graded)</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 5: Completely randomized ANOVA</h1>
+<p class="subtitle lead">FANR 6750: Experimental Methods in Forestry and Natural Resources Research<br><small>Fall 2026</small></p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="lab-4" class="level2">
+<h2 class="anchored" data-anchor-id="lab-4">Lab 4</h2>
+<ol type="1">
+<li>t-tests</li>
+</ol>
+<ul>
+<li><p>One sample t-tests</p></li>
+<li><p>Two sample t-tests</p></li>
+<li><p>Samples vs tails</p></li>
+<li><p>Paired t-tests</p></li>
+</ul>
+</section>
+<section id="todays-topics" class="level2">
+<h2 class="anchored" data-anchor-id="todays-topics">Today’s topics</h2>
+<ol type="1">
+<li>One way ANOVA as a linear model</li>
+</ol>
+<ul>
+<li><p>Using lm()</p></li>
+<li><p>Using aov()</p></li>
+<li><p>Performing an ANOVA by hand</p></li>
+</ul>
+<ol start="2" type="1">
+<li><p>Plotting group means and CI’s</p></li>
+<li><p>Multiple comparisons</p></li>
+</ol>
+</section>
+<section id="one-way-anova-as-a-linear-model" class="level1">
+<h1>One-way ANOVA as a linear model</h1>
+<section id="scenario" class="level4">
+<h4 class="anchored" data-anchor-id="scenario">Scenario</h4>
+<ul>
+<li><p>We have independent samples from <span class="math inline">\(a &gt; 2\)</span> groups</p></li>
+<li><p>We assume a common variance</p></li>
+</ul>
+</section>
+<section id="questions" class="level4">
+<h4 class="anchored" data-anchor-id="questions">Questions</h4>
+<ul>
+<li><p>Do the means differ and by how much (what are the effect sizes?)</p></li>
+<li><p>Which means differ from each other?</p></li>
+</ul>
+</section>
+<section id="null-hypothesis" class="level4">
+<h4 class="anchored" data-anchor-id="null-hypothesis">Null hypothesis</h4>
+<ul>
+<li><span class="math inline">\(H_0 : \mu_1 = \mu_2 = \mu_3 = . . . = \mu_a\)</span></li>
+</ul>
+<p>OR</p>
+<ul>
+<li><span class="math inline">\(H_0 : \alpha_1 = \alpha_2 = \alpha_3 = . . . = \alpha_a = 0\)</span></li>
+</ul>
+</section>
+<section id="alternative-hypothesis" class="level4">
+<h4 class="anchored" data-anchor-id="alternative-hypothesis">Alternative hypothesis</h4>
+<ul>
+<li><span class="math inline">\(H_A: \mu_i \ne \mu_j \space\text{for some i, j in (1, . . ., a)}\)</span></li>
+</ul>
+</section>
+<section id="formulation-as-a-linear-model" class="level4">
+<h4 class="anchored" data-anchor-id="formulation-as-a-linear-model">Formulation as a linear model</h4>
+<p>Just as we have seen in the last lab, many of the analyses that we will perform this semester can be thought of in multiple ways. A one-way ANOVA can be formulated as a linear model:</p>
+<p><span class="math display">\[
+y_{ij} = \mu + \alpha_i + \epsilon_{ij} \ \ \ \ \ \text{where} \ \ \ \ \ \epsilon_{ij} \sim \text{N}(0,\sigma)
+\]</span></p>
+<p><strong>Can you define each term in the context of the data? Why did we need to add additional sub-scripting to the observation and residual terms?</strong></p>
+</section>
+<section id="exercise-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1">Exercise 1</h2>
+<p>The dataset below comes from a pilot study implemented by the US Forest Service. The service is interested in purchasing a number of chainsaws to use for various projects and fieldwork. Due to safety concerns, the service is hoping to select the chainsaw brand (A, B, C, or D) which has the lowest average kickback angle. Kickback, which refers to the sudden upward motion of the saw’s guide bar when the saw strikes a hard object, is one of the leading causes of injuries during chainsaw work. While the service would like to prioritize safety, their secondary objective is to find a reasonably priced brand. The brands range in price (D,B,A,C) with Brand D being the most expensive.</p>
+<ol type="1">
+<li>Load the sawdata dataset and examine the data</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"sawdata"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sawdata)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Chainsaw  A  B  C  D</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1        1 42 38 52 29</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2        2 36 50 54 35</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3        3 33 44 48 31</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4        4 39 37 49 36</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5        5 43 47 54 32</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>You may notice that something seems different about this dataset than the previous ones we have looked at over the last few weeks. This is because the data are in what is called ‘wide format’. This means that each level of the grouping variable (in this case chainsaw brand) has gotten its own column in the dataframe. While wide format is often convenient for reports because it allows you to more easily see trends in a table, long format is more useful for succinctly storing data and for use in most analyses.</p>
+<ol start="2" type="1">
+<li>Convert the dataframe from wide format to long format<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sawdata <span class="ot">&lt;-</span> sawdata <span class="sc">%&gt;%</span>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span> <span class="fu">c</span>(<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>, <span class="st">'D'</span>),</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                         <span class="at">names_to=</span> <span class="st">'Brand'</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">values_to=</span> <span class="st">'angle'</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>sawdata<span class="sc">$</span>Brand <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(sawdata<span class="sc">$</span>Brand)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="3" type="1">
+<li>Visualize the data</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(sawdata, <span class="fu">aes</span>(<span class="at">x =</span> Brand, <span class="at">y =</span> angle)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Kickback angle"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab05_ANOVA_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="two-anova-functions-in-r-aov-and-lm" class="level2">
+<h2 class="anchored" data-anchor-id="two-anova-functions-in-r-aov-and-lm">Two ANOVA functions: in <code>R</code>: <code>aov()</code> and <code>lm()</code></h2>
+<ul>
+<li><p><code>R</code> has 2 common functions for doing ANOVA: <code>aov()</code> and <code>lm()</code></p></li>
+<li><p>We will use both in this class</p></li>
+</ul>
+<section id="crude-characterization" class="level3">
+<h3 class="anchored" data-anchor-id="crude-characterization">Crude characterization</h3>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed caption-top table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">aov()</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">lm()</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Emphasis</td>
+<td style="text-align: center;">ANOVA tables</td>
+<td style="text-align: center;">Linear models</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Typical use</td>
+<td style="text-align: center;">Designed experiments</td>
+<td style="text-align: center;">Regression analysis</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Multiple error strata?</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="using-lm" class="level2">
+<h2 class="anchored" data-anchor-id="using-lm">Using <code>lm()</code></h2>
+<ol start="4" type="1">
+<li>Perform the analysis using the lm() function</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(angle<span class="sc">~</span> Brand, <span class="at">data=</span> sawdata)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = angle ~ Brand, data = sawdata)</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   -6.2   -2.8    0.5    2.8    6.8 </span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)    38.60       1.80   21.39  3.4e-13 ***</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; BrandB          4.60       2.55    1.80  0.09027 .  </span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; BrandC         12.80       2.55    5.02  0.00013 ***</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; BrandD         -6.00       2.55   -2.35  0.03184 *  </span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 4.03 on 16 degrees of freedom</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.784,  Adjusted R-squared:  0.743 </span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 19.3 on 3 and 16 DF,  p-value: 1.45e-05</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(mod1)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    (Intercept) BrandB BrandC BrandD</span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1            1      0      0      0</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2            1      1      0      0</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3            1      0      1      0</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4            1      0      0      1</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5            1      0      0      0</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6            1      1      0      0</span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7            1      0      1      0</span></span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8            1      0      0      1</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9            1      0      0      0</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10           1      1      0      0</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11           1      0      1      0</span></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12           1      0      0      1</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 13           1      0      0      0</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 14           1      1      0      0</span></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 15           1      0      1      0</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 16           1      0      0      1</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 17           1      0      0      0</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 18           1      1      0      0</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 19           1      0      1      0</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 20           1      0      0      1</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,"assign")</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0 1 1 1</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,"contrasts")</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,"contrasts")$Brand</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "contr.treatment"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Can you interpret each estimate? Why are only the last three brands shown (what happened to Brand A)? What does each p-value represent and what hypothesis are they testing?</strong></p>
+</section>
+<section id="using-aov" class="level2">
+<h2 class="anchored" data-anchor-id="using-aov">Using <code>aov()</code></h2>
+<ol start="5" type="1">
+<li>Perform the analysis using the aov() function</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>aov1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(angle <span class="sc">~</span> Brand, <span class="at">data =</span> sawdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="6" type="1">
+<li>View the ANOVA table</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov1)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Df Sum Sq Mean Sq F value  Pr(&gt;F)    </span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Brand        3    943   314.2    19.3 1.4e-05 ***</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals   16    260    16.3                    </span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>What can we conclude from this ANOVA table? Does there appear to be more or less information (or just different) provided here than when we used the lm() function?</strong></p>
+<p>The default output from <code>summary</code> is fine for viewing in the console but what if you want to include the ANOVA table in a report or paper? You could manually create a table and copy/paste the values, but that’s a pain. Luckily, there is a handy package called <code>broom</code> that turns the output from many model functions into cleaned-up data frames<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(aov1)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 2 × 6</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   term         df sumsq meansq statistic    p.value</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Brand         3  943.  314.       19.3  0.0000145</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Residuals    16  260.   16.3      NA   NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In R Markdown, we can even include that data frame as a nicely formatted table directly in the knitted document:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>aov_df <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">tidy</span>(aov1)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">knitr.kable.NA =</span> <span class="st">''</span>) <span class="co"># don't print NA's in table</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(aov_df, </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Source"</span>, <span class="st">"df"</span>, <span class="st">"SS"</span>, <span class="st">"MS"</span>, <span class="st">"F"</span>, <span class="st">"p"</span>),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">align =</span> <span class="st">'c'</span>, <span class="at">format =</span> <span class="st">"html"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th">Source</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">df</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">SS</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">MS</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">F</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Brand</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">942.5</td>
+<td style="text-align: center;">314.18</td>
+<td style="text-align: center;">19.3</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Residuals</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">260.4</td>
+<td style="text-align: center;">16.27</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="getting-estimates-of-group-means-mus-and-ses" class="level4">
+<h4 class="anchored" data-anchor-id="getting-estimates-of-group-means-mus-and-ses">Getting estimates of group means ( <span class="math inline">\(\mu\)</span>’s) and SE’s</h4>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.tables</span>(aov1, <span class="at">type =</span> <span class="st">"means"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Tables of means</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Grand mean</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 41.45 </span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Brand </span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Brand</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    A    B    C    D </span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 38.6 43.2 51.4 32.6 </span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Standard errors for differences of means</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         Brand</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         2.551</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; replic.     5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="getting-estimates-of-effect-sizes-alphas-and-ses" class="level4">
+<h4 class="anchored" data-anchor-id="getting-estimates-of-effect-sizes-alphas-and-ses">Getting estimates of effect sizes ( <span class="math inline">\(\alpha\)</span>’s) and SE’s</h4>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.tables</span>(aov1, <span class="at">type =</span> <span class="st">"effects"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Tables of effects</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Brand </span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Brand</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     A     B     C     D </span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -2.85  1.75  9.95 -8.85 </span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Standard errors of effects</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         Brand</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         1.804</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; replic.     5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="constructing-an-anova-table-by-hand" class="level2">
+<h2 class="anchored" data-anchor-id="constructing-an-anova-table-by-hand">Constructing an ANOVA table by hand</h2>
+<p>Just as we did in the last lab, we will see below how <code>R</code> is actually doing the ANOVA and we’ll get practice constructing an ANOVA table by hand.</p>
+<section id="grand-mean" class="level4">
+<h4 class="anchored" data-anchor-id="grand-mean">Grand mean</h4>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>(ybar. <span class="ot">&lt;-</span> <span class="fu">mean</span>(sawdata<span class="sc">$</span>angle))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 41.45</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="group-means" class="level4">
+<h4 class="anchored" data-anchor-id="group-means">Group means</h4>
+<p>As with most things in <code>R</code>, there are several ways to calculate the group means. First, find the group means, the hard way:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> sawdata<span class="sc">$</span>angle[sawdata<span class="sc">$</span>Brand <span class="sc">==</span> <span class="st">"A"</span>]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> sawdata<span class="sc">$</span>angle[sawdata<span class="sc">$</span>Brand <span class="sc">==</span> <span class="st">"B"</span>]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>C <span class="ot">&lt;-</span> sawdata<span class="sc">$</span>angle[sawdata<span class="sc">$</span>Brand <span class="sc">==</span> <span class="st">"C"</span>]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>D <span class="ot">&lt;-</span> sawdata<span class="sc">$</span>angle[sawdata<span class="sc">$</span>Brand <span class="sc">==</span> <span class="st">"D"</span>]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>(ybar.i <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(A), <span class="fu">mean</span>(B), <span class="fu">mean</span>(C), <span class="fu">mean</span>(D)))</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 38.6 43.2 51.4 32.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Better yet, use <code>tapply</code> to find the group means (the base <code>R</code> way):</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(ybar.i <span class="ot">&lt;-</span> <span class="fu">tapply</span>(sawdata<span class="sc">$</span>angle, <span class="at">INDEX =</span> sawdata<span class="sc">$</span>Brand, <span class="at">FUN =</span> mean))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    A    B    C    D </span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 38.6 43.2 51.4 32.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, find the group means, the tidyverse way:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>(ybar.i <span class="ot">&lt;-</span> sawdata <span class="sc">%&gt;%</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>            <span class="fu">group_by</span>(Brand) <span class="sc">%&gt;%</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">summarise</span>(<span class="at">mu =</span> <span class="fu">mean</span>(angle)))</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 2</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Brand    mu</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt; &lt;dbl&gt;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 A      38.6</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 B      43.2</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 C      51.4</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 D      32.6</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<p>Although each of these methods does what we want - return the mean kickback angle for each group - note that they do not return the same type of object.</p>
+<p>Use the <code>class()</code> function to see what type of object each one returns.</p>
+<p>When might the output from each method be useful?</p>
+<hr>
+</section>
+<section id="sum-of-squares" class="level4">
+<h4 class="anchored" data-anchor-id="sum-of-squares">Sum of squares</h4>
+<p>Sums of squares among</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of saw brands</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">unique</span>(sawdata<span class="sc">$</span>Brand))</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of measurements of each brand (note, this assumes balanced design)</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(sawdata)<span class="sc">/</span>a</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>SSa <span class="ot">&lt;-</span> n <span class="sc">*</span> <span class="fu">sum</span>((ybar.i<span class="sc">$</span>mu <span class="sc">-</span> ybar.)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>SSa</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 942.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Sums of squares within<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># individual saw data</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>y.ij <span class="ot">&lt;-</span> sawdata<span class="sc">$</span>angle</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>SSw <span class="ot">&lt;-</span> <span class="fu">sum</span>((y.ij <span class="sc">-</span> <span class="fu">rep</span>(ybar.i<span class="sc">$</span>mu, <span class="at">times =</span> n)) <span class="sc">^</span> <span class="dv">2</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>SSw</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 260.4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="means-squares" class="level4">
+<h4 class="anchored" data-anchor-id="means-squares">Means squares</h4>
+<p>Mean squares among</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> a <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>(MSa <span class="ot">&lt;-</span> SSa <span class="sc">/</span> df1)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 314.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Mean squares within</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> a <span class="sc">*</span> (n <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>(MSw <span class="ot">&lt;-</span> SSw <span class="sc">/</span> df2)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 16.27</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="f-statistic" class="level4">
+<h4 class="anchored" data-anchor-id="f-statistic"><em>F</em>-statistic</h4>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>(F.stat <span class="ot">&lt;-</span> MSa <span class="sc">/</span> MSw)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 19.3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="critical-values-and-p-values" class="level4">
+<h4 class="anchored" data-anchor-id="critical-values-and-p-values">Critical values and <em>p</em>-values</h4>
+<p>Recall that in ANOVA, we only consider the upper tail of the <em>F</em>-distribution.</p>
+<p>Critical value:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>(F.crit <span class="ot">&lt;-</span> <span class="fu">qf</span>(<span class="dv">1</span> <span class="sc">-</span> alpha, df1, df2))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 3.239</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><em>p</em>-value</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>(p.value <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pf</span>(F.stat, df1, df2))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.446e-05</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="plotting-group-means-and-confidence-intervals" class="level2">
+<h2 class="anchored" data-anchor-id="plotting-group-means-and-confidence-intervals">Plotting group means and confidence intervals</h2>
+<p>Although we have performed the ANOVA in multiple ways and can conclude that there is at least one difference in means between the chainsaw brands, we still have a few tasks to perform. The first is to plot the data in a meaningful way. With this type of data there are at least two ways we could display the results. An example of one is below; we’ll practice the second one in the homework assignment.</p>
+<p>In an ANOVA context, confidence intervals can be constructed using the equation:</p>
+<p><span class="math display">\[
+CI = Point\: estimate \pm t_{\alpha/2,a(n-1)}\times SE
+\]</span></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the SE</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>mean.SE <span class="ot">&lt;-</span> <span class="fl">2.551</span> <span class="co"># hard coded from model.tables()</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># OR</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>table <span class="ot">&lt;-</span> <span class="fu">model.tables</span>(aov1, <span class="at">type =</span> <span class="st">"means"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>mean.SE <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(table<span class="sc">$</span>se) <span class="co"># more explicit</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>mean.SE</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2.551</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute confidence intervals</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>tc <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, a<span class="sc">*</span>(n<span class="dv">-1</span>))</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>lowerCI <span class="ot">&lt;-</span> ybar.i<span class="sc">$</span>mu <span class="sc">-</span> tc<span class="sc">*</span>mean.SE</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>upperCI <span class="ot">&lt;-</span> ybar.i<span class="sc">$</span>mu <span class="sc">+</span> tc<span class="sc">*</span>mean.SE</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ybar.i, <span class="fu">aes</span>(<span class="at">x =</span> Brand, <span class="at">y =</span> mu, <span class="at">fill =</span> Brand)) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lowerCI, <span class="at">ymax =</span> upperCI), <span class="at">width =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Chainsaw kickback angle"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab05_ANOVA_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="480"></p>
+<figcaption>Figure 1: Mean kickback angle from four chainsaw brands with 95% CI</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="multiple-comparisons" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-comparisons">Multiple comparisons</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(aov1)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Tukey multiple comparisons of means</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     95% family-wise confidence level</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Fit: aov(formula = angle ~ Brand, data = sawdata)</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Brand</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      diff      lwr   upr  p adj</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; B-A   4.6  -2.6998  11.9 0.3079</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; C-A  12.8   5.5002  20.1 0.0007</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D-A  -6.0 -13.2998   1.3 0.1276</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; C-B   8.2   0.9002  15.5 0.0251</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D-B -10.6 -17.8998  -3.3 0.0037</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D-C -18.8 -26.0998 -11.5 0.0000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">TukeyHSD</span>(aov1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab05_ANOVA_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Which brands were significantly different from one another? How would you answer the original question at the start of this exercise?</strong></p>
+<p><br></p>
+<p><br></p>
+</section>
+</section>
+<section id="optional-exercise-not-graded" class="level1">
+<h1>Optional exercise (not graded)</h1>
+<p>A biologist wants to compare the growth of four different tree species she is considering for use in reforestation efforts. Thirty two seedlings of each species are planted at the same time in a large plot. Heights in meters are recorded after several years.</p>
+<p>Within a RMarkdown document, do the following:</p>
+<ol type="1">
+<li>Create an <code>R</code> chunk to load the data using:</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"treedata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li><p>Create a header called “Hypotheses” and under this header, indicate, in plain English, what the null and alternative hypotheses are. Also use R Markdown’s equation features to write these hypotheses using mathematical notation</p></li>
+<li><p>Create a header called “ANOVA by hand”. Under this header, perform an ANOVA analysis (degrees of freedom, sums-of-squares, mean-squares, and <em>F</em>-value) without using <code>aov()</code>. Compute either the critical value of <em>F</em>, or the <em>p</em>-value. Be sure to <strong>annotate your code</strong></p></li>
+<li><p>Create a header called “ANOVA in R”. Under this header, perform an ANOVA analysis on the data using the <code>lm()</code> function and then again using the <code>aov()</code> function</p></li>
+<li><p>Under a subheader called “ANOVA results”</p>
+<ul>
+<li><p>indicate whether or not the null hypothesis can be rejected at the <span class="math inline">\(\alpha = 0.05\)</span> level</p></li>
+<li><p>include a well-formatted ANOVA table using the <code>broom::tidy()</code> function</p></li>
+<li><p>create a barplot showing the effect sizes and 95% confidence intervals around them</p></li>
+</ul></li>
+<li><p>Create a header called “Which means are different?”. Use Tukey’s HSD test to determine which pairs of means differ at the <span class="math inline">\(\alpha = 0.05\)</span> level. Include a few sentences indicating which pairs are different. If there is an inconsistency between the initial ANOVA results and the post-hoc comparisons, explain why that might be the case</p></li>
+</ol>
+<p>A few things to remember when finishing the exercise:</p>
+<ul>
+<li><p>Be sure the output type is set to: <code>output: html_document</code></p></li>
+<li><p>Be sure to include your name in the <code>author</code> field of the header</p></li>
+<li><p>Be sure to set <code>echo = TRUE</code> in all <code>R</code> chunks so we can see both your code and the output</p></li>
+<li><p>See the R Markdown reference sheet for help with creating <code>R</code> chunks, equations, tables, etc.</p></li>
+<li><p>If you use AI on any part of your assignment, you must include the full prompt(s) you used and it’s full answer(s) in a <strong>separate section</strong> titled “AI assistance” at the end of this document.</p></li>
+</ul>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>In this code chunk, we introduce the idea of pipes in R. A pipe (shown with %&gt;%) is a way of stacking multiple functions on top of each other in an easy to read way. Many packages (including tidyr) use pipes instead of having functions nested inside of each other. While pipes are generally considered to have multiple advantages related to their readability as well as modular structure, there are ways to perform any of these steps without their use.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Notice the use of the double colon in the code chunk below. This is used in <code>R</code> to explicitly link a function to the package from where it came. Because there is an ever expanding list of available packages and many of them contain functions that have the same names but perform different tasks, it is necessary to tell <code>R</code> which particular function you are trying to use. If we did not specify the package using the double colon operator, <code>R</code> would use the function from whatever was the most recently loaded package in your library that contained that function name.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Notice the use of the <code>times=</code> argument. How do we decide whether to use <code>times=</code> or <code>each=</code>? In this case, we need to look at the order of the data in the dataframe. Because of how the data is ordered, we are interested in taking the entire mu vector and repeating it 5 times. If the data were ordered such that all the Brand A observations were first etc. then we would have taken each element in the mu vector and repeated it <code>each= 5</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/djklement\.github\.io\/FANR6750\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,59 @@
+---
+title: "Homework instructions"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research<br><small>Fall 2026</small>"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false # change to true if you want numbered lists
+jupyter: false
+date: "updated on `r Sys.Date()`"
+---
+
+```{r setup-hw, include=FALSE}
+# Global setup chunk
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  fig.align = 'center',
+  fig.retina = 2,
+  collapse = TRUE,
+  comment = "#>"
+)
+
+# Source Clark's palette
+source(here::here("R/zzz.R"))
+```
+
+
+All homework assignments for this course will be completed R Markdown files. To make the distribution, completion, and grading easier, each homework will follow the same workflow. 
+
+# Homework steps
+
+## Step 1: Create a new directory to store your homework files
+
+1) Create a new directory (or ideally a subdirectoy of your `FANR6750\homework` directory) and call it `LastNameFirstName-assignment#`, replacing `LastNameFirstName` with your last and first names and `#` with the appropriate assignment number
+
+## Step 2: Create a new R Markdown file
+
+2a) Click on `File -> New File -> R Markdown...`
+
+2b) In the `Title:` window type `Assignment #`, substituting the correct assignment number  
+
+2c) In the `Author` window, type your name  
+
+2d) Click `Ok`
+
+2e) Save the R Markdown file as `LastnameFirstname-assignment#` in the directory you created in step 1, replacing `LastNameFirstName` with your last and first names and `#` with the appropriate assignment number  
+
+## Step 3: Complete the assignment
+
+3) Complete the assignment, following the instructions in the lab document as you go
+
+## Step 4: Submit your assignment
+
+4a) Before submitting your assignment, always click the "Knit" button to be sure your .Rmd file can be rendered as a HTML page. **If you have any problems rendering the file, please contact your TA prior to the submission deadline.**
+
+4b) Once you know your file can be rendered, upload **both** the `LastnameFirstname-assignment#.Rmd` *and* the `LastnameFirstname-assignment#.html` files to eLC under the correct assignment folder
+
+**Assignments that fail to follow this instructions will not be graded**

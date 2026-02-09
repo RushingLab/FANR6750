@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 7: Interactions – FANR6750 2026.1.0</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a786baa6f14ee79d175f6472c084195c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">FANR6750 <span class="version-text">2026.1.0</span></span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> <i class="bi bi-house" role="img">
+</i> 
+<span class="menu-text">FANR6750</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> <i class="bi bi-book" role="img">
+</i> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> <i class="bi bi-calendar" role="img">
+</i> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lectures" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-file-pdf" role="img">
+</i> 
+ <span class="menu-text">Lectures</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-lectures">    
+        <li>
+    <a class="dropdown-item" href="../lectures/00_course_intro.qmd">
+ <span class="dropdown-text">Lecture 0: Course introduction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/01_intro_to_stats.qmd">
+ <span class="dropdown-text">Lecture 1: Introduction to statistics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/02_intro_to_lm.qmd">
+ <span class="dropdown-text">Lecture 2: Introduction to linear models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/03_inference.qmd">
+ <span class="dropdown-text">Lecture 3: Principles of inference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/04_expdesign.qmd">
+ <span class="dropdown-text">Lecture 4: Principles of experimental design</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/05_t_test.qmd">
+ <span class="dropdown-text">Lecture 5: Linear models part 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/06_nht.qmd">
+ <span class="dropdown-text">Lecture 6: Null hypothesis testing</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/07_power.qmd">
+ <span class="dropdown-text">Lecture 7: Statistical power</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/08_anova.qmd">
+ <span class="dropdown-text">Lecture 8: ANOVA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/09_mult_comp.qmd">
+ <span class="dropdown-text">Lecture 9: Multiple Comparisons</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/10_regression.qmd">
+ <span class="dropdown-text">Lecture 10: Multiple Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/11_interactions.qmd">
+ <span class="dropdown-text">Lecture 11: Interactions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/12_assumptions.qmd">
+ <span class="dropdown-text">Lecture 12: Evaluating assumptions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/13_model_selection.qmd">
+ <span class="dropdown-text">Lecture 13: Model selection</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/14_random_effects.qmd">
+ <span class="dropdown-text">Lecture 14: Random effects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/15_nested.qmd">
+ <span class="dropdown-text">Lecture 15: Nested designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/16_split_plot.qmd">
+ <span class="dropdown-text">Lecture 16: Split-plot designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/17_repeated_measures.qmd">
+ <span class="dropdown-text">Lecture 17: Repeated measures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/18_glm.qmd">
+ <span class="dropdown-text">Lecture 18: Generalized linear models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/19_logistic_regression.qmd">
+ <span class="dropdown-text">Lecture 19: Logistic regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/20_poisson_regression.qmd">
+ <span class="dropdown-text">Lecture 20: Poisson regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/21_zero_inflation.qmd">
+ <span class="dropdown-text">Lecture 21: Zero-inflated regression</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-labs" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-display" role="img">
+</i> 
+ <span class="menu-text">Labs</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-labs">    
+        <li>
+    <a class="dropdown-item" href="../labs/lab01_intro_to_R.html">
+ <span class="dropdown-text">Lab 1: Introduction to R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab02_Intro_project_and_Rmd.html">
+ <span class="dropdown-text">Lab 2: Introduction to projects and RMarkdown</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab03_inference.html">
+ <span class="dropdown-text">Lab 3: Using R to explore sampling error</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab04_t_tests.qmd">
+ <span class="dropdown-text">Lab 4: t-tests</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab05_ANOVA.html">
+ <span class="dropdown-text">Lab 5: ANOVA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab06_multiple_regression.html">
+ <span class="dropdown-text">Lab 6: Multiple Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab07_interactions.html">
+ <span class="dropdown-text">Lab 7: Interactions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab08_linear_model_assumptions.html">
+ <span class="dropdown-text">Lab 8: Evaluating assumptions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab09_model_selection.qmd">
+ <span class="dropdown-text">Lab 9: Model selection</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab10_nested.qmd">
+ <span class="dropdown-text">Lab 10: Nested designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab11_split_plot.qmd">
+ <span class="dropdown-text">Lab 11: Split-plot designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab13_glm_lr.qmd">
+ <span class="dropdown-text">Lab 12: Logistic regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab14_glm_pr.qmd">
+ <span class="dropdown-text">Lab 13: Poisson regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab12_repeated_measures.qmd">
+ <span class="dropdown-text">Bonus lab: Repeated measures</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-references" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-pencil-square" role="img">
+</i> 
+ <span class="menu-text">References</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-references">    
+        <li>
+    <a class="dropdown-item" href="../references/homework.html">
+ <span class="dropdown-text">Assignment instructions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/projects_and_directories.html">
+ <span class="dropdown-text">Projects and directories</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/RMarkdown.html">
+ <span class="dropdown-text">R Markdown reference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/graphics.html">
+ <span class="dropdown-text">Creating publication-quality graphics</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#lab-6" id="toc-lab-6" class="nav-link active" data-scroll-target="#lab-6">Lab 6</a></li>
+  <li><a href="#todays-topics" id="toc-todays-topics" class="nav-link" data-scroll-target="#todays-topics">Today’s topics</a></li>
+  <li><a href="#interactions" id="toc-interactions" class="nav-link" data-scroll-target="#interactions">Interactions</a>
+  <ul class="collapse">
+  <li><a href="#scenario" id="toc-scenario" class="nav-link" data-scroll-target="#scenario">Scenario</a></li>
+  <li><a href="#visualizing-an-interaction" id="toc-visualizing-an-interaction" class="nav-link" data-scroll-target="#visualizing-an-interaction">Visualizing an Interaction</a></li>
+  <li><a href="#data-example-1" id="toc-data-example-1" class="nav-link" data-scroll-target="#data-example-1">Data Example 1</a></li>
+  <li><a href="#data-example-2" id="toc-data-example-2" class="nav-link" data-scroll-target="#data-example-2">Data example 2</a></li>
+  <li><a href="#visualizing-the-data" id="toc-visualizing-the-data" class="nav-link" data-scroll-target="#visualizing-the-data">Visualizing the data</a></li>
+  <li><a href="#defining-the-model" id="toc-defining-the-model" class="nav-link" data-scroll-target="#defining-the-model">Defining the model</a></li>
+  <li><a href="#factorial-design-using-aov" id="toc-factorial-design-using-aov" class="nav-link" data-scroll-target="#factorial-design-using-aov">Factorial design using <code>aov()</code></a></li>
+  <li><a href="#follow-ups" id="toc-follow-ups" class="nav-link" data-scroll-target="#follow-ups">Follow ups</a></li>
+  <li><a href="#visualizing-the-results" id="toc-visualizing-the-results" class="nav-link" data-scroll-target="#visualizing-the-results">Visualizing the results</a></li>
+  <li><a href="#factorial-design-using-lm" id="toc-factorial-design-using-lm" class="nav-link" data-scroll-target="#factorial-design-using-lm">Factorial Design using <code>lm()</code></a></li>
+  </ul></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 7: Interactions</h1>
+<p class="subtitle lead">FANR 6750: Experimental Methods in Forestry and Natural Resources Research<br><small>Fall 2026</small></p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="lab-6" class="level2">
+<h2 class="anchored" data-anchor-id="lab-6">Lab 6</h2>
+<ol type="1">
+<li><p>Multiple Regression</p>
+<ol type="a">
+<li><p>ANCOVA</p></li>
+<li><p>Blocking</p></li>
+</ol></li>
+<li><p>Centering predictors</p></li>
+</ol>
+</section>
+<section id="todays-topics" class="level2">
+<h2 class="anchored" data-anchor-id="todays-topics">Today’s topics</h2>
+<ol type="1">
+<li><p>Interactions</p>
+<ol type="a">
+<li><p>Definition</p></li>
+<li><p>Identifying interactions visually</p></li>
+<li><p>Types of interactions</p></li>
+</ol></li>
+<li><p>Factorial Designs</p>
+<ol type="a">
+<li><p>2-way Factorial Designs using aov()</p></li>
+<li><p>Post-hoc analyses</p></li>
+<li><p>Visualizing a 2-way Factorial Design</p></li>
+<li><p>2-way Factorial Designs using lm()</p></li>
+</ol></li>
+</ol>
+<p><br> <br></p>
+</section>
+<section id="interactions" class="level1">
+<h1>Interactions</h1>
+<section id="scenario" class="level2">
+<h2 class="anchored" data-anchor-id="scenario">Scenario</h2>
+<p>So far we have talked about models with one categorical predictor (ANOVA), models with one continuous predictor (simple linear regression), models with a categorical predictor while accounting for a continuous predictor (ANCOVA), and models with two categorical predictors where one is not of interest (Blocked design). Now we will discuss scenarios where there are multiple predictors and they are all of interest to the researcher. Additionally, and most importantly for this lab, the relationship between/among these predictors is also of interest. This relationship mentioned above is referred to as an <strong>interaction</strong>.</p>
+<p><br></p>
+<p>An <strong>interaction</strong> in model design terms refers to the phenomenon when the effect of one predictor variable depends on the values of one or more other predictor variables.</p>
+<p><br></p>
+</section>
+<section id="visualizing-an-interaction" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-an-interaction">Visualizing an Interaction</h2>
+<div class="cell" data-layout-align="left">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab07_interactions_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption><strong>Figure 1: Relationship between predictor variable (x) and response variable (y) across two levels of second predictor variable. Left figure represents no interaction while right figure represents presence of an interaction.</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>As we saw in lecture, interactions can take many forms but the overall interpretation is the same. An interaction could be between two continuous variables, a continuous and categorical variable, or between two categorical variables. We will look at a few examples of these below.</p>
+<p><br> <br></p>
+</section>
+<section id="data-example-1" class="level2">
+<h2 class="anchored" data-anchor-id="data-example-1">Data Example 1</h2>
+<p>In this dataset, two continuous predictor variables (moon phase and percent cloud cover) are being used to predict the call rate of Chuck-will’s-widow. Although the researchers are interested in each of these variables alone, they are also interested in determining how the values of one predictor may alter the effects of the other.</p>
+<p>Load the <code>chuckdata</code> dataset and examine the data</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">'chuckdata'</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(chuckdata)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 'data.frame':    60 obs. of  4 variables:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ X        : int  1 2 3 4 5 6 7 8 9 10 ...</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ call.rate: num  2.9 3.65 3.68 2.73 3.56 ...</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ cloud    : num  0.1185 0.9156 0.0941 0.8536 0.14 ...</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ moon     : num  0.241 0.56 0.56 0.855 0.24 ...</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(chuckdata)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        X          call.rate         cloud             moon        </span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   : 1.0   Min.   :0.736   Min.   :0.0394   Min.   :0.00058  </span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:15.8   1st Qu.:2.840   1st Qu.:0.2242   1st Qu.:0.22001  </span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median :30.5   Median :3.441   Median :0.4965   Median :0.43986  </span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   :30.5   Mean   :3.361   Mean   :0.5171   Mean   :0.44644  </span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:45.2   3rd Qu.:3.840   3rd Qu.:0.8123   3rd Qu.:0.71315  </span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :60.0   Max.   :5.594   Max.   :0.9697   Max.   :0.99301</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>Notice that several of the variables in the dataset are recorded as percentages. This fact will affect the way that we interpret the model output. As they are defined now, our interpretation of a slope means that call rate will change some amount for <strong>each unit</strong> change in cloud cover or moon phase. Currently, one unit of these variables represents the difference between 0% and 100%. It would be more intuitive for us to talk about changes in call rate for each percent change in the predictors. To do this, we can simply modify our dataset.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>chuckdata<span class="sc">$</span>cloud <span class="ot">&lt;-</span> chuckdata<span class="sc">$</span>cloud<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>chuckdata<span class="sc">$</span>moon <span class="ot">&lt;-</span> chuckdata<span class="sc">$</span>moon<span class="sc">*</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now a one unit change in these predictors represents a one percent change.</p>
+<p><br> <br></p>
+<p>Next, it would be a good idea to plot the relationship between the response variable and each predictor.</p>
+<div class="cell" data-layout-align="left">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ```{r, fig.width=8, fig.height=4} R code chunk options for making this plot</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages('gridExtra') Check your package library to see if you already have this package</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">grid.arrange</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data=</span> chuckdata, <span class="fu">aes</span>(<span class="at">x=</span> cloud, <span class="at">y=</span> call.rate)) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data=</span> chuckdata, <span class="fu">aes</span>(<span class="at">x=</span> moon, <span class="at">y=</span> call.rate)) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(), <span class="at">ncol=</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab07_interactions_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption><strong>Figure 2: Relationship between call rate of Chuck wills widow and two predictor variables, cloud cover and moon phase.</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p><strong>Does there appear to be a relationship between call rate and either of these predictor variables?</strong></p>
+<p><br> <br> <br> <br></p>
+<p>Let’s use a linear model to look at the relationships. First, we need to define our linear model:</p>
+<p><span class="math display">\[
+y_i = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \beta_3x_{1i}x_{2i} + \epsilon_i
+\]</span></p>
+<p><strong>How would you interpret each of these terms? Which ones represent the main effects and which represents the interaction?</strong></p>
+<p><br> <br></p>
+<p>Now we are ready to specify our model in <code>R</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(call.rate<span class="sc">~</span> moon<span class="sc">*</span>cloud, <span class="at">data=</span> chuckdata)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = call.rate ~ moon * cloud, data = chuckdata)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -2.365 -0.392  0.158  0.560  1.497 </span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)  2.582092   0.405007    6.38  3.7e-08 ***</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; moon         0.027339   0.008023    3.41   0.0012 ** </span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; cloud        0.002281   0.006423    0.36   0.7238    </span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; moon:cloud  -0.000239   0.000123   -1.94   0.0573 .  </span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.833 on 56 degrees of freedom</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.281,  Adjusted R-squared:  0.243 </span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 7.31 on 3 and 56 DF,  p-value: 0.000322</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>How would you interpret these parameter estimates? Were the main effects significant? Was the interaction significant? Given the results you see here, would it be appropriate for the researcher to consider the main effects independently of each other?</strong></p>
+<p><br> <br></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nd1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">moon =</span> <span class="fu">seq</span>(<span class="fu">min</span>(chuckdata<span class="sc">$</span>moon), <span class="fu">max</span>(chuckdata<span class="sc">$</span>moon), <span class="at">length =</span> <span class="dv">100</span>),</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">cloud =</span> <span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">100</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>nd2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">moon =</span> <span class="fu">seq</span>(<span class="fu">min</span>(chuckdata<span class="sc">$</span>moon), <span class="fu">max</span>(chuckdata<span class="sc">$</span>moon), <span class="at">length =</span> <span class="dv">100</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">cloud =</span> <span class="fu">rep</span>(<span class="dv">100</span>,<span class="dv">100</span>))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>E1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod1, <span class="at">newdata =</span> nd1, <span class="at">se.fit =</span> <span class="cn">TRUE</span>, <span class="at">interval=</span><span class="st">"confidence"</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>predictionData1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(E1<span class="sc">$</span>fit, nd1)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>E2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod1, <span class="at">newdata =</span> nd2, <span class="at">se.fit =</span> <span class="cn">TRUE</span>, <span class="at">interval=</span><span class="st">"confidence"</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>predictionData2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(E2<span class="sc">$</span>fit, nd2)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'0'</span> <span class="ot">=</span> <span class="st">'black'</span>, <span class="st">'100'</span> <span class="ot">=</span> <span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="left">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> chuckdata, <span class="fu">aes</span>(<span class="at">x =</span> moon, <span class="at">y =</span> call.rate)) <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> predictionData1, <span class="fu">aes</span>(<span class="at">x =</span> moon, <span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr),</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype =</span> <span class="st">"longdash"</span>, <span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> predictionData1, <span class="fu">aes</span>(<span class="at">x =</span> moon, <span class="at">y =</span> fit, <span class="at">color=</span> <span class="st">'0'</span>)) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data=</span> predictionData2, <span class="fu">aes</span>(<span class="at">x =</span> moon, <span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">'red'</span>, <span class="at">linetype =</span> <span class="st">'longdash'</span>, <span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> predictionData2, <span class="fu">aes</span>(<span class="at">x =</span> moon, <span class="at">y =</span> fit, <span class="at">color=</span> <span class="st">'100'</span>)) <span class="sc">+</span> </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span> colors) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color=</span> <span class="st">'Cloud cover'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab07_interactions_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption><strong>Figure 3: Predicted call rate of Chuck wills widow as a function of moon phase. Solid lines represent fitted values and dashed lines represent 95% confidence bands. Predictions shown for two values of cloud cover (0 = black, 100 = red).</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br> <br></p>
+</section>
+<section id="data-example-2" class="level2">
+<h2 class="anchored" data-anchor-id="data-example-2">Data example 2</h2>
+<p>Below is a dataset which contains information about a species of <em>microtus</em> vole. Voles are small rodents found throughout the world which generally feed on grasses, grains, and seeds. In this experiment, a population of voles has been introduced into 24 enclosures. Each enclosure is randomly assigned to two treatments- food (three levels) and predator presence (two levels). After a specified period of time the number of surviving voles in each enclosure is counted. The researcher is particularly interested in understanding how food availability affects the vole population while also taking into account the presence or absence of predators.</p>
+<p>The dataset described above can best be approached through a particular kind of ANOVA which is referred to as a <strong>Factorial Design</strong>.</p>
+<p>A factorial design is commonly used when:</p>
+<ol type="1">
+<li>There are multiple categorical predictors</li>
+<li>The interactions between/among predictors is of interest</li>
+<li>There are replicates within each combination of treatment levels</li>
+</ol>
+<p>Load the <code>microtusdata</code> dataset and examine the data:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"microtusdata"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(microtusdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: center;">voles</th>
+<th style="text-align: center;">food</th>
+<th style="text-align: center;">predators</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">Present</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">Present</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">Present</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">Present</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">Present</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">Present</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(microtusdata)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 'data.frame':    24 obs. of  3 variables:</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ voles    : int  10 12 8 14 18 20 21 24 20 18 ...</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ food     : Factor w/ 3 levels "0","1","2": 1 1 1 1 2 2 2 2 3 3 ...</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ predators: chr  "Present" "Present" "Present" "Present" ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Before proceeding, we need to convert <code>food</code> and <code>predators</code> to factors:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>microtusdata<span class="sc">$</span>food <span class="ot">&lt;-</span> <span class="fu">factor</span>(microtusdata<span class="sc">$</span>food)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>microtusdata<span class="sc">$</span>predators <span class="ot">&lt;-</span> <span class="fu">factor</span>(microtusdata<span class="sc">$</span>predators)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(microtusdata)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 'data.frame':    24 obs. of  3 variables:</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ voles    : int  10 12 8 14 18 20 21 24 20 18 ...</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ food     : Factor w/ 3 levels "0","1","2": 1 1 1 1 2 2 2 2 3 3 ...</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ predators: Factor w/ 2 levels "Absent","Present": 2 2 2 2 2 2 2 2 2 2 ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>How many replicates do we have?</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(microtusdata[,<span class="fu">c</span>(<span class="st">"predators"</span>,<span class="st">"food"</span>)])</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          food</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; predators 0 1 2</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Absent  4 4 4</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Present 4 4 4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualizing-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-the-data">Visualizing the data</h2>
+<p>Visualizing multiple factors at once can sometimes be tricky. We’ll use the <code>fill</code> aestethic to make separate boxplots for each predation level, within each food treatment:</p>
+<div class="cell" data-layout-align="left">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(microtusdata, <span class="fu">aes</span>(<span class="at">x =</span> food, <span class="at">y =</span> voles, <span class="at">fill =</span> predators)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="st">"Food treatment"</span>) <span class="sc">+</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Number of voles"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab07_interactions_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="576"></p>
+<figcaption><strong>Figure 4: Number of voles in each enclosure as a function of food treatment levels. Colors represent predator treatment.</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>It’s clear from this figure that 1) food supplementation influences vole abundance, and 2) the effects of food treatment depend on whether predators are present or absent.</p>
+</section>
+<section id="defining-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="defining-the-model">Defining the model</h2>
+<p>Below is the equation we might use to define our linear model for a 2-way factorial design:</p>
+<p><span class="math display">\[
+y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk} \ \ \ \ \ \text{where} \ \ \ \ \ \epsilon_i \sim \text{N}(0,\sigma)
+\]</span></p>
+<p><strong>Notice the increased complexity of the subscripting. What does each represent? What does the <span class="math inline">\(\alpha\beta_{ij}\)</span> term represent?</strong></p>
+<p><strong>Can you list all of the relevant null and alternative hypotheses?</strong></p>
+<p><br> <br></p>
+</section>
+<section id="factorial-design-using-aov" class="level2">
+<h2 class="anchored" data-anchor-id="factorial-design-using-aov">Factorial design using <code>aov()</code></h2>
+<p>We can analyze the <em>microtus</em> data using the <code>aov()</code> function that we’re already familiar with.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>aov1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(voles <span class="sc">~</span> food <span class="sc">*</span> predators, <span class="at">data =</span> microtusdata)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov1)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                Df Sum Sq Mean Sq F value  Pr(&gt;F)    </span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food            2   1337     669    40.6 2.1e-07 ***</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; predators       1    975     975    59.2 4.3e-07 ***</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food:predators  2    518     259    15.7 0.00011 ***</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals      18    297      16                    </span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<p>On your own, fit the model without the interaction (<code>food + predators</code>). How do the results compare?</p>
+<hr>
+</section>
+<section id="follow-ups" class="level2">
+<h2 class="anchored" data-anchor-id="follow-ups">Follow ups</h2>
+<p>Often in your own analysis, you will not stop at a significant ANOVA result. For example, maybe you want to further explore the effects of one factor while holding the other factor constant. In this case, we can further test whether food supplements influence vole abundance <em>when predators are present</em> using the <code>subset</code> argument:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(voles <span class="sc">~</span> food, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> microtusdata, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">subset =</span> predators <span class="sc">==</span> <span class="st">"Present"</span>))</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Df Sum Sq Mean Sq F value Pr(&gt;F)   </span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food         2  193.5    96.8    14.8 0.0014 **</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals    9   58.8     6.5                  </span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Or when predators are absent:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(voles <span class="sc">~</span> food, </span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> microtusdata, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">subset =</span> predators <span class="sc">==</span> <span class="st">"Absent"</span>))</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Df Sum Sq Mean Sq F value  Pr(&gt;F)    </span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food         2   1662     831    31.4 8.7e-05 ***</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals    9    238      26                    </span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Or maybe we want to test which levels are different using our old friend the Tukey HSD test, which for the factorial design will return both the “main” effect differences and the interaction<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(aov1)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Tukey multiple comparisons of means</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     95% family-wise confidence level</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Fit: aov(formula = voles ~ food * predators, data = microtusdata)</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $food</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       diff    lwr    upr  p adj</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1-0 13.875  8.694 19.056 0.0000</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2-0 17.250 12.069 22.431 0.0000</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2-1  3.375 -1.806  8.556 0.2464</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $predators</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                  diff    lwr    upr p adj</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Present-Absent -12.75 -16.23 -9.267     0</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $`food:predators`</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                       diff      lwr     upr  p adj</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1:Absent-0:Absent    18.00   8.8756  27.124 0.0001</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2:Absent-0:Absent    28.50  19.3756  37.624 0.0000</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0:Present-0:Absent   -2.50 -11.6244   6.624 0.9488</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1:Present-0:Absent    7.25  -1.8744  16.374 0.1684</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2:Present-0:Absent    3.50  -5.6244  12.624 0.8221</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2:Absent-1:Absent    10.50   1.3756  19.624 0.0189</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0:Present-1:Absent  -20.50 -29.6244 -11.376 0.0000</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1:Present-1:Absent  -10.75 -19.8744  -1.626 0.0158</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2:Present-1:Absent  -14.50 -23.6244  -5.376 0.0010</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 0:Present-2:Absent  -31.00 -40.1244 -21.876 0.0000</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1:Present-2:Absent  -21.25 -30.3744 -12.126 0.0000</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2:Present-2:Absent  -25.00 -34.1244 -15.876 0.0000</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1:Present-0:Present   9.75   0.6256  18.874 0.0323</span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2:Present-0:Present   6.00  -3.1244  15.124 0.3351</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2:Present-1:Present  -3.75 -12.8744   5.374 0.7781</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="visualizing-the-results" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-the-results">Visualizing the results</h2>
+<p>Another follow up that will often be important is visualizing the results of the ANOVA model. In the case of the factorial design, this will generally involve making a graph of the predicted response (and associated uncertainty!) for each combination of factors.</p>
+<p>To create the data that will form the basis of this visualization, we’ll first use the <code>model.tables()</code> function to compute the relevant means (i.e., predicted values) and standard errors:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(tab <span class="ot">&lt;-</span> <span class="fu">model.tables</span>(aov1, <span class="at">type=</span><span class="st">"means"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Tables of means</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Grand mean</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       </span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 22.62 </span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  food </span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     0     1     2 </span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12.25 26.12 29.50 </span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  predators </span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; predators</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Absent Present </span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   29.00   16.25 </span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  food:predators </span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     predators</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food Absent Present</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    0 13.50  11.00  </span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    1 31.50  20.75  </span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    2 42.00  17.00  </span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Standard errors for differences of means</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          food predators food:predators</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         2.030     1.658          2.871</span></span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; replic.     8        12              4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next, we’ll extract the group means</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>(ybar_ij. <span class="ot">&lt;-</span> tab<span class="sc">$</span>tables<span class="sc">$</span><span class="st">"food:predators"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     predators</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food Absent Present</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    0 13.50  11.00  </span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    1 31.50  20.75  </span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    2 42.00  17.00</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>What about confidence intervals? Notice that <code>model.tables()</code> returns “Standard errors for differences of means”.</p>
+<p>Extending the formulas to the <span class="math inline">\(A \times B\)</span> factorial case, the confidence interval for the difference in two <span class="math inline">\(A \times B\)</span> means is:</p>
+<p><span class="math display">\[\Large CI_{1−\alpha} : \bar{y}_{ij.} − \bar{y}_{ij.′} \pm t_{1−\alpha/2,ab(n−1)}\times \sqrt{\frac{2MSE}{n}}\]</span></p>
+<p>where <span class="math inline">\(n = 4\)</span> in the vole example.</p>
+<p>To set up a plot of the group means, however, we need a confidence interval for each mean. We take out the ‘2’ from the SE expression:</p>
+<p><span class="math display">\[\Large CI_{1−\alpha} : \bar{y}_{ij.} \pm t_{1−\alpha/2,ab(n−1)}\times \sqrt{\frac{MSE}{n}}\]</span></p>
+<p>Where can we find MSE?</p>
+<p>Answer: in the output of <code>summary()</code> of our <code>aov1</code> object:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov1)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                Df Sum Sq Mean Sq F value  Pr(&gt;F)    </span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food            2   1337     669    40.6 2.1e-07 ***</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; predators       1    975     975    59.2 4.3e-07 ***</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food:predators  2    518     259    15.7 0.00011 ***</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals      18    297      16                    </span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Calculate the width of the confidence intervals:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>MSE <span class="ot">&lt;-</span> <span class="fu">summary</span>(aov1)[[<span class="dv">1</span>]]<span class="sc">$</span><span class="st">`</span><span class="at">Mean Sq</span><span class="st">`</span>[<span class="dv">4</span>] <span class="do">## 16.5</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ybar_ij.SE <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(MSE<span class="sc">/</span><span class="dv">4</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>CI.half <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="dv">18</span>) <span class="sc">*</span> ybar_ij.SE</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>(CI <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span>CI.half, CI.half))</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -4.265  4.265</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can create a data frame and plot the group means and confidence intervals. Remember to always check how you have defined the order of your dataframe and make sure that it matches with the order that the group means have been displayed in the <code>model.tables()</code> function.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>predicted.voles <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Food =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dv">2</span>),</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">Predators =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Absent"</span>, <span class="st">"Present"</span>), <span class="at">each =</span> <span class="dv">3</span>),</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">voles =</span> <span class="fu">c</span>(ybar_ij.))</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Add lower and upper confidence intervals</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>predicted.voles <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(predicted.voles, </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">LCI =</span> voles <span class="sc">+</span> CI[<span class="dv">1</span>],</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">UCI =</span> voles <span class="sc">+</span> CI[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="left">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(predicted.voles, <span class="fu">aes</span>(<span class="at">x =</span> Food, <span class="at">y =</span> voles, </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">color =</span> Predators)) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="fu">aes</span>(<span class="at">linetype =</span> Predators)) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> LCI, <span class="at">ymax =</span> UCI), <span class="at">width =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Predicted number of voles"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab07_interactions_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="576"></p>
+<figcaption><strong>Figure 5: Predicted number of voles in each enclosure as a function of food treatment level. Point estimates shown with 95% confidence intervals. Colors represent predator treatment levels.</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br> <br></p>
+</section>
+<section id="factorial-design-using-lm" class="level2">
+<h2 class="anchored" data-anchor-id="factorial-design-using-lm">Factorial Design using <code>lm()</code></h2>
+<p>Although we have already completed the analysis, lets also look at how we could have built this model using the <code>lm()</code> function.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(voles<span class="sc">~</span> food<span class="sc">*</span>predators, <span class="at">data=</span> microtusdata)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = voles ~ food * predators, data = microtusdata)</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  -9.50  -2.19   0.00   2.25   8.50 </span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                        Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)               13.50       2.03    6.65  3.1e-06 ***</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food1                     18.00       2.87    6.27  6.5e-06 ***</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food2                     28.50       2.87    9.93  1.0e-08 ***</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; predatorsPresent          -2.50       2.87   -0.87    0.395    </span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food1:predatorsPresent    -8.25       4.06   -2.03    0.057 .  </span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food2:predatorsPresent   -22.50       4.06   -5.54  2.9e-05 ***</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 4.06 on 18 degrees of freedom</span></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.905,  Adjusted R-squared:  0.879 </span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 34.3 on 5 and 18 DF,  p-value: 1.34e-08</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>There is a lot going on here. Can you interpret each of the parameter estimates (especially the interaction term)? What do we conclude about the original set of hypotheses related to our model?</strong></p>
+<p><br> <br> <br></p>
+</section>
+</section>
+<section id="assignment" class="level1">
+<h1>Assignment</h1>
+<p>In the field of fisheries, hard calcified structures such as otoliths and fin spines are frequently used to age individual animals. Similar to trees, these structures lay down annual growth rings which can be counted to estimate age. The use of spines instead of the more traditional aging structure in fish, otoliths, has the advantage that it usually does not require killing the fish. Otoliths, however, typically produce higher quality images since they are less susceptible to being damaged during the life of the fish.</p>
+<p>A graduate student at UGA is conducting studies on Lake Sturgeon (<em>Acipenser fulvescens</em>), a large river dwelling fish which in Georgia is only found in the northwestern corner of the state. The student plans to use the calcified structures from these fish to better understand the population age-distribution. Before examining growth annuli, however, the student needs to cut the structures and mount them on microscope slides.</p>
+<p>In the dataset below, the student has processed 36 structures (some spines and some otoliths) using 3 different mounting methods (A, B, and C) and 3 different saw speeds (low, medium, and high). Once mounted, the time required (seconds) to accurately age each structure was recorded for each fish.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"agingdata"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(agingdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Questions/tasks</strong></p>
+<ol type="1">
+<li><p>Write out an equation for the linear model that would describe this scenario. Define each term</p></li>
+<li><p>Analyze this dataset using an <span class="math inline">\(A \times B \times C\)</span> factorial ANOVA implemented with <code>aov()</code>. Because the student is not interested in the 3-way interaction, set up your model so that it does not include that term (only include the main effects and 2-way interactions of all variables)</p></li>
+<li><p>Interpret the model output. Which main effects and which interactions were significant?</p></li>
+<li><p>Does the effect of the mounting method depend on the speed of the saw? If so, how?</p></li>
+<li><p>Which combination of mounting method, saw speed, and structure type resulted in the lowest average aging time?</p></li>
+<li><p>The student has decided that he is going to use fin spines in future studies because he does not want to use the lethal method of collecting otoliths. Given that, which combination of mounting method and saw speed would result in the lowest average aging time?</p></li>
+</ol>
+<p>Put your answers in an R Markdown report. Your report should include:</p>
+<pre><code>+ A well-formatted ANOVA table (with header); and
+
++ A publication-quality plot of the estimated effect of mounting method on aging time for both types of hard structures, including 95% confidence intervals. Rather than making 3 plots (one for each saw speed), use the predictions for 'high speed' only. The figure should also have a descriptive caption and any aesthetics (color, line type, etc.) should be clearly defined. </code></pre>
+<ol start="7" type="1">
+<li>At the end of your report, under a header titled “Reflection”, answer the following questions:</li>
+</ol>
+<ul>
+<li><p>On a 1-10 scale, how would you rate your confidence in the topics covered in this lab?</p></li>
+<li><p>What lingering questions/confusion about these topics do you still have?</p></li>
+</ul>
+<p>A few things to remember when creating the document:</p>
+<ul>
+<li><p>Be sure to include your name in the <code>author</code> field of the header</p></li>
+<li><p>Be sure the output type is set to: <code>output: html_document</code></p></li>
+<li><p>Be sure to set <code>echo = TRUE</code> in all <code>R</code> chunks so that all code and output is visible in the knitted document</p></li>
+<li><p>Regularly knit the document as you work to check for errors</p></li>
+<li><p>See the R Markdown reference sheet for help with creating <code>R</code> chunks, equations, tables, etc.</p></li>
+<li><p>If you use AI on any part of your assignment, you must include the full prompt(s) you used and it’s full answer(s) in a <strong>separate section</strong> titled “AI assistance” at the end of this document.</p></li>
+</ul>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>There are two ways to denote interactions in the model statement. The more broad method is shown above using an asterisk between the two predictors. This tells <code>R</code> to include all of the main effects of these predictors as well as the interactions. In the case of a 3-way Factorial Design we could have something like A*B*C which would be interpreted as main effect of A, main effect of B, main effect of C, interaction between A and B, interaction between A and C, interaction between B and C, and interaction among A,B, and C. While the notation above saves time and space, we are not always actually interested in all of the possible interactions available to be estimated. Instead, we may want to include several main effects but only investigate a subset of interaction. For example, in a 3-way design if we were only interested in the interactions between A and B, we could write <code>response~ A + B + C + A:B</code>. This would tell <code>R</code> to only include that specific interaction term.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Depending on the number of factors and levels, we may not want to view all of the pairwise comparisons at once. Adding the <code>which=</code> argument to the <code>TukeyHSD</code> function tells <code>R</code> which factors we are interested in having displayed.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/djklement\.github\.io\/FANR6750\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

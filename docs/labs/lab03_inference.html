@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 3: Using R to explore sampling error – FANR6750</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a786baa6f14ee79d175f6472c084195c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">FANR6750</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> <i class="bi bi-house" role="img">
+</i> 
+<span class="menu-text">FANR6750</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> <i class="bi bi-book" role="img">
+</i> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> <i class="bi bi-calendar" role="img">
+</i> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lectures" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-file-pdf" role="img">
+</i> 
+ <span class="menu-text">Lectures</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-lectures">    
+        <li>
+    <a class="dropdown-item" href="../lectures/00_course_intro.qmd">
+ <span class="dropdown-text">Lecture 0: Course introduction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/01_intro_to_stats.qmd">
+ <span class="dropdown-text">Lecture 1: Introduction to statistics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/02_intro_to_lm.qmd">
+ <span class="dropdown-text">Lecture 2: Introduction to linear models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/03_inference.qmd">
+ <span class="dropdown-text">Lecture 3: Principles of inference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/04_expdesign.qmd">
+ <span class="dropdown-text">Lecture 4: Principles of experimental design</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/05_t_test.qmd">
+ <span class="dropdown-text">Lecture 5: Linear models part 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/06_nht.qmd">
+ <span class="dropdown-text">Lecture 6: Null hypothesis testing</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/07_power.qmd">
+ <span class="dropdown-text">Lecture 7: Statistical power</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/08_anova.qmd">
+ <span class="dropdown-text">Lecture 8: ANOVA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/09_mult_comp.qmd">
+ <span class="dropdown-text">Lecture 9: Multiple Comparisons</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/10_regression.qmd">
+ <span class="dropdown-text">Lecture 10: Multiple Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/11_interactions.qmd">
+ <span class="dropdown-text">Lecture 11: Interactions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/12_assumptions.qmd">
+ <span class="dropdown-text">Lecture 12: Evaluating assumptions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/13_model_selection.qmd">
+ <span class="dropdown-text">Lecture 13: Model selection</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/14_random_effects.qmd">
+ <span class="dropdown-text">Lecture 14: Random effects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/15_nested.qmd">
+ <span class="dropdown-text">Lecture 15: Nested designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/16_split_plot.qmd">
+ <span class="dropdown-text">Lecture 16: Split-plot designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/17_repeated_measures.qmd">
+ <span class="dropdown-text">Lecture 17: Repeated measures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/18_glm.qmd">
+ <span class="dropdown-text">Lecture 18: Generalized linear models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/19_logistic_regression.qmd">
+ <span class="dropdown-text">Lecture 19: Logistic regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/20_poisson_regression.qmd">
+ <span class="dropdown-text">Lecture 20: Poisson regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/21_zero_inflation.qmd">
+ <span class="dropdown-text">Lecture 21: Zero-inflated regression</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-labs" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-display" role="img">
+</i> 
+ <span class="menu-text">Labs</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-labs">    
+        <li>
+    <a class="dropdown-item" href="../labs/lab01_intro_to_R.html">
+ <span class="dropdown-text">Lab 1: Introduction to R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab02_Intro_project_and_Rmd.html">
+ <span class="dropdown-text">Lab 2: Introduction to projects and RMarkdown</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab03_inference.html">
+ <span class="dropdown-text">Lab 3: Using R to explore sampling error</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab04_t_tests.qmd">
+ <span class="dropdown-text">Lab 4: t-tests</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab05_ANOVA.html">
+ <span class="dropdown-text">Lab 5: ANOVA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab06_multiple_regression.qmd">
+ <span class="dropdown-text">Lab 6: Multiple Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab07_interactions.qmd">
+ <span class="dropdown-text">Lab 7: Interactions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab08_linear_model_assumptions.qmd">
+ <span class="dropdown-text">Lab 8: Evaluating assumptions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab09_model_selection.qmd">
+ <span class="dropdown-text">Lab 9: Model selection</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab10_nested.qmd">
+ <span class="dropdown-text">Lab 10: Nested designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab11_split_plot.qmd">
+ <span class="dropdown-text">Lab 11: Split-plot designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab13_glm_lr.qmd">
+ <span class="dropdown-text">Lab 12: Logistic regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab14_glm_pr.qmd">
+ <span class="dropdown-text">Lab 13: Poisson regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab12_repeated_measures.qmd">
+ <span class="dropdown-text">Bonus lab: Repeated measures</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-references" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-pencil-square" role="img">
+</i> 
+ <span class="menu-text">References</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-references">    
+        <li>
+    <a class="dropdown-item" href="../references/homework.qmd">
+ <span class="dropdown-text">Assignment instructions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/projects_and_directories.qmd">
+ <span class="dropdown-text">Projects and directories</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/RMarkdown.qmd">
+ <span class="dropdown-text">R Markdown reference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/graphics.qmd">
+ <span class="dropdown-text">Creating publication-quality graphics</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#lab-2" id="toc-lab-2" class="nav-link active" data-scroll-target="#lab-2">Lab 2</a></li>
+  <li><a href="#todays-topics" id="toc-todays-topics" class="nav-link" data-scroll-target="#todays-topics">Today’s topics</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#graphics" id="toc-graphics" class="nav-link" data-scroll-target="#graphics">Graphics</a></li>
+  <li><a href="#using-r-to-generate-samples" id="toc-using-r-to-generate-samples" class="nav-link" data-scroll-target="#using-r-to-generate-samples">Using <code>R</code> to generate samples</a></li>
+  <li><a href="#exploring-variability-among-samples" id="toc-exploring-variability-among-samples" class="nav-link" data-scroll-target="#exploring-variability-among-samples">Exploring variability among samples</a></li>
+  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals">Confidence intervals</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 3: Using R to explore sampling error</h1>
+<p class="subtitle lead">FANR 6750: Experimental Methods in Forestry and Natural Resources Research<br><small>Fall 2026</small></p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="lab-2" class="level2">
+<h2 class="anchored" data-anchor-id="lab-2">Lab 2</h2>
+<ul>
+<li><p>Introduction to RMarkdown</p></li>
+<li><p>Introduction to RProjects and directories</p></li>
+<li><p>Submitting HWs</p></li>
+</ul>
+</section>
+<section id="todays-topics" class="level2">
+<h2 class="anchored" data-anchor-id="todays-topics">Today’s topics</h2>
+<ul>
+<li><p>Introduction</p></li>
+<li><p>Data visualization using <code>ggplot2</code></p></li>
+<li><p>Using <code>for</code> loops to explore sampling</p></li>
+<li><p>More on confidence intervals</p></li>
+<li><p>Assignment</p></li>
+</ul>
+</section>
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>Today we will dive deeper into several key topics from lecture related to statistical inference. In particular, we will use R explore concepts related to sampling, sampling error, and sample size. In doing so, we will also learn (or reinforce) some new skills in <code>R</code>, including:</p>
+<ul>
+<li><p>Data visualizationg using <code>ggplot2</code></p></li>
+<li><p>Using R’s built in functions to randomly generate samples from probability distributions</p></li>
+<li><p>Using <code>for</code> loops to repeat code many times</p></li>
+</ul>
+</section>
+<section id="graphics" class="level1">
+<h1>Graphics</h1>
+<p><code>R</code> has very powerful graphing capabilities that make it possible to create data visualizations for reports or publications. Before we get started on today’s material, we will introduce a few ways to visualize data. As with most tasks in <code>R</code>, there are many ways to create graphs and you will find that people have very strong feelings about the best approach.</p>
+<p>The debate over graphics in <code>R</code> usually boils down to using the built-in graphing functions (“base graphics”) vs the <code>ggplot2</code> package. There are some advantages to both approaches, but for the most part the newer generations of <code>R</code> users prefer <code>ggplot2</code>. Therefore most of the sample code provided in lab will reflect that preference. However, <strong>I don’t care how you make your plots as long as they effectively display the information you are trying to convey</strong>. If you prefer base graphics, by all means use base graphics.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>For this exercise, we will use a small data set that comes with the <code>FANR6750</code> package:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"thrushdata"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(thrushdata)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 'data.frame':    100 obs. of  2 variables:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ calls: num  9.1 5.7 7.7 14.9 12.3 16.7 17.8 11.6 7.5 14.3 ...</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ wind : chr  "high" "high" "high" "high" ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The data frame contains two columns: <code>calls</code> is the average number of calls made by birds during a brief sampling period and <code>wind</code> indicates whether there was high or low wind during each sample.</p>
+<section id="brief-introduction-to-ggplot2" class="level3">
+<h3 class="anchored" data-anchor-id="brief-introduction-to-ggplot2">Brief introduction to <code>ggplot2</code></h3>
+<p>Because the code I provide will use <code>ggplot2</code>, it is worth briefly learning/reviewing how this package approaches data visualization.</p>
+<p>The power and flexibility of <code>ggplot2</code> come from it’s consistent structure. Although a bit confusing at first, once you get the hang of it, the structure actually makes it quite easy to create highly customized visualizations. All plots created using <code>ggplot2</code> use the same underlying structure:</p>
+<p><span class="math display">\[\underbrace{ggplot}_{initiate\; plot} ( \underbrace{data = df}_{data\;frame},\;  \underbrace{aes(x =\; , y = \;)}_{plot\; attributes} ) + \underbrace{geom\_line()}_{geometry}\]</span></p>
+<p>The <code>ggplot()</code> function initiates a new plot. In this function, you tell <code>ggplot2</code> what data frame you will be using for the plot (<code>ggplot</code> only accepts data frames as input) and you tell it how to map attributes of the data to the visual properties of the figures. Attributes are mapped inside the <code>aes()</code> argument. Attributes usually include location (<code>x-axis</code> and <code>y-axis</code> placement), color, size, shape, line type, and many others. In general, <strong>each attribute will be mapped to one column of your data frame</strong>.</p>
+<p>The <code>ggplot()</code> function simply initiates a graph - if you run just that portion of the code you will get a blank graph. We can see that by creating a plot showing the relationship between <code>wind</code> (the x-axis of the plot) and <code>calls</code> (the y-axis):</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> thrushdata, <span class="fu">aes</span>(<span class="at">x =</span> wind, <span class="at">y =</span> calls))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab03_inference_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can see that <code>ggplot</code> created a figure with the correct axes and labels. But no data. That’s because we didn’t tell <code>ggplot</code> what type of <em>geometry</em> to use to represent the data. Once we add a geometry, we can see the data:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> thrushdata, <span class="fu">aes</span>(<span class="at">x =</span> wind, <span class="at">y =</span> calls)) <span class="sc">+</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab03_inference_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In this case, a boxplot might make more sense:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> thrushdata, <span class="fu">aes</span>(<span class="at">x =</span> wind, <span class="at">y =</span> calls)) <span class="sc">+</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab03_inference_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It’s also possible to use more than one geometry:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> thrushdata, <span class="fu">aes</span>(<span class="at">x =</span> wind, <span class="at">y =</span> calls)) <span class="sc">+</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab03_inference_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This is reasonable figure showing call frequencies as a function of wind. But <code>ggplot2</code> makes it very easy to tweak the way the data is visualized (maybe too easy, you can spend <em>a lot</em> of time tweaking minor details). For example, maybe we want to color the points based on the wind. Because we want to map an <em>attribute</em> (color) to a <em>variable</em> (wind), we make this change inside of <code>aes</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> thrushdata, <span class="fu">aes</span>(<span class="at">x =</span> wind, <span class="at">y =</span> calls, <span class="at">color =</span> wind)) <span class="sc">+</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab03_inference_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>That’s not exactly what we wanted. Both the boxplot and the points now colored a function of <code>wind</code>. To make just the points a function of wind, we specify <code>color = wind</code> inside of the <code>geom_point()</code> function (anything in the <code>ggplot()</code> function will apply to all geoms):</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> thrushdata, <span class="fu">aes</span>(<span class="at">x =</span> wind, <span class="at">y =</span> calls)) <span class="sc">+</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> wind))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab03_inference_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We can also do things like the change the size of the geometries. In this case, we are <strong>not</strong> mapping a variable to an attribute (size is not a function of the data values). So these changes happen <strong>outside</strong> of the <code>aes()</code> argument:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> thrushdata, <span class="fu">aes</span>(<span class="at">x =</span> wind, <span class="at">y =</span> calls)) <span class="sc">+</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> wind), <span class="at">size =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab03_inference_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>One last example. Because many of the points overlap, it can be hard to tell how many individual points there are in each group. One way to deal with overplotting like this is to make each point slightly transparent. We can do that with the <code>alpha</code> parameter:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> thrushdata, <span class="fu">aes</span>(<span class="at">x =</span> wind, <span class="at">y =</span> calls)) <span class="sc">+</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> wind), <span class="at">size =</span> <span class="dv">5</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab03_inference_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Again, because we aren’t mapping the alpha value to any data, we include it outside of <code>aes()</code>.</p>
+<hr>
+</section>
+<section id="exercise-1" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-1">Exercise 1</h3>
+<p>The graph above is fine for a quick visualization of the data but wouldn’t be appropriate for including in publications or reports. On your own,</p>
+<ol type="1">
+<li><p>Improve the axis labels. This could include: title case, units, font size, etc. Run <code>?scale_y_continuous</code> and <code>?scale_x_discrete</code> if you need some help (and note the difference between these two functions!). <code>?theme</code> may also be useful</p></li>
+<li><p>Manually change the color of the points (<code>?scale_color_manual</code>)</p></li>
+<li><p>Instead of displaying the data using a boxplot, create histograms showing the distribution of call densities at each level of wind (<code>?geom_histogram</code>)</p></li>
+</ol>
+<hr>
+<p>As you learn about graphics functions, whether base or <code>ggplot2</code>, you will probably need to look up help for how to do certain things. Google is usually your best bet but here are a few other good references:</p>
+<ul>
+<li><p>The fantastic <a href="https://clauswilke.com/dataviz/">Fundamentals of Data Visualization</a> book by Claus Wilke</p></li>
+<li><p>The <code>ggplot2</code> package <a href="https://ggplot2.tidyverse.org/">website</a></p></li>
+<li><p>And, yes, even the base <code>R</code> <a href="https://www.r-graph-gallery.com/base-R.html">graph gallery</a></p></li>
+</ul>
+</section>
+</section>
+<section id="using-r-to-generate-samples" class="level1">
+<h1>Using <code>R</code> to generate samples</h1>
+<p>In lecture, we discussed the concept of <em>sampling</em> - that is, using a randomly-selected subset of a larger population to learn about the characteristics of that population. We will explore this idea further in this lab, taking advantage of several built-in <code>R</code> functions that make it very easy to simulate samples.</p>
+<p>To start, let’s assume that we are interested in quantifying the body mass of gray squirrels (<em>Sciurus carolinensis</em>) on campus. Because we’re simulating these data, we first need to define the true distribution of body mass (i.e., the population). For this exercise, we will assume the mean mass of campus squirrels is 500g. Furthermore, we will assume that body mass in this population is normally distributed (a reasonable assumption given the central limit theorem) with a standard deviation of 30. We can visualize the population using the code below<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p>
+<div class="cell" data-layout-align="center" data-fig.density="3">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">380</span>, <span class="at">to =</span> <span class="dv">620</span>, <span class="at">length.out =</span> <span class="dv">1000</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> x,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="fu">dnorm</span>(x, <span class="dv">500</span>, <span class="dv">30</span>))</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to shade area under normal distribution</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>dnorm_one_sd <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  norm_one_sd <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x, <span class="dv">500</span>, <span class="dv">30</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  norm_one_sd[x <span class="sc">&lt;=</span> <span class="dv">470</span> <span class="sc">|</span> x <span class="sc">&gt;=</span> <span class="dv">530</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(norm_one_sd)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm_one_sd, <span class="at">geom =</span> <span class="st">"area"</span>, <span class="at">fill =</span> <span class="st">"#446E9B"</span>, <span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">500</span>, <span class="at">xend =</span> <span class="dv">500</span>, <span class="at">y =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">yend =</span> <span class="fu">max</span>(df<span class="sc">$</span>y)), <span class="at">color =</span> <span class="st">"grey30"</span>) <span class="sc">+</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">color =</span> <span class="st">"#446E9B"</span>) <span class="sc">+</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Mass (g)"</span>) <span class="sc">+</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(), <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">label =</span> <span class="st">"mu"</span>, <span class="at">parse =</span> <span class="cn">TRUE</span>, <span class="at">x =</span> <span class="dv">500</span>, <span class="at">y =</span> <span class="fu">max</span>(df<span class="sc">$</span>y) <span class="sc">+</span> <span class="fl">0.0013</span>)</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab03_inference_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Sampling from this population is simple using the built in <code>rnorm()</code> function. <code>R</code> has a number of built-in functions to randomly generate samples from a range of probability distributions (that’s what the <em>r</em> stands for in the function name). In addition to <code>rnorm()</code>, there is <code>rpois()</code> (Poisson distribution), <code>rbinom()</code> (binomial distribution), <code>runif()</code> (uniform distribution), etc.</p>
+<p>As with any function, you can run <code>?rnorm()</code> to get more information about the arguments required to run this function. Briefly, we need to define</p>
+<ul>
+<li><p><code>x</code>: the number of random numbers to generate, i.e.&nbsp;the sample size)</p></li>
+<li><p><code>mean</code>: the mean of the normal distribution (in this case, the population mean of 500)</p></li>
+<li><p><code>sd</code>: the standard deviation on the normal distribution (in this case 30)</p></li>
+</ul>
+<p>Let’s start with a sample size of 15:</p>
+<div class="cell" data-layout-align="center">
+<pre><code>#&gt;  [1] 530.0 464.3 492.4 526.0 500.0 560.2 502.7 460.2 489.0 529.9 472.1 532.7
+#&gt; [13] 534.9 525.1 476.6</code></pre>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>samp <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="dv">500</span>, <span class="dv">30</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>samp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<section id="exercise-2" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-2">Exercise 2</h3>
+<p><strong>Question</strong>: What are the expected values for the mean and standard deviation of our sample?</p>
+<p>Use <code>R</code> to calculate the mean and standard deviation of the sample. How close were they to the expected values?</p>
+<hr>
+<p>We can also visualize how this sample compares to the population by adding it to our previous plot<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>:</p>
+<div class="cell" data-layout-align="center" data-fig.density="3">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>samp_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x =</span> samp)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> p <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_rug</span>(<span class="at">data =</span> samp_df, <span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">mean</span>(samp), <span class="at">xend =</span> <span class="fu">mean</span>(samp), <span class="at">y =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">yend =</span> <span class="fu">dnorm</span>(<span class="fu">mean</span>(samp), <span class="dv">500</span>, <span class="dv">30</span>)), <span class="at">color =</span> <span class="st">"grey30"</span>, <span class="at">linetype =</span> <span class="st">"longdash"</span>) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">label =</span> <span class="st">"bar(y)"</span>, <span class="at">parse =</span> <span class="cn">TRUE</span>, <span class="at">x =</span> <span class="fu">mean</span>(samp), <span class="at">y =</span> <span class="fu">dnorm</span>(<span class="fu">mean</span>(samp), <span class="dv">500</span>, <span class="dv">30</span>) <span class="sc">+</span> <span class="fl">0.001</span>) </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>p2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab03_inference_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Remember that because this is a random sample, your sample will be slightly different from the one shown here.</p>
+</section>
+</section>
+<section id="exploring-variability-among-samples" class="level1">
+<h1>Exploring variability among samples</h1>
+<p>One of the most foundational topics for everything we will learn about this semester is <em>sampling error</em>. Sampling error stems directly from the fact that sampling is an inherently random process and therefore no two samples will be exactly the same (and no sample will exactly resemble the population from which it is drawn). Although straightforward, this simple fact will form the basis of nearly every topic we discuss this semester. In fact, this is the reason we need statistics in the first place!</p>
+<p>To explore the concept of sampling error in more detail, and to build some intuition for how sampling error influences conclusions from our samples, we will expand on the previous exercise by generating a very large number of samples from the population.</p>
+<p>In the real world, of course, we generally only have a single sample. But <code>R</code> makes it easy to explore what we would see <em>if</em> we could repeat our sampling process many times. This is essentially the entire concept of <em>frequentist statistics</em></p>
+<p>To repeat the sampling process we implemented above, we could just copy and paste the <code>samp &lt;- rnorm(15, 500, 30)</code> code over and over again, each time naming the sample object something different:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>samp1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="dv">500</span>, <span class="dv">30</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>samp2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="dv">500</span>, <span class="dv">30</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>samp3 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="dv">500</span>, <span class="dv">30</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>.</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>.</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>.</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>sampN <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="dv">500</span>, <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>But that is obviously inefficient for more than just 2-3 samples. Anytime you find yourself needing to repeat the same code many times, you could consider using a loop.</p>
+<p>In <code>R</code>, <code>for</code> loops allow us to efficiently<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> repeat code as many times we want. To run a <code>for</code> loop, we will first specify how many times we want to run the loop and also create an empty matrix that will store the samples that are created each time we run the loop.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">15</span> <span class="co"># sample size</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>nsamp <span class="ot">&lt;-</span> <span class="dv">1000</span> <span class="co"># number of samples</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>samp_mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, <span class="at">nrow =</span> n, <span class="at">ncol =</span> nsamp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The syntax of the loop itself will always start with the function <code>for()</code>. Inside the parentheses, the first thing we add is a <em>counter</em>, which is essentially just a symbol we will use to keep track of which iteration of the loop we are on. By convention, we will use <code>i</code> as our counter, though we could make it pretty much anything we want (e.g., <code>j</code>, <code>k</code>, etc<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>). After defining the counter, we add <code>in</code> and then a sequence of values the counter will take each time it runs the loop. We want to run the loop 1000 times so we generate a sequence from 1 to 1000. After defining the counter and sequence, we put all of the code we want to run inside of curly brackets:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsamp){</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  samp_mat[,i] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, <span class="dv">500</span>, <span class="dv">30</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that each time the loop runs, any place you see the counter <code>i</code> inside the curly brackets, <code>R</code> will replace <code>i</code> with the values specified in sequence <code>1:nsamp</code> (the first loop, i = 1, the second loop i = 2, etc). The code inside of the loop uses some of the indexing rules we learned several weeks ago. Be sure you understand how this indexing works, particularly in relation to the counter <code>i</code>.</p>
+<hr>
+<p>Because the counter symbol and the sequence are flexible, the following code all does the same thing:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsamp){</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  samp_mat[,j] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="dv">500</span>, <span class="dv">30</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(samp <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsamp){</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  samp_mat[,samp] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="dv">500</span>, <span class="dv">30</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>samps <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span>nsamp</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(samps)){</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  samp_mat[,i] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">15</span>, <span class="dv">500</span>, <span class="dv">30</span>)</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<p>The <code>samp_mat</code> object we just created contains 1000 samples from our hypothetical population of squirrels, each containing 15 observations. Although we expect the mean of each sample to be 500, we know that there will be variation among the 1000 sample means (this is <strong>sampling error</strong>!).</p>
+<p>To explore how much variation there is among our sample means, we first need to calculate the mean of each sample. We could do this a few ways. First, we could use a loop<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>samp_means <span class="ot">&lt;-</span> <span class="fu">numeric</span>() <span class="co"># object to store sample means</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsamp){</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  samp_means[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp_mat[,i])</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This works perfectly well, though because loops can be slow, many advanced users try to avoid them when possible. <code>R</code> has another built-in function called <code>apply()</code> that can be very useful for avoiding loops when we need to apply the same function to each row or column of a matrix:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>samp_means <span class="ot">&lt;-</span> <span class="fu">apply</span>(<span class="at">X =</span> samp_mat, <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN =</span>  mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The first argument <code>X</code> is a matrix and the argument <code>FUN</code> is the function we want to apply to each row or column of the matrix. The <code>MARGIN</code> argument is the dimension we want to apply the function to (1 = row, 2 = column). So in this case, we are telling <code>R</code> to take the mean of each column of <code>samp_mat</code>. Apply will return a vector with the mean of each column.</p>
+<p>Let’s visualize the distribution of the 1000 sample means:</p>
+<div class="cell" data-layout-align="center" data-fig.density="3">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> p <span class="sc">+</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">x =</span> samp_means), <span class="fu">aes</span>(<span class="at">x =</span> x, ..density..), </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">"grey50"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">binwidth =</span> <span class="dv">10</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>p3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab03_inference_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<p>What do you notice about the distribution of sampling means?</p>
+<hr>
+<p>We can also calculate summary statistics from our sample means:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(samp_means)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 500.4</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(samp_means)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 7.746</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<hr>
+<p>What do you notice about the mean of the sample means?</p>
+<p>What is the interpretation of the standard deviation of the sample means?</p>
+<hr>
+<p>As you may have figured out, we just used <code>R</code> to approximate the <strong>sampling distribution</strong>, i.e., the means of a large number of samples from the same population. Thanks to the central limit theorem, the mean of the sample means is the population mean (or, in this case, very close to the population mean since 1000 is large but not infinite).</p>
+<p>More importantly, the standard deviation of the sample means tells us <em>on average</em> how far each sample mean is from the population mean, i.e., the <strong>standard error</strong>. You can prove this to yourself by calculating the standard error of the first sample we took and comparing it to the standard deviation of the sample means:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(samp)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(samp))</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 7.798</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(samp_means)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 7.746</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Again, these values should be close but will not be equal. Why won’t they be equal? What factors influence how close they are to each other?</p>
+<hr>
+<section id="exercise-3" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-3">Exercise 3</h3>
+<p>On your own, change the sample size and rerun the previous code. Note that all you need to do is change <code>n &lt;- 15</code> to another value and re-run the code. Run smaller sample sizes (e.g., <code>n &lt;- 5</code>) and larger sample sizes (e.g., <code>n &lt;- 30</code>). What happens to the sampling distribution and the standard error?</p>
+<hr>
+</section>
+</section>
+<section id="confidence-intervals" class="level1">
+<h1>Confidence intervals</h1>
+<p>We can also use the concepts we just learned to better understand how confidence intervals are calculated and what they represent.</p>
+<p>Let’s quickly review a few properties of normal distributions. First, ~68% of samples from a normal distribution will fall within 1 SD of the mean. For our squirrel population, this means that ~68% of squirrel body masses fall within the range 470g-530g. This is the dark shaded area below:</p>
+<div class="cell" data-layout-align="center" data-fig.density="3">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab03_inference_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>It is also true that 95% of samples will fall within ~1.96 x SD of the mean. For our squirrel population, this means that ~95% of squirrel body masses fall within the range 441.2g-558.8g. This is the dark shaded area above.</p>
+<p>In the above graph, we are visualizing the distribution of body masses for individual squirrels as a way to learn about the properties of normal distributions. But when we sample, we are (usually) not trying to learn about individual squirrels, but instead about the population mean.</p>
+<p>How does this relate to confidence intervals?</p>
+<p>Remember that the sampling distribution is a normal distribution. If we denote the mean of sampling distribution <span class="math inline">\(\mu_{\bar{x}}\)</span> and standard deviation as <span class="math inline">\(\sigma_{\bar{x}}\)</span>, this means that ~95% of sample means will fall within the range <span class="math inline">\(\mu_{\bar{x}} - 1.96 \times \sigma_{\bar{x}}\)</span> - <span class="math inline">\(\mu_{\bar{x}} + 1.96 \times \sigma_{\bar{x}}\)</span>. Stare at that sentence for a few minutes until it sinks in.</p>
+<p>What is this range for our samples?</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="dv">500</span> <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(samp_means)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 484.8</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="dv">500</span> <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> <span class="fu">sd</span>(samp_means)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 515.2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>So 95% of our sample means should fall within the range 484.8 - 515.2. We can use the quantile function to check whether this is the case:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(samp_means, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  2.5% 97.5% </span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 485.1 515.3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Pretty close!</p>
+<p>In the real world, we never actually know <span class="math inline">\(\hat{\mu}_{\bar{x}}\)</span> or <span class="math inline">\(\hat{\sigma}_{\bar{x}}\)</span> so we can’t know the exact range of values our sample means should fall within. But we can estimate it from our sample!</p>
+<p>Remember that: <span class="math inline">\(\hat{\mu}_{\bar{x}} = \bar{y}\)</span> and <span class="math inline">\(\hat{\sigma}_{\bar{x}} = \frac{s}{\sqrt{n}} = SE\)</span>. So for given a sample, we expect that 95% of sample means should be within the interval <span class="math inline">\(\bar{y} - 1.96 \times SE\)</span> - <span class="math inline">\(\bar{y} + 1.96 \times SE\)</span>.</p>
+<p>For our initial sample:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>y_bar <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>se <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(samp))</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>y_bar <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 491.1</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>y_bar <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 521.7</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>How do we interpret this range? Remember, it is <strong>not</strong> saying anything about the probability of population mean is between these values. In fact, in this case we can see that it makes no sense to think about probability at all. We <strong>know</strong> whether the confidence interval we just calculated includes the population mean or not. There is no probability. We can see that by visualizing the <em>estimated</em> sampling distribution and 95% confidence interval relative to the true population mean:</p>
+<div class="cell" data-layout-align="center" data-fig.density="3">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab03_inference_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In this case, we know the population mean so we are certain whether or not it is within the confidence interval. But that is not the important point. What’s important is that <em>after we collect a sample</em>, the population mean is either within the confidence interval or it isn’t. Even if we don’t know the population mean, we know it’s either within the interval or it’s not.</p>
+<p><em>Before we collect the sample</em>, however, we don’t know exactly what the bounds of the confidence interval will be<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. All we know is that, given the properties of the normally-distributed sampling distribution, there is a 95% probability that the confidence interval will include the population mean and a 5% probability that it won’t. Put another way, if we repeated our sampling many times, 95% of the confidence intervals will contain the population mean and 5% won’t.</p>
+<p>But don’t take my word for it! We can actually prove that and, in doing so, hopefully clarify what confidence intervals are. We already have a large number of samples, so let’s calculate the 95% confidence interval for each one. To do this, we’ll again use a loop:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># empty objects to store lower and upper CI bounds for each sample</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>lci <span class="ot">&lt;-</span> uci <span class="ot">&lt;-</span> <span class="fu">numeric</span>()</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nsamp){</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># first, calculate SE of sample </span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="co"># note that we use the object n for sample size. If you changed n above, be sure it is correct here</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  se <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp_mat[,i])<span class="sc">/</span><span class="fu">sqrt</span>(n)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># next, calculate bounds of CI</span></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="co"># again, we use the samp_means object here to index the correct sample mean. Make sure it is correct</span></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  lci[i] <span class="ot">&lt;-</span> samp_means[i] <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> se</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  uci[i] <span class="ot">&lt;-</span> samp_means[i] <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> se</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>To aid visualization, let’s compile these in a data frame:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ci_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sample_id =</span> <span class="dv">1</span><span class="sc">:</span>nsamp, </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">mean =</span> samp_means,</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                    <span class="at">lci =</span> lci, </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>                    <span class="at">uci =</span> uci)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ci_df)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   sample_id  mean   lci   uci</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1         1 513.0 497.5 528.6</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2         2 494.2 477.2 511.2</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3         3 511.3 495.5 527.0</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4         4 501.6 487.5 515.7</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5         5 510.0 492.5 527.6</span></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6         6 487.9 469.5 506.4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can also create another column to indicate whether each confidence interval contains the true population mean:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>ci_df <span class="ot">&lt;-</span> <span class="fu">mutate</span>(ci_df, <span class="at">Coverage =</span> <span class="fu">ifelse</span>(lci <span class="sc">&lt;</span> <span class="dv">500</span> <span class="sc">&amp;</span> uci <span class="sc">&gt;</span> <span class="dv">500</span>, <span class="st">"Yes"</span>, <span class="st">"No"</span>))</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ci_df)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   sample_id  mean   lci   uci Coverage</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1         1 513.0 497.5 528.6      Yes</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2         2 494.2 477.2 511.2      Yes</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3         3 511.3 495.5 527.0      Yes</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4         4 501.6 487.5 515.7      Yes</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5         5 510.0 492.5 527.6      Yes</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6         6 487.9 469.5 506.4      Yes</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we can visualize our samples. Note that we will only look at the first 200 samples just to make things easier to see (you can change this on your own if you’d like). Also note that we are using some additional ggplot2 functions and arguments to improve the aesthetics of our graph:</p>
+<div class="cell" data-layout-align="center" data-fig.density="3">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plot the mean of each sample and color based on whether CI contains population mean</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(ci_df[<span class="dv">1</span><span class="sc">:</span><span class="dv">200</span>,], <span class="fu">aes</span>(<span class="at">x =</span> sample_id, <span class="at">y =</span> mean, <span class="at">color =</span> Coverage)) <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add horizontal line, corresponding to population mean</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">500</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add CI for each sample; make each bar semi-transparent to make them easier to see</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">x =</span> sample_id, <span class="at">ymin =</span> lci, <span class="at">ymax =</span> uci), <span class="at">alpha =</span> <span class="fl">0.6</span>, <span class="at">width =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># add sample means; make each point semi-transparent to make them easier to see</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.75</span>) <span class="sc">+</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="co"># change the y-axis title to be more informative</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Sample mean"</span>) <span class="sc">+</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="co"># set the colors manually so that No = red, Yes = black</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"black"</span>)) <span class="sc">+</span></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># turn off x-axis text, tick marks, and title since it is cluttered and not relevant</span></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab03_inference_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Of the 1000 total intervals, what proportion do you think are black?</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>coverage <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(ci_df<span class="sc">$</span>Coverage <span class="sc">==</span> <span class="st">"Yes"</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(coverage)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.933</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Of course, for <em>your</em> sample that forms the basis of <em>your</em> thesis, you have no way of knowing whether you are of the black points or one of the red points. :)</p>
+<section id="exercise-4" class="level3">
+<h3 class="anchored" data-anchor-id="exercise-4">Exercise 4</h3>
+<p>By convention, most people calculate and report 95% confidence intervals. But there is nothing magical about 95% and we can calculate confidence intervals for any percentage we think is relevant to our inference.</p>
+<p>For example, 80% of a normal distribution falls within ~1.281 standard deviations of the mean. Based on this information:</p>
+<ol type="1">
+<li><p>Calculate the 80% confidence intervals of the 1000 samples from our population</p></li>
+<li><p>Add the 80% confidence intervals to the graph we created above. Use a slightly thicker line for the 80% intervals than you did for the 95% intervals so you can see the limits of both intervals (hint - <code>geom_errorbar()</code> has a <code>size</code> argument). It may help to limit your graph to a smaller number of samples (e.g., 100)</p></li>
+</ol>
+<p>How do the 80% confidence intervals compare to the 95% confidence intervals? What are some reasons you might prefer intervals other than 95% when reporting results or making decisions based on the confidence intervals from your sample?</p>
+</section>
+</section>
+<section id="assignment" class="level1">
+<h1>Assignment</h1>
+<p>In this assignment, you will build on the concepts and code from this lab to explore sampling error in more detail.</p>
+<p>Create an R Markdown file titled “Assignment 1”. Within that document, do the following:</p>
+<ol type="1">
+<li><p>Create a header called “Quantifying the magnitude of sampling error” and under this header create a R chunk. Within this R chunk, create an object called <code>r</code> that contains the difference between each of the 1000 sample means and the population mean (<code>r</code> should thus be a vector of 1000 numeric values). Next, use ggplot2 to create a histogram of these values. Below the chunk, explain what the values in this histogram represent. In your answer, indicate what the expected value of <code>r</code> is and what positive vs negative values indicate about each sample.</p></li>
+<li><p>Create a header called “Standardizing the magnitude of sampling error” and under this header create another R chunk. Within this chunk, calculate the standard deviation of <code>r</code>. Next, create a new object (call it <code>t</code>) by dividing each element of <code>r</code> by the standard deviation of <code>r</code>. Note that you should do this using a single line of code and you <em>should not</em> hard code the standard deviation (in other words, use the <code>sd()</code> function rather than typing the actual value you calculated in the previous step). Next, use ggplot2 to create a histogram of these values. Below the chunk, explain what the values in this histogram represent, in particular what positive and negative values represent. Also, explain where the variation in these values comes from. In other words, why do the samples not all have the same value?</p></li>
+<li><p>A friend of yours from another university also happens to be studying gray squirrels (what are the chances!) and claims that their squirrels are bigger than your squirrels. This friend has a history of exaggeration and you certainly don’t want them to think their squirrels are better than your squirrels, so you are skeptical. You ask your friend to capture and weigh 15 squirrels on their campus and send you the data, which is included below:</p></li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">575.5</span>, <span class="fl">513.1</span>, <span class="fl">509.4</span>, <span class="fl">527.1</span>, <span class="fl">485.6</span>, <span class="fl">473.9</span>, <span class="fl">467.3</span>, <span class="fl">535.9</span>, <span class="fl">527.5</span>, </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>              <span class="fl">533.4</span>, <span class="fl">535.9</span>, <span class="fl">516.9</span>, <span class="fl">572.9</span>, <span class="fl">530.3</span>, <span class="fl">498.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Create a new header called “Are their squirrels really bigger than my squirrels?” and under this header create another R chunk. Copy the new code to that chunk. Next, perform the following calculations:</p>
+<ul>
+<li><p>the mean of the new data (call this <code>mu_samp</code>)</p></li>
+<li><p>the difference between this mean and population mean of UGA gray squirrels (call this <code>r_samp</code>)</p></li>
+<li><p>divide <code>r_samp</code> by the standard deviation of <code>r</code> that you calculated above (call this <code>t_samp</code>)</p></li>
+</ul>
+<p>Next, create a new figure that includes the histogram you created in the previous step plus a dashed, vertical bar corresponding to <code>t_samp</code>.</p>
+<p>Finally, do think your friend is right? Are the squirrels on their campus bigger? Discuss how the information in this figure informs your conclusions. Remember that this assignment is focused on sampling error, so be sure your answer relates back to this concept. What does sampling error have to do with the histogram and your friend’s data?</p>
+<p>You may use AI to help inform your answer, though if you do, you must include the full prompt(s) you used and it’s full answer(s) in a <strong>separate section</strong> at the end of this document.</p>
+<ol start="4" type="1">
+<li>Create a new header called “Reflection”. Under this header, answer the following questions:</li>
+</ol>
+<ul>
+<li><p>On a 1-10 scale, how would you rate your confidence in the topics covered in this lab?</p></li>
+<li><p>What lingering questions/confusion about these topics do you still have?</p></li>
+<li><p>If you used AI to help with any aspects of this lab, how well did it do? Did it help you understand the material better? Did it struggle with any specific topics?</p></li>
+</ul>
+<p>A few things to remember when creating the document:</p>
+<ul>
+<li><p>Be sure to include your name in the <code>author</code> field of the header</p></li>
+<li><p>Be sure the output type is set to: <code>output: html_document</code></p></li>
+<li><p>Be sure to set <code>echo = TRUE</code> in all <code>R</code> chunks so that all code and output is visible in the knitted document</p></li>
+<li><p>Regularly knit the document as you work to check for errors</p></li>
+<li><p>See the R Markdown reference sheet for help with creating <code>R</code> chunks, equations, tables, etc.</p></li>
+<li><p>If you use AI on any part of your assignment, you must include the full prompt(s) you used and it’s full answer(s) in a <strong>separate section</strong> titled “AI assistance” at the end of this document.</p></li>
+</ul>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Keep in mind that although we will be using ggplot2, it is a good idea to have some understanding of how base <code>R</code> graphics work. Most packages in <code>R</code>, when they produce some sort of output in the form of a plot, will still create that plot using base <code>R</code> graphics rather than ggplot. In order to alter those graphics without having to start from scratch, it will be useful to know a little about base <code>R</code> graphics.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This code includes some fairly advanced ggplot2 options. Don’t worry too much about understanding each one, though it may be useful to spend some time figuring out what each function is doing<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Notice the <code>p</code> is a ggplot object, so we can add elements directly to it rather than repeat all the code needed to make the previous figure<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Efficient in terms of lines of code, not computational efficiency. Loops are often very slow to run so advanced R users often avoid them when possible<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Remember that certain letters are also functions - e.g., <code>c()</code>, <code>t()</code> - so it’s good practice not to use those letters as counters<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>In fact, we could just add a second line to our previous loop rather than run two loops<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Just the like the sample mean and standard deviation, the bounds of the confidence interval are random variables and will be different for each sample<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/djklement\.github\.io\/FANR6750\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 8: Evaluating assumptions of Linear Models – FANR6750 2026.1.0</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a786baa6f14ee79d175f6472c084195c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">FANR6750 <span class="version-text">2026.1.0</span></span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> <i class="bi bi-house" role="img">
+</i> 
+<span class="menu-text">FANR6750</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> <i class="bi bi-book" role="img">
+</i> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> <i class="bi bi-calendar" role="img">
+</i> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lectures" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-file-pdf" role="img">
+</i> 
+ <span class="menu-text">Lectures</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-lectures">    
+        <li>
+    <a class="dropdown-item" href="../lectures/00_course_intro.qmd">
+ <span class="dropdown-text">Lecture 0: Course introduction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/01_intro_to_stats.qmd">
+ <span class="dropdown-text">Lecture 1: Introduction to statistics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/02_intro_to_lm.qmd">
+ <span class="dropdown-text">Lecture 2: Introduction to linear models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/03_inference.qmd">
+ <span class="dropdown-text">Lecture 3: Principles of inference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/04_expdesign.qmd">
+ <span class="dropdown-text">Lecture 4: Principles of experimental design</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/05_t_test.qmd">
+ <span class="dropdown-text">Lecture 5: Linear models part 1</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/06_nht.qmd">
+ <span class="dropdown-text">Lecture 6: Null hypothesis testing</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/07_power.qmd">
+ <span class="dropdown-text">Lecture 7: Statistical power</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/08_anova.qmd">
+ <span class="dropdown-text">Lecture 8: ANOVA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/09_mult_comp.qmd">
+ <span class="dropdown-text">Lecture 9: Multiple Comparisons</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/10_regression.qmd">
+ <span class="dropdown-text">Lecture 10: Multiple Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/11_interactions.qmd">
+ <span class="dropdown-text">Lecture 11: Interactions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/12_assumptions.qmd">
+ <span class="dropdown-text">Lecture 12: Evaluating assumptions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/13_model_selection.qmd">
+ <span class="dropdown-text">Lecture 13: Model selection</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/14_random_effects.qmd">
+ <span class="dropdown-text">Lecture 14: Random effects</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/15_nested.qmd">
+ <span class="dropdown-text">Lecture 15: Nested designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/16_split_plot.qmd">
+ <span class="dropdown-text">Lecture 16: Split-plot designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/17_repeated_measures.qmd">
+ <span class="dropdown-text">Lecture 17: Repeated measures</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/18_glm.qmd">
+ <span class="dropdown-text">Lecture 18: Generalized linear models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/19_logistic_regression.qmd">
+ <span class="dropdown-text">Lecture 19: Logistic regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/20_poisson_regression.qmd">
+ <span class="dropdown-text">Lecture 20: Poisson regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/21_zero_inflation.qmd">
+ <span class="dropdown-text">Lecture 21: Zero-inflated regression</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-labs" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-display" role="img">
+</i> 
+ <span class="menu-text">Labs</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-labs">    
+        <li>
+    <a class="dropdown-item" href="../labs/lab01_intro_to_R.html">
+ <span class="dropdown-text">Lab 1: Introduction to R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab02_Intro_project_and_Rmd.html">
+ <span class="dropdown-text">Lab 2: Introduction to projects and RMarkdown</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab03_inference.html">
+ <span class="dropdown-text">Lab 3: Using R to explore sampling error</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab04_t_tests.qmd">
+ <span class="dropdown-text">Lab 4: t-tests</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab05_ANOVA.html">
+ <span class="dropdown-text">Lab 5: ANOVA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab06_multiple_regression.html">
+ <span class="dropdown-text">Lab 6: Multiple Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab07_interactions.html">
+ <span class="dropdown-text">Lab 7: Interactions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab08_linear_model_assumptions.html">
+ <span class="dropdown-text">Lab 8: Evaluating assumptions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab09_model_selection.qmd">
+ <span class="dropdown-text">Lab 9: Model selection</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab10_nested.qmd">
+ <span class="dropdown-text">Lab 10: Nested designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab11_split_plot.qmd">
+ <span class="dropdown-text">Lab 11: Split-plot designs</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab13_glm_lr.qmd">
+ <span class="dropdown-text">Lab 12: Logistic regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab14_glm_pr.qmd">
+ <span class="dropdown-text">Lab 13: Poisson regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab12_repeated_measures.qmd">
+ <span class="dropdown-text">Bonus lab: Repeated measures</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-references" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-pencil-square" role="img">
+</i> 
+ <span class="menu-text">References</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-references">    
+        <li>
+    <a class="dropdown-item" href="../references/homework.html">
+ <span class="dropdown-text">Assignment instructions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/projects_and_directories.html">
+ <span class="dropdown-text">Projects and directories</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/RMarkdown.html">
+ <span class="dropdown-text">R Markdown reference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/graphics.html">
+ <span class="dropdown-text">Creating publication-quality graphics</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#lab-7" id="toc-lab-7" class="nav-link active" data-scroll-target="#lab-7">Lab 7</a></li>
+  <li><a href="#todays-topics" id="toc-todays-topics" class="nav-link" data-scroll-target="#todays-topics">Today’s topics</a></li>
+  <li><a href="#assumptions-of-linear-models" id="toc-assumptions-of-linear-models" class="nav-link" data-scroll-target="#assumptions-of-linear-models">Assumptions of linear models</a></li>
+  <li><a href="#ordinary-least-squares-regression-and-the-gauss-markov-theory" id="toc-ordinary-least-squares-regression-and-the-gauss-markov-theory" class="nav-link" data-scroll-target="#ordinary-least-squares-regression-and-the-gauss-markov-theory">Ordinary Least Squares Regression and the Gauss Markov Theory</a></li>
+  <li><a href="#evaluating-model-assumptions-in-r" id="toc-evaluating-model-assumptions-in-r" class="nav-link" data-scroll-target="#evaluating-model-assumptions-in-r">Evaluating model assumptions in R</a>
+  <ul class="collapse">
+  <li><a href="#data-example" id="toc-data-example" class="nav-link" data-scroll-target="#data-example">Data example</a></li>
+  <li><a href="#evaluating-model-assumptions" id="toc-evaluating-model-assumptions" class="nav-link" data-scroll-target="#evaluating-model-assumptions">Evaluating model assumptions</a></li>
+  </ul></li>
+  <li><a href="#outliers-and-influential-observations" id="toc-outliers-and-influential-observations" class="nav-link" data-scroll-target="#outliers-and-influential-observations">Outliers and influential observations</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 8: Evaluating assumptions of Linear Models</h1>
+<p class="subtitle lead">FANR 6750: Experimental Methods in Forestry and Natural Resources Research<br><small>Fall 2026</small></p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="lab-7" class="level2">
+<h2 class="anchored" data-anchor-id="lab-7">Lab 7</h2>
+<ul>
+<li><p>Interactions in experimental design</p>
+<ul>
+<li><p>Visualizing interactions</p></li>
+<li><p>Types of interactions</p></li>
+</ul></li>
+<li><p>Factorial designs</p>
+<ul>
+<li><p>Using aov()</p></li>
+<li><p>Using lm()</p></li>
+<li><p>Follow-ups</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="todays-topics" class="level2">
+<h2 class="anchored" data-anchor-id="todays-topics">Today’s topics</h2>
+<ul>
+<li><p>Review of linear model assumptions</p>
+<ul>
+<li>OLS regression and the Gauss Markov Theory</li>
+</ul></li>
+<li><p>Evaluating assumptions (visual assessments and tests)</p>
+<ul>
+<li><p>Linearity</p></li>
+<li><p>Normality</p></li>
+<li><p>Homoscedasticity</p></li>
+<li><p>Independence</p></li>
+<li><p>Multicollinearity</p></li>
+</ul></li>
+<li><p>Outliers and influential observations</p></li>
+</ul>
+<p><br></p>
+</section>
+<section id="assumptions-of-linear-models" class="level1">
+<h1>Assumptions of linear models</h1>
+<p>When we are using <code>R</code> to help with data analysis, keep in mind that, for the most part, <code>R</code> is happy to do anything that you tell it to do. In reality though, every linear model that we will use this semester will come with a set of assumptions. Before using any model for data analysis, you will need to consider the assumptions of that model and decide whether or not it is reasonable to make those assumptions. If it is, that model may be appropriate for that analysis; if it is not, you will need to consider other options. <strong>Because we have limited time in this course, for the most part we will not delve into other modeling options including nonparametric tests, GLMS, and data transformation methods. Several other courses on campus, however, directly tackle these approaches.</strong></p>
+<p>All linear models have at least 6 explicit assumptions. In this course, we will primarily consider the first 4 of these assumptions, but it is good to know that the others (and usually more) exist.</p>
+<p>As we go through these assumptions try to find in our linear model where these assumptions show up (some are more subtle than others).</p>
+<ol type="1">
+<li><strong>Linearity:</strong> We assume that the relationship between x and y is linear</li>
+</ol>
+<p><br></p>
+<p>Note: This assumption <strong>DOES NOT</strong> mean that we need to be able to fit a straight line through the data. Often, we will actually used a curved line (in the cases of quadratic relationships). Rather, this assumption means that the <strong>parameters</strong> themselves enter the model linearly. This means that for one unit change in a predictor, there is <strong>ALWAYS</strong> the same constant change in the response.</p>
+<p>Let’s see some examples:</p>
+<p><span class="math display">\[
+y_i = \beta_0 + \beta_1x_1 + \epsilon_i
+\]</span></p>
+<p><span class="math display">\[
+y_i = \beta_0 + \beta_1x_1 + \beta_2x_1^2 + \epsilon_i
+\]</span></p>
+<p><span class="math display">\[
+y_i = \beta_0 + \beta_1x_1 + \beta_2x_2x_3 + \epsilon_i
+\]</span></p>
+<p><span class="math display">\[
+y_i = \beta_0 + x_1^{\beta_1} + \beta_2x_1^2 + \epsilon_i
+\]</span> <strong>Which of the above examples are linear and which are not?</strong></p>
+<p><br></p>
+<ol start="2" type="1">
+<li><strong>Normality:</strong> We assume that the residuals are normally distributed</li>
+</ol>
+<p>This assumption will be important as we progress through the semester and perform hypothesis testing to assess the significance of predictor variables. While normality of residuals is not required, it suggests that the model is doing a good job of predicting the response (i.e.&nbsp;most residuals are close to zero and larger errors are much less likely).</p>
+<p><br> <br></p>
+<ol start="3" type="1">
+<li><strong>Homoscedasticity:</strong> We assume that the residuals have a constant variance across all levels or values of x (if not, we refer to that as heterscedasticity)</li>
+</ol>
+<div class="cell" data-layout-align="left" data-fig.fullwidth="true">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab08_linear_model_assumptions_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption><strong>Figure 1: Residuals from linear model across a range of x (predictor variable). Heteroscedasticity is demonstrated as a funnel shape.</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br> <br></p>
+<p><strong>When might this assumption be violated?</strong></p>
+<ul>
+<li>In time series</li>
+<li>In cross sectional studies</li>
+</ul>
+<p><br> <br></p>
+<ol start="4" type="1">
+<li><strong>Independence:</strong> We assume that the residuals are independent of one another and independent of predictors.</li>
+</ol>
+<p>This assumption means that we cannot predict the size of a residual from another residual (autocorrelation) or from the value of a predictor variable (endogeneity).</p>
+<p><strong>When might this assumption be violated?</strong></p>
+<p><br> <br></p>
+<ol start="5" type="1">
+<li><strong>Unbiased estimator:</strong> We assume that the residuals are centered on zero.</li>
+</ol>
+<p>If the residuals are centered on zero, then our estimate of the parameter is doing a good job of approximating the true value of the parameter. If the residuals are not centered on zero, then the model is either consistenly under or over estimating the parameter values (a biased estimator).</p>
+<div class="cell" data-layout-align="left" data-fig.fullwidth="true">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab08_linear_model_assumptions_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption><strong>Figure 2: Histogram of residuals from linear model demonstrating biased estimator.</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br></p>
+<p>Note: When we are using least squares regression, we assume that our estimators are unbiased. An unbiased estimator is not <strong>always</strong> desirable though (or even realistic [e.g.&nbsp;estimating <span class="math inline">\(\lambda^2\)</span> or <span class="math inline">\(e^{-\lambda}\)</span> for a poisson distribution]). In general, <em>bias</em> and <em>variance</em> are both just forms of error in the model. One is not inherently worse than the other. See <a href="http://www-biba.inrialpes.fr/Jaynes/cc17h.pdf">here</a> for an in depth discussion of this topic from one of the founders of modern probability theory.</p>
+<p>Remember that the total error (MSE) can be calculated as:</p>
+<p><span class="math display">\[
+MSE = Bias(\hat\beta)^2 + Var(\hat\beta)
+\]</span></p>
+<p><strong>When might a biased estimator be advantageous?</strong></p>
+<p><br> <br></p>
+<ol start="6" type="1">
+<li><strong>Independent predictors:</strong> We assume that when using multiple predictor variables, they are <em>relatively</em> independent from one another.</li>
+</ol>
+<p>If one explanatory variable is able to be partially predicted using others (the information provided by the variable is somewhat redundant) then we refer to that as multicollinearity. In general, linear models are able to withstand a great deal of multicollinearity. These methods, however, are not able to deal with situations where a predictor variable is completely redundant. In this case, the Gram matrix [<span class="math inline">\(X'X\)</span>] is not invertible (singular; i.e.&nbsp;the matrix algebra isn’t defined).</p>
+<p><strong>What are some other issues we might consider when thinking about whether multicollinearity will affect our model?</strong></p>
+<ul>
+<li><p>Standard error of estimates</p></li>
+<li><p>Stability of parameters (inference)</p></li>
+<li><p>Issues with model selection (effect on penalty terms and parsimony)</p></li>
+<li><p>Cost of data collection</p></li>
+<li><p>Unreasonable or impossible predictions (due to impossible combinations of predictor values)</p></li>
+</ul>
+<p><br> <br></p>
+<p><strong>What are some examples where multicollinearity might happen?</strong></p>
+<ul>
+<li><p>Predicting nest survival using both Fahrenheit and Celsius</p></li>
+<li><p>Predicting presence of birds using all % land use categories</p></li>
+<li><p>Predicting movement of fish using dissolved oxygen, salinity, and conductivity</p></li>
+</ul>
+<p><br> <br></p>
+</section>
+<section id="ordinary-least-squares-regression-and-the-gauss-markov-theory" class="level1">
+<h1>Ordinary Least Squares Regression and the Gauss Markov Theory</h1>
+<p>All of the assumptions of linear models above can be traced back to the method we will be using (ordinary least squares regression) and the theory that helps explain it (Gauss Markov Theory). The method of OLS regression works by minimizing the sum of the squared residuals. The Gauss Markov Theory says that when the assumptions listed above are reasonably met, this minimum can be obtained in a straightforward way, will be unique, and will be the Best Linear Unbiased Estimator. Namely:</p>
+<p><span class="math display">\[
+\hat\beta = (X'X)^{-1}X'y
+\]</span></p>
+<p>While this formula may look somewhat daunting, remember that we have all the information we need in the form of our data. We have our X matrix (the variables being used as predictors) and we have our vector of y (the response variable). All that remains is to perform some matrix algebra to obtain our vector of <span class="math inline">\(\hat\beta\)</span>’s.</p>
+<p><br> <br></p>
+</section>
+<section id="evaluating-model-assumptions-in-r" class="level1">
+<h1>Evaluating model assumptions in R</h1>
+<p>Above, we have seen many of the assumptions that are made when using linear modeling as a tool for data analysis. Now we will look at how we might evaluate our data to see if they meet those assumptions or if they deviate enough that we will need to adjust our methods.</p>
+<section id="data-example" class="level2">
+<h2 class="anchored" data-anchor-id="data-example">Data example</h2>
+<p>Deer hunters are often interested in knowing what variables affect deer movement rates. Presumably deer should move more during certain conditions and less during others. Knowing what affects this change can help hunters to know when their hunt is most likely to be profitable.</p>
+<p>Below is a dataset containing information about 150 radio collared bucks. The total movement (m) in one day was recorded for each deer across several tracts of land in Arkansas. Other information which was also collected includes the day on which the tracking was conducted (either the last day before hunting season starts, the day hunting season starts, or the first day after hunting season ends), the average temperature (F) on that day, the average wind speed (mi/hr) on that day, and the patch size (categorical) where the deer resides.</p>
+<p>Let’s start by loading the <code>deerdata</code> dataset and examining the data.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">'deerdata'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We should also examine the structure and summary of the dataset:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(deerdata)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 'data.frame':    150 obs. of  6 variables:</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Deer    : int  1 2 3 4 5 6 7 8 9 10 ...</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Movement: int  6676 6290 5038 6849 7313 6725 7471 5845 9220 5138 ...</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Season  : chr  "Prehunt" "Prehunt" "Prehunt" "Prehunt" ...</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Temp    : int  47 56 68 54 51 47 58 64 50 52 ...</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Wind    : int  12 14 12 14 20 20 13 16 17 21 ...</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Patch   : chr  "Medium" "Large" "Large" "Medium" ...</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(deerdata)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       Deer          Movement       Season               Temp     </span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   :  1.0   Min.   :1198   Length:150         Min.   :30.0  </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.: 38.2   1st Qu.:1636   Class :character   1st Qu.:55.0  </span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median : 75.5   Median :3914   Mode  :character   Median :58.0  </span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   : 75.5   Mean   :3952                      Mean   :58.6  </span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:112.8   3rd Qu.:5806                      3rd Qu.:63.0  </span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :150.0   Max.   :9662                      Max.   :76.0  </span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       Wind         Patch          </span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   : 6.0   Length:150        </span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:13.2   Class :character  </span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median :16.0   Mode  :character  </span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   :15.9                     </span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:19.0                     </span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :24.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>It appears that two of the variables are being read as characters but we will want them to be factors. In this case, it also makes sense to manually define the factor levels.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>deerdata<span class="sc">$</span>Season <span class="ot">&lt;-</span> <span class="fu">factor</span>(deerdata<span class="sc">$</span>Season, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'Prehunt'</span>, <span class="st">'Hunt'</span>, <span class="st">'Posthunt'</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>deerdata<span class="sc">$</span>Patch <span class="ot">&lt;-</span> <span class="fu">factor</span>(deerdata<span class="sc">$</span>Patch, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'Small'</span>, <span class="st">'Medium'</span>, <span class="st">'Large'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<p>The researchers who set up this study already have a model in mind. Before they write up their conclusions though, they have come to you to check the model assumptions to see how reasonably they are being met.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>deerdata<span class="sc">$</span>Wind.sq <span class="ot">&lt;-</span> deerdata<span class="sc">$</span>Wind<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Movement<span class="sc">~</span> Temp <span class="sc">+</span> Wind <span class="sc">+</span> Wind.sq <span class="sc">+</span> Season <span class="sc">+</span> Patch <span class="sc">+</span> Season<span class="sc">:</span>Patch, <span class="at">data=</span> deerdata)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = Movement ~ Temp + Wind + Wind.sq + Season + Patch + </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Season:Patch, data = deerdata)</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -2450.0  -531.7    63.2   566.9  2271.9 </span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                             Estimate Std. Error t value           Pr(&gt;|t|)    </span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)                 9372.069   1316.724    7.12 0.0000000000547120 ***</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Temp                         -78.587     10.986   -7.15 0.0000000000453510 ***</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Wind                          43.743    128.385    0.34              0.734    </span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Wind.sq                        0.354      4.038    0.09              0.930    </span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SeasonHunt                 -1734.984    432.534   -4.01 0.0000985462680663 ***</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SeasonPosthunt             -3955.655    441.819   -8.95 0.0000000000000021 ***</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; PatchMedium                  -87.401    415.696   -0.21              0.834    </span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; PatchLarge                   854.837    421.993    2.03              0.045 *  </span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SeasonHunt:PatchMedium       510.248    502.542    1.02              0.312    </span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SeasonPosthunt:PatchMedium     3.594    529.716    0.01              0.995    </span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SeasonHunt:PatchLarge       1135.633    547.858    2.07              0.040 *  </span></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; SeasonPosthunt:PatchLarge  -1007.949    524.112   -1.92              0.057 .  </span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 887 on 138 degrees of freedom</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.851,  Adjusted R-squared:  0.839 </span></span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 71.7 on 11 and 138 DF,  p-value: &lt;0.0000000000000002</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>On the surface, this looks great. The researchers have included several predictor variables including a quadratic term for wind (perhaps they expect a happy medium of wind conditions?) and an interaction term that suggests that patch size may matter but only during certain seasons.</p>
+<p><strong>Can you interpret each of the parameter estimates? Which variables ended up being significant in this model?</strong></p>
+</section>
+<section id="evaluating-model-assumptions" class="level2">
+<h2 class="anchored" data-anchor-id="evaluating-model-assumptions">Evaluating model assumptions</h2>
+<section id="residual-vs-fitted-plots" class="level3">
+<h3 class="anchored" data-anchor-id="residual-vs-fitted-plots">Residual vs fitted plots</h3>
+<p>We’ll start by creating a plot of the model residuals as a function of the predicted values. This can be done either using base R plotting or ggplot.</p>
+<div class="cell" data-layout-align="left" data-fig.fullwidth="true">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mod1, <span class="fu">aes</span>(<span class="at">x=</span> .fitted, <span class="at">y=</span> .resid)) <span class="sc">+</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab08_linear_model_assumptions_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption><strong>Figure 3: Residuals across a range of predicted values from Model 1</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>What assumptions can we examine from this plot?</strong></p>
+<ol type="1">
+<li><p>First, let’s consider the linearity assumption. From lecture, we saw that deviations from linearity will appear as patterns in the residual plot. This could show itself as consistently increasing or decreasing values or as a quadratic relationship. There definitely appears to be something happening in this plot that is out of the ordinary, but only at the smallest prediction values. One possibility is that there is some sort of upper bound in the dataset (perhaps for a particular factor level).</p></li>
+<li><p>Next, we can consider the issue of heteroscedasticity. In that case, we would expect to see a funnel shape of residuals across the range of predicted values (either fanning in or fanning out). <strong>What might cause this funnel?</strong> <strong>Do you think that is happening here?</strong></p></li>
+</ol>
+<p>Notice what happens if we re-create this plot but change the points so that the color of the points represents the season of the tracking event.</p>
+<div class="cell" data-layout-align="left" data-fig.fullwidth="true">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mod1, <span class="fu">aes</span>(<span class="at">x=</span> .fitted, <span class="at">y=</span> .resid, <span class="at">color=</span> deerdata<span class="sc">$</span>Season)) <span class="sc">+</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab08_linear_model_assumptions_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption><strong>Figure 4: Residuals across a range of predicted values (by season) from Model 1</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>What seems to be happening here?</strong></p>
+<p>We can now see that there appears to be a very different relationship during the posthunt season. Additionally, there appears to be much less variation during that season compared to the other two seasons.</p>
+<p>We could see this same trend if we were to create a boxplot of movement as a function of season.</p>
+<div class="cell" data-layout-align="left" data-fig.fullwidth="true">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(deerdata, <span class="fu">aes</span>(<span class="at">x=</span> Season, <span class="at">y=</span> Movement)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab08_linear_model_assumptions_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption><strong>Figure 5: Residuals as a function of tracking season from Model 1</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="normality-plots" class="level3">
+<h3 class="anchored" data-anchor-id="normality-plots">Normality plots</h3>
+<section id="histograms" class="level4">
+<h4 class="anchored" data-anchor-id="histograms">Histograms</h4>
+<p>Next, we can check the normality of the residuals coming from our model. We can do this in a couple ways. One is to create a histogram of the residuals.</p>
+<div class="cell" data-layout-align="left" data-fig.fullwidth="true">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mod1, <span class="fu">aes</span>(<span class="at">x=</span> .resid)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span> <span class="fu">mean</span>(mod1<span class="sc">$</span>residuals))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab08_linear_model_assumptions_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption><strong>Figure 6: Histogram of residuals from Model 1. Vertical line represents mean of the residuals.</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>These histograms (and to some degree all of the plots we have made in this lab) are notoriously subjective. Different researchers, depending on the kinds of data they are accustomed to working with, may interpret this plot differently. Thankfully, normality of residuals is not a <em>strict</em> assumption of linear models and this distribution appears <em>relatively</em> normal.</p>
+<p>In addition to normality, this plot can show us information about the bias of our estimator. As we might expect, since we have used an unbiased estimator, the mean of the residuals should be close to zero (which it is).</p>
+</section>
+<section id="qq-plots" class="level4">
+<h4 class="anchored" data-anchor-id="qq-plots">QQ plots</h4>
+<p>We can also assess the normality assumption using QQ plots. QQ plots essentially tell us whether or not two samples of data come from the same distribution. For our purposes, we will plot the residuals (in ascending order) vs the theoretical order of the residuals if they truly came from a normal distribution. Ideally, the points in the plot should fall along the center line. Deviations from the line can tell us a great deal about issues in the data.</p>
+<p>You can find lots of resources online which help to explain patterns that you might see in QQ plots. One such resource can be found <a href="https://seankross.com/2016/02/29/A-Q-Q-Plot-Dissection-Kit.html">here</a>.</p>
+<div class="cell" data-layout-align="left" data-fig.fullwidth="true">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mod1, <span class="fu">aes</span>(<span class="at">sample=</span> .resid)) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span> </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Sample quantiles"</span>) <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Theoretical quantiles"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab08_linear_model_assumptions_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption><strong>Figure 7: Quantile-Quantile plot of residuals from Model 1.</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="independence" class="level3">
+<h3 class="anchored" data-anchor-id="independence">Independence</h3>
+<p>We can assess the independence of residuals using an autocorrelation function. Typically correlated residuals result from either temporal (serial) autocorrelation or spatial autocorrelation of data points. Autocorrelated residuals would manifest as trends along the x-axis of the ACF plot. As we might expect, because there are no spatial or temporal trends in our dataset, we do not see any trends in the plot.</p>
+<p>Note: while this class does not delve into time series modeling, there are a few courses on campus which specifically address this topic.</p>
+<div class="cell" data-layout-align="left" data-fig.fullwidth="true">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(mod1<span class="sc">$</span>residuals, <span class="at">plot=</span> T, <span class="at">main=</span> <span class="st">''</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab08_linear_model_assumptions_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption><strong>Figure 8: Autocorrelation function plot of Model 1 residuals.</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="multicollinearity" class="level3">
+<h3 class="anchored" data-anchor-id="multicollinearity">Multicollinearity</h3>
+<p>We can assess multicollinearity of predictors (only the continuous ones!) by creating a covariance matrix in <code>R</code>. There are numerous opinions by different researchers as far as how highly correlated predictors need to be before you consider throwing one of them out of the model. <a href="https://onlinelibrary.wiley.com/doi/epdf/10.1111/j.1600-0587.2012.07348.x">Here</a> and <a href="https://ia903007.us.archive.org/21/items/identifyingproxy470boot/identifyingproxy470boot.pdf">here</a> are two papers which have addressed this issue through extensive simulations.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(deerdata[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>)])</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          Movement      Temp     Wind</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Movement   1.0000 -0.318801 0.134070</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Temp      -0.3188  1.000000 0.008585</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Wind       0.1341  0.008585 1.000000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="left" data-fig.fullwidth="true">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(<span class="fu">cor</span>(deerdata[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>)]), <span class="at">method=</span> <span class="st">'number'</span>, <span class="at">type =</span> <span class="st">"upper"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab08_linear_model_assumptions_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption><strong>Figure 9: Correlation matrix of predictors used in Model 1.</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br> <br></p>
+</section>
+<section id="getting-r-to-do-it-all" class="level3">
+<h3 class="anchored" data-anchor-id="getting-r-to-do-it-all">Getting R to do it all</h3>
+<p>While we have made each of these plots individually (which makes them more easily edited), we can also get <code>R</code> to create all of these plots at once.</p>
+<div class="cell" data-layout-align="left" data-fig.fullwidth="false">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(mod1, <span class="at">check=</span> <span class="fu">c</span>(<span class="st">'linearity'</span>, <span class="st">'homogeneity'</span>, <span class="st">'qq'</span>, <span class="st">'normality'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br> <br></p>
+<p>We can also formally test some of these assumptions with functions in <code>R</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linearity</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">resettest</span>(mod1)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  RESET test</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  mod1</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; RESET = 9.6, df1 = 2, df2 = 136, p-value = 0.0001</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Normality</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(mod1<span class="sc">$</span>residuals)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Shapiro-Wilk normality test</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  mod1$residuals</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; W = 1, p-value = 0.9</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Heteroscedasticity</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="fu">ncvTest</span>(mod1, <span class="sc">~</span> Season) <span class="co"># Breusch-Pagan test</span></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Non-constant Variance Score Test </span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Variance formula: ~ Season </span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare = 20.85, Df = 2, p = 0.00003</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br> <br></p>
+</section>
+</section>
+</section>
+<section id="outliers-and-influential-observations" class="level1">
+<h1>Outliers and influential observations</h1>
+<p>A topic which is related to the discussion of evaluating model assumptions is the issue of outliers and influential points. First let’s define some terms:</p>
+<p><br></p>
+<p>An <strong>outlier</strong> is a data point that does not fit well into the model. These points result in very large residuals (the predicted value is nowhere close to the actual observed value).</p>
+<p>An <strong>influential observation</strong> is a data point whose removal from the dataset would cause a large change in the model fit.</p>
+<p>An observation with high <strong>leverage</strong> is one at the extreme end of the x-axis (think of a fulcrum) which has the potential to pull the model predictions toward itself (be influential).</p>
+<p><br></p>
+<p>At first glance, these terms appear to be essentially defining the same concept. In reality though, an outlier may or may not be influential to the model fit and may or may not have high leverage. An influential point may or may not be an outlier. An observation with high leverage may or may not be influential or be an outlier. All three, however, should be considered during the process of model diagnostics.</p>
+<p>Some great plots demonstrating these concepts from the Penn State College of Science can be found <a href="https://online.stat.psu.edu/stat462/node/170/">here</a>.</p>
+<p><br> <br></p>
+<p>Several plots can be made in <code>R</code> which will help us to identify outliers and data points that are exerting high degrees of leverage on the model. Below we have plotted the studentized residuals (residuals divided by their sd) as a function of leverage. Data points deviating too far on the y-axis from zero are considered outliers and those with leverage exceeding a threshold (defined as a function of the data) are considered high leverage.</p>
+<div class="cell" data-layout-align="left" data-fig.fullwidth="true">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(olsrr)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ols_plot_resid_lev</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab08_linear_model_assumptions_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="768"></p>
+<figcaption><strong>Figure 11: Studentized residuals from Model 1 as a function of leverage.</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><br> <br></p>
+<p>Now that we have identified the presence of some outliers in our dataset, what do we do about it?</p>
+<p><br></p>
+<p><strong>Some things to consider first:</strong></p>
+<ol type="1">
+<li><p>Multiple outliers can mask the effect of each other.</p></li>
+<li><p>An observation that is an outlier in one model may not be in another model when different variables are included or transformed.</p></li>
+<li><p>Outliers may be more reasonable/expected in some datasets than others. If the residuals are not normally distributed, it may be more common to find extreme values.</p></li>
+<li><p>Individual outliers are much less of a problem in a large enough dataset.</p></li>
+</ol>
+<p><br></p>
+<p><strong>What are our options?</strong></p>
+<ol type="1">
+<li><p>First, check for data entry errors. Is there a discrepancy between the excel file and the paper datasheet? Is this value a code for something that you don’t know about?</p></li>
+<li><p>Consider the biological context. Is this value impossible biologically? Or does it represent an extreme but potentially very interesting phenomenon?</p></li>
+<li><p>Consider excluding the observation and see how it affects your model. This is a tricky and subjective process. Always remember to explain your data management process including the exclusion of observations when you write up your methods.</p></li>
+</ol>
+<p><br> <br> <br></p>
+</section>
+<section id="assignment" class="level1">
+<h1>Assignment</h1>
+<p>Freshwater mussels are a group of aquatic organisms which inhabit streams and rivers throughout the world. While typically residing at or just below the surface of the stream substrate where they filter feed, mussels sometimes burrow further into the substrate for a variety of reasons. While this burrowing behavior can protect the mussels from environmental conditions, it prevents the mussels from feeding during that time. Researchers at UGA are interested in better understanding what environmental conditions might cause mussels to burrow.</p>
+<p>The dataset below contains information about 90 juvenile mussels which were housed in a laboratory setting and monitored to assess their burrowing behavior. Information related to the burrow depth (cm) was collected as well as the temperature (F) of the system and the flow (<span class="math inline">\(m^3\)</span>/s) through the system. To translate the flow into biologically relevant terms, the researchers categorized flow to represent the severity of drought which that flow would represent. Because the researchers were interested in how these burrow dynamics might vary across species, they used three species of mussel in the study design. They made sure, however, that all individuals within a particular species were approximately the same size.</p>
+<p>Your task should you choose to accept it is to help these researchers determine whether their data reasonably meet the linear modeling assumptions which are assumed in the model they have constructed.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Depth <span class="ot">=</span> Species <span class="sc">+</span> Temp <span class="sc">+</span> Flow <span class="sc">+</span> Drought</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Create an R Markdown file to do the following:</p>
+<ol type="1">
+<li>Create an <code>R</code> chunk to load the data using:</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">'burrowdata'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li><p>Formulate the linear model in R and interpret the results of the model. Which predictors appear to be significant? Explain these results in the context of the biological system (1 pt).</p></li>
+<li><p>Let’s start thinking about model assumptions by considering outliers and highly influential points.</p></li>
+</ol>
+<ol type="a">
+<li><p>Create a plot of the studentized residuals as a function of leverage and interpret the results (0.5 pt).</p></li>
+<li><p>Are there any values which appear to be outliers? If so, can you identify which TagID corresponds to that individual animal? (0.5 pt) Here we are presented with a problem. An outlier exists in the dataset but we have no way of knowing whether or not it is a valid data point. Did the data recorder mean to type 9.9? Did they enter a ‘99’ to represent a missing value similar to how some datasets might contain a ‘-999’ or other impossible value? Did the mussel actually burrow 99cm into the substrate?<br>
+For the purposes of this analysis, remove the outlier and rerun the model.</p></li>
+<li><p>Note whether or not this changes the significance of any of the predictors. (0.5 pt)</p></li>
+</ol>
+<ol start="4" type="1">
+<li>Next, let’s consider the <code>Drought</code> variable in the model.</li>
+</ol>
+<ol type="a">
+<li><p>Although this is a categorical variable so we cannot formally assess multicollinearity, do you think that this variable is redundant with any other predictors? (0.5 pt)</p></li>
+<li><p>Create a plot of <code>Depth</code> as a function of <code>Flow</code> where the color of the data points in the plot represent the <code>Drought</code> condition (0.5 pt)</p></li>
+<li><p>Explain why you think the researchers should or should not include <code>Drought</code> in the final model (0.5 pt)</p></li>
+<li><p>Remove <code>Drought</code> from the linear model and analyze the data again. Did any variables change in their significance? Explain why you think this happened. Having seen this result, did your opinion change about the utility of including <code>Drought</code> in the model? (0.5 pt)</p></li>
+</ol>
+<ol start="5" type="1">
+<li><p>For all of the following questions, leave <code>Drought</code> out of the linear model such that the model now appears as <code>Depth = Species + Temp + Flow</code>.</p></li>
+<li><p>Assess the linear model assumptions by creating the following series of plots. Below each plot, explain what assumption is being assessed using that plot and your conclusions (1.5 pt).</p></li>
+</ol>
+<ol type="a">
+<li><p>Residual vs fitted plot</p></li>
+<li><p>Histogram of residuals</p></li>
+<li><p>QQ plot of residuals</p></li>
+<li><p>Correlation plot of continuous predictors</p></li>
+</ol>
+<p><br></p>
+<p>A few things to remember when creating the document:</p>
+<ul>
+<li><p>Be sure the output type is set to: <code>output: html_document</code></p></li>
+<li><p>Be sure to set <code>echo = TRUE</code> in all <code>R</code> chunks so that all code and output is visible in the knitted document</p></li>
+<li><p>Regularly knit the document as you work to check for errors</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/djklement\.github\.io\/FANR6750\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
