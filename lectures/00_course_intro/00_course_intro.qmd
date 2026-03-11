@@ -1,0 +1,255 @@
+---
+title: "LECTURE 0: course overview"
+subtitle: "FANR 6750 (Experimental design)"
+author: "<br/><br/><br/>Fall 2025"
+format:
+  revealjs:
+    theme: simple
+    highlight-style: github
+    incremental: false
+    css: FANR6750-revealjs.css
+    width: 1050
+    height: 700
+    margin: 0.1
+    slide-number: true
+    transition: none
+    background-transition: none
+    center: false
+---
+
+```{r setup}
+#| echo: false
+#| include: false
+options(htmltools.dir.version = FALSE)
+source(here::here("R/zzz.R"))
+```
+
+## logistics
+
+**Lecture**: Monday, Wednesday, Friday 11:30-12:20, 1-304  
+**Lab**: Monday **or** Tuesday **or** Wednesday  
+**Credits**: 3  
+
+---
+
+## instructors
+
+:::: {.columns}
+
+::: {.column width="50%"}
+Dr. Clark Rushing  
+[clark.rushing@uga.edu](mailto:clark.rushing@uga.edu)  
+**Office**: 3-409  
+**Office hours**: M 1:00-2:30
+:::
+
+::: {.column width="50%"}
+**TAs**  
+
+Anna Willoughby (M)  
+[anna.willoughby@uga.edu](mailto:anna.willoughby@uga.edu)  
+**Office**: Odum Rm. 140  
+**Office hours**: W 3:30-5pm  
+
+Alan Bond (Tu)  
+[alan.bond1@uga.edu](mailto:alan.bond1@uga.edu)  
+**Office**: 1-102  
+**Office hours**: F 10:00-12:00  
+
+Himasree Kolla (W)  
+[himasree.kolla@uga.edu](mailto:himasree.kolla@uga.edu)  
+**Office**: TBD  
+**Office hours**: TBD  
+:::
+
+::::
+
+---
+
+## course schedule and materials
+
+Lectures and labs: [rushinglab.github.io/FANR6750](https://rushinglab.github.io/FANR6750)^[Bookmark this page!]
+
+:::: {.columns}
+
+::: {.column width="50%"}
+**Primary texts** (not required):
+
+Fieberg, J. (2022). Statistics for Ecologists: A Frequentist and Bayesian Treatment of Modern Regression Models. [An open-source online textbook.](https://fw8051statistics4ecologists.netlify.app/)
+
+Quinn, G.P. & Keough, M.J. 2002. Experimental Design and Data Analysis for Biologists. Cambridge University Press
+:::
+
+::: {.column width="50%"}
+```{r}
+#| echo: false
+#| out-height: "300px"
+#| out-width: "225px"
+knitr::include_graphics("fig/experimental-design-and-data-analysis-for-biologists-1.jpg")
+```
+:::
+
+::::
+
+---
+
+## labs
+
+**Meet weekly**
+
+::: {.incremental}
+- You should have registered for one and only one lab section
+
+- Always attend your assigned lab section unless both TA's have provided prior approval to attend the other section
+:::
+
+**Taught in R**
+
+::: {.incremental}
+- No prior experience required
+
+- But those without prior experience may need to spend time learning outside of class
+
+- You can use your own laptop but make sure you have R and RStudio installed prior to the first lab^[See [here](https://rushinglab.github.io/FANR6750/articles/syllabus.html#course-resources-1) for instructions]
+:::
+
+---
+
+## lab assignments
+
+::: {.incremental}
+- 8 throughout semester
+
+- Meant to help with:
+    - Understanding lecture/lab concepts
+    - Implementing statistical procedures in R
+    - Interpreting and presenting results
+
+- Worth 10 points each
+    - Grade based on turning in **complete** assignment **on time**
+    - Answer keys will be posted after all assignments have been submitted
+:::
+
+---
+
+## grading
+
+#### 200 points total
+
+::: {.incremental}
+- 3 lecture exams, 40 points (20%) each
+    - In-class format using eLC/Lockdown Browser^[Remote students must take exams during class period in an approved setting]
+    - Primarily focused on concepts, not coding
+    - Pool of 8-10 potential questions provided in advance
+    - Exam consists of 2 questions chosen by me, 2 questions chosen by student
+    - Not (explicitly) cumulative
+    - See schedule for approximate dates (subject to change)
+
+- 8 lab assignments, 10 points (5%) each
+:::
+
+---
+
+## a note on ai
+
+AI tools (e.g., ChatGPT) have advanced very rapidly in a very short time
+
+::: {.incremental}
+- AI can increasingly help answer questions about statistical concepts, coding, etc.
+
+- AI = resource (similar to Google, Cross Validated, etc.)
+    - AI can help you perform statistical analyses but **it cannot replace your own statistical knowledge**
+
+- My goal is not to fight AI, but instead focus on responsible and appropriate use
+    - Students may use AI to assist with lab assignments but must acknowledge, document, and assess all AI use
+    - Students may use AI to assist with exam preparation but must complete exams without the use of AI
+    - Unacknowledged use of AI will be considered a violation of course policy. Suspected violations will be referred to the Office of Academic Honesty
+:::
+
+---
+
+## a note on ai
+
+Later in the semester, we will have a class discussion on the role of AI in research/statistical analysis
+
+In preparation for that discussion, I highly recommend reading [Bull$&!t Machines](https://thebullshitmachines.com/table-of-contents/index.html), a short, self-paced course on the LLM
+
+```{r}
+#| echo: false
+knitr::include_graphics("fig/bs_machines.png")
+```
+
+---
+
+## remote students
+
+Although we do our best to make instruction and materials accessible to remote students, *this is not officially a hybrid class*. That has several implications:
+
+- Teaching to in-person and remote students is hard, especially labs. Technology problems are inevitable
+
+- Remote students should be prepared to spend extra effort engaging with course materials
+
+- Remote students must arrange to take exams with a proctor present and exam arrangements must be approved by the instructor prior to the exam
+
+- MAKE SURE YOU HAVE ACCESS TO THE PRIMARY eLC PAGE!
+
+. . .
+
+**A note to in-person students:**  
+In my experience, lab and lecture attendance are strong predictors of performance. Although zoom links can be used for brief or unanticipated absences, students based in Athens should attend classes in person
+
+---
+
+## course objectives
+
+**To understand:**
+
+::: {.incremental}
+1) the logical structure of experiments, including the design of manipulative and observational experiments;
+
+2) the analysis of such experiments, focusing on linear models;
+
+3) the use of models in ecological studies (experimental and observational);
+:::
+
+---
+
+## basic structure
+
+::: {.incremental}
+1) Foundational concepts for statistical inference and experimental design
+
+2) Linear model basics
+
+3) Null hypothesis significance testing
+
+4) Linear model variations for experiments (t-tests, ANOVA, ANCOVA)
+
+5) Generalized linear models and model selection
+:::
+
+---
+
+## pre- and post-course assessment
+
+Two short quizzes used to assess collective learning outcomes
+
+- Posted under `Quizzes` on eLC
+- Require Lockdown Browser extension
+- Pre-assessment available until 8/17/2025
+
+. . .
+
+The assessments do **not** count towards your grade, but students who complete them will receive extra credit on their final grade
+
+- 2 points for completing pre-assessment
+- 2 points for completing post-assessment
+- 1 point for completing both assessments (5 points total)
+
+---
+
+## looking ahead
+
+### Next time: Basic Concepts in Statistics
+
+### Reading: [Quinn chp. 1](https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&%20Keough.pdf#page=21.08)

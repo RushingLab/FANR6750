@@ -1174,5 +1174,369 @@
     "title": "Welcome to FANR6750: Experimental Methods in Forestry and Natural Resources Research",
     "section": "format: html",
     "text": "format: html"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview.html#logistics",
+    "href": "lectures/00_course_intro/lecture0-course-overview.html#logistics",
+    "title": "LECTURE 0: course overview",
+    "section": "logistics",
+    "text": "logistics\nLecture: Monday, Wednesday, Friday 11:30-12:20, 1-304\nLab: Monday or Tuesday or Wednesday\nCredits: 3"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview.html#instructors",
+    "href": "lectures/00_course_intro/lecture0-course-overview.html#instructors",
+    "title": "LECTURE 0: course overview",
+    "section": "instructors",
+    "text": "instructors\n\n\nDr. Clark Rushing\nclark.rushing@uga.edu\nOffice: 3-409\nOffice hours: M 1:00-2:30\n\nTAs\nAnna Willoughby (M)\nanna.willoughby@uga.edu\nOffice: Odum Rm. 140\nOffice hours: W 3:30-5pm\nAlan Bond (Tu)\nalan.bond1@uga.edu\nOffice: 1-102\nOffice hours: F 10:00-12:00\nHimasree Kolla (W)\nhimasree.kolla@uga.edu\nOffice: TBD\nOffice hours: TBD"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview.html#course-schedule-and-materials",
+    "href": "lectures/00_course_intro/lecture0-course-overview.html#course-schedule-and-materials",
+    "title": "LECTURE 0: course overview",
+    "section": "course schedule and materials",
+    "text": "course schedule and materials\nLectures and labs: rushinglab.github.io/FANR67501\n\n\nPrimary texts (not required):\nFieberg, J. (2022). Statistics for Ecologists: A Frequentist and Bayesian Treatment of Modern Regression Models. An open-source online textbook.\nQuinn, G.P. & Keough, M.J. 2002. Experimental Design and Data Analysis for Biologists. Cambridge University Press\n\n\n\n\n\n\n\n\n\n\n\nBookmark this page!"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview.html#labs",
+    "href": "lectures/00_course_intro/lecture0-course-overview.html#labs",
+    "title": "LECTURE 0: course overview",
+    "section": "labs",
+    "text": "labs\nMeet weekly\n\nYou should have registered for one and only one lab section\nAlways attend your assigned lab section unless both TA’s have provided prior approval to attend the other section\n\nTaught in R\n\nNo prior experience required\nBut those without prior experience may need to spend time learning outside of class\nYou can use your own laptop but make sure you have R and RStudio installed prior to the first lab1\n\nSee here for instructions"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview.html#lab-assignments",
+    "href": "lectures/00_course_intro/lecture0-course-overview.html#lab-assignments",
+    "title": "LECTURE 0: course overview",
+    "section": "lab assignments",
+    "text": "lab assignments\n\n8 throughout semester\nMeant to help with:\n\nUnderstanding lecture/lab concepts\nImplementing statistical procedures in R\nInterpreting and presenting results\n\nWorth 10 points each\n\nGrade based on turning in complete assignment on time\nAnswer keys will be posted after all assignments have been submitted"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview.html#grading",
+    "href": "lectures/00_course_intro/lecture0-course-overview.html#grading",
+    "title": "LECTURE 0: course overview",
+    "section": "grading",
+    "text": "grading\n200 points total\n\n3 lecture exams, 40 points (20%) each\n\nIn-class format using eLC/Lockdown Browser1\nPrimarily focused on concepts, not coding\nPool of 8-10 potential questions provided in advance\nExam consists of 2 questions chosen by me, 2 questions chosen by student\nNot (explicitly) cumulative\nSee schedule for approximate dates (subject to change)\n\n8 lab assignments, 10 points (5%) each\n\nRemote students must take exams during class period in an approved setting"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview.html#a-note-on-ai",
+    "href": "lectures/00_course_intro/lecture0-course-overview.html#a-note-on-ai",
+    "title": "LECTURE 0: course overview",
+    "section": "a note on ai",
+    "text": "a note on ai\nAI tools (e.g., ChatGPT) have advanced very rapidly in a very short time\n\nAI can increasingly help answer questions about statistical concepts, coding, etc.\nAI = resource (similar to Google, Cross Validated, etc.)\n\nAI can help you perform statistical analyses but it cannot replace your own statistical knowledge\n\nMy goal is not to fight AI, but instead focus on responsible and appropriate use\n\nStudents may use AI to assist with lab assignments but must acknowledge, document, and assess all AI use\nStudents may use AI to assist with exam preparation but must complete exams without the use of AI\nUnacknowledged use of AI will be considered a violation of course policy. Suspected violations will be referred to the Office of Academic Honesty"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview.html#a-note-on-ai-1",
+    "href": "lectures/00_course_intro/lecture0-course-overview.html#a-note-on-ai-1",
+    "title": "LECTURE 0: course overview",
+    "section": "a note on ai",
+    "text": "a note on ai\nLater in the semester, we will have a class discussion on the role of AI in research/statistical analysis\nIn preparation for that discussion, I highly recommend reading Bull$&!t Machines, a short, self-paced course on the LLM"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview.html#remote-students",
+    "href": "lectures/00_course_intro/lecture0-course-overview.html#remote-students",
+    "title": "LECTURE 0: course overview",
+    "section": "remote students",
+    "text": "remote students\nAlthough we do our best to make instruction and materials accessible to remote students, this is not officially a hybrid class. That has several implications:\n\nTeaching to in-person and remote students is hard, especially labs. Technology problems are inevitable\nRemote students should be prepared to spend extra effort engaging with course materials\nRemote students must arrange to take exams with a proctor present and exam arrangements must be approved by the instructor prior to the exam\nMAKE SURE YOU HAVE ACCESS TO THE PRIMARY eLC PAGE!\n\n\nA note to in-person students:\nIn my experience, lab and lecture attendance are strong predictors of performance. Although zoom links can be used for brief or unanticipated absences, students based in Athens should attend classes in person"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview.html#course-objectives",
+    "href": "lectures/00_course_intro/lecture0-course-overview.html#course-objectives",
+    "title": "LECTURE 0: course overview",
+    "section": "course objectives",
+    "text": "course objectives\nTo understand:\n\nthe logical structure of experiments, including the design of manipulative and observational experiments;\nthe analysis of such experiments, focusing on linear models;\nthe use of models in ecological studies (experimental and observational);"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview.html#basic-structure",
+    "href": "lectures/00_course_intro/lecture0-course-overview.html#basic-structure",
+    "title": "LECTURE 0: course overview",
+    "section": "basic structure",
+    "text": "basic structure\n\nFoundational concepts for statistical inference and experimental design\nLinear model basics\nNull hypothesis significance testing\nLinear model variations for experiments (t-tests, ANOVA, ANCOVA)\nGeneralized linear models and model selection"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview.html#pre--and-post-course-assessment",
+    "href": "lectures/00_course_intro/lecture0-course-overview.html#pre--and-post-course-assessment",
+    "title": "LECTURE 0: course overview",
+    "section": "pre- and post-course assessment",
+    "text": "pre- and post-course assessment\nTwo short quizzes used to assess collective learning outcomes\n\nPosted under Quizzes on eLC\nRequire Lockdown Browser extension\nPre-assessment available until 8/17/2025\n\n\nThe assessments do not count towards your grade, but students who complete them will receive extra credit on their final grade\n\n2 points for completing pre-assessment\n2 points for completing post-assessment\n1 point for completing both assessments (5 points total)"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview.html#looking-ahead",
+    "href": "lectures/00_course_intro/lecture0-course-overview.html#looking-ahead",
+    "title": "LECTURE 0: course overview",
+    "section": "looking ahead",
+    "text": "looking ahead\nNext time: Basic Concepts in Statistics\nReading: Quinn chp. 1"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview(3).html#logistics",
+    "href": "lectures/00_course_intro/lecture0-course-overview(3).html#logistics",
+    "title": "LECTURE 0: course overview",
+    "section": "logistics",
+    "text": "logistics\nLecture: Monday, Wednesday, Friday 11:30-12:20, 1-304\nLab: Monday or Tuesday or Wednesday\nCredits: 3"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview(3).html#instructors",
+    "href": "lectures/00_course_intro/lecture0-course-overview(3).html#instructors",
+    "title": "LECTURE 0: course overview",
+    "section": "instructors",
+    "text": "instructors\n\n\nDr. Clark Rushing\nclark.rushing@uga.edu\nOffice: 3-409\nOffice hours: M 1:00-2:30\n\nTAs\nAnna Willoughby (M)\nanna.willoughby@uga.edu\nOffice: Odum Rm. 140\nOffice hours: W 3:30-5pm\nAlan Bond (Tu)\nalan.bond1@uga.edu\nOffice: 1-102\nOffice hours: F 10:00-12:00\nHimasree Kolla (W)\nhimasree.kolla@uga.edu\nOffice: TBD\nOffice hours: TBD"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview(3).html#course-schedule-and-materials",
+    "href": "lectures/00_course_intro/lecture0-course-overview(3).html#course-schedule-and-materials",
+    "title": "LECTURE 0: course overview",
+    "section": "course schedule and materials",
+    "text": "course schedule and materials\nLectures and labs: rushinglab.github.io/FANR67501\n\n\nPrimary texts (not required):\nFieberg, J. (2022). Statistics for Ecologists: A Frequentist and Bayesian Treatment of Modern Regression Models. An open-source online textbook.\nQuinn, G.P. & Keough, M.J. 2002. Experimental Design and Data Analysis for Biologists. Cambridge University Press\n\n\n\n\n\n\n\n\n\n\n\nBookmark this page!"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview(3).html#labs",
+    "href": "lectures/00_course_intro/lecture0-course-overview(3).html#labs",
+    "title": "LECTURE 0: course overview",
+    "section": "labs",
+    "text": "labs\nMeet weekly\n\nYou should have registered for one and only one lab section\nAlways attend your assigned lab section unless both TA’s have provided prior approval to attend the other section\n\nTaught in R\n\nNo prior experience required\nBut those without prior experience may need to spend time learning outside of class\nYou can use your own laptop but make sure you have R and RStudio installed prior to the first lab1\n\nSee here for instructions"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview(3).html#lab-assignments",
+    "href": "lectures/00_course_intro/lecture0-course-overview(3).html#lab-assignments",
+    "title": "LECTURE 0: course overview",
+    "section": "lab assignments",
+    "text": "lab assignments\n\n8 throughout semester\nMeant to help with:\n\nUnderstanding lecture/lab concepts\nImplementing statistical procedures in R\nInterpreting and presenting results\n\nWorth 10 points each\n\nGrade based on turning in complete assignment on time\nAnswer keys will be posted after all assignments have been submitted"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview(3).html#grading",
+    "href": "lectures/00_course_intro/lecture0-course-overview(3).html#grading",
+    "title": "LECTURE 0: course overview",
+    "section": "grading",
+    "text": "grading\n200 points total\n\n3 lecture exams, 40 points (20%) each\n\nIn-class format using eLC/Lockdown Browser1\nPrimarily focused on concepts, not coding\nPool of 8-10 potential questions provided in advance\nExam consists of 2 questions chosen by me, 2 questions chosen by student\nNot (explicitly) cumulative\nSee schedule for approximate dates (subject to change)\n\n8 lab assignments, 10 points (5%) each\n\nRemote students must take exams during class period in an approved setting"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview(3).html#a-note-on-ai",
+    "href": "lectures/00_course_intro/lecture0-course-overview(3).html#a-note-on-ai",
+    "title": "LECTURE 0: course overview",
+    "section": "a note on ai",
+    "text": "a note on ai\nAI tools (e.g., ChatGPT) have advanced very rapidly in a very short time\n\nAI can increasingly help answer questions about statistical concepts, coding, etc.\nAI = resource (similar to Google, Cross Validated, etc.)\n\nAI can help you perform statistical analyses but it cannot replace your own statistical knowledge\n\nMy goal is not to fight AI, but instead focus on responsible and appropriate use\n\nStudents may use AI to assist with lab assignments but must acknowledge, document, and assess all AI use\nStudents may use AI to assist with exam preparation but must complete exams without the use of AI\nUnacknowledged use of AI will be considered a violation of course policy. Suspected violations will be referred to the Office of Academic Honesty"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview(3).html#a-note-on-ai-1",
+    "href": "lectures/00_course_intro/lecture0-course-overview(3).html#a-note-on-ai-1",
+    "title": "LECTURE 0: course overview",
+    "section": "a note on ai",
+    "text": "a note on ai\nLater in the semester, we will have a class discussion on the role of AI in research/statistical analysis\nIn preparation for that discussion, I highly recommend reading Bull$&!t Machines, a short, self-paced course on the LLM"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview(3).html#remote-students",
+    "href": "lectures/00_course_intro/lecture0-course-overview(3).html#remote-students",
+    "title": "LECTURE 0: course overview",
+    "section": "remote students",
+    "text": "remote students\nAlthough we do our best to make instruction and materials accessible to remote students, this is not officially a hybrid class. That has several implications:\n\nTeaching to in-person and remote students is hard, especially labs. Technology problems are inevitable\nRemote students should be prepared to spend extra effort engaging with course materials\nRemote students must arrange to take exams with a proctor present and exam arrangements must be approved by the instructor prior to the exam\nMAKE SURE YOU HAVE ACCESS TO THE PRIMARY eLC PAGE!\n\n\nA note to in-person students:\nIn my experience, lab and lecture attendance are strong predictors of performance. Although zoom links can be used for brief or unanticipated absences, students based in Athens should attend classes in person"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview(3).html#course-objectives",
+    "href": "lectures/00_course_intro/lecture0-course-overview(3).html#course-objectives",
+    "title": "LECTURE 0: course overview",
+    "section": "course objectives",
+    "text": "course objectives\nTo understand:\n\nthe logical structure of experiments, including the design of manipulative and observational experiments;\nthe analysis of such experiments, focusing on linear models;\nthe use of models in ecological studies (experimental and observational);"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview(3).html#basic-structure",
+    "href": "lectures/00_course_intro/lecture0-course-overview(3).html#basic-structure",
+    "title": "LECTURE 0: course overview",
+    "section": "basic structure",
+    "text": "basic structure\n\nFoundational concepts for statistical inference and experimental design\nLinear model basics\nNull hypothesis significance testing\nLinear model variations for experiments (t-tests, ANOVA, ANCOVA)\nGeneralized linear models and model selection"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview(3).html#pre--and-post-course-assessment",
+    "href": "lectures/00_course_intro/lecture0-course-overview(3).html#pre--and-post-course-assessment",
+    "title": "LECTURE 0: course overview",
+    "section": "pre- and post-course assessment",
+    "text": "pre- and post-course assessment\nTwo short quizzes used to assess collective learning outcomes\n\nPosted under Quizzes on eLC\nRequire Lockdown Browser extension\nPre-assessment available until 8/17/2025\n\n\nThe assessments do not count towards your grade, but students who complete them will receive extra credit on their final grade\n\n2 points for completing pre-assessment\n2 points for completing post-assessment\n1 point for completing both assessments (5 points total)"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview(3).html#looking-ahead",
+    "href": "lectures/00_course_intro/lecture0-course-overview(3).html#looking-ahead",
+    "title": "LECTURE 0: course overview",
+    "section": "looking ahead",
+    "text": "looking ahead\nNext time: Basic Concepts in Statistics\nReading: Quinn chp. 1"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview4.html#logistics",
+    "href": "lectures/00_course_intro/lecture0-course-overview4.html#logistics",
+    "title": "LECTURE 0: course overview",
+    "section": "logistics",
+    "text": "logistics\nLecture: Monday, Wednesday, Friday 11:30-12:20, 1-304\nLab: Monday or Tuesday or Wednesday\nCredits: 3"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview4.html#instructors",
+    "href": "lectures/00_course_intro/lecture0-course-overview4.html#instructors",
+    "title": "LECTURE 0: course overview",
+    "section": "instructors",
+    "text": "instructors\n\n\nDr. Clark Rushing\nclark.rushing@uga.edu\nOffice: 3-409\nOffice hours: M 1:00-2:30\n\nTAs\nAnna Willoughby (M)\nanna.willoughby@uga.edu\nOffice: Odum Rm. 140\nOffice hours: W 3:30-5pm\nAlan Bond (Tu)\nalan.bond1@uga.edu\nOffice: 1-102\nOffice hours: F 10:00-12:00\nHimasree Kolla (W)\nhimasree.kolla@uga.edu\nOffice: TBD\nOffice hours: TBD"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview4.html#course-schedule-and-materials",
+    "href": "lectures/00_course_intro/lecture0-course-overview4.html#course-schedule-and-materials",
+    "title": "LECTURE 0: course overview",
+    "section": "course schedule and materials",
+    "text": "course schedule and materials\nLectures and labs: rushinglab.github.io/FANR67501\n\n\nPrimary texts (not required):\nFieberg, J. (2022). Statistics for Ecologists: A Frequentist and Bayesian Treatment of Modern Regression Models. An open-source online textbook.\nQuinn, G.P. & Keough, M.J. 2002. Experimental Design and Data Analysis for Biologists. Cambridge University Press\n\n\n\n\n\n\n\n\n\n\n\nBookmark this page!"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview4.html#labs",
+    "href": "lectures/00_course_intro/lecture0-course-overview4.html#labs",
+    "title": "LECTURE 0: course overview",
+    "section": "labs",
+    "text": "labs\nMeet weekly\n\nYou should have registered for one and only one lab section\nAlways attend your assigned lab section unless both TA’s have provided prior approval to attend the other section\n\nTaught in R\n\nNo prior experience required\nBut those without prior experience may need to spend time learning outside of class\nYou can use your own laptop but make sure you have R and RStudio installed prior to the first lab1\n\nSee here for instructions"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview4.html#lab-assignments",
+    "href": "lectures/00_course_intro/lecture0-course-overview4.html#lab-assignments",
+    "title": "LECTURE 0: course overview",
+    "section": "lab assignments",
+    "text": "lab assignments\n\n8 throughout semester\nMeant to help with:\n\nUnderstanding lecture/lab concepts\nImplementing statistical procedures in R\nInterpreting and presenting results\n\nWorth 10 points each\n\nGrade based on turning in complete assignment on time\nAnswer keys will be posted after all assignments have been submitted"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview4.html#grading",
+    "href": "lectures/00_course_intro/lecture0-course-overview4.html#grading",
+    "title": "LECTURE 0: course overview",
+    "section": "grading",
+    "text": "grading\n200 points total\n\n3 lecture exams, 40 points (20%) each\n\nIn-class format using eLC/Lockdown Browser1\nPrimarily focused on concepts, not coding\nPool of 8-10 potential questions provided in advance\nExam consists of 2 questions chosen by me, 2 questions chosen by student\nNot (explicitly) cumulative\nSee schedule for approximate dates (subject to change)\n\n8 lab assignments, 10 points (5%) each\n\nRemote students must take exams during class period in an approved setting"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview4.html#a-note-on-ai",
+    "href": "lectures/00_course_intro/lecture0-course-overview4.html#a-note-on-ai",
+    "title": "LECTURE 0: course overview",
+    "section": "a note on ai",
+    "text": "a note on ai\nAI tools (e.g., ChatGPT) have advanced very rapidly in a very short time\n\nAI can increasingly help answer questions about statistical concepts, coding, etc.\nAI = resource (similar to Google, Cross Validated, etc.)\n\nAI can help you perform statistical analyses but it cannot replace your own statistical knowledge\n\nMy goal is not to fight AI, but instead focus on responsible and appropriate use\n\nStudents may use AI to assist with lab assignments but must acknowledge, document, and assess all AI use\nStudents may use AI to assist with exam preparation but must complete exams without the use of AI\nUnacknowledged use of AI will be considered a violation of course policy. Suspected violations will be referred to the Office of Academic Honesty"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview4.html#a-note-on-ai-1",
+    "href": "lectures/00_course_intro/lecture0-course-overview4.html#a-note-on-ai-1",
+    "title": "LECTURE 0: course overview",
+    "section": "a note on ai",
+    "text": "a note on ai\nLater in the semester, we will have a class discussion on the role of AI in research/statistical analysis\nIn preparation for that discussion, I highly recommend reading Bull$&!t Machines, a short, self-paced course on the LLM"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview4.html#remote-students",
+    "href": "lectures/00_course_intro/lecture0-course-overview4.html#remote-students",
+    "title": "LECTURE 0: course overview",
+    "section": "remote students",
+    "text": "remote students\nAlthough we do our best to make instruction and materials accessible to remote students, this is not officially a hybrid class. That has several implications:\n\nTeaching to in-person and remote students is hard, especially labs. Technology problems are inevitable\nRemote students should be prepared to spend extra effort engaging with course materials\nRemote students must arrange to take exams with a proctor present and exam arrangements must be approved by the instructor prior to the exam\nMAKE SURE YOU HAVE ACCESS TO THE PRIMARY eLC PAGE!\n\n\nA note to in-person students:\nIn my experience, lab and lecture attendance are strong predictors of performance. Although zoom links can be used for brief or unanticipated absences, students based in Athens should attend classes in person"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview4.html#course-objectives",
+    "href": "lectures/00_course_intro/lecture0-course-overview4.html#course-objectives",
+    "title": "LECTURE 0: course overview",
+    "section": "course objectives",
+    "text": "course objectives\nTo understand:\n\nthe logical structure of experiments, including the design of manipulative and observational experiments;\nthe analysis of such experiments, focusing on linear models;\nthe use of models in ecological studies (experimental and observational);"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview4.html#basic-structure",
+    "href": "lectures/00_course_intro/lecture0-course-overview4.html#basic-structure",
+    "title": "LECTURE 0: course overview",
+    "section": "basic structure",
+    "text": "basic structure\n\nFoundational concepts for statistical inference and experimental design\nLinear model basics\nNull hypothesis significance testing\nLinear model variations for experiments (t-tests, ANOVA, ANCOVA)\nGeneralized linear models and model selection"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview4.html#pre--and-post-course-assessment",
+    "href": "lectures/00_course_intro/lecture0-course-overview4.html#pre--and-post-course-assessment",
+    "title": "LECTURE 0: course overview",
+    "section": "pre- and post-course assessment",
+    "text": "pre- and post-course assessment\nTwo short quizzes used to assess collective learning outcomes\n\nPosted under Quizzes on eLC\nRequire Lockdown Browser extension\nPre-assessment available until 8/17/2025\n\n\nThe assessments do not count towards your grade, but students who complete them will receive extra credit on their final grade\n\n2 points for completing pre-assessment\n2 points for completing post-assessment\n1 point for completing both assessments (5 points total)"
+  },
+  {
+    "objectID": "lectures/00_course_intro/lecture0-course-overview4.html#looking-ahead",
+    "href": "lectures/00_course_intro/lecture0-course-overview4.html#looking-ahead",
+    "title": "LECTURE 0: course overview",
+    "section": "looking ahead",
+    "text": "looking ahead\nNext time: Basic Concepts in Statistics\nReading: Quinn chp. 1"
+  },
+  {
+    "objectID": "lectures/00_course_intro/00_course_intro.html#logistics",
+    "href": "lectures/00_course_intro/00_course_intro.html#logistics",
+    "title": "LECTURE 0: course overview",
+    "section": "logistics",
+    "text": "logistics\nLecture: Monday, Wednesday, Friday 11:30-12:20, 1-304\nLab: Monday or Tuesday or Wednesday\nCredits: 3"
+  },
+  {
+    "objectID": "lectures/00_course_intro/00_course_intro.html#instructors",
+    "href": "lectures/00_course_intro/00_course_intro.html#instructors",
+    "title": "LECTURE 0: course overview",
+    "section": "instructors",
+    "text": "instructors\n\n\nDr. Clark Rushing\nclark.rushing@uga.edu\nOffice: 3-409\nOffice hours: M 1:00-2:30\n\nTAs\nAnna Willoughby (M)\nanna.willoughby@uga.edu\nOffice: Odum Rm. 140\nOffice hours: W 3:30-5pm\nAlan Bond (Tu)\nalan.bond1@uga.edu\nOffice: 1-102\nOffice hours: F 10:00-12:00\nHimasree Kolla (W)\nhimasree.kolla@uga.edu\nOffice: TBD\nOffice hours: TBD"
+  },
+  {
+    "objectID": "lectures/00_course_intro/00_course_intro.html#course-schedule-and-materials",
+    "href": "lectures/00_course_intro/00_course_intro.html#course-schedule-and-materials",
+    "title": "LECTURE 0: course overview",
+    "section": "course schedule and materials",
+    "text": "course schedule and materials\nLectures and labs: rushinglab.github.io/FANR67501\n\n\nPrimary texts (not required):\nFieberg, J. (2022). Statistics for Ecologists: A Frequentist and Bayesian Treatment of Modern Regression Models. An open-source online textbook.\nQuinn, G.P. & Keough, M.J. 2002. Experimental Design and Data Analysis for Biologists. Cambridge University Press\n\n\n\n\n\n\n\n\n\n\n\nBookmark this page!"
+  },
+  {
+    "objectID": "lectures/00_course_intro/00_course_intro.html#labs",
+    "href": "lectures/00_course_intro/00_course_intro.html#labs",
+    "title": "LECTURE 0: course overview",
+    "section": "labs",
+    "text": "labs\nMeet weekly\n\nYou should have registered for one and only one lab section\nAlways attend your assigned lab section unless both TA’s have provided prior approval to attend the other section\n\nTaught in R\n\nNo prior experience required\nBut those without prior experience may need to spend time learning outside of class\nYou can use your own laptop but make sure you have R and RStudio installed prior to the first lab1\n\nSee here for instructions"
+  },
+  {
+    "objectID": "lectures/00_course_intro/00_course_intro.html#lab-assignments",
+    "href": "lectures/00_course_intro/00_course_intro.html#lab-assignments",
+    "title": "LECTURE 0: course overview",
+    "section": "lab assignments",
+    "text": "lab assignments\n\n8 throughout semester\nMeant to help with:\n\nUnderstanding lecture/lab concepts\nImplementing statistical procedures in R\nInterpreting and presenting results\n\nWorth 10 points each\n\nGrade based on turning in complete assignment on time\nAnswer keys will be posted after all assignments have been submitted"
+  },
+  {
+    "objectID": "lectures/00_course_intro/00_course_intro.html#grading",
+    "href": "lectures/00_course_intro/00_course_intro.html#grading",
+    "title": "LECTURE 0: course overview",
+    "section": "grading",
+    "text": "grading\n200 points total\n\n3 lecture exams, 40 points (20%) each\n\nIn-class format using eLC/Lockdown Browser1\nPrimarily focused on concepts, not coding\nPool of 8-10 potential questions provided in advance\nExam consists of 2 questions chosen by me, 2 questions chosen by student\nNot (explicitly) cumulative\nSee schedule for approximate dates (subject to change)\n\n8 lab assignments, 10 points (5%) each\n\nRemote students must take exams during class period in an approved setting"
+  },
+  {
+    "objectID": "lectures/00_course_intro/00_course_intro.html#a-note-on-ai",
+    "href": "lectures/00_course_intro/00_course_intro.html#a-note-on-ai",
+    "title": "LECTURE 0: course overview",
+    "section": "a note on ai",
+    "text": "a note on ai\nAI tools (e.g., ChatGPT) have advanced very rapidly in a very short time\n\nAI can increasingly help answer questions about statistical concepts, coding, etc.\nAI = resource (similar to Google, Cross Validated, etc.)\n\nAI can help you perform statistical analyses but it cannot replace your own statistical knowledge\n\nMy goal is not to fight AI, but instead focus on responsible and appropriate use\n\nStudents may use AI to assist with lab assignments but must acknowledge, document, and assess all AI use\nStudents may use AI to assist with exam preparation but must complete exams without the use of AI\nUnacknowledged use of AI will be considered a violation of course policy. Suspected violations will be referred to the Office of Academic Honesty"
+  },
+  {
+    "objectID": "lectures/00_course_intro/00_course_intro.html#a-note-on-ai-1",
+    "href": "lectures/00_course_intro/00_course_intro.html#a-note-on-ai-1",
+    "title": "LECTURE 0: course overview",
+    "section": "a note on ai",
+    "text": "a note on ai\nLater in the semester, we will have a class discussion on the role of AI in research/statistical analysis\nIn preparation for that discussion, I highly recommend reading Bull$&!t Machines, a short, self-paced course on the LLM"
+  },
+  {
+    "objectID": "lectures/00_course_intro/00_course_intro.html#remote-students",
+    "href": "lectures/00_course_intro/00_course_intro.html#remote-students",
+    "title": "LECTURE 0: course overview",
+    "section": "remote students",
+    "text": "remote students\nAlthough we do our best to make instruction and materials accessible to remote students, this is not officially a hybrid class. That has several implications:\n\nTeaching to in-person and remote students is hard, especially labs. Technology problems are inevitable\nRemote students should be prepared to spend extra effort engaging with course materials\nRemote students must arrange to take exams with a proctor present and exam arrangements must be approved by the instructor prior to the exam\nMAKE SURE YOU HAVE ACCESS TO THE PRIMARY eLC PAGE!\n\n\nA note to in-person students:\nIn my experience, lab and lecture attendance are strong predictors of performance. Although zoom links can be used for brief or unanticipated absences, students based in Athens should attend classes in person"
+  },
+  {
+    "objectID": "lectures/00_course_intro/00_course_intro.html#course-objectives",
+    "href": "lectures/00_course_intro/00_course_intro.html#course-objectives",
+    "title": "LECTURE 0: course overview",
+    "section": "course objectives",
+    "text": "course objectives\nTo understand:\n\nthe logical structure of experiments, including the design of manipulative and observational experiments;\nthe analysis of such experiments, focusing on linear models;\nthe use of models in ecological studies (experimental and observational);"
+  },
+  {
+    "objectID": "lectures/00_course_intro/00_course_intro.html#basic-structure",
+    "href": "lectures/00_course_intro/00_course_intro.html#basic-structure",
+    "title": "LECTURE 0: course overview",
+    "section": "basic structure",
+    "text": "basic structure\n\nFoundational concepts for statistical inference and experimental design\nLinear model basics\nNull hypothesis significance testing\nLinear model variations for experiments (t-tests, ANOVA, ANCOVA)\nGeneralized linear models and model selection"
+  },
+  {
+    "objectID": "lectures/00_course_intro/00_course_intro.html#pre--and-post-course-assessment",
+    "href": "lectures/00_course_intro/00_course_intro.html#pre--and-post-course-assessment",
+    "title": "LECTURE 0: course overview",
+    "section": "pre- and post-course assessment",
+    "text": "pre- and post-course assessment\nTwo short quizzes used to assess collective learning outcomes\n\nPosted under Quizzes on eLC\nRequire Lockdown Browser extension\nPre-assessment available until 8/17/2025\n\n\nThe assessments do not count towards your grade, but students who complete them will receive extra credit on their final grade\n\n2 points for completing pre-assessment\n2 points for completing post-assessment\n1 point for completing both assessments (5 points total)"
+  },
+  {
+    "objectID": "lectures/00_course_intro/00_course_intro.html#looking-ahead",
+    "href": "lectures/00_course_intro/00_course_intro.html#looking-ahead",
+    "title": "LECTURE 0: course overview",
+    "section": "looking ahead",
+    "text": "looking ahead\nNext time: Basic Concepts in Statistics\nReading: Quinn chp. 1"
   }
 ]
