@@ -1538,5 +1538,341 @@
     "title": "LECTURE 0: course overview",
     "section": "looking ahead",
     "text": "looking ahead\nNext time: Basic Concepts in Statistics\nReading: Quinn chp. 1"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#outline",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#outline",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "outline",
+    "text": "outline\n\n\n1) What is statistics?\n\n\n\n2) Statistics and the scientific method\n\n\n\n3) Populations vs. samples"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#what-is-statistics-1",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#what-is-statistics-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "what is statistics?",
+    "text": "what is statistics?\n \n\nThe study of the collection, analysis, interpretation, presentation, and organization of data (Dodge 2006)\n\n\n\n\n\nThe science of learning from data in the face of uncertainty (various)\n\n\n\n\n\\[Statistics = Information + Uncertainty\\]"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#why-do-we-need-statistics",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#why-do-we-need-statistics",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "why do we need statistics?",
+    "text": "why do we need statistics?\nCommon tasks\n\nIdentify relationships between variables \nEstimate unknown parameters \nTest hypotheses \nDescribe stochastic systems \nMake predictions that account for uncertainty"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#stats-and-the-scientific-method",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#stats-and-the-scientific-method",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning\n\n\nInductive reasoning\n\nOften attributed to Francis Bacon (and others)\nConsistent observations -&gt; general principle\nProblem: “confirmatory” observations can’t disprove theory\nExample: I’ve only seen birds that fly :: all birds can fly\n\n\nDeductive reasoning\n\nFormalized by Karl Popper\nTheory -&gt; predictions -&gt; observations\nBased on falsification\nExample: All birds can fly :: penguins are birds :: penguins can fly"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#stats-and-the-scientific-method-1",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#stats-and-the-scientific-method-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning (real world)\n\nPattern identification (i.e., exploratory studies)\n\nAnecdotes\nCorrelations/visual analysis\nExploratory modeling (i.e., fishing)"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#stats-and-the-scientific-method-2",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#stats-and-the-scientific-method-2",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning (real world)\n\nPattern identification (i.e., exploratory studies)\nHypothesis formation\n\nFormed from patterns\nShould focus on mechanisms (“because”, “controls”, “adapted to”)\nShould be falsifiable\nIdeally &gt; 1 alternatives"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#stats-and-the-scientific-method-3",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#stats-and-the-scientific-method-3",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning (real world)\n\nPattern identification (i.e., exploratory studies)\nHypothesis formation\nPredictions\n\nIf the hypothesis is true, what do you expect to see?\nFocus on things we can measure\nMore = better\n“associated”, “correlated”, “greater/less than”"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#stats-and-the-scientific-method-4",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#stats-and-the-scientific-method-4",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning (real world)\n\nPattern identification (i.e., exploratory studies)\nHypothesis formation\nPredictions\nData collection\n\nCan be observational but ideally manipulative experiment\nSampling must be designed to answer question"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#stats-and-the-scientific-method-5",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#stats-and-the-scientific-method-5",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning (real world)\n\nPattern identification (i.e., exploratory studies)\nHypothesis formation\nPredictions\nData collection\nModels and testing\n\nModel = mathematical abstraction of hypothesis\nModel used to “confront” hypothesis with data (via predictions)\nDraw conclusions: Does data support hypothesis?"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#stats-and-the-scientific-method-6",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#stats-and-the-scientific-method-6",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nExample\n\nPattern: Trees at higher elevations are shorter than at low elevations\nHypotheses\nPredictions\nData collection1\nModels2\n\nWe’ll get to these!We’ll get to these!"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#causal-inference",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#causal-inference",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "causal inference",
+    "text": "causal inference"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#causal-inference-1",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#causal-inference-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "causal inference",
+    "text": "causal inference\nOften, we want to know whether \\(x\\) influences \\(y\\)\n\nIn other words, if we change \\(x\\), will \\(y\\) change also (and by how much)?\nHarder than it seems! Why?\nGenerally restricted to manipulative experiments\n\nWell-designed experiments ensure that “treatment assignment is independent of the potential outcomes” (Gelman et al. 2021)\n\nIncreasing interest in causal inference from observational studies\n\nThis is something we will discuss later in the semester"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#uncertainty",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#uncertainty",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "uncertainty",
+    "text": "uncertainty"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#populations-vs-samples",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#populations-vs-samples",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "populations vs samples",
+    "text": "populations vs samples\nHypothesis: New plant variety is more disease resistant than current variety\n\nPrediction: Disease prevalence is lower in new variety than in current variety\nHow can we determine whether the hypothesis is true?"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#populations-vs-samples-1",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#populations-vs-samples-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "populations vs samples",
+    "text": "populations vs samples\nPopulation\n\nA collection of subjects of interest\nOften, a biologically meaningful unit\nSometimes a process of interest\n\nQuestion: What is the population in our example?"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#population-1",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#population-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "population",
+    "text": "population\n\nNote:\n\nThese are the populations\nThere is variation within and among populations, but:\nThe hypothesis is correct (mean prevalence is lower in new vs. current variety)"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#populations-vs-samples-2",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#populations-vs-samples-2",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "populations vs samples",
+    "text": "populations vs samples\nPopulation\n\nA collection of subjects of interest\nOften, a biologically meaningful unit\nSometimes a process of interest\n\nSample\n\nA finite subset of the population of interest, i.e. the data we collect\nSamples allow us to draw inferences about the population\nGood samples are:\n\nRandom\nRepresentative\nSufficiently large"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#sample-1",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#sample-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "sample",
+    "text": "sample"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#sample-2",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#sample-2",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "sample",
+    "text": "sample\n\nNote:\n\nThese are samples\nThe sample means are our best estimates of the population means\nBut the sample means will never equal the population means (uncertainty!)"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#summary-statistics",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#summary-statistics",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "summary statistics",
+    "text": "summary statistics\nMeasures of central tendency\n\nSample mean\n\n\\[\\large \\bar{y} = \\frac{\\sum_{i=1}^n y_i}{n}\\]\n\n\nMedian\n\n\n\nMode"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#summary-statistics-1",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#summary-statistics-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "summary statistics",
+    "text": "summary statistics\nMeasures of dispersion\n\nSample variance\n\n\\[\\large s^2 = \\frac{\\sum_{i=1}^n (y_i - \\bar{y})^2}{n-1}\\]\n\n\nSample standard deviation\n\n\\[\\large s = \\sqrt{s^2}\\]\n\n\nRange"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#sampling-error",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#sampling-error",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "sampling error",
+    "text": "sampling error\nEvery sample has a different mean (and standard deviation) - more uncertainty!"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#sampling-uncertainty",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#sampling-uncertainty",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "sampling = uncertainty",
+    "text": "sampling = uncertainty\nBecause populations (usually) cannot be measured, sampling is essential\nBut sampling is inherently stochastic\n\nsampling produces uncertainty\nunavoidable (but that’s ok!)\n\n\nDoubt is not a pleasant condition, but certainty is absurd – Voltaire\n\nStatistics is what allows us to learn about the population using samples in the face of uncertainty\n\nthe primary goal of this class is for you to understand how to make robust inferences that account for uncertainty (and the limitations of those inferences)\nwe will return to this basic concept (sampling error) many times this semester"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#looking-ahead",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics.html#looking-ahead",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "looking ahead",
+    "text": "looking ahead\n\nNext time: Introduction to linear models\n\nReading: Fieberg chp. 1.2-1.4"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#outline",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#outline",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "outline",
+    "text": "outline\n\n1) What is statistics?\n\n. . .\n2) Statistics and the scientific method\n\n. . .\n3) Populations vs. samples"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#what-is-statistics-1",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#what-is-statistics-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "what is statistics?",
+    "text": "what is statistics?\n \n\nThe study of the collection, analysis, interpretation, presentation, and organization of data (Dodge 2006)\n\n\n\n\n\nThe science of learning from data in the face of uncertainty (various)\n\n\n\n\n\\[Statistics = Information + Uncertainty\\]"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#why-do-we-need-statistics",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#why-do-we-need-statistics",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "why do we need statistics?",
+    "text": "why do we need statistics?\nCommon tasks\n. . .\n\nIdentify relationships between variables \n\n. . .\n\nEstimate unknown parameters \n\n. . .\n\nTest hypotheses \n\n. . .\n\nDescribe stochastic systems \n\n. . .\n\nMake predictions that account for uncertainty"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#stats-and-the-scientific-method",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#stats-and-the-scientific-method",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning\n. . .\n\n\nInductive reasoning\n\nOften attributed to Francis Bacon (and others)\nConsistent observations -&gt; general principle\nProblem: “confirmatory” observations can’t disprove theory\nExample: I’ve only seen birds that fly :: all birds can fly\n\n. . .\nDeductive reasoning\n\nFormalized by Karl Popper\nTheory -&gt; predictions -&gt; observations\nBased on falsification\nExample: All birds can fly :: penguins are birds :: penguins can fly"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#stats-and-the-scientific-method-1",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#stats-and-the-scientific-method-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning (real world)\n. . .\n\nPattern identification (i.e., exploratory studies)\n\n\nAnecdotes\nCorrelations/visual analysis\nExploratory modeling (i.e., fishing)"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#stats-and-the-scientific-method-2",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#stats-and-the-scientific-method-2",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning (real world)\n\nPattern identification (i.e., exploratory studies)\nHypothesis formation\n\n\nFormed from patterns\nShould focus on mechanisms (“because”, “controls”, “adapted to”)\nShould be falsifiable\nIdeally &gt; 1 alternatives"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#stats-and-the-scientific-method-3",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#stats-and-the-scientific-method-3",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning (real world)\n\nPattern identification (i.e., exploratory studies)\nHypothesis formation\nPredictions\n\n\nIf the hypothesis is true, what do you expect to see?\nFocus on things we can measure\nMore = better\n“associated”, “correlated”, “greater/less than”"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#stats-and-the-scientific-method-4",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#stats-and-the-scientific-method-4",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning (real world)\n\nPattern identification (i.e., exploratory studies)\nHypothesis formation\nPredictions\nData collection\n\n\nCan be observational but ideally manipulative experiment\nSampling must be designed to answer question"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#stats-and-the-scientific-method-5",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#stats-and-the-scientific-method-5",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning (real world)\n\nPattern identification (i.e., exploratory studies)\nHypothesis formation\nPredictions\nData collection\nModels and testing\n\n\nModel = mathematical abstraction of hypothesis\nModel used to “confront” hypothesis with data (via predictions)\nDraw conclusions: Does data support hypothesis?"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#stats-and-the-scientific-method-6",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#stats-and-the-scientific-method-6",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nExample\n\nPattern: Trees at higher elevations are shorter than at low elevations\n\n. . .\n\nHypotheses\n\n. . .\n\nPredictions\n\n. . .\n\nData collection1\nModels1\n\n\n[1] We’ll get to these!"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#causal-inference",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#causal-inference",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "causal inference",
+    "text": "causal inference"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#causal-inference-1",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#causal-inference-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "causal inference",
+    "text": "causal inference\nOften, we want to know whether \\(x\\) influences \\(y\\)\n. . .\n\nIn other words, if we change \\(x\\), will \\(y\\) change also (and by how much)?\n\n. . .\n\nHarder than it seems! Why?\n\n. . .\n\nGenerally restricted to manipulative experiments\n\n. . .\n\nWell-designed experiments ensure that “treatment assignment is independent of the potential outcomes” (Gelman et al. 2021)\n\n. . .\n\nIncreasing interest in causal inference from observational studies\n\nThis is something we will discuss later in the semester"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#uncertainty",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#uncertainty",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "uncertainty",
+    "text": "uncertainty"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#populations-vs-samples",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#populations-vs-samples",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "populations vs samples",
+    "text": "populations vs samples\nHypothesis: New plant variety is more disease resistant than current variety\n\n. . .\nPrediction: Disease prevalence is lower in new variety than in current variety\n. . .\nHow can we determine whether the hypothesis is true?"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#populations-vs-samples-1",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#populations-vs-samples-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "populations vs samples",
+    "text": "populations vs samples\nPopulation\n\nA collection of subjects of interest\nOften, a biologically meaningful unit\nSometimes a process of interest\n\n. . .\nQuestion: What is the population in our example?"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#population-1",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#population-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "population",
+    "text": "population\n\nNote:\n\nThese are the populations\nThere is variation within and among populations, but:\nThe hypothesis is correct (mean prevalence is lower in new vs. current variety)"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#populations-vs-samples-2",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#populations-vs-samples-2",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "populations vs samples",
+    "text": "populations vs samples\nPopulation\n\nA collection of subjects of interest\nOften, a biologically meaningful unit\nSometimes a process of interest\n\n. . .\nSample\n\nA finite subset of the population of interest, i.e. the data we collect\nSamples allow us to draw inferences about the population\nGood samples are:\n\nRandom\nRepresentative\nSufficiently large"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#sample-1",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#sample-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "sample",
+    "text": "sample"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#sample-2",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#sample-2",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "sample",
+    "text": "sample\n\n\nNote:\n\nThese are samples\nThe sample means are our best estimates of the population means\nBut the sample means will never equal the population means (uncertainty!)"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#summary-statistics",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#summary-statistics",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "summary statistics",
+    "text": "summary statistics\nMeasures of central tendency\n\nSample mean\n\n\\[\\large \\bar{y} = \\frac{\\sum_{i=1}^n y_i}{n}\\]\n\n. . .\n\nMedian\n\n\n. . .\n\nMode"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#summary-statistics-1",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#summary-statistics-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "summary statistics",
+    "text": "summary statistics\nMeasures of dispersion\n\nSample variance\n\n\\[\\large s^2 = \\frac{\\sum_{i=1}^n (y_i - \\bar{y})^2}{n-1}\\]\n\n. . .\n\nSample standard deviation\n\n\\[\\large s = \\sqrt{s^2}\\]\n\n. . .\n\nRange"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#sampling-error",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#sampling-error",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "sampling error",
+    "text": "sampling error\nEvery sample has a different mean (and standard deviation) - more uncertainty!"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#sampling-uncertainty",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#sampling-uncertainty",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "sampling = uncertainty",
+    "text": "sampling = uncertainty\nBecause populations (usually) cannot be measured, sampling is essential\n. . .\nBut sampling is inherently stochastic\n\nsampling produces uncertainty\nunavoidable (but that’s ok!)\n\n\nDoubt is not a pleasant condition, but certainty is absurd – Voltaire\n\n. . .\nStatistics is what allows us to learn about the population using samples in the face of uncertainty\n\nthe primary goal of this class is for you to understand how to make robust inferences that account for uncertainty (and the limitations of those inferences)\nwe will return to this basic concept (sampling error) many times this semester"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#looking-ahead",
+    "href": "lectures/01_intro_to_stats/lecture1-intro-statistics(2).html#looking-ahead",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "looking ahead",
+    "text": "looking ahead\n\nNext time: Introduction to linear models\n\nReading: Fieberg chp. 1.2-1.4"
   }
 ]
