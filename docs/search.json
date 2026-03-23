@@ -1874,5 +1874,1104 @@
     "title": "LECTURE 1: introduction to statistics",
     "section": "looking ahead",
     "text": "looking ahead\n\nNext time: Introduction to linear models\n\nReading: Fieberg chp. 1.2-1.4"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#outline",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#outline",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "outline",
+    "text": "outline\n\n1) Basic structure of a linear model\n\n. . .\n2) Parameter interpretation\n\n. . .\n3) Assumptions"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#section",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#section",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "",
+    "text": "Statistics = Information + Uncertainty\nIn the last lecture, we learned that statistics is what allows us to make inferences about a population in the face of uncertainty\n. . .\nStatistical inference requires models"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#what-is-a-model",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#what-is-a-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "what is a model?",
+    "text": "what is a model?"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#what-is-a-model-1",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#what-is-a-model-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "what is a model?",
+    "text": "what is a model?\n\nan abstraction of reality used to describe the relationship between two or more variables\n\nMany types (conceptual, graphical, mathematical)\nIn this class, we will deal with statistical models\n\nMathematical representation of our hypothesis\nBy necessity, models will be simplifications of reality (“all models are wrong…”)\nDo not have to be complex"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#but-i-dont-want-to-be-a-modeler",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#but-i-dont-want-to-be-a-modeler",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "but i don’t want to be a modeler!",
+    "text": "but i don’t want to be a modeler!\n\n\n\n\n\n\n\n\n\n\n\nInference requires models\n\n\n\n\nModels link observations to processes\n\n\n\n\nModels are tools that allow us understand processes that we cannot directly observe based on quantities that we can observe"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#a-simple-example",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#a-simple-example",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple example",
+    "text": "a simple example\nSuppose we are interested in the hypothesis that water availability limits acorn production by oak trees\n\nPrediction: Acorn production will increase following years with higher rainfall\n\n. . ."
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#a-simple-model",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#a-simple-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\n\n\n\n\n\n\n\n\n\n\n\nIt may not be obvious, but this is essentially the only model we will use this semester1\n\n[1] With some minor variations, mainly in \\(x\\)"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#a-simple-model-1",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#a-simple-model-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\nIf we want to use this as a statistical model, what’s missing?"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#a-simple-model-2",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#a-simple-model-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\nIf we want to use this as a statistical model, what’s missing?\nStochasticity!"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#a-simple-model-3",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#a-simple-model-3",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\nIf we want to use this as a statistical model, what’s missing?\nStochasticity!"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#the-linear-model",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#the-linear-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#statistics-cookbook",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#statistics-cookbook",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "statistics cookbook",
+    "text": "statistics cookbook"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#the-linear-model-1",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#the-linear-model-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\n \n\\[\\Large response = deterministic\\; part+stochastic\\; part\\]\n \n\n\\[\\underbrace{\\LARGE E[y_i] = \\beta_0 + \\beta_1 \\times x_i}_{Deterministic}\\]\n \n\n\n\\[\\underbrace{\\LARGE y_i \\sim normal(E[y_i], \\sigma)}_{Stochastic}\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#the-linear-model-2",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#the-linear-model-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\nSometimes you will see linear models written as:\n\\[\\LARGE y_i = \\beta_0 + \\beta_1  x_i + \\epsilon_i\\]\n\\[\\LARGE \\epsilon_i \\sim normal(0, \\sigma)\\]\nwith the \\(\\large \\epsilon_i\\) terms referred to as residuals or residual error\n\nMathematically, the two formulations are identical\nWe will use both formulations"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#a-note-on-notation",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#a-note-on-notation",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a note on notation",
+    "text": "a note on notation\nThroughout the semester, we will try to be consistent with mathematical notation, e.g.\n\n\\(y\\) = response/dependent variable\n\\(x\\) = predictor/independent variable\n\\(\\mu\\) = population mean\n\\(\\sigma\\) = population standard deviation\n\\(\\beta\\) = model parameter (i.e., intercept/slope)\n\n. . .\nTo the extent possible, these follow conventions used in many textbooks/papers (but there is a lot of variation between authors)\n. . .\nRemember that these are just symbols - you could replace them with other symbols (e.g., emoji) and it would not change their interpretation!"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#parameter-interpretation-1",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#parameter-interpretation-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "parameter interpretation",
+    "text": "parameter interpretation\n\\(\\large \\beta_0\\) = intercept\n\nThe expected value of the response variable, \\(\\large E[y_i]\\), when all predictors \\(=0\\)\n\n\\(\\large \\beta_n\\) = slope\n\nThe expected change in the response variable for a one unit change in the associated predictor variable \\(\\large x_n\\)\n\n\nMathematically, the interpretation of the intercept and slope(s) is always the same\n\n\nEcologically, the interpretation will depend on:\n\nthe structure of the predictor variables (continuous vs. categorical)\nthe units of the predictor variables (e.g., scaled vs unscaled)\nthe inclusion of interaction terms\n\nWe will discuss each of these scenarios in detail as the semester progresses"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#the-linear-model-3",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#the-linear-model-3",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\nA “simple” example\n\\[\\underbrace{\\LARGE E[y_i] = -2 + 0.5 \\times x_i}_{Deterministic}\\]\n. . .\n\\[\\underbrace{\\LARGE y_i \\sim normal(E[y_i], \\sigma=0.25)}_{Stochastic}\\]\n. . ."
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#the-linear-model-4",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#the-linear-model-4",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\nA more complex model\n\\[\\large y_i = \\beta_0 + \\beta_1x_{i1} + \\beta_2x_{i2} + ... + \\beta_px_{ip} + \\epsilon_i\\]\n. . .\n\nEach \\(\\beta\\) coefficient is the effect of a specific predictor variables \\(x\\)\nPredictor variables may be continuous, binary, factors, or a combination\nWe will cover more complex models (and interpretation) later"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#is-this-a-linear-model",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#is-this-a-linear-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "is this a linear model?",
+    "text": "is this a linear model?\n\\[\\Large y = 20 + 0.5x - 0.3x^2\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#residuals",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#residuals",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "residuals",
+    "text": "residuals\nOne concept we will talk about a lot is residuals, i.e., \\(\\Large \\epsilon_i\\)\n. . .\n\nResiduals are the difference between the observed values \\(\\large y_i\\) and the predicted values \\(\\large E[y_i]\\) - how much variation in \\(\\large y\\) is explained by \\(\\large x\\)?"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#residuals-1",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#residuals-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "residuals",
+    "text": "residuals\nOne concept we will talk about a lot is residuals, i.e., \\(\\Large \\epsilon_i\\)\n\nResiduals are the difference between the observed values \\(\\large y_i\\) and the predicted values \\(\\large E[y_i]\\) - how much variation in \\(\\large y\\) is explained by \\(\\large x\\)?\n\n\n. . .\n\nParameters are generally estimated by finding values that minimize residual error (e.g., ordinary least squares)\n\n. . .\n\nUseful for assessing whether data violate model assumptions"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions-1",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions",
+    "text": "assumptions"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions-2",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions",
+    "text": "assumptions\nEVERY model has assumptions\n. . .\n\nAssumptions are necessary to simplify real world to workable model\n\n. . .\n\nIf your data violate the assumptions of your model, inferences may be invalid\n\n. . .\n\nAlways know (and test) the assumptions of your model1\n\n\n[1] You know what happens when you assume…"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#linear-model-assumptions",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#linear-model-assumptions",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "linear model assumptions",
+    "text": "linear model assumptions\n\n\\[\\Large y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i\\]\n\\[\\Large \\epsilon_i \\sim normal(0, \\sigma)\\]\n\n\n\nLinearity: The relationship between \\(x\\) and \\(y\\) is linear\n\n\n\n\nNormality: The residuals are normally distributed2\n\n\n[2] Note that these assumptions apply to the residuals, not the data!\n\n\n\n\nHomogeneity: The residuals have a constant variance at every level of \\(x\\)\n\n\n\n\nIndependence: The residuals are independent (i.e., uncorrelated with each other)"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions-3",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions-3",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions",
+    "text": "assumptions\n\\[\\large y_i = \\beta_0 + \\beta_1x_i + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim normal(0, \\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions---linearity",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions---linearity",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - linearity",
+    "text": "assumptions - linearity\n\\[\\large y_i = \\color{#D47500}{\\beta_0 + \\beta_1x_i} + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim normal(0, \\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions---normality",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions---normality",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - normality",
+    "text": "assumptions - normality\n\\[\\large y_i = \\color{#D47500}{\\beta_0 + \\beta_1x_i} + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim \\color{#3CB521}{normal}(0, \\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions---homogeneity",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions---homogeneity",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - homogeneity",
+    "text": "assumptions - homogeneity\n\\[\\large y_i = \\color{#D47500}{\\beta_0 + \\beta_1x_i} + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim \\color{#3CB521}{normal}(0, \\color{#CD0200}\\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions---normality-1",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions---normality-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - normality",
+    "text": "assumptions - normality\nRemember that the normality assumption applies to the residuals not the data.\n\nIn the data below, the histogram of the response variable y shows that the data is clearly not normally distributed"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions---normality-2",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#assumptions---normality-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - normality",
+    "text": "assumptions - normality\nRemember that the normality assumption applies to the residuals not the data.\nIn the data below, the histogram of the response variable y shows that the data is clearly not normally distributed\nBut a histogram of the residuals (green lines) shows that they are normal (or at least close)"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#linear-models",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#linear-models",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "linear models",
+    "text": "linear models\nVery flexible\n. . .\n\nPredictor(s) can take different forms (binary, continuous, factor)\n\n. . .\n\nCan contain many predictors\n\n. . .\n\nCan model non-linear relationships\n\n. . .\nLink different “tests” (e.g., t-tests, ANOVA, ANCOVA, linear regression)\n. . .\nCan be used for different statistical goals\n\nEstimating unknown parameters\nTesting hypotheses\nDescribing stochastic systems\nMaking predictions that account for uncertainty"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#statistical-inference",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#statistical-inference",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "statistical inference",
+    "text": "statistical inference\nLinear models allow us to quantify relationships between variables\n. . .\nGenerally, models are fit to samples\n\nThe intercept and slope values correspond to the observed response and predictor values\nIf we repeated our study, the sampled values would change and so would the intercept/slope values\n\n. . .\nWe’re generally interested in the population, not the sample\n\nThe intercept and slope values fitted to a particular sample are considered estimates of the true population values\n\n. . .\nInference about populations requires quantifying how well our estimated values represent the true population values (which we can never know)\n\nThis will be the topic of the next lecture (and a theme we will revisit throughout the semester)"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#looking-ahead",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#looking-ahead",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "looking ahead",
+    "text": "looking ahead\n\nNext time: Principles of statistical inference\n\nReading: Fieberg chp. 1.6-1.8"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#outline",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#outline",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "outline",
+    "text": "outline\n\n\n1) What is statistics?\n\n\n\n2) Statistics and the scientific method\n\n\n\n3) Populations vs. samples"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#what-is-statistics-1",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#what-is-statistics-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "what is statistics?",
+    "text": "what is statistics?\n \n\nThe study of the collection, analysis, interpretation, presentation, and organization of data (Dodge 2006)\n\n\n\n\n\nThe science of learning from data in the face of uncertainty (various)\n\n\n\n\n\\[Statistics = Information + Uncertainty\\]"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#why-do-we-need-statistics",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#why-do-we-need-statistics",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "why do we need statistics?",
+    "text": "why do we need statistics?\nCommon tasks\n\nIdentify relationships between variables \nEstimate unknown parameters \nTest hypotheses \nDescribe stochastic systems \nMake predictions that account for uncertainty"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#stats-and-the-scientific-method",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#stats-and-the-scientific-method",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning\n\n\nInductive reasoning\n\nOften attributed to Francis Bacon (and others)\nConsistent observations -&gt; general principle\nProblem: “confirmatory” observations can’t disprove theory\nExample: I’ve only seen birds that fly :: all birds can fly\n\n\nDeductive reasoning\n\nFormalized by Karl Popper\nTheory -&gt; predictions -&gt; observations\nBased on falsification\nExample: All birds can fly :: penguins are birds :: penguins can fly"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#stats-and-the-scientific-method-1",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#stats-and-the-scientific-method-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning (real world)\n\nPattern identification (i.e., exploratory studies)\n\nAnecdotes\nCorrelations/visual analysis\nExploratory modeling (i.e., fishing)"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#stats-and-the-scientific-method-2",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#stats-and-the-scientific-method-2",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning (real world)\n\nPattern identification (i.e., exploratory studies)\nHypothesis formation\n\nFormed from patterns\nShould focus on mechanisms (“because”, “controls”, “adapted to”)\nShould be falsifiable\nIdeally &gt; 1 alternatives"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#stats-and-the-scientific-method-3",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#stats-and-the-scientific-method-3",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning (real world)\n\nPattern identification (i.e., exploratory studies)\nHypothesis formation\nPredictions\n\nIf the hypothesis is true, what do you expect to see?\nFocus on things we can measure\nMore = better\n“associated”, “correlated”, “greater/less than”"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#stats-and-the-scientific-method-4",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#stats-and-the-scientific-method-4",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning (real world)\n\nPattern identification (i.e., exploratory studies)\nHypothesis formation\nPredictions\nData collection\n\nCan be observational but ideally manipulative experiment\nSampling must be designed to answer question"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#stats-and-the-scientific-method-5",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#stats-and-the-scientific-method-5",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nWays of learning (real world)\n\nPattern identification (i.e., exploratory studies)\nHypothesis formation\nPredictions\nData collection\nModels and testing\n\nModel = mathematical abstraction of hypothesis\nModel used to “confront” hypothesis with data (via predictions)\nDraw conclusions: Does data support hypothesis?"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#stats-and-the-scientific-method-6",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#stats-and-the-scientific-method-6",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "stats and the scientific method",
+    "text": "stats and the scientific method\nExample\n\nPattern: Trees at higher elevations are shorter than at low elevations\nHypotheses\nPredictions\nData collection1\nModels2\n\nWe’ll get to these!We’ll get to these!"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#causal-inference",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#causal-inference",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "causal inference",
+    "text": "causal inference"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#causal-inference-1",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#causal-inference-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "causal inference",
+    "text": "causal inference\nOften, we want to know whether \\(x\\) influences \\(y\\)\n\nIn other words, if we change \\(x\\), will \\(y\\) change also (and by how much)?\nHarder than it seems! Why?\nGenerally restricted to manipulative experiments\n\nWell-designed experiments ensure that “treatment assignment is independent of the potential outcomes” (Gelman et al. 2021)\n\nIncreasing interest in causal inference from observational studies\n\nThis is something we will discuss later in the semester"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#uncertainty",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#uncertainty",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "uncertainty",
+    "text": "uncertainty"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#populations-vs-samples",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#populations-vs-samples",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "populations vs samples",
+    "text": "populations vs samples\nHypothesis: New plant variety is more disease resistant than current variety\n\nPrediction: Disease prevalence is lower in new variety than in current variety\nHow can we determine whether the hypothesis is true?"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#populations-vs-samples-1",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#populations-vs-samples-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "populations vs samples",
+    "text": "populations vs samples\nPopulation\n\nA collection of subjects of interest\nOften, a biologically meaningful unit\nSometimes a process of interest\n\nQuestion: What is the population in our example?"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#population-1",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#population-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "population",
+    "text": "population\n\nNote:\n\nThese are the populations\nThere is variation within and among populations, but:\nThe hypothesis is correct (mean prevalence is lower in new vs. current variety)"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#populations-vs-samples-2",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#populations-vs-samples-2",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "populations vs samples",
+    "text": "populations vs samples\nPopulation\n\nA collection of subjects of interest\nOften, a biologically meaningful unit\nSometimes a process of interest\n\nSample\n\nA finite subset of the population of interest, i.e. the data we collect\nSamples allow us to draw inferences about the population\nGood samples are:\n\nRandom\nRepresentative\nSufficiently large"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#sample-1",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#sample-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "sample",
+    "text": "sample"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#sample-2",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#sample-2",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "sample",
+    "text": "sample\n\nNote:\n\nThese are samples\nThe sample means are our best estimates of the population means\nBut the sample means will never equal the population means (uncertainty!)"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#summary-statistics",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#summary-statistics",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "summary statistics",
+    "text": "summary statistics\nMeasures of central tendency\n\nSample mean\n\n\\[\\large \\bar{y} = \\frac{\\sum_{i=1}^n y_i}{n}\\]\n\n\nMedian\n\n\n\nMode"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#summary-statistics-1",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#summary-statistics-1",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "summary statistics",
+    "text": "summary statistics\nMeasures of dispersion\n\nSample variance\n\n\\[\\large s^2 = \\frac{\\sum_{i=1}^n (y_i - \\bar{y})^2}{n-1}\\]\n\n\nSample standard deviation\n\n\\[\\large s = \\sqrt{s^2}\\]\n\n\nRange"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#sampling-error",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#sampling-error",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "sampling error",
+    "text": "sampling error\nEvery sample has a different mean (and standard deviation) - more uncertainty!"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#sampling-uncertainty",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#sampling-uncertainty",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "sampling = uncertainty",
+    "text": "sampling = uncertainty\nBecause populations (usually) cannot be measured, sampling is essential\nBut sampling is inherently stochastic\n\nsampling produces uncertainty\nunavoidable (but that’s ok!)\n\n\nDoubt is not a pleasant condition, but certainty is absurd – Voltaire\n\nStatistics is what allows us to learn about the population using samples in the face of uncertainty\n\nthe primary goal of this class is for you to understand how to make robust inferences that account for uncertainty (and the limitations of those inferences)\nwe will return to this basic concept (sampling error) many times this semester"
+  },
+  {
+    "objectID": "lectures/01_intro_to_stats/01_intro_to_stats.html#looking-ahead",
+    "href": "lectures/01_intro_to_stats/01_intro_to_stats.html#looking-ahead",
+    "title": "LECTURE 1: introduction to statistics",
+    "section": "looking ahead",
+    "text": "looking ahead\n\nNext time: Introduction to linear models\n\nReading: Fieberg chp. 1.2-1.4"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/lecture2-linear-models.html#outline-.inverse",
+    "href": "lectures/02_intro_to_lm/lecture2-linear-models.html#outline-.inverse",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "outline {{.inverse}}",
+    "text": "outline {{.inverse}}\n\n1) Basic structure of a linear model\n\n2) Parameter interpretation\n\n3) Assumptions\n\nStatistics = Information + Uncertainty\nIn the last lecture, we learned that statistics is what allows us to make inferences about a population in the face of uncertainty\nStatistical inference requires models"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#outline",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#outline",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "outline",
+    "text": "outline\n\n1) Basic structure of a linear model\n\n. . .\n2) Parameter interpretation\n\n. . .\n3) Assumptions"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#section",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#section",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "",
+    "text": "Statistics = Information + Uncertainty\nIn the last lecture, we learned that statistics is what allows us to make inferences about a population in the face of uncertainty\n. . .\nStatistical inference requires models"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#what-is-a-model",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#what-is-a-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "what is a model?",
+    "text": "what is a model?"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#what-is-a-model-1",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#what-is-a-model-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "what is a model?",
+    "text": "what is a model?\n\nan abstraction of reality used to describe the relationship between two or more variables\n\n\nMany types (conceptual, graphical, mathematical)\n. . .\nIn this class, we will deal with statistical models\n. . .\n\nMathematical representation of our hypothesis\n\n. . .\n\nBy necessity, models will be simplifications of reality (“all models are wrong…”)\n\n. . .\n\nDo not have to be complex"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#but-i-dont-want-to-be-a-modeler",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#but-i-dont-want-to-be-a-modeler",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "but i don’t want to be a modeler!",
+    "text": "but i don’t want to be a modeler!\n\n\n\n\n\n\n\n\n\n\n\nInference requires models\n\n\n\n\nModels link observations to processes\n\n\n\n\nModels are tools that allow us understand processes that we cannot directly observe based on quantities that we can observe"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#a-simple-example",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#a-simple-example",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple example",
+    "text": "a simple example\nSuppose we are interested in the hypothesis that water availability limits acorn production by oak trees\n\nPrediction: Acorn production will increase following years with higher rainfall\n\n. . ."
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#a-simple-model",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#a-simple-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\n\n\n\n\n\n\n\n\n\n\n\nIt may not be obvious, but this is essentially the only model we will use this semester1\n\nWith some minor variations, mainly in \\(x\\)"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#a-simple-model-1",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#a-simple-model-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\nIf we want to use this as a statistical model, what’s missing?"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#a-simple-model-2",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#a-simple-model-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\nIf we want to use this as a statistical model, what’s missing?\nStochasticity!"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#a-simple-model-3",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#a-simple-model-3",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\nIf we want to use this as a statistical model, what’s missing?\nStochasticity!"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#the-linear-model",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#the-linear-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#statistics-cookbook",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#statistics-cookbook",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "statistics cookbook",
+    "text": "statistics cookbook"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#the-linear-model-1",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#the-linear-model-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\n \n\\[\\Large response = deterministic\\; part+stochastic\\; part\\]\n \n\n\\[\\underbrace{\\LARGE E[y_i] = \\beta_0 + \\beta_1 \\times x_i}_{Deterministic}\\]\n \n\n\n\\[\\underbrace{\\LARGE y_i \\sim normal(E[y_i], \\sigma)}_{Stochastic}\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#the-linear-model-2",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#the-linear-model-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\nSometimes you will see linear models written as:\n\\[\\LARGE y_i = \\beta_0 + \\beta_1  x_i + \\epsilon_i\\]\n\\[\\LARGE \\epsilon_i \\sim normal(0, \\sigma)\\]\nwith the \\(\\large \\epsilon_i\\) terms referred to as residuals or residual error\n\nMathematically, the two formulations are identical\nWe will use both formulations"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#a-note-on-notation",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#a-note-on-notation",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a note on notation",
+    "text": "a note on notation\nThroughout the semester, we will try to be consistent with mathematical notation, e.g.\n\n\\(y\\) = response/dependent variable\n\\(x\\) = predictor/independent variable\n\\(\\mu\\) = population mean\n\\(\\sigma\\) = population standard deviation\n\\(\\beta\\) = model parameter (i.e., intercept/slope)\n\n. . .\nTo the extent possible, these follow conventions used in many textbooks/papers (but there is a lot of variation between authors)\n. . .\nRemember that these are just symbols - you could replace them with other symbols (e.g., emoji) and it would not change their interpretation!"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#parameter-interpretation-1",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#parameter-interpretation-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "parameter interpretation",
+    "text": "parameter interpretation\n\\(\\large \\beta_0\\) = intercept\n\nThe expected value of the response variable, \\(\\large E[y_i]\\), when all predictors \\(=0\\)\n\n\\(\\large \\beta_n\\) = slope\n\nThe expected change in the response variable for a one unit change in the associated predictor variable \\(\\large x_n\\)\n\n\nMathematically, the interpretation of the intercept and slope(s) is always the same\n\n\nEcologically, the interpretation will depend on:\n\nthe structure of the predictor variables (continuous vs. categorical)\nthe units of the predictor variables (e.g., scaled vs unscaled)\nthe inclusion of interaction terms\n\nWe will discuss each of these scenarios in detail as the semester progresses"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#the-linear-model-3",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#the-linear-model-3",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\nA “simple” example\n\\[\\underbrace{\\LARGE E[y_i] = -2 + 0.5 \\times x_i}_{Deterministic}\\]\n. . .\n\\[\\underbrace{\\LARGE y_i \\sim normal(E[y_i], \\sigma=0.25)}_{Stochastic}\\]\n. . ."
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#the-linear-model-4",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#the-linear-model-4",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\nA more complex model\n\\[\\large y_i = \\beta_0 + \\beta_1x_{i1} + \\beta_2x_{i2} + ... + \\beta_px_{ip} + \\epsilon_i\\]\n. . .\n\nEach \\(\\beta\\) coefficient is the effect of a specific predictor variables \\(x\\)\nPredictor variables may be continuous, binary, factors, or a combination\nWe will cover more complex models (and interpretation) later"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#is-this-a-linear-model",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#is-this-a-linear-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "is this a linear model?",
+    "text": "is this a linear model?\n\\[\\Large y = 20 + 0.5x - 0.3x^2\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#residuals",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#residuals",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "residuals",
+    "text": "residuals\nOne concept we will talk about a lot is residuals, i.e., \\(\\Large \\epsilon_i\\)\n. . .\n\nResiduals are the difference between the observed values \\(\\large y_i\\) and the predicted values \\(\\large E[y_i]\\) — how much variation in \\(\\large y\\) is explained by \\(\\large x\\)?"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#residuals-1",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#residuals-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "residuals",
+    "text": "residuals\nOne concept we will talk about a lot is residuals, i.e., \\(\\Large \\epsilon_i\\)\n\nResiduals are the difference between the observed values \\(\\large y_i\\) and the predicted values \\(\\large E[y_i]\\) — how much variation in \\(\\large y\\) is explained by \\(\\large x\\)?\n\n\n. . .\n\nParameters are generally estimated by finding values that minimize residual error (e.g., ordinary least squares)\n\n. . .\n\nUseful for assessing whether data violate model assumptions"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions-1",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions",
+    "text": "assumptions"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions-2",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions",
+    "text": "assumptions\nEVERY model has assumptions\n. . .\n\nAssumptions are necessary to simplify real world to workable model\n\n. . .\n\nIf your data violate the assumptions of your model, inferences may be invalid\n\n. . .\n\nAlways know (and test) the assumptions of your model1\n\nYou know what happens when you assume…"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#linear-model-assumptions",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#linear-model-assumptions",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "linear model assumptions",
+    "text": "linear model assumptions\n\n\\[\\Large y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i\\]\n\\[\\Large \\epsilon_i \\sim normal(0, \\sigma)\\]\n\n\n\nLinearity: The relationship between \\(x\\) and \\(y\\) is linear\n\n\n\n\nNormality: The residuals are normally distributed1\n\n\n\n\nHomogeneity: The residuals have a constant variance at every level of \\(x\\)\n\n\n\n\nIndependence: The residuals are independent (i.e., uncorrelated with each other)\n\n\nNote that these assumptions apply to the residuals, not the data!"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions-3",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions-3",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions",
+    "text": "assumptions\n\\[\\large y_i = \\beta_0 + \\beta_1x_i + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim normal(0, \\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions---linearity",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions---linearity",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - linearity",
+    "text": "assumptions - linearity\n\\[\\large y_i = \\color{#D47500}{\\beta_0 + \\beta_1x_i} + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim normal(0, \\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions---normality",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions---normality",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - normality",
+    "text": "assumptions - normality\n\\[\\large y_i = \\color{#D47500}{\\beta_0 + \\beta_1x_i} + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim \\color{#3CB521}{normal}(0, \\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions---homogeneity",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions---homogeneity",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - homogeneity",
+    "text": "assumptions - homogeneity\n\\[\\large y_i = \\color{#D47500}{\\beta_0 + \\beta_1x_i} + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim \\color{#3CB521}{normal}(0, \\color{#CD0200}\\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions---normality-1",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions---normality-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - normality",
+    "text": "assumptions - normality\nRemember that the normality assumption applies to the residuals not the data.\n\nIn the data below, the histogram of the response variable y shows that the data is clearly not normally distributed"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions---normality-2",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#assumptions---normality-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - normality",
+    "text": "assumptions - normality\nRemember that the normality assumption applies to the residuals not the data.\nIn the data below, the histogram of the response variable y shows that the data is clearly not normally distributed\nBut a histogram of the residuals (green lines) shows that they are normal (or at least close)"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#linear-models",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#linear-models",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "linear models",
+    "text": "linear models\nVery flexible\n. . .\n\nPredictor(s) can take different forms (binary, continuous, factor)\n\n. . .\n\nCan contain many predictors\n\n. . .\n\nCan model non-linear relationships\n\n. . .\nLink different “tests” (e.g., t-tests, ANOVA, ANCOVA, linear regression)\n. . .\nCan be used for different statistical goals\n\nEstimating unknown parameters\nTesting hypotheses\nDescribing stochastic systems\nMaking predictions that account for uncertainty"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#statistical-inference",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#statistical-inference",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "statistical inference",
+    "text": "statistical inference\nLinear models allow us to quantify relationships between variables\n. . .\nGenerally, models are fit to samples\n\nThe intercept and slope values correspond to the observed response and predictor values\nIf we repeated our study, the sampled values would change and so would the intercept/slope values\n\n. . .\nWe’re generally interested in the population, not the sample\n\nThe intercept and slope values fitted to a particular sample are considered estimates of the true population values\n\n. . .\nInference about populations requires quantifying how well our estimated values represent the true population values (which we can never know)\n\nThis will be the topic of the next lecture (and a theme we will revisit throughout the semester)"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#looking-ahead",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models1.html#looking-ahead",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "looking ahead",
+    "text": "looking ahead\n\nNext time: Principles of statistical inference\n\nReading: Feiberg chp. 1.6-1.8"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#outline",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#outline",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "outline",
+    "text": "outline\n\n1) Basic structure of a linear model\n\n\n2) Parameter interpretation\n\n\n\n3) Assumptions"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#section",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#section",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "",
+    "text": "Statistics = Information + Uncertainty\n\nIn the last lecture, we learned that statistics is what allows us to make inferences about a population in the face of uncertainty\n\n\nStatistical inference requires models"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#what-is-a-model",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#what-is-a-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "what is a model?",
+    "text": "what is a model?"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#what-is-a-model-1",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#what-is-a-model-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "what is a model?",
+    "text": "what is a model?\n\nan abstraction of reality used to describe the relationship between two or more variables\n\n\nMany types (conceptual, graphical, mathematical)\n\n\n\nIn this class, we will deal with statistical models\n\n\nMathematical representation of our hypothesis\nBy necessity, models will be simplifications of reality (“all models are wrong…”)\nDo not have to be complex"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#but-i-dont-want-to-be-a-modeler",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#but-i-dont-want-to-be-a-modeler",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "but i don’t want to be a modeler!",
+    "text": "but i don’t want to be a modeler!\n\n\nInference requires models\nModels link observations to processes\nModels are tools that allow us understand processes that we cannot directly observe based on quantities that we can observe"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#a-simple-example",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#a-simple-example",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple example",
+    "text": "a simple example\nSuppose we are interested in the hypothesis that water availability limits acorn production by oak trees\n\nPrediction: Acorn production will increase following years with higher rainfall"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#a-simple-model",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#a-simple-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\n\n\n\n\n\n\n\n\n\n\n\nIt may not be obvious, but this is essentially the only model we will use this semester1\n\nWith some minor variations, mainly in \\(x\\)"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#a-simple-model-1",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#a-simple-model-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\nIf we want to use this as a statistical model, what’s missing?"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#a-simple-model-2",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#a-simple-model-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\nIf we want to use this as a statistical model, what’s missing?\nStochasticity!"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#a-simple-model-3",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#a-simple-model-3",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\nIf we want to use this as a statistical model, what’s missing?\nStochasticity!"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#the-linear-model",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#the-linear-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#statistics-cookbook",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#statistics-cookbook",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "statistics cookbook",
+    "text": "statistics cookbook"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#the-linear-model-1",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#the-linear-model-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\n \n\\[\\Large response = deterministic\\; part+stochastic\\; part\\]\n \n\n\\[\\underbrace{\\LARGE E[y_i] = \\beta_0 + \\beta_1 \\times x_i}_{Deterministic}\\]\n \n\n\n\\[\\underbrace{\\LARGE y_i \\sim normal(E[y_i], \\sigma)}_{Stochastic}\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#the-linear-model-2",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#the-linear-model-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\nSometimes you will see linear models written as:\n\\[\\LARGE y_i = \\beta_0 + \\beta_1  x_i + \\epsilon_i\\]\n\\[\\LARGE \\epsilon_i \\sim normal(0, \\sigma)\\]\nwith the \\(\\large \\epsilon_i\\) terms referred to as residuals or residual error\n\nMathematically, the two formulations are identical\nWe will use both formulations"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#a-note-on-notation",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#a-note-on-notation",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a note on notation",
+    "text": "a note on notation\nThroughout the semester, we will try to be consistent with mathematical notation, e.g.\n\n\\(y\\) = response/dependent variable\n\\(x\\) = predictor/independent variable\n\\(\\mu\\) = population mean\n\\(\\sigma\\) = population standard deviation\n\\(\\beta\\) = model parameter (i.e., intercept/slope)\n\n\nTo the extent possible, these follow conventions used in many textbooks/papers (but there is a lot of variation between authors)\n\n\nRemember that these are just symbols - you could replace them with other symbols (e.g., emoji) and it would not change their interpretation!"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#parameter-interpretation-1",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#parameter-interpretation-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "parameter interpretation",
+    "text": "parameter interpretation\n\\(\\large \\beta_0\\) = intercept\n\nThe expected value of the response variable, \\(\\large E[y_i]\\), when all predictors \\(=0\\)\n\n\\(\\large \\beta_n\\) = slope\n\nThe expected change in the response variable for a one unit change in the associated predictor variable \\(\\large x_n\\)\n\n\nMathematically, the interpretation of the intercept and slope(s) is always the same\n\n\nEcologically, the interpretation will depend on:\n\nthe structure of the predictor variables (continuous vs. categorical)\nthe units of the predictor variables (e.g., scaled vs unscaled)\nthe inclusion of interaction terms\n\nWe will discuss each of these scenarios in detail as the semester progresses"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#the-linear-model-3",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#the-linear-model-3",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\nA “simple” example\n\\[\\underbrace{\\LARGE E[y_i] = -2 + 0.5 \\times x_i}_{Deterministic}\\]\n\n\\[\\underbrace{\\LARGE y_i \\sim normal(E[y_i], \\sigma=0.25)}_{Stochastic}\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#the-linear-model-4",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#the-linear-model-4",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\nA more complex model\n\\[\\large y_i = \\beta_0 + \\beta_1x_{i1} + \\beta_2x_{i2} + ... + \\beta_px_{ip} + \\epsilon_i\\]\n\nEach \\(\\beta\\) coefficient is the effect of a specific predictor variables \\(x\\)\nPredictor variables may be continuous, binary, factors, or a combination\nWe will cover more complex models (and interpretation) later"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#is-this-a-linear-model",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#is-this-a-linear-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "is this a linear model?",
+    "text": "is this a linear model?\n\\[\\Large y = 20 + 0.5x - 0.3x^2\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#residuals",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#residuals",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "residuals",
+    "text": "residuals\nOne concept we will talk about a lot is residuals, i.e., \\(\\Large \\epsilon_i\\)\n\n\nResiduals are the difference between the observed values \\(\\large y_i\\) and the predicted values \\(\\large E[y_i]\\) — how much variation in \\(\\large y\\) is explained by \\(\\large x\\)?"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#residuals-1",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#residuals-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "residuals",
+    "text": "residuals\nOne concept we will talk about a lot is residuals, i.e., \\(\\Large \\epsilon_i\\)\n\nResiduals are the difference between the observed values \\(\\large y_i\\) and the predicted values \\(\\large E[y_i]\\) — how much variation in \\(\\large y\\) is explained by \\(\\large x\\)?\n\n\n\nParameters are generally estimated by finding values that minimize residual error (e.g., ordinary least squares)\nUseful for assessing whether data violate model assumptions"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions-1",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions",
+    "text": "assumptions"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions-2",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions",
+    "text": "assumptions\nEVERY model has assumptions\n\nAssumptions are necessary to simplify real world to workable model\nIf your data violate the assumptions of your model, inferences may be invalid\nAlways know (and test) the assumptions of your model1\n\nYou know what happens when you assume…"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#linear-model-assumptions",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#linear-model-assumptions",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "linear model assumptions",
+    "text": "linear model assumptions\n\n\\[\\Large y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i\\]\n\\[\\Large \\epsilon_i \\sim normal(0, \\sigma)\\]\n\n\nLinearity: The relationship between \\(x\\) and \\(y\\) is linear\nNormality: The residuals are normally distributed1\nHomogeneity: The residuals have a constant variance at every level of \\(x\\)\nIndependence: The residuals are independent (i.e., uncorrelated with each other)\n\nNote that these assumptions apply to the residuals, not the data!"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions-3",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions-3",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions",
+    "text": "assumptions\n\\[\\large y_i = \\beta_0 + \\beta_1x_i + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim normal(0, \\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions---linearity",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions---linearity",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - linearity",
+    "text": "assumptions - linearity\n\\[\\large y_i = \\color{#D47500}{\\beta_0 + \\beta_1x_i} + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim normal(0, \\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions---normality",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions---normality",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - normality",
+    "text": "assumptions - normality\n\\[\\large y_i = \\color{#D47500}{\\beta_0 + \\beta_1x_i} + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim \\color{#3CB521}{normal}(0, \\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions---homogeneity",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions---homogeneity",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - homogeneity",
+    "text": "assumptions - homogeneity\n\\[\\large y_i = \\color{#D47500}{\\beta_0 + \\beta_1x_i} + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim \\color{#3CB521}{normal}(0, \\color{#CD0200}\\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions---normality-1",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions---normality-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - normality",
+    "text": "assumptions - normality\nRemember that the normality assumption applies to the residuals not the data.\n\nIn the data below, the histogram of the response variable y shows that the data is clearly not normally distributed"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions---normality-2",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#assumptions---normality-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - normality",
+    "text": "assumptions - normality\nRemember that the normality assumption applies to the residuals not the data.\nIn the data below, the histogram of the response variable y shows that the data is clearly not normally distributed\nBut a histogram of the residuals (green lines) shows that they are normal (or at least close)"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#linear-models",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#linear-models",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "linear models",
+    "text": "linear models\nVery flexible\n\nPredictor(s) can take different forms (binary, continuous, factor)\nCan contain many predictors\nCan model non-linear relationships\n\n\nLink different “tests” (e.g., t-tests, ANOVA, ANCOVA, linear regression)\n\n\nCan be used for different statistical goals\n\nEstimating unknown parameters\nTesting hypotheses\nDescribing stochastic systems\nMaking predictions that account for uncertainty"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#statistical-inference",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#statistical-inference",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "statistical inference",
+    "text": "statistical inference\nLinear models allow us to quantify relationships between variables\n\nGenerally, models are fit to samples\n\nThe intercept and slope values correspond to the observed response and predictor values\nIf we repeated our study, the sampled values would change and so would the intercept/slope values\n\n\n\nWe’re generally interested in the population, not the sample\n\nThe intercept and slope values fitted to a particular sample are considered estimates of the true population values\n\n\n\nInference about populations requires quantifying how well our estimated values represent the true population values (which we can never know)\n\nThis will be the topic of the next lecture (and a theme we will revisit throughout the semester)"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#looking-ahead",
+    "href": "lectures/02_intro_to_lm/LECTURE2-linear-models(1).html#looking-ahead",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "looking ahead",
+    "text": "looking ahead\n\nNext time: Principles of statistical inference\n\nReading: Feiberg chp. 1.6-1.8"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#outline",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#outline",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "outline",
+    "text": "outline\n\n1) Basic structure of a linear model\n\n\n2) Parameter interpretation\n\n\n\n3) Assumptions"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#section",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#section",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "",
+    "text": "Statistics = Information + Uncertainty\n\nIn the last lecture, we learned that statistics is what allows us to make inferences about a population in the face of uncertainty\n\n\nStatistical inference requires models"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#what-is-a-model",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#what-is-a-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "what is a model?",
+    "text": "what is a model?"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#what-is-a-model-1",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#what-is-a-model-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "what is a model?",
+    "text": "what is a model?\n\nan abstraction of reality used to describe the relationship between two or more variables\n\n\nMany types (conceptual, graphical, mathematical)\n\n\n\nIn this class, we will deal with statistical models\n\n\nMathematical representation of our hypothesis\nBy necessity, models will be simplifications of reality (“all models are wrong…”)\nDo not have to be complex"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#but-i-dont-want-to-be-a-modeler",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#but-i-dont-want-to-be-a-modeler",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "but i don’t want to be a modeler!",
+    "text": "but i don’t want to be a modeler!\n\n\nInference requires models\nModels link observations to processes\nModels are tools that allow us understand processes that we cannot directly observe based on quantities that we can observe"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#a-simple-example",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#a-simple-example",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple example",
+    "text": "a simple example\nSuppose we are interested in the hypothesis that water availability limits acorn production by oak trees\n\nPrediction: Acorn production will increase following years with higher rainfall"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#a-simple-model",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#a-simple-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\n\n\n\n\n\n\n\n\n\n\n\nIt may not be obvious, but this is essentially the only model we will use this semester1\n\nWith some minor variations, mainly in \\(x\\)"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#a-simple-model-1",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#a-simple-model-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\nIf we want to use this as a statistical model, what’s missing?"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#a-simple-model-2",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#a-simple-model-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\nIf we want to use this as a statistical model, what’s missing?\nStochasticity!"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#a-simple-model-3",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#a-simple-model-3",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a simple model",
+    "text": "a simple model\n \n\\[\\Huge y = a + bx\\]\n\nIf we want to use this as a statistical model, what’s missing?\nStochasticity!"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#the-linear-model",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#the-linear-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#statistics-cookbook",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#statistics-cookbook",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "statistics cookbook",
+    "text": "statistics cookbook"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#the-linear-model-1",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#the-linear-model-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\n \n\\[\\Large response = deterministic\\; part+stochastic\\; part\\]\n \n\n\\[\\underbrace{\\LARGE E[y_i] = \\beta_0 + \\beta_1 \\times x_i}_{Deterministic}\\]\n \n\n\n\\[\\underbrace{\\LARGE y_i \\sim normal(E[y_i], \\sigma)}_{Stochastic}\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#the-linear-model-2",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#the-linear-model-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\nSometimes you will see linear models written as:\n\\[\\LARGE y_i = \\beta_0 + \\beta_1  x_i + \\epsilon_i\\]\n\\[\\LARGE \\epsilon_i \\sim normal(0, \\sigma)\\]\nwith the \\(\\large \\epsilon_i\\) terms referred to as residuals or residual error\n\nMathematically, the two formulations are identical\nWe will use both formulations"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#a-note-on-notation",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#a-note-on-notation",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "a note on notation",
+    "text": "a note on notation\nThroughout the semester, we will try to be consistent with mathematical notation, e.g.\n\n\\(y\\) = response/dependent variable\n\\(x\\) = predictor/independent variable\n\\(\\mu\\) = population mean\n\\(\\sigma\\) = population standard deviation\n\\(\\beta\\) = model parameter (i.e., intercept/slope)\n\n\nTo the extent possible, these follow conventions used in many textbooks/papers (but there is a lot of variation between authors)\n\n\nRemember that these are just symbols - you could replace them with other symbols (e.g., emoji) and it would not change their interpretation!"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#parameter-interpretation-1",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#parameter-interpretation-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "parameter interpretation",
+    "text": "parameter interpretation\n\\(\\large \\beta_0\\) = intercept\n\nThe expected value of the response variable, \\(\\large E[y_i]\\), when all predictors \\(=0\\)\n\n\\(\\large \\beta_n\\) = slope\n\nThe expected change in the response variable for a one unit change in the associated predictor variable \\(\\large x_n\\)\n\n\nMathematically, the interpretation of the intercept and slope(s) is always the same\n\n\nEcologically, the interpretation will depend on:\n\nthe structure of the predictor variables (continuous vs. categorical)\nthe units of the predictor variables (e.g., scaled vs unscaled)\nthe inclusion of interaction terms We will discuss each of these scenarios in detail as the semester progresses"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#the-linear-model-3",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#the-linear-model-3",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\nA “simple” example\n\\[\\underbrace{\\LARGE E[y_i] = -2 + 0.5 \\times x_i}_{Deterministic}\\]\n\n\\[\\underbrace{\\LARGE y_i \\sim normal(E[y_i], \\sigma=0.25)}_{Stochastic}\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#the-linear-model-4",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#the-linear-model-4",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "the linear model",
+    "text": "the linear model\nA more complex model\n\\[\\large y_i = \\beta_0 + \\beta_1x_{i1} + \\beta_2x_{i2} + ... + \\beta_px_{ip} + \\epsilon_i\\]\n\nEach \\(\\beta\\) coefficient is the effect of a specific predictor variables \\(x\\)\nPredictor variables may be continuous, binary, factors, or a combination\nWe will cover more complex models (and interpretation) later"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#is-this-a-linear-model",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#is-this-a-linear-model",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "is this a linear model?",
+    "text": "is this a linear model?\n\\[\\Large y = 20 + 0.5x - 0.3x^2\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#residuals",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#residuals",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "residuals",
+    "text": "residuals\nOne concept we will talk about a lot is residuals, i.e., \\(\\Large \\epsilon_i\\)\n\n\nResiduals are the difference between the observed values \\(\\large y_i\\) and the predicted values \\(\\large E[y_i]\\) — how much variation in \\(\\large y\\) is explained by \\(\\large x\\)?"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#residuals-1",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#residuals-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "residuals",
+    "text": "residuals\nOne concept we will talk about a lot is residuals, i.e., \\(\\Large \\epsilon_i\\)\n\nResiduals are the difference between the observed values \\(\\large y_i\\) and the predicted values \\(\\large E[y_i]\\) — how much variation in \\(\\large y\\) is explained by \\(\\large x\\)?\n\n\n\nParameters are generally estimated by finding values that minimize residual error (e.g., ordinary least squares)\nUseful for assessing whether data violate model assumptions"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions-1",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions",
+    "text": "assumptions"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions-2",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions",
+    "text": "assumptions\nEVERY model has assumptions\n\nAssumptions are necessary to simplify real world to workable model\nIf your data violate the assumptions of your model, inferences may be invalid\nAlways know (and test) the assumptions of your model1\n\nYou know what happens when you assume…"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#linear-model-assumptions",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#linear-model-assumptions",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "linear model assumptions",
+    "text": "linear model assumptions\n\n\\[\\Large y_i = \\beta_0 + \\beta_1 x_i + \\epsilon_i\\]\n\\[\\Large \\epsilon_i \\sim normal(0, \\sigma)\\]\n\n\nLinearity: The relationship between \\(x\\) and \\(y\\) is linear\nNormality: The residuals are normally distributed1\nHomogeneity: The residuals have a constant variance at every level of \\(x\\)\nIndependence: The residuals are independent (i.e., uncorrelated with each other)\n\nNote that these assumptions apply to the residuals, not the data!"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions-3",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions-3",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions",
+    "text": "assumptions\n\\[\\large y_i = \\beta_0 + \\beta_1x_i + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim normal(0, \\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions---linearity",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions---linearity",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - linearity",
+    "text": "assumptions - linearity\n\\[\\large y_i = \\color{#D47500}{\\beta_0 + \\beta_1x_i} + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim normal(0, \\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions---normality",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions---normality",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - normality",
+    "text": "assumptions - normality\n\\[\\large y_i = \\color{#D47500}{\\beta_0 + \\beta_1x_i} + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim \\color{#3CB521}{normal}(0, \\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions---homogeneity",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions---homogeneity",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - homogeneity",
+    "text": "assumptions - homogeneity\n\\[\\large y_i = \\color{#D47500}{\\beta_0 + \\beta_1x_i} + \\epsilon_i\\] \\[\\large \\epsilon_i \\sim \\color{#3CB521}{normal}(0, \\color{#CD0200}\\sigma)\\]"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions---normality-1",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions---normality-1",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - normality",
+    "text": "assumptions - normality\nRemember that the normality assumption applies to the residuals not the data.\n\nIn the data below, the histogram of the response variable y shows that the data is clearly not normally distributed"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions---normality-2",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#assumptions---normality-2",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "assumptions - normality",
+    "text": "assumptions - normality\nRemember that the normality assumption applies to the residuals not the data.\nIn the data below, the histogram of the response variable y shows that the data is clearly not normally distributed\nBut a histogram of the residuals (green lines) shows that they are normal (or at least close)"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#linear-models",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#linear-models",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "linear models",
+    "text": "linear models\nVery flexible\n\nPredictor(s) can take different forms (binary, continuous, factor)\nCan contain many predictors\nCan model non-linear relationships\n\n\nLink different “tests” (e.g., t-tests, ANOVA, ANCOVA, linear regression)\n\n\nCan be used for different statistical goals\n\nEstimating unknown parameters\nTesting hypotheses\nDescribing stochastic systems\nMaking predictions that account for uncertainty"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#statistical-inference",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#statistical-inference",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "statistical inference",
+    "text": "statistical inference\nLinear models allow us to quantify relationships between variables\n\nGenerally, models are fit to samples\n\nThe intercept and slope values correspond to the observed response and predictor values\nIf we repeated our study, the sampled values would change and so would the intercept/slope values\n\n\n\nWe’re generally interested in the population, not the sample\n\nThe intercept and slope values fitted to a particular sample are considered estimates of the true population values\n\n\n\nInference about populations requires quantifying how well our estimated values represent the true population values (which we can never know)\n\nThis will be the topic of the next lecture (and a theme we will revisit throughout the semester)"
+  },
+  {
+    "objectID": "lectures/02_intro_to_lm/02_intro_to_lm.html#looking-ahead",
+    "href": "lectures/02_intro_to_lm/02_intro_to_lm.html#looking-ahead",
+    "title": "LECTURE 2: introduction to linear models",
+    "section": "looking ahead",
+    "text": "looking ahead\n\nNext time: Principles of statistical inference\n\nReading: Feiberg chp. 1.6-1.8"
   }
 ]
