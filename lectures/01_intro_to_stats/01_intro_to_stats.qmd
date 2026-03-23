@@ -92,7 +92,7 @@ $$Statistics = Information + Uncertainty$$
 
 :::: {.columns}
 
-::: {.column width="50%"}
+::: {.fragment .column width="50%"}
 **Inductive reasoning**
 
 - Often attributed to Francis Bacon (and others)
@@ -104,7 +104,7 @@ $$Statistics = Information + Uncertainty$$
 - Example: I've only seen birds that fly :: all birds can fly
 :::
 
-::: {.column width="50%"}
+::: {. fragment.column width="50%"}
 **Deductive reasoning**
 
 - Formalized by Karl Popper

@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.7.32">
 
   <meta name="author" content=" Fall 2026">
-  <title>FANR6750 – LECTURE 1: introduction to statistics</title>
+  <title>FANR6750 – LECTURE 3: principles of statistical inference</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -128,7 +128,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">LECTURE 1: introduction to statistics</h1>
+  <h1 class="title">LECTURE 3: principles of statistical inference</h1>
   <p class="subtitle">FANR 6750 (Experimental design)</p>
 
 <div class="quarto-title-authors">
@@ -143,311 +143,384 @@
 <section id="outline" class="slide level2 inverse">
 <h2>outline</h2>
 <p><br></p>
-<blockquote>
-<h4 id="what-is-statistics">1) What is statistics?</h4>
-</blockquote>
-<p><br></p>
-<blockquote>
-<h4 id="statistics-and-the-scientific-method">2) Statistics and the scientific method</h4>
-</blockquote>
-<p><br></p>
-<blockquote>
-<h4 id="populations-vs.-samples">3) Populations vs.&nbsp;samples</h4>
-</blockquote>
-</section>
-<section id="what-is-statistics-1" class="slide level2">
-<h2>what is statistics?</h2>
-<p><br> <br></p>
-<blockquote>
-<p>The study of the collection, analysis, interpretation, presentation, and organization of data (Dodge 2006)</p>
-</blockquote>
+<h4 id="uncertainty-in-statistical-models">1) Uncertainty in statistical models</h4>
 <p><br></p>
 <div class="fragment">
+<h4 id="sampling-distributions">2) Sampling distributions</h4>
 <p><br></p>
-<blockquote>
-<p>The science of learning from data in the face of <strong>uncertainty</strong> (various)</p>
-</blockquote>
 </div>
 <div class="fragment">
+<h4 id="standard-error">3) Standard error</h4>
 <p><br></p>
-<p><span class="math display">\[Statistics = Information + Uncertainty\]</span></p>
+</div>
+<div class="fragment">
+<h4 id="confidence-intervals">4) Confidence intervals</h4>
+<p><br></p>
 </div>
 </section>
-<section id="why-do-we-need-statistics" class="slide level2">
-<h2>why do we need statistics?</h2>
-<h3 id="common-tasks">Common tasks</h3>
+<section id="section" class="slide level2 inverse">
+<h2></h2>
+<h3 id="statistics-information-uncertainty">Statistics = Information + Uncertainty</h3>
+<h4 id="in-the-last-lecture-we-learned-that-models-allow-us-to-quantify-relationships-between-variables-based-on-samples">In the last lecture, we learned that models allow us to quantify relationships between variables based on <strong>samples</strong></h4>
+<p><br></p>
+<div class="fragment">
+<h4 id="we-also-learned-that-sampling-uncertainty">We also learned that sampling = uncertainty</h4>
 <ul>
-<li class="fragment"><p>Identify relationships between variables <br></p></li>
-<li class="fragment"><p>Estimate unknown parameters <br></p></li>
-<li class="fragment"><p>Test hypotheses <br></p></li>
-<li class="fragment"><p>Describe stochastic systems <br></p></li>
-<li class="fragment"><p>Make predictions that account for uncertainty</p></li>
+<li>Parameter estimates from samples will never exactly equal population parameters</li>
 </ul>
+<p><br></p>
+</div>
+<div class="fragment">
+<h4 id="inference-about-populations-requires-quantifying-the-magnitude-of-this-uncertainty">Inference about populations requires quantifying the magnitude of this uncertainty</h4>
+<p><br></p>
+</div>
+<div class="fragment">
+<h4 id="but-how-can-we-measure-how-far-our-estimates-are-from-the-population-parameters-if-we-dont-know-the-population-parameters">But how can we measure how far our estimates are from the population parameters if we don’t know the population parameters?</h4>
+</div>
 </section>
-<section id="stats-and-the-scientific-method" class="slide level2">
-<h2>stats and the scientific method</h2>
-<h4 id="ways-of-learning">Ways of learning</h4>
-<div class="columns">
-<div class="fragment column" style="width:50%;">
-<p><strong>Inductive reasoning</strong></p>
+<section id="parameters-vs-statistics" class="slide level2">
+<h2>parameters vs statistics</h2>
+<div class="fragment">
+<h3 id="parameters">Parameters</h3>
 <ul>
-<li><p>Often attributed to Francis Bacon (and others)</p></li>
-<li><p>Consistent observations -&gt; general principle</p></li>
-<li><p>Problem: “confirmatory” observations can’t disprove theory</p></li>
-<li><p>Example: I’ve only seen birds that fly :: all birds can fly</p></li>
-</ul>
-</div><p>::: {. fragment.column width=“50%”} <strong>Deductive reasoning</strong></p><ul>
-<li><p>Formalized by Karl Popper</p></li>
-<li><p>Theory -&gt; predictions -&gt; observations</p></li>
-<li><p>Based on <em>falsification</em></p></li>
-<li><p>Example: All birds can fly :: penguins are birds :: penguins can fly</p></li>
+<li>Attributes of the population
+<ul>
+<li>Mean ( <span class="math inline">\(\mu\)</span> )<br>
+</li>
+<li>Variance ( <span class="math inline">\(\sigma^2\)</span> )<br>
+</li>
+<li>Standard deviation ( <span class="math inline">\(\sigma\)</span> )</li>
+</ul></li>
 </ul>
 </div>
-<p>::::</p>
-</section>
-<section id="stats-and-the-scientific-method-1" class="slide level2">
-<h2>stats and the scientific method</h2>
-<h4 id="ways-of-learning-real-world">Ways of learning (real world)</h4>
-<ol type="1">
-<li>Pattern identification (i.e., exploratory studies)
+<div class="fragment">
 <ul>
-<li>Anecdotes</li>
-<li>Correlations/visual analysis</li>
-<li>Exploratory modeling (i.e., fishing)</li>
-</ul></li>
-</ol>
-</section>
-<section id="stats-and-the-scientific-method-2" class="slide level2">
-<h2>stats and the scientific method</h2>
-<h4 id="ways-of-learning-real-world-1">Ways of learning (real world)</h4>
-<ol type="1">
-<li><p>Pattern identification (i.e., exploratory studies)</p></li>
-<li><p>Hypothesis formation</p>
+<li>Usually unknown</li>
+<li>Parameters are the quantities of interest<br>
+</li>
+</ul>
+</div>
+<div class="fragment">
+<h3 id="statistics">Statistics</h3>
 <ul>
-<li>Formed from patterns</li>
-<li>Should focus on mechanisms (“because”, “controls”, “adapted to”)</li>
-<li>Should be falsifiable</li>
-<li>Ideally &gt; 1 alternatives</li>
-</ul></li>
-</ol>
-</section>
-<section id="stats-and-the-scientific-method-3" class="slide level2">
-<h2>stats and the scientific method</h2>
-<h4 id="ways-of-learning-real-world-2">Ways of learning (real world)</h4>
-<ol type="1">
-<li><p>Pattern identification (i.e., exploratory studies)</p></li>
-<li><p>Hypothesis formation</p></li>
-<li><p>Predictions</p>
+<li>Attributes of the sample
 <ul>
-<li>If the hypothesis is true, what do you expect to see?</li>
-<li>Focus on things <strong>we can measure</strong></li>
-<li>More = better</li>
-<li>“associated”, “correlated”, “greater/less than”</li>
-</ul></li>
-</ol>
-</section>
-<section id="stats-and-the-scientific-method-4" class="slide level2">
-<h2>stats and the scientific method</h2>
-<h4 id="ways-of-learning-real-world-3">Ways of learning (real world)</h4>
-<ol type="1">
-<li><p>Pattern identification (i.e., exploratory studies)</p></li>
-<li><p>Hypothesis formation</p></li>
-<li><p>Predictions</p></li>
-<li><p>Data collection</p>
-<ul>
-<li>Can be observational but ideally manipulative experiment</li>
-<li>Sampling must be <em>designed</em> to answer question</li>
-</ul></li>
-</ol>
-</section>
-<section id="stats-and-the-scientific-method-5" class="slide level2">
-<h2>stats and the scientific method</h2>
-<h4 id="ways-of-learning-real-world-4">Ways of learning (real world)</h4>
-<ol type="1">
-<li><p>Pattern identification (i.e., exploratory studies)</p></li>
-<li><p>Hypothesis formation</p></li>
-<li><p>Predictions</p></li>
-<li><p>Data collection</p></li>
-<li><p>Models and testing</p>
-<ul>
-<li>Model = mathematical abstraction of hypothesis</li>
-<li>Model used to “confront” hypothesis with data (via predictions)</li>
-<li>Draw conclusions: Does data support hypothesis?</li>
-</ul></li>
-</ol>
-</section>
-<section id="stats-and-the-scientific-method-6" class="slide level2">
-<h2>stats and the scientific method</h2>
-<h4 id="example">Example</h4>
-<ol type="1">
-<li class="fragment"><p><strong>Pattern</strong>: Trees at higher elevations are shorter than at low elevations</p></li>
-<li class="fragment"><p><strong>Hypotheses</strong></p></li>
-<li class="fragment"><p><strong>Predictions</strong></p></li>
-<li class="fragment"><p><strong>Data collection</strong><sup>1</sup></p></li>
-<li class="fragment"><p><strong>Models</strong><sup>2</sup></p></li>
-</ol>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>We’ll get to these!</p></li><li id="fn2"><p>We’ll get to these!</p></li></ol></aside></section>
-<section id="causal-inference" class="slide level2 inverse center-slide" data-background-color="#2e2e2e">
-<h2>causal inference</h2>
-</section>
-<section id="causal-inference-1" class="slide level2">
-<h2>causal inference</h2>
-<h4 id="often-we-want-to-know-whether-x-influences-y">Often, we want to know whether <span class="math inline">\(x\)</span> influences <span class="math inline">\(y\)</span></h4>
-<ul>
-<li class="fragment"><p>In other words, if we change <span class="math inline">\(x\)</span>, will <span class="math inline">\(y\)</span> change also (and by how much)?</p></li>
-<li class="fragment"><p>Harder than it seems! Why?</p></li>
-<li class="fragment"><p>Generally restricted to <em>manipulative</em> experiments</p>
-<ul>
-<li class="fragment">Well-designed experiments ensure that “treatment assignment is independent of the potential outcomes” (Gelman et al.&nbsp;2021)</li>
-</ul></li>
-<li class="fragment"><p>Increasing interest in causal inference from observational studies</p>
-<ul>
-<li class="fragment">This is something we will discuss later in the semester</li>
+<li>Mean ( <span class="math inline">\(\bar{y}\)</span> or <span class="math inline">\(\hat{\mu}\)</span> )<br>
+</li>
+<li>Variance ( <span class="math inline">\(s^2\)</span> or <span class="math inline">\(\hat{\sigma}^2\)</span> )<br>
+</li>
+<li>Standard deviation ( <span class="math inline">\(s\)</span> or <span class="math inline">\(\hat{\sigma}\)</span> )</li>
 </ul></li>
 </ul>
-</section>
-<section id="uncertainty" class="slide level2 inverse center-slide" data-background-color="#2e2e2e">
-<h2>uncertainty</h2>
-</section>
-<section id="populations-vs-samples" class="slide level2">
-<h2>populations vs samples</h2>
-<h4 id="hypothesis-new-plant-variety-is-more-disease-resistant-than-current-variety"><strong>Hypothesis</strong>: New plant variety is more disease resistant than current variety</h4>
-
-<img data-src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Hemileia_vastatrix_-_coffee_leaf_rust.jpg" class="quarto-figure quarto-figure-center r-stretch" style="width:35.0%"><h4 id="prediction-disease-prevalence-is-lower-in-new-variety-than-in-current-variety"><strong>Prediction</strong>: Disease prevalence is lower in new variety than in current variety</h4>
-<h3 id="how-can-we-determine-whether-the-hypothesis-is-true">How can we determine whether the hypothesis is true?</h3>
-</section>
-<section id="populations-vs-samples-1" class="slide level2 inverse" data-background-color="#2e2e2e">
-<h2>populations vs samples</h2>
-<h4 id="population">Population</h4>
+</div>
+<div class="fragment">
 <ul>
-<li><p>A collection of subjects of interest</p></li>
-<li><p>Often, a biologically meaningful unit</p></li>
-<li><p>Sometimes a process of interest</p></li>
+<li>Often treated as estimates of parameters</li>
 </ul>
-<h3 id="question-what-is-the-population-in-our-example">Question: What is the population in our example?</h3>
-</section>
-<section id="population-1" class="slide level2">
-<h2>population</h2>
-
-<img data-src="01_intro_to_stats_files/figure-revealjs/pop-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"><h4 id="note">Note:</h4>
-<ol type="1">
-<li><p>These are <strong>the</strong> <em>populations</em></p></li>
-<li><p>There is <strong>variation</strong> within and among populations, but:</p></li>
-<li><p>The hypothesis is correct (mean prevalence is lower in new vs.&nbsp;current variety)</p></li>
-</ol>
-</section>
-<section id="populations-vs-samples-2" class="slide level2 inverse" data-background-color="#2e2e2e">
-<h2>populations vs samples</h2>
-<h4 id="population-2">Population</h4>
-<ul>
-<li><p>A collection of subjects of interest</p></li>
-<li><p>Often, a biologically meaningful unit</p></li>
-<li><p>Sometimes a process of interest</p></li>
-</ul>
-<h4 id="sample">Sample</h4>
-<ul>
-<li><p>A finite subset of the population of interest, i.e.&nbsp;the data we collect</p></li>
-<li><p>Samples allow us to draw inferences about the population</p></li>
-<li><p>Good samples are:</p>
-<ul>
-<li>Random</li>
-<li>Representative</li>
-<li>Sufficiently large</li>
-</ul></li>
-</ul>
-</section>
-<section id="sample-1" class="slide level2">
-<h2>sample</h2>
-
-<img data-src="01_intro_to_stats_files/figure-revealjs/samp1-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
-<section id="sample-2" class="slide level2">
-<h2>sample</h2>
-
-<img data-src="01_intro_to_stats_files/figure-revealjs/samp_lab-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"><h4 id="note-1">Note:</h4>
-<ol type="1">
-<li><p>These are <em>samples</em></p></li>
-<li><p>The sample means are our best estimates of the population means</p></li>
-<li><p>But the sample means will never equal the population means (uncertainty!)</p></li>
-</ol>
-</section>
-<section id="summary-statistics" class="slide level2">
-<h2>summary statistics</h2>
-<h3 id="measures-of-central-tendency">Measures of central tendency</h3>
-<ul>
-<li>Sample mean</li>
-</ul>
-<p><span class="math display">\[\large \bar{y} = \frac{\sum_{i=1}^n y_i}{n}\]</span></p>
-<p><br></p>
-<ul>
-<li>Median</li>
-</ul>
-<p><br></p>
-<ul>
-<li>Mode</li>
-</ul>
-</section>
-<section id="summary-statistics-1" class="slide level2">
-<h2>summary statistics</h2>
-<h3 id="measures-of-dispersion">Measures of dispersion</h3>
-<ul>
-<li>Sample variance</li>
-</ul>
-<p><span class="math display">\[\large s^2 = \frac{\sum_{i=1}^n (y_i - \bar{y})^2}{n-1}\]</span></p>
-<p><br></p>
-<ul>
-<li>Sample standard deviation</li>
-</ul>
-<p><span class="math display">\[\large s = \sqrt{s^2}\]</span></p>
-<p><br></p>
-<ul>
-<li>Range</li>
-</ul>
+</div>
 </section>
 <section id="sampling-error" class="slide level2">
 <h2>sampling error</h2>
-<p>Every sample has a different mean (and standard deviation) - more uncertainty!</p>
+<h4 id="question-what-is-the-probablity-that-large-bary-mu">Question: What is the probablity that <span class="math inline">\(\large \bar{y} = \mu\)</span>?</h4>
+<div class="fragment">
+<ul>
+<li>Answer: 0 (why?)</li>
+</ul>
+</div>
+<div class="fragment">
+<h4 id="fact-the-sample-mean-will-never-equal-the-population-mean">Fact: The sample mean will never equal the population mean</h4>
+</div>
+<div class="fragment">
+<ul>
+<li>The difference between <span class="math inline">\(\large \bar{y}\)</span> and <span class="math inline">\(\large \mu\)</span> is <strong>sampling error</strong></li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>Sampling error can be reduced but it cannot be eliminated</li>
+</ul>
+</div>
+<div class="fragment">
+<h4 id="problem-if-we-dont-know-large-mu-how-do-we-know-how-far-our-estimate-is-from-the-true-value">Problem: If we don’t know <span class="math inline">\(\large \mu\)</span>, how do we know how far our estimate is from the true value?</h4>
+</div>
+<div class="fragment">
+<ul>
+<li>Answer: We don’t (for any specific sample)</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>BUT…we do know how far, on average, a sample of size <span class="math inline">\(n\)</span> will be from the true value</li>
+</ul>
+</div>
+</section>
+<section id="the-sampling-distribution" class="slide level2 inverse center">
+<h2>the sampling distribution</h2>
+</section>
+<section id="a-single-sample-n-25" class="slide level2">
+<h2>a single sample (n = 25)</h2>
+<p><br></p>
+
+<img data-src="03_inference_files/figure-revealjs/sampling-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
+<section id="standard-deviation" class="slide level2">
+<h2>standard deviation</h2>
+<p><br></p>
+
+<img data-src="03_inference_files/figure-revealjs/sampling_sd-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"><div class="fragment">
+<p><strong>Remember</strong> - this error bar is the standard deviation <strong>of our sample</strong>!</p>
+</div>
+</section>
+<section id="standard-deviation-1" class="slide level2">
+<h2>standard deviation</h2>
+<p>But remember, what we really want to know is, how far is the sample mean from the true parameter value?</p>
+<div class="fragment">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="01_intro_to_stats_files/figure-revealjs/samp1_again-1.png" class="quarto-figure quarto-figure-center" width="864"></p>
+<p><img data-src="03_inference_files/figure-revealjs/sample_se-1.png" class="quarto-figure quarto-figure-center" width="864"></p>
 </figure>
 </div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="01_intro_to_stats_files/figure-revealjs/samp2-1.png" class="quarto-figure quarto-figure-center" width="864"></p>
-</figure>
 </div>
 </div>
 </div>
 </section>
-<section id="sampling-uncertainty" class="slide level2">
-<h2>sampling = uncertainty</h2>
-<h4 id="because-populations-usually-cannot-be-measured-sampling-is-essential">Because populations (usually) cannot be measured, sampling is essential</h4>
-<h4 id="but-sampling-is-inherently-stochastic">But sampling is inherently <em>stochastic</em></h4>
-<ul>
-<li><p>sampling produces uncertainty</p></li>
-<li><p>unavoidable (but that’s ok!)</p></li>
-</ul>
+<section id="the-sampling-distribution-1" class="slide level2">
+<h2>the sampling distribution</h2>
+<p>Imagine we could repeat our experiment many, many times</p>
+
+<img data-src="samples.gif" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="the-sampling-distribution-2" class="slide level2">
+<h2>the sampling distribution</h2>
+<p>The collection of sample means is referred to as the <strong>sampling distribution</strong></p>
+
+<img data-src="03_inference_files/figure-revealjs/sampling_dist, -1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
+<section id="the-sampling-distribution-3" class="slide level2">
+<h2>the sampling distribution</h2>
+<p>The collection of sample means is referred to as the <strong>sampling distribution</strong></p>
+
+<img data-src="03_inference_files/figure-revealjs/sampling_dist2, -1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
+<section id="the-sampling-distribution-4" class="slide level2">
+<h2>the sampling distribution</h2>
+<p>The standard deviation <em>of the sampling distribution</em> measures, on average, how far each sample mean from the true population value</p>
+
+<img data-src="03_inference_files/figure-revealjs/sampling_se, -1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
+<section id="the-sampling-distribution-5" class="slide level2">
+<h2>the sampling distribution</h2>
+<h4 id="we-rarely-repeat-experiments">We rarely repeat experiments</h4>
+<p><br></p>
+<div class="fragment">
+<h4 id="but-we-can-estimate-the-standard-deviation-of-the-sampling-distribution-from-a-single-sample">But we can estimate the standard deviation of the sampling distribution from a single sample!</h4>
+<p><br></p>
+</div>
+<div class="fragment">
+<h4 id="how-the-central-limit-theorem">How? The <strong>central limit theorem</strong>!</h4>
+</div>
+</section>
+<section id="central-limit-theorem" class="slide level2 inverse">
+<h2>central limit theorem</h2>
 <blockquote>
-<p>Doubt is not a pleasant condition, but certainty is absurd – Voltaire</p>
+<p>For a population with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, the sampling distribution will be (approximately) normally distributed with mean <span class="math inline">\(\mu_X = \mu\)</span> and standard deviation <span class="math inline">\(\sigma_X = \sigma/\sqrt{n}\)</span>.</p>
 </blockquote>
-<h4 id="statistics-is-what-allows-us-to-learn-about-the-population-using-samples-in-the-face-of-uncertainty">Statistics is what allows us to learn about the <strong>population</strong> using <strong>samples</strong> in the face of <strong>uncertainty</strong></h4>
+
+<img data-src="03_inference_files/figure-revealjs/clt-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
+<section id="central-limit-theorem-1" class="slide level2 inverse">
+<h2>central limit theorem</h2>
+<blockquote>
+<p>For a population with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, the sampling distribution will be (approximately) normally distributed with mean <span class="math inline">\(\mu_X = \mu\)</span> and standard deviation <span class="math inline">\(\sigma_X = \sigma/\sqrt{n}\)</span>.</p>
+</blockquote>
+<p>This might seem academic but it is hugely important</p>
 <ul>
-<li><p>the primary goal of this class is for you to understand how to make robust inferences that account for uncertainty (and the limitations of those inferences)</p></li>
-<li><p>we will return to this basic concept (sampling error) many times this semester</p></li>
+<li><p>given sufficient sample size ( <span class="math inline">\(\sim n &gt; 30\)</span> ), we <em>know</em> the sampling distribution will be normally distributed without needing to repeat the experiment</p></li>
+<li><p>although we never know the true population mean <span class="math inline">\(\mu\)</span>, we can estimate how far (on average) our sample mean is likely to be away from it (that’s what the standard deviation is!)</p></li>
+<li><p>the CLT will hold true regardless of whether the source population is normal!</p></li>
+<li><p><a href="http://www.ltcconline.net/greenl/java/Statistics/clt/cltsimulation.html">Demonstration using simulations</a></p></li>
+</ul>
+</section>
+<section id="standard-error-1" class="slide level2">
+<h2>standard error</h2>
+<h4 id="the-standard-deviation-of-the-sampling-distribution-is-called-the-standard-error-of-the-mean-or-just-the-standard-error">The standard deviation of the sampling distribution is called the <strong>standard error of the mean</strong> (or just the standard error)</h4>
+<p><span class="math display">\[\Large SE =\frac{s}{\sqrt{n}}\]</span> - Standard error tells us how far (on average) our sample mean is likely to be from the population mean</p>
+<ul>
+<li><p>It is the key to estimating uncertainty in our estimates</p></li>
+<li><p>Smaller is better</p></li>
+</ul>
+</section>
+<section id="descriptive-vs-inferential-statistics" class="slide level2 inverse">
+<h2>descriptive vs inferential statistics</h2>
+<blockquote>
+<p>The sample standard deviation ( <span class="math inline">\(s\)</span> ) is a descriptive statistic</p>
+</blockquote>
+<p><span class="math display">\[\Large s = \sqrt{s^2}\]</span></p>
+<ul>
+<li><span class="math inline">\(\large s\)</span> tells us how far, on average, each observation <span class="math inline">\(\large y\)</span> is from the sample mean <span class="math inline">\(\large \bar{y}\)</span></li>
+</ul>
+<p><br></p>
+<div class="fragment">
+<blockquote>
+<p>The standard error (SE) is an inferential statistic</p>
+</blockquote>
+<p><span class="math display">\[\Large SE = \frac{s}{\sqrt{n}}\]</span> - <span class="math inline">\(\large SE\)</span> tells us how far, on average, each sample mean <span class="math inline">\(\large \bar{y}\)</span> is from the population mean <span class="math inline">\(\large \mu\)</span></p>
+</div>
+</section>
+<section id="quick-review" class="slide level2">
+<h2>quick review</h2>
+<ol type="1">
+<li>sampling is a stochastic process</li>
+</ol>
+<ul>
+<li>sample statistics (mean, standard deviation) will vary from sample to sample</li>
+</ul>
+<div class="fragment">
+<ol start="2" type="1">
+<li>the sampling distribution is an (imaginary) collection of statistics from repeated samples of the same population</li>
+</ol>
+<ul>
+<li>assumes that the procedure for generating samples (e.g., sample size) is identical</li>
+</ul>
+</div>
+<div class="fragment">
+<ol start="3" type="1">
+<li>Standard error is the standard deviation of the sampling distribution</li>
+</ol>
+<ul>
+<li><p><span class="math inline">\(\large SE =  s/\sqrt{n}\)</span></p></li>
+<li><p>measures how far, on average, sample statistics are from the true population value (smaller is better!)</p></li>
+</ul>
+</div>
+<div class="fragment">
+<h4 id="we-will-explore-these-concepts-in-lab-using-r-to-generate-and-visualize-repeated-samples-calculate-properties-of-the-sampling-distribution">We will explore these concepts in lab, using <code>R</code> to generate and visualize repeated samples, calculate properties of the sampling distribution</h4>
+</div>
+</section>
+<section id="confidence-intervals-1" class="slide level2 inverse">
+<h2>confidence intervals</h2>
+</section>
+<section id="confidence-intervals-2" class="slide level2">
+<h2>confidence intervals</h2>
+<h4 id="uncertainty-is-commonly-reported-using-confidence-intervals">Uncertainty is commonly reported using <em>confidence intervals</em></h4>
+<ul>
+<li>this is a concept that seems intuitive but in reality it is commonly misunderstood</li>
+</ul>
+<div class="inverse">
+<blockquote>
+<p>If we calculated a <span class="math inline">\(x\)</span>% confidence interval from repeated samples of the population, about <span class="math inline">\(x\)</span>% of those confidence intervals would contain the true population mean</p>
+</blockquote>
+</div>
+<div class="inverse">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="03_inference_files/figure-revealjs/ci-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="calculating-confidence-intervals" class="slide level2">
+<h2>calculating confidence intervals</h2>
+<div class="fragment">
+<p>95% of a normal distribution falls between -1.96 and 1.96 standard deviation of the mean<sup>1</sup></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="03_inference_files/figure-revealjs/unnamed-chunk-1-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p>Question - if this is the sampling distribution, what is the standard deviation? What is our estimate of the mean?</p>
+</div>
+<div class="fragment">
+<p>95% CI = <span class="math inline">\(\large \bar{y} \pm 1.96 \times SE\)</span></p>
+</div>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>Can easily be calculated for other percentages using <code>R</code></p></li></ol></aside></section>
+<section id="confidence-intervals-3" class="slide level2">
+<h2>confidence intervals</h2>
+<h4 id="what-a-confidence-interval-is-not">What a confidence interval is <strong>NOT</strong>:</h4>
+<ul>
+<li>“there is an <span class="math inline">\(x\)</span>% probability that the true population parameter is inside this interval”</li>
+</ul>
+<div class="fragment">
+<h4 id="the-true-population-value-is-considered-a-fixed-parameter">The true population value is considered a <em>fixed</em> parameter</h4>
+</div>
+<div class="fragment">
+<h4 id="before-we-collect-our-sample-the-ends-of-the-confidence-intervals-are-considered-random-variables-i.e.-their-value-will-change-each-time-we-collect-a-sample">Before we collect our sample, the ends of the confidence intervals are considered <em>random variables</em> (i.e., their value will change each time we collect a sample)</h4>
+<ul>
+<li>Like all random variables, we can describe the long-term (i.e., asymptotic) expectations of confidence intervals if we repeated the experiment many times</li>
+</ul>
+</div>
+<div class="fragment">
+<h4 id="after-we-collect-our-sample-the-confidence-interval-either-does-or-does-not-contain-the-true-population-value">After we collect our sample, the confidence interval either <em>does</em> or <em>does not</em> contain the true population value</h4>
+</div>
+</section>
+<section id="confidence-intervals-4" class="slide level2">
+<h2>confidence intervals</h2>
+<div class="columns">
+<div class="fragment column" style="width:50%;">
+<p>Think of confidence intervals like trying to determine where the stake is in a game of horseshoes by looking at where the horseshoes landed</p>
+<ul>
+<li><p>The true parameter (i.e., the stake) does not move</p></li>
+<li><p>Each horseshoe is the CI based on a single sample (i.e., one throw)</p></li>
+<li><p>Before a horseshoe is thrown, there is some probability it will land around the stake</p></li>
+<li><p>After it is thrown, it is either around the stake or not</p></li>
+</ul>
+<p>or…</p>
+</div><div class="fragment column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@dunk/video/7218281145279220997" data-video-id="7218281145279220997" data-embed-from="oembed" style="max-width:605px; min-width:325px;"> <section> <a target="_blank" title="@dunk" href="https://www.tiktok.com/@dunk?refer=embed">@dunk</a> <p>Tag someone you could beat in reverse basketball 😭 (@creationsross)</p> <a target="_blank" title="♬ original sound - Chizi" href="https://www.tiktok.com/music/original-sound-7212359167532075782?refer=embed">♬ original sound - Chizi</a> </section> </blockquote> 
+<!--SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
+<script async="" data-external="1" src="https://www.tiktok.com/embed.js"></script>
+<style>blockquote.tiktok-embed {border:unset;padding:unset;}</style>
+<!--/SHINY.SINGLETON[e123f97525dee37cc53ba5b9f17fd3caf1b72842]-->
+</div>
+</div>
+</div></div>
+</section>
+<section id="confidence-intervals-5" class="slide level2">
+<h2>confidence intervals</h2>
+<p>I like to think of confidence intervals as providing a range of values that, based on our sample, are consistent with the population mean (<em>plausible interval</em>?)</p>
+<ul>
+<li>If want to be more confident that the CI contains the parameter (e.g., 50% CI vs 95% CI), what happens to the size of the interval?</li>
+</ul>
+<div class="fragment">
+<p>It’s worth remembering that 1 - <span class="math inline">\(x\)</span>% of the time, the confidence interval we calculate from our sample <strong>will not</strong> include the true population mean.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="03_inference_files/figure-revealjs/ci2-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Of course, with our real data, we have no way of knowing if our sample is one of the black points on this graph :grinning: or one of the red dots :sob:</p>
+</div>
+</section>
+<section id="for-thought" class="slide level2">
+<h2>for thought</h2>
+<h4 id="if-our-goal-is-generally-to-decrease-uncertainty-in-parameter-estimates">If our goal is generally to decrease uncertainty in parameter estimates:</h4>
+<div class="fragment">
+<ul>
+<li>What factors determine the magnitude of our uncertainty estimates (SE or confidence intervals)?</li>
+</ul>
+<p><br></p>
+</div>
+<ul>
+<li>What can we, as researchers, control when we design experiments to minimize uncertainty? What can we not control?</li>
 </ul>
 </section>
 <section id="looking-ahead" class="slide level2">
 <h2>looking ahead</h2>
 <p><br></p>
-<h3 id="next-time-introduction-to-linear-models"><strong>Next time</strong>: Introduction to linear models</h3>
+<h3 id="next-time-principles-of-experimental-design"><strong>Next time</strong>: Principles of Experimental Design</h3>
 <p><br></p>
-<h3 id="reading-fieberg-chp.-1.2-1.4"><strong>Reading</strong>: <a href="https://statistics4ecologists-v3.netlify.app/01-linearregression">Fieberg chp. 1.2-1.4</a></h3>
+<h3 id="reading-quinn-chp.-7.1-7.2"><strong>Reading</strong>: <a href="https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&amp;%20Keough.pdf#page=175.08">Quinn chp. 7.1-7.2</a></h3>
 
 
 </section>

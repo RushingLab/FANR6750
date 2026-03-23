@@ -2973,5 +2973,194 @@
     "title": "LECTURE 2: introduction to linear models",
     "section": "looking ahead",
     "text": "looking ahead\n\nNext time: Principles of statistical inference\n\nReading: Feiberg chp. 1.6-1.8"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#outline",
+    "href": "lectures/03_inference/03_inference.html#outline",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "outline",
+    "text": "outline\n\n1) Uncertainty in statistical models\n\n\n2) Sampling distributions\n\n\n\n3) Standard error\n\n\n\n4) Confidence intervals"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#section",
+    "href": "lectures/03_inference/03_inference.html#section",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "",
+    "text": "Statistics = Information + Uncertainty\nIn the last lecture, we learned that models allow us to quantify relationships between variables based on samples\n\n\nWe also learned that sampling = uncertainty\n\nParameter estimates from samples will never exactly equal population parameters\n\n\n\n\nInference about populations requires quantifying the magnitude of this uncertainty\n\n\n\nBut how can we measure how far our estimates are from the population parameters if we don’t know the population parameters?"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#parameters-vs-statistics",
+    "href": "lectures/03_inference/03_inference.html#parameters-vs-statistics",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "parameters vs statistics",
+    "text": "parameters vs statistics\n\nParameters\n\nAttributes of the population\n\nMean ( \\(\\mu\\) )\n\nVariance ( \\(\\sigma^2\\) )\n\nStandard deviation ( \\(\\sigma\\) )\n\n\n\n\n\nUsually unknown\nParameters are the quantities of interest\n\n\n\n\nStatistics\n\nAttributes of the sample\n\nMean ( \\(\\bar{y}\\) or \\(\\hat{\\mu}\\) )\n\nVariance ( \\(s^2\\) or \\(\\hat{\\sigma}^2\\) )\n\nStandard deviation ( \\(s\\) or \\(\\hat{\\sigma}\\) )\n\n\n\n\n\nOften treated as estimates of parameters"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#sampling-error",
+    "href": "lectures/03_inference/03_inference.html#sampling-error",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "sampling error",
+    "text": "sampling error\nQuestion: What is the probablity that \\(\\large \\bar{y} = \\mu\\)?\n\n\nAnswer: 0 (why?)\n\n\n\nFact: The sample mean will never equal the population mean\n\n\n\nThe difference between \\(\\large \\bar{y}\\) and \\(\\large \\mu\\) is sampling error\n\n\n\n\nSampling error can be reduced but it cannot be eliminated\n\n\n\nProblem: If we don’t know \\(\\large \\mu\\), how do we know how far our estimate is from the true value?\n\n\n\nAnswer: We don’t (for any specific sample)\n\n\n\n\nBUT…we do know how far, on average, a sample of size \\(n\\) will be from the true value"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#the-sampling-distribution",
+    "href": "lectures/03_inference/03_inference.html#the-sampling-distribution",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "the sampling distribution",
+    "text": "the sampling distribution"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#a-single-sample-n-25",
+    "href": "lectures/03_inference/03_inference.html#a-single-sample-n-25",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "a single sample (n = 25)",
+    "text": "a single sample (n = 25)"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#standard-deviation",
+    "href": "lectures/03_inference/03_inference.html#standard-deviation",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "standard deviation",
+    "text": "standard deviation\n\n\n\nRemember - this error bar is the standard deviation of our sample!"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#standard-deviation-1",
+    "href": "lectures/03_inference/03_inference.html#standard-deviation-1",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "standard deviation",
+    "text": "standard deviation\nBut remember, what we really want to know is, how far is the sample mean from the true parameter value?"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#the-sampling-distribution-1",
+    "href": "lectures/03_inference/03_inference.html#the-sampling-distribution-1",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "the sampling distribution",
+    "text": "the sampling distribution\nImagine we could repeat our experiment many, many times"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#the-sampling-distribution-2",
+    "href": "lectures/03_inference/03_inference.html#the-sampling-distribution-2",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "the sampling distribution",
+    "text": "the sampling distribution\nThe collection of sample means is referred to as the sampling distribution"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#the-sampling-distribution-3",
+    "href": "lectures/03_inference/03_inference.html#the-sampling-distribution-3",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "the sampling distribution",
+    "text": "the sampling distribution\nThe collection of sample means is referred to as the sampling distribution"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#the-sampling-distribution-4",
+    "href": "lectures/03_inference/03_inference.html#the-sampling-distribution-4",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "the sampling distribution",
+    "text": "the sampling distribution\nThe standard deviation of the sampling distribution measures, on average, how far each sample mean from the true population value"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#the-sampling-distribution-5",
+    "href": "lectures/03_inference/03_inference.html#the-sampling-distribution-5",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "the sampling distribution",
+    "text": "the sampling distribution\nWe rarely repeat experiments\n\n\nBut we can estimate the standard deviation of the sampling distribution from a single sample!\n\n\n\nHow? The central limit theorem!"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#central-limit-theorem",
+    "href": "lectures/03_inference/03_inference.html#central-limit-theorem",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "central limit theorem",
+    "text": "central limit theorem\n\nFor a population with mean \\(\\mu\\) and standard deviation \\(\\sigma\\), the sampling distribution will be (approximately) normally distributed with mean \\(\\mu_X = \\mu\\) and standard deviation \\(\\sigma_X = \\sigma/\\sqrt{n}\\)."
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#central-limit-theorem-1",
+    "href": "lectures/03_inference/03_inference.html#central-limit-theorem-1",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "central limit theorem",
+    "text": "central limit theorem\n\nFor a population with mean \\(\\mu\\) and standard deviation \\(\\sigma\\), the sampling distribution will be (approximately) normally distributed with mean \\(\\mu_X = \\mu\\) and standard deviation \\(\\sigma_X = \\sigma/\\sqrt{n}\\).\n\nThis might seem academic but it is hugely important\n\ngiven sufficient sample size ( \\(\\sim n &gt; 30\\) ), we know the sampling distribution will be normally distributed without needing to repeat the experiment\nalthough we never know the true population mean \\(\\mu\\), we can estimate how far (on average) our sample mean is likely to be away from it (that’s what the standard deviation is!)\nthe CLT will hold true regardless of whether the source population is normal!\nDemonstration using simulations"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#standard-error-1",
+    "href": "lectures/03_inference/03_inference.html#standard-error-1",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "standard error",
+    "text": "standard error\nThe standard deviation of the sampling distribution is called the standard error of the mean (or just the standard error)\n\\[\\Large SE =\\frac{s}{\\sqrt{n}}\\] - Standard error tells us how far (on average) our sample mean is likely to be from the population mean\n\nIt is the key to estimating uncertainty in our estimates\nSmaller is better"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#descriptive-vs-inferential-statistics",
+    "href": "lectures/03_inference/03_inference.html#descriptive-vs-inferential-statistics",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "descriptive vs inferential statistics",
+    "text": "descriptive vs inferential statistics\n\nThe sample standard deviation ( \\(s\\) ) is a descriptive statistic\n\n\\[\\Large s = \\sqrt{s^2}\\]\n\n\\(\\large s\\) tells us how far, on average, each observation \\(\\large y\\) is from the sample mean \\(\\large \\bar{y}\\)\n\n\n\n\nThe standard error (SE) is an inferential statistic\n\n\\[\\Large SE = \\frac{s}{\\sqrt{n}}\\] - \\(\\large SE\\) tells us how far, on average, each sample mean \\(\\large \\bar{y}\\) is from the population mean \\(\\large \\mu\\)"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#quick-review",
+    "href": "lectures/03_inference/03_inference.html#quick-review",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "quick review",
+    "text": "quick review\n\nsampling is a stochastic process\n\n\nsample statistics (mean, standard deviation) will vary from sample to sample\n\n\n\nthe sampling distribution is an (imaginary) collection of statistics from repeated samples of the same population\n\n\nassumes that the procedure for generating samples (e.g., sample size) is identical\n\n\n\n\nStandard error is the standard deviation of the sampling distribution\n\n\n\\(\\large SE =  s/\\sqrt{n}\\)\nmeasures how far, on average, sample statistics are from the true population value (smaller is better!)\n\n\n\nWe will explore these concepts in lab, using R to generate and visualize repeated samples, calculate properties of the sampling distribution"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#confidence-intervals-1",
+    "href": "lectures/03_inference/03_inference.html#confidence-intervals-1",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "confidence intervals",
+    "text": "confidence intervals"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#confidence-intervals-2",
+    "href": "lectures/03_inference/03_inference.html#confidence-intervals-2",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "confidence intervals",
+    "text": "confidence intervals\nUncertainty is commonly reported using confidence intervals\n\nthis is a concept that seems intuitive but in reality it is commonly misunderstood\n\n\n\nIf we calculated a \\(x\\)% confidence interval from repeated samples of the population, about \\(x\\)% of those confidence intervals would contain the true population mean"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#calculating-confidence-intervals",
+    "href": "lectures/03_inference/03_inference.html#calculating-confidence-intervals",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "calculating confidence intervals",
+    "text": "calculating confidence intervals\n\n95% of a normal distribution falls between -1.96 and 1.96 standard deviation of the mean1\n\n\n\n\n\n\n\n\n\n\n\nQuestion - if this is the sampling distribution, what is the standard deviation? What is our estimate of the mean?\n\n\n95% CI = \\(\\large \\bar{y} \\pm 1.96 \\times SE\\)\n\nCan easily be calculated for other percentages using R"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#confidence-intervals-3",
+    "href": "lectures/03_inference/03_inference.html#confidence-intervals-3",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "confidence intervals",
+    "text": "confidence intervals\nWhat a confidence interval is NOT:\n\n“there is an \\(x\\)% probability that the true population parameter is inside this interval”\n\n\nThe true population value is considered a fixed parameter\n\n\nBefore we collect our sample, the ends of the confidence intervals are considered random variables (i.e., their value will change each time we collect a sample)\n\nLike all random variables, we can describe the long-term (i.e., asymptotic) expectations of confidence intervals if we repeated the experiment many times\n\n\n\nAfter we collect our sample, the confidence interval either does or does not contain the true population value"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#confidence-intervals-4",
+    "href": "lectures/03_inference/03_inference.html#confidence-intervals-4",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "confidence intervals",
+    "text": "confidence intervals\n\n\nThink of confidence intervals like trying to determine where the stake is in a game of horseshoes by looking at where the horseshoes landed\n\nThe true parameter (i.e., the stake) does not move\nEach horseshoe is the CI based on a single sample (i.e., one throw)\nBefore a horseshoe is thrown, there is some probability it will land around the stake\nAfter it is thrown, it is either around the stake or not\n\nor…\n\n\n\n  @dunk Tag someone you could beat in reverse basketball 😭 (@creationsross) ♬ original sound - Chizi"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#confidence-intervals-5",
+    "href": "lectures/03_inference/03_inference.html#confidence-intervals-5",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "confidence intervals",
+    "text": "confidence intervals\nI like to think of confidence intervals as providing a range of values that, based on our sample, are consistent with the population mean (plausible interval?)\n\nIf want to be more confident that the CI contains the parameter (e.g., 50% CI vs 95% CI), what happens to the size of the interval?\n\n\nIt’s worth remembering that 1 - \\(x\\)% of the time, the confidence interval we calculate from our sample will not include the true population mean.\n\n\n\n\n\n\n\n\n\nOf course, with our real data, we have no way of knowing if our sample is one of the black points on this graph :grinning: or one of the red dots :sob:"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#for-thought",
+    "href": "lectures/03_inference/03_inference.html#for-thought",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "for thought",
+    "text": "for thought\nIf our goal is generally to decrease uncertainty in parameter estimates:\n\n\nWhat factors determine the magnitude of our uncertainty estimates (SE or confidence intervals)?\n\n\n\n\nWhat can we, as researchers, control when we design experiments to minimize uncertainty? What can we not control?"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#looking-ahead",
+    "href": "lectures/03_inference/03_inference.html#looking-ahead",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "looking ahead",
+    "text": "looking ahead\n\nNext time: Principles of Experimental Design\n\nReading: Quinn chp. 7.1-7.2"
+  },
+  {
+    "objectID": "lectures/03_inference/03_inference.html#the-sampling-distribution-.inverse-.center",
+    "href": "lectures/03_inference/03_inference.html#the-sampling-distribution-.inverse-.center",
+    "title": "LECTURE 3: principles of statistical inference",
+    "section": "the sampling distribution {.inverse, .center}",
+    "text": "the sampling distribution {.inverse, .center}"
   }
 ]

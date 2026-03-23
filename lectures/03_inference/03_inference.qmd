@@ -29,6 +29,7 @@ source(here::here("R/zzz.R"))
 ## outline {.inverse}
 
 <br/>
+
 #### 1) Uncertainty in statistical models
 
 <br/>  
@@ -49,21 +50,26 @@ source(here::here("R/zzz.R"))
 <br/> 
 :::
 
-## {.inverse .center}
-::: {.fragment}
+## {.inverse}
+
 ### Statistics = Information + Uncertainty
 
 #### In the last lecture, we learned that models allow us to quantify relationships between variables based on **samples**
-:::
+
+<br/>
 
 :::{.fragment}
 #### We also learned that sampling = uncertainty
 
 - Parameter estimates from samples will never exactly equal population parameters
+
+<br/>
 :::
 
 :::{.fragment}
 #### Inference about populations requires quantifying the magnitude of this uncertainty
+
+<br/> 
 :::
 
 :::{.fragment}
@@ -79,17 +85,15 @@ source(here::here("R/zzz.R"))
   + Mean ( $\mu$ )  
   + Variance ( $\sigma^2$ )  
   + Standard deviation ( $\sigma$ )  
- 
+
 :::
 
 :::{.fragment}
 - Usually unknown
-:::
-
-:::{.fragment}
 - Parameters are the quantities of interest  
 :::
 
+:::{.fragment}
 ### Statistics
 
 - Attributes of the sample  
@@ -97,48 +101,51 @@ source(here::here("R/zzz.R"))
   + Variance ( $s^2$ or $\hat{\sigma}^2$ )  
   + Standard deviation ( $s$ or $\hat{\sigma}$ )  
 
---
-- Often treated as estimates of parameters
+:::
 
----
-# sampling error
+:::{.fragment}
+- Often treated as estimates of parameters
+:::
+
+
+## sampling error
 
 #### Question: What is the probablity that $\large \bar{y} = \mu$?
 
---
 
+:::{.fragment}
 - Answer: 0 (why?)
+:::
 
---
-
+:::{.fragment}
 #### Fact: The sample mean will never equal the population mean
+:::
 
---
-
+:::{.fragment}
 - The difference between $\large \bar{y}$ and $\large \mu$ is **sampling error** 
+:::
 
---
-
+:::{.fragment}
 - Sampling error can be reduced but it cannot be eliminated
+:::
 
---
-
+:::{.fragment}
 #### Problem: If we don't know $\large \mu$, how do we know how far our estimate is from the true value?
+:::
 
---
+:::{.fragment}
 - Answer: We don't (for any specific sample)
+:::
 
---
+:::{.fragment}
 - BUT...we do know how far, on average, a sample of size $n$ will be from the true value
+:::
 
 
----
-class:inverse, center, middle
+## the sampling distribution {.inverse .center}
 
-# the sampling distribution
 
----
-# a single sample (n = 25)
+## a single sample (n = 25)
 
 <br/>
 
@@ -171,8 +178,8 @@ p <- ggplot(samp[samp$Experiment==1,], aes(x = Experiment, y = Estimate)) +
 p
 ```
 
----
-# standard deviation
+
+## standard deviation
 
 <br/>
 
@@ -180,25 +187,23 @@ p
 p + geom_errorbar(data = samp[samp$Experiment==1,], aes(x = Experiment, ymin = Estimate - SD, ymax = Estimate + SD), width = 0)
 ```
 
---
-
+:::{.fragment}
 **Remember** - this error bar is the standard deviation **of our sample**!  
+:::
 
-
----
-# standard deviation
+## standard deviation
 
 But remember, what we really want to know is, how far is the sample mean from the true parameter value?
 
---
+:::{.fragment}
 
 ```{r sample_se, fig.width=9, fig.height=5.6}
 p + geom_segment(aes(x = 1, xend = 1, y = 70, yend = Estimate), color = "blue")
 ```
+:::
 
 
----
-# the sampling distribution
+## the sampling distribution
 
 Imagine we could repeat our experiment many, many times
 
@@ -207,8 +212,7 @@ Imagine we could repeat our experiment many, many times
 knitr::include_graphics("samples.gif")
 ```
 
----
-# the sampling distribution
+## the sampling distribution
 
 The collection of sample means is referred to as the **sampling distribution**  
 
@@ -226,8 +230,7 @@ ggplot(samp, aes(x = Experiment, y = Estimate)) +
   annotate(x = 15, y = 72.25, label = "Sample mean", geom = "text", hjust = 0) 
 ```
 
----
-# the sampling distribution
+## the sampling distribution
 
 The collection of sample means is referred to as the **sampling distribution**  
 
@@ -257,8 +260,7 @@ ggplot() +
   scale_x_continuous("Sample mean", expand = c(0, 0))
 ```
 
----
-# the sampling distribution
+## the sampling distribution
 
 The standard deviation *of the sampling distribution* measures, on average, how far each sample mean from the true population value
 
@@ -278,25 +280,23 @@ ggplot(samp, aes(x = Experiment, y = Estimate)) +
 ```
 
 
----
-# the sampling distribution
+## the sampling distribution
 
 #### We rarely repeat experiments
 
 <br/>
---
 
+:::{.fragment}
 #### But we can estimate the standard deviation of the sampling distribution from a single sample!
 <br/>
+:::
 
---
-
+:::{.fragment}
 #### How? The **central limit theorem**!
+:::
 
----
-class:inverse
 
-# central limit theorem
+## central limit theorem {.inverse}
 
 > For a population with mean $\mu$ and standard deviation $\sigma$, the sampling distribution will be (approximately) normally distributed with mean $\mu_X = \mu$ and standard deviation $\sigma_X = \sigma/\sqrt{n}$. 
 
@@ -328,10 +328,9 @@ ggplot() +
         plot.background = element_rect(color = "#2e2e2e", fill = "#2e2e2e"))
 ```
 
----
-class:inverse
 
-# central limit theorem
+
+## central limit theorem {.inverse}
 
 > For a population with mean $\mu$ and standard deviation $\sigma$, the sampling distribution will be (approximately) normally distributed with mean $\mu_X = \mu$ and standard deviation $\sigma_X = \sigma/\sqrt{n}$. 
 
@@ -345,8 +344,8 @@ This might seem academic but it is hugely important
 
 - [Demonstration using simulations](http://www.ltcconline.net/greenl/java/Statistics/clt/cltsimulation.html)
 
----
-# standard error
+
+## standard error
 
 #### The standard deviation of the sampling distribution is called the **standard error of the mean** (or just the standard error)
 
@@ -358,10 +357,7 @@ $$\Large SE =\frac{s}{\sqrt{n}}$$
 - Smaller is better
 
 
----
-class:inverse
-
-# descriptive vs inferential statistics 
+## descriptive vs inferential statistics {.inverse}
 
 > The sample standard deviation ( $s$ ) is a descriptive statistic  
 
@@ -370,58 +366,55 @@ $$\Large s = \sqrt{s^2}$$
 - $\large s$ tells us how far, on average, each observation $\large y$ is from the sample mean $\large \bar{y}$
 
 <br/>
---
 
+:::{.fragment}
 > The standard error (SE) is an inferential statistic  
 
 $$\Large SE = \frac{s}{\sqrt{n}}$$
 - $\large SE$ tells us how far, on average, each sample mean $\large \bar{y}$ is from the population mean $\large \mu$
+:::
 
 
----
-# quick review
+## quick review
 
 1) sampling is a stochastic process 
 
 - sample statistics (mean, standard deviation) will vary from sample to sample
 
---
-
+:::{.fragment}
 2) the sampling distribution is an (imaginary) collection of statistics from repeated samples of the same population
 
 - assumes that the procedure for generating samples (e.g., sample size) is identical
+:::
 
---
-
+:::{.fragment}
 3) Standard error is the standard deviation of the sampling distribution
 
 - $\large SE =  s/\sqrt{n}$
 
 - measures how far, on average, sample statistics are from the true population value (smaller is better!)
+:::
 
---
-
+:::{.fragment}
 #### We will explore these concepts in lab, using `R` to generate and visualize repeated samples, calculate properties of the sampling distribution
+:::
+
+## confidence intervals {.inverse}
 
 
----
-class:inverse,center,middle
-
-# confidence intervals
-
----
-# confidence intervals
+## confidence intervals
 
 #### Uncertainty is commonly reported using *confidence intervals* 
 
 - this is a concept that seems intuitive but in reality it is commonly misunderstood
 
---
 
+:::{.inverse}
 > If we calculated a $x$% confidence interval from repeated samples of the population, about $x$% of those confidence intervals would contain the true population mean  
 
---
+:::
 
+:::{.inverse}
 ```{r ci, fig.width=8, fig.height=4}
 samp <- dplyr::mutate(samp, LCI = Estimate - 1.96 * SE,
                       UCI = Estimate + 1.96 * SE,
@@ -442,14 +435,14 @@ ggplot(samp, aes(x = Experiment, y = Estimate)) +
 
 ```
 
----
-# calculating confidence intervals
+:::
 
---
+## calculating confidence intervals
 
-95% of a normal distribution falls between -1.96 and 1.96 standard deviation of the mean<sup>1</sup>
 
-.footnote[[1] Can easily be calculated for other percentages using `R`]
+:::{.fragment}
+95% of a normal distribution falls between -1.96 and 1.96 standard deviation of the mean^[Can easily be calculated for other percentages using `R`]
+
 
 ```{r fig.width=7, fig.height=3}
 ggplot(NULL, aes(c(-3,3))) +
@@ -463,44 +456,43 @@ ggplot(NULL, aes(c(-3,3))) +
   scale_y_continuous("Density") 
 ```
 
---
+:::
 
+:::{.fragment}
 Question - if this is the sampling distribution, what is the standard deviation? What is our estimate of the mean?
+:::
 
---
-
+:::{.fragment}
 95% CI = $\large \bar{y} \pm 1.96 \times SE$
+:::
 
 
-
-
-
----
-# confidence intervals
+## confidence intervals
 
 #### What a confidence interval is **NOT**:
 
 - "there is an $x$% probability that the true population parameter is inside this interval" 
 
---
 
+:::{.fragment}
 #### The true population value is considered a *fixed* parameter
+:::
 
---
-
+:::{.fragment}
 #### Before we collect our sample, the ends of the confidence intervals are considered *random variables* (i.e., their value will change each time we collect a sample)
 
 -  Like all random variables, we can describe the long-term (i.e., asymptotic) expectations of confidence intervals if we repeated the experiment many times
+:::
 
---
-
+:::{.fragment}
 #### After we collect our sample, the confidence interval either *does* or *does not* contain the true population value
+:::
 
----
-# confidence intervals
+## confidence intervals
 
-.pull-left[
+::::{.columns}
 
+:::{.fragment .column width="50%"}
 Think of confidence intervals like trying to determine where the stake is in a game of horseshoes by looking at where the horseshoes landed 
 
 - The true parameter (i.e., the stake) does not move
@@ -512,30 +504,29 @@ Think of confidence intervals like trying to determine where the stake is in a g
 - After it is thrown, it is either around the stake or not
 
 or...
-]
+:::
 
---
-
-.pull-right[
-```{r out.height="80%"}
+:::{.fragment .column width="50%"}
+```{r dunk, out.height="80%"}
+#remotes::install_github("gadenbuie/tiktokrmd")
 library(tiktokrmd)
 tt_url <- "https://www.tiktok.com/@dunk/video/7218281145279220997"
 tt <- tiktok_embed(tt_url)
 tt
 ```
-]
+
+:::
+
+::::
 
 
-
----
-# confidence intervals
+## confidence intervals
 
 I like to think of confidence intervals as providing a range of values that, based on our sample, are consistent with the population mean (*plausible interval*?)
 
 - If want to be more confident that the CI contains the parameter (e.g., 50% CI vs 95% CI), what happens to the size of the interval?
 
---
-
+:::{.fragment}
 It's worth remembering that 1 - $x$% of the time, the confidence interval we calculate from our sample **will not** include the true population mean. 
 
 ```{r ci2, fig.width=7, fig.height=2.5}
@@ -555,27 +546,24 @@ ggplot(samp, aes(x = Experiment, y = Estimate)) +
 
 ```
 
-Of course, with our real data, we have no way of knowing if our sample is one of the black points on this graph `r ji("grinning face")` or one of the red dots `r ji("crying face")`
+Of course, with our real data, we have no way of knowing if our sample is one of the black points on this graph :grinning: or one of the red dots :sob:
+:::
 
----
-# for thought
+## for thought
 
 #### If our goal is generally to decrease uncertainty in parameter estimates:
 
---
+:::{.fragment}
 - What factors determine the magnitude of our uncertainty estimates (SE or confidence intervals)?
 
 <br/>
 
---
+:::
 - What can we, as researchers, control when we design experiments to minimize uncertainty? What can we not control?
 
 
 
-
-
----
-# looking ahead
+## looking ahead
 
 <br/>
 
