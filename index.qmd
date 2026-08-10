@@ -6,7 +6,7 @@ format: html
 
 # Welcome to FANR6750: Experimental Methods in Forestry and Natural Resources Research
 
-This is the unofficial course website for the Fall 2025 offering of **FANR6750: Experimental Methods in Forestry and Natural Resources Research** at the University of Georgia. The "official" course website (for students enrolled in the course) is on eLC.  
+This is the unofficial course website for the Fall 2026 offering of **FANR6750: Experimental Methods in Forestry and Natural Resources Research** at the University of Georgia. The "official" course website (for students enrolled in the course) is on eLC.  
 
 The goal of this website is to create a central repository for students to access all course materials - lecture slides, lab activities, code, data, etc. A secondary goal is to make those materials freely available to other students and instructors who may find them useful. If you encounter any issues or have any suggestions, feel free to contact me at clark.rushing [at] uga [dot] edu.     
 
@@ -15,11 +15,11 @@ General course information can be found by clicking on the `Syllabus` and `Sched
 
 ## Course R package
 
-In addition to this website, materials from the course will be distributed through an `R` package called *FANR6750*. The main purpose of the package is to distribute code and data that will used for labs, though eventually additional materials may be included, including lectures and reference documents. You can install the most current version of *FANR6750* with:
+In addition to this website, materials from the course will be distributed through an `R` package called *FANR6750data*. The main purpose of the package is to distribute code and data that will used for labs, though eventually additional materials may be included, including lectures and reference documents. You can install the most current version of *FANR6750data* with:
 
 ``` r
 install.packages("devtools")
-devtools::install_github("RushingLab/FANR6750")
+devtools::install_github("RushingLab/FANR6750data")
 ```
 
 
@@ -30,6 +30,8 @@ Materials included in this course is purposefully made available to anyone who f
 ## Previous course materials
 
 The websites from previous versions of this course are archived here: 
+
+[Fall 2025](https://rushinglab.github.io/FANR6750.v2025/)
 
 [Fall 2024](https://rushinglab.github.io/FANR6750.v2024/)
 
