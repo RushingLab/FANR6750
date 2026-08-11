@@ -46,59 +46,40 @@ schedule <- data.frame(WK = c("1", "", "", "",
                        Day = c(rep(c("M", "W", "F", ""), 15), "M"),
                        Week = MWF(first.day = "2026/08/17", last.day = "2026/12/01"),
                        Lecture = c("Course introduction", "Introduction to statistics", "Introduction to linear models", "", #1
-      "Introduction to linear models", "Principles of statistical inference", "Principles of statistical inference", "",#2
-       "Principles of experimental design", "Principles of experimental design", "Linear models for simple categorical predictors (aka t-test)", "", #3
-      "Labor Day", "Linear models for simple categorical predictors (aka t-test)", "Null hypothesis testing", "", # 4
-        "Null hypothesis testing", "Troubleshooting R workshop", "Power", "", #5
-        "Linear models for categorical predictor w/ >2 levels (aka ANOVA)", "Linear models for categorical predictor w/ >2 levels (aka ANOVA)", "Multiple comparisons", "", #6
-       "Special topic: p-hacking", "**Exam 1**", "Multiple regression", "", #7
-       "Multiple regression",  "Interactions", "Interactions", "", #8 
-      "Evaluating assumptions", "Model selection", "Random effects", "", #9
-       "Nested designs", "Split-plot designs", "Split-plot designs", "", # 10
-        "Special topic: AI", "**Exam 2**", "Fall break", "", #11
-       "Repeated measures", "Repeated measures", "Repeated measures", "",
-          "Buffer", "Generalized linear models", "GLM: Logistic regression", "", #13 
-       "GLM: Logistic regression", "GLM: Poisson regression", "GLM: Poisson regression", "", #14
-          "Thanksgiving break", "Thanksgiving break", "Thanksgiving break", "", #15
-             "**Exam 3**"), #16
-      Reading = c('<a href="https://rushinglab.github.io/FANR6750/articles/syllabus.html">Syllabus</a>', '<a href=https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&%20Keough.pdf#page=21.08>Quinn chp. 1</a>', "",
-      '<a href="https://statistics4ecologists-v3.netlify.app/01-linearregression">Fieberg chp. 1.2-1.4</a>', "", '<a href="https://statistics4ecologists-v3.netlify.app/01-linearregression#sec-sampdist">Fieberg chp. 1.6-1.8</a>', "",
-"", '<a href="https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&%20Keough.pdf#page=175.08">Quinn chp. 7.1-7.2</a>', "", "",
-"", '<a href="https://statistics4ecologists-v3.netlify.app/03-multipleregression#categorical-predictors">Fieberg chp. 3.6</a>', "", "",
-'<a href="https://statistics4ecologists-v3.netlify.app/01-linearregression#hypothesis-tests-and-p-values">Fieberg chp. 1.10</a>', 
-"", "", "", "", '<a href="https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&amp;%20Keough.pdf#page=175.08">Quinn chp. 7.3</a>', 
-'<a href="https://statistics4ecologists-v3.netlify.app/03-multipleregression#sec-ancova">Fieberg chp. 3.7</a>', "", "",
-'<a href="https://statistics4ecologists-v3.netlify.app/03-multipleregression#pairwise-comparisons">Fieberg chp. 3.9</a>, <a href="https://statistics4ecologists-v3.netlify.app/03-multipleregression#sec-contrasts">3.12</a>', 
-                               '<a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0200303">Fraser et al. 2018</a>', "", "",
-          '<a href="https://statistics4ecologists-v3.netlify.app/03-multipleregression#introduction-to-multiple-regression">Fieberg chp. 3.2-3.5</a>', "", '<a href="https://statistics4ecologists-v3.netlify.app/03-multipleregression#models-with-interactions">Fieberg chp. 3.8</a>', "",
-                               "", "", '<a href="https://esajournals.onlinelibrary.wiley.com/doi/full/10.1002/ecy.3336">Tredennick et al. 2021</a>', "",
-                               "", "", "", "",
-                               "", '<a href="https://thebullshitmachines.com/table-of-contents/index.html">Bergstrom & West 2025</a>', "", "",
-                               "", "",  "", "",
-                               "", "", "", "",
-                               "", "", "", "",
-                               "", "", "", "",
-                               ""
-                               ),
-                       Lab = c("Introduction to R", "", "", "",
-                               "Introduction to RMarkdown", "", "", "",
-                               "Sampling error*", "", "", "",
-                               "No lab", "", "", "",
-                               "t-tests*", "", "", "",
-                               "ANOVA", "", "", "",
-                               "Multiple regression*", "", "", "",
-                               "Interactions*", "", "", "",
-                               "Evaluating assumptions*", "", "", "",
-                               "Model selection", "", "", "",
-                               "Nested design*", "", "", "",
-                               "Split-plot designs*", "", "", "",
-                               "Logistic regression*", "", "", "",
-                               "Poisson regression*", "", "", "",
-                               "No lab", "", "", "",
-                               "No lab"))
+                                   "Introduction to linear models", "Principles of statistical inference", "Principles of statistical inference", "",#2
+                                   "Linear models for simple categorical predictors (aka t-test)", "Linear models for simple categorical predictors (aka t-test)", "Troubleshooting R workshop", "", #3
+                                   "Labor Day", "Null hypothesis testing", "Null hypothesis testing", "", #4
+                                   "Evaluating assumptions", "Buffer/exam review", "**Exam 1**",  "", #5
+                                   "Principles of causal inference", "Principles of causal inference", "Principles of experimental design", "", #6
+                                   "Principles of experimental design", "Linear models for simple categorical predictors (aka t-test)", "Linear models for simple categorical predictors (aka t-test)", "", # 7
+                                   "Multiple comparisons", "Power", "Special topic: p-hacking","", #8
+                                   "Multiple regression", "Multiple regression", "Interactions", "", #9
+                                   "Interactions", "Buffer/exam review", "**Exam 2**", "", #10
+                                   "Causal Inference for Observational Studies", "Causal Inference for Observational Studies", "Fall Break", "", #11
+                                   "Model Selection", "Psuedoreplication Part 1: Random effects", "Psuedoreplication Part 1: Random effects", "", #12
+                                   "Psuedoreplication Part 2: Nested designs", "Psuedoreplication Part 3: Repeated Measures", "Special topic: AI", "", #13
+                                   "Generalized linear models", "GLM: Logistic regression", "GLM: Poisson regression", "", #14
+                                   "Thanksgiving break", "Thanksgiving break", "Thanksgiving break", "", #15
+                                   "**Exam 3**"), #16
+                       Lab = c("Introduction to R", "", "", "",#1
+                               "Introduction to RMarkdown", "", "", "",#2
+                               "Sampling error*", "", "", "",#3
+                                "No lab", "", "", "",#4
+                               "t-tests/NHST", "", "", "",#5
+                               "Evaluating Assumptions*", "", "", "",#6
+                               "Experimental Design", "", "", "",#7
+                               "ANOVA*", "", "", "",#8
+                               "Multiple Comparisons*", "", "", "",#9
+                               "Multiple Regression", "", "", "",#10
+                               "Interactions*", "", "", "",#11
+                               "Causal Inference*", "", "", "",#12
+                               "Model Selection*", "", "", "",#13
+                               "Nested Designs*", "", "", "",#14
+                               "No lab", "", "", "",#15
+                               "No lab"))#16
 
 schedule %>%
-  kable(format = "html", escape = FALSE, col.names = c("Week", "", "Date", "Lecture topic", "Reading", "Lab Topic"), align = 'c') %>%
+  kable(format = "html", escape = FALSE, col.names = c("Week", "", "Date", "Lecture topic", "Lab Topic"), align = 'c') %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = TRUE)
 
 ```

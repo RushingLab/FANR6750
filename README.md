@@ -9,11 +9,11 @@ General course information can be found by clicking on the `Syllabus` and `Sched
 
 ## Course R package
 
-In addition to this website, materials from the course will be distributed through an `R` package called *FANR6750*. The main purpose of the package is to distribute code and data that will used for labs, though eventually additional materials may be included, including lectures and reference documents. You can install the most current version of *FANR6750* with:
+In addition to this website, materials from the course will be distributed through an `R` package called *FANR6750data*. The main purpose of the package is to distribute code and data that will used for labs, though eventually additional materials may be included, including lectures and reference documents. You can install the most current version of *FANR6750data* with:
 
 ``` r
 install.packages("devtools")
-devtools::install_github("RushingLab/FANR6750")
+devtools::install_github("RushingLab/FANR6750data")
 ```
 
 

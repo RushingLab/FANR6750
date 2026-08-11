@@ -4,7 +4,7 @@ project:
 
 website:
   title: "FANR6750"
-  site-url: "https://djklement.github.io/FANR6750/"
+  site-url: "https://rushinglab.github.io/FANR6750/"
 
   navbar:
     left:
@@ -68,8 +68,8 @@ website:
           - text: "Lecture 13: Interactions"
             href: lectures/13_interactions/13_interactions.qmd
 
-          - text: "Lecture 14:Causal Inference in Observational Studies"
-            href: lectures/14_causal_inference_part2/14_causal_inference_part2.qmd
+          # - text: "Lecture 14:Causal Inference in Observational Studies"
+            # href: lectures/14_causal_inference_part2/14_causal_inference_part2.qmd
 
           #- text: "Lecture 15: Model Selection"
           #  href: lectures/15_model_selection.qmd
@@ -96,45 +96,45 @@ website:
 
           - text: "Lab 1: Introduction to R"
             href: labs/lab01_intro_to_R.qmd
+
+          - text: "Lab 2: Introduction to projects and RMarkdown"
+            href: labs/lab02_Intro_project_and_Rmd.qmd
+
+          - text: "Lab 3: Using R to explore sampling error"
+            href: labs/lab03_inference.qmd
+
+          - text: "Lab 4: t-tests"
+            href: labs/lab04_t_tests.qmd
+
+          - text: "Lab 5: Evaluating assumptions"
+            href: labs/lab05_linear_model_assumptions.qmd
+
+          # - text: "Lab 6: Experimental Design"
+          #   href: labs/lab06_expdesign.qmd
           #
-          # - text: "Lab 2: Introduction to projects and RMarkdown"
-          #   href: labs/lab02_Intro_project_and_Rmd.qmd
+          # - text: "Lab 7: ANOVA"
+          #   href: labs/lab07_anova.qmd
           #
-          # - text: "Lab 3: Using R to explore sampling error"
-          #   href: labs/lab03_inference.qmd
+          # - text: "Lab 8: Multiple Comparisons"
+          #   href: labs/lab08_multcomp.qmd
+
+          # - text: "Lab 9: Multiple regression"
+          #   href: labs/lab09_multreg.qmd
           #
-          # - text: "Lab 4: t-tests"
-          #   href: labs/lab04_t_tests.qmd
+          # - text: "Lab 10: Interactions"
+          #   href: labs/lab10_interactions.qmd
           #
-          # - text: "Lab 5: ANOVA"
-          #   href: labs/lab05_ANOVA.qmd
+          # - text: "Lab 11: Causal inference"
+          #   href: labs/lab11_causal_inference.qmd
           #
-          # - text: "Lab 6: Multiple Regression"
-          #   href: labs/lab06_multiple_regression.qmd
+          # - text: "Lab 12: Model Selection"
+          #   href: labs/lab12_model_selection.qmd
           #
-          # - text: "Lab 7: Interactions"
-          #   href: labs/lab07_interactions.qmd
+          # - text: "Lab 13: Nested Designs"
+          #   href: labs/lab13_nested.qmd
           #
-          # - text: "Lab 8: Evaluating assumptions"
-          #   href: labs/lab08_linear_model_assumptions.qmd
-          #
-          # - text: "Lab 9: Model selection"
-          #   href: labs/lab09_model_selection.qmd
-          #
-          # - text: "Lab 10: Nested designs"
-          #   href: labs/lab10_nested.qmd
-          #
-          # - text: "Lab 11: Split-plot designs"
-          #   href: labs/lab11_split_plot.qmd
-          #
-          # - text: "Lab 12: Logistic regression"
-          #   href: labs/lab13_glm_lr.qmd
-          #
-          # - text: "Lab 13: Poisson regression"
-          #   href: labs/lab14_glm_pr.qmd
-          #
-          # - text: "Bonus lab: Repeated measures"
-          #   href: labs/lab12_repeated_measures.qmd
+          # - text: "Bonus lab: Generalized Linear Models"
+          #   href: labs/lab14_glm.qmd
 
 
       - text: "References"
