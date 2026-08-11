@@ -1,0 +1,677 @@
+---
+format:
+  revealjs:
+    highlight-style: github
+    incremental: false
+    theme: FANR6750.scss
+    reference-location: document
+knitr:
+  opts_chunk:
+    dev: png
+    dev.args: { bg: "transparent" }
+from: markdown+emoji
+---
+
+```{r setup}
+#| echo: false
+#| include: false
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning = FALSE,
+                      message = FALSE, fig.retina = 2)
+source(here::here("R/zzz.R"))
+```
+
+## LECTURE 8: principles of experimental design {.theme-title .center}
+
+::: footer
+FANR 6750\
+Fall 2026
+:::
+
+## Outline {.theme-inverse .smaller}
+
+<br/>
+
+### 1) Overview
+
+<br/>
+
+::: fragment
+### 2) Replication
+
+<br/>
+:::
+
+::: fragment
+### 3) Randomization
+
+<br/>
+:::
+
+::: fragment
+### 4) Controls
+
+<br/>
+:::
+
+## Experimental design {.smaller}
+
+Experiments are often treated as the *only* way to infer cause and effect
+
+::: fragment
+-   Although not technically true[^1], certain types of experiments can strengthen causal inference
+:::
+
+[^1]: Causal inference from observational studies will be the focus of lecture?
+
+::: fragment
+In this lecture, we will discuss why experiments can improve causal inference and the elements of experimental design that must be considered for this objective. Specifically, we will discuss:
+
+::: incremental
+-   Types of experiments
+
+-   Elements of experimental design
+
+-   Causal inference
+:::
+:::
+
+## Types of experiments {.smaller}
+
+What is an experiment?
+
+::: fragment
+> A scientific procedure undertaken to make a discovery, test a hypothesis, or demonstrate a known fact
+:::
+
+::: fragment
+::: incremental
+Generally, experiments fall into one of three types:
+
+1)  Manipulative experiment
+
+2)  Quasi-experiment
+
+3)  Mensurative experiment (i.e., observational)
+:::
+:::
+
+::: fragment
+The principles discussed in this lecture are important for understanding the differences between these types, and the limitations of each
+:::
+
+## Components of an experiment {.smaller}
+
+::: incremental
+Regardless of type, all experiments require:
+
+1)  Hypothesis
+
+2)  Experimental design
+
+3)  Experimental execution
+
+4)  Statistical analysis
+
+5)  Interpretation
+:::
+
+::: fragment
+Which of these do you think is most important? Which takes the most time?
+:::
+
+## Experimental design {.smaller}
+
+What is experimental design?
+
+::: incremental
+1)  The number, type, and arrangement of experimental units
+
+2)  The number and type of treatments
+
+3)  The assignment of treatments to experimental units
+
+4)  The response variables that will be measured
+:::
+
+## The elements of experimental design {.theme-inverse .center}
+
+## Elements of experimental design {.smaller}
+
+If the goal of experiments is to test a hypothesis, a good experiment must:
+
+1)  Isolate the effects of the hypothesized treatment variables from other sources of variation[^2]
+
+2)  Have a reasonable chance of detecting a treatment effect, if one exists[^3]
+
+[^2]: In other words, to distinguish between causal vs. confounding effects
+
+[^3]: In other words, to distinguish between causal effects vs. noise
+
+The first goal can be generally be met by careful consideration of:
+
+1)  Replication
+
+2)  Randomization
+
+3)  Controls
+
+We will discuss the second goal in another lecture
+
+## Replication {.smaller}
+
+Imagine we are interested in whether predation by birds reduces the abundance of phytophagous insects on trees
+
+To test this hypothesis, we place an wire exclosure around one tree and leave the neighboring tree unmanipulated. We then collect 10 branches from each tree, count the number of insects on each branch, and calculate the average number of insects per branch on each tree
+
+![](fig/unreplicated_ybar.png){fig-align="center"}
+
+::: fragment
+[Question]{.highlight}: Can these samples test the hypothesis that birds influence insect abundance?
+:::
+
+## Replication {.smaller}
+
+This design is inadequate for testing our hypothesis because it is [unreplicated]{.highlight} (among other reasons)
+
+![](fig/unreplicated_ybar.png){fig-align="center"}
+
+::: fragment
+Why is replication important?
+
+::: incremental
+-   Experimental units will differ from one another, or from their expected value, for many reasons
+
+-   Without replication, our treatment will *always be confounded* with other sources of variation
+
+-   Due to this confounding, it is *impossible* to conclude whether observed differences are due to the treatment
+:::
+:::
+
+## Replication {.smaller}
+
+Replication is critical because it allows us to quantify how much variation there is between treatments *relative to* all the other sources of variability
+
+![](fig/replicated.png){fig-align="center"}
+
+::: fragment
+If differences among treatment groups are larger than differences within groups, we are more confident about the treatment effect
+
+-   We will return to this idea throughout the semester, as it is key to interpreting the output of statistical models
+
+-   Replication is necessary for any type of experiment (manipulative, quasi-experiments, observational)
+:::
+
+::: fragment
+How does replication help with confounding?
+:::
+
+## Replication {.smaller}
+
+[Question]{.highlight}: Can these samples test the hypothesis that birds influence insect abundance?
+
+![](fig/replicated.png){fig-align="center"}
+
+::: fragment
+::: incremental
+Replication is necessary, but not sufficient, to remove confounding
+
+-   Replication, when combined with [randomization]{.highlight}, helps to ensure that treatment effects are not confounded with other sources of variation
+
+-   For this reason, randomization is arguably the most important component of a good experiment!
+:::
+:::
+
+## Randomization {.smaller}
+
+There are two elements to randomization:
+
+1)  Random selection of sampling units from the population
+
+-   Helps to ensure[^But does not guarantee!] that the sample is representative of population
+
+-   Critical for all types of experiments
+
+
+::: fragment
+2)  Random allocation of treatments to experimental units
+
+-   Helps to ensure[^But does not guarantee!] that treatment effects are not confounded with other sources of variability
+
+-   Not possible in quasi-experiments or observational studies. What is the consequence?
+:::
+
+
+## Randomization {.smaller}
+
+As discussed previously, samples (and the statistics calculated from samples) allow us to learn about populations
+
+::: fragment
+Sample statistics will only provide accurate (i.e., unbiased) estimates of population parameters if the sample is *representative* of the population we are trying to study
+:::
+
+::: fragment
+Random selection of experimental units is one way to generate samples that are representative of the population
+
+```{r samp}
+#| fig-width: 6
+#| fig-height: 3
+set.seed(43049)
+x <- seq(from = 0, to = 100, length.out = 100)
+
+delta_df <- data.frame(x = x, 
+                       y = dnorm(x, 40, 10))
+
+samp_df <- data.frame(y2 = c(rnorm(40, 40, 10)))
+mean_df <- data.frame(x = mean(samp_df$y2))
+ggplot() +
+  geom_histogram(data = samp_df, aes(x = y2, y = ..density..), 
+                 color = "white", alpha = 0.6) +
+  geom_path(data = delta_df, aes(x = x, y = y), size = 1.25, alpha = 0.5) +
+  geom_rug(data = samp_df, aes(x = y2), sides = "b") +
+  geom_vline(data = mean_df, aes(xintercept = x), size = 1) +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  labs(subtitle = "Random samples (n = 40)")
+```
+:::
+
+## A note on bias and expectations {.theme-inverse .smaller}
+
+Sample statistics from truly randomized sampling provide [unbiased]{.highlight-inverse} estimators of population parameters
+
+::: fragment
+In this context, *unbiased* simply means that, [on average]{.highlight-inverse}, the sample statistics are expected to be equal to the population parameters
+
+-   Put another way, the expected value of the sample statistics is the population parameter, e.g.,
+
+$$E[\bar{y}] = \mu$$
+:::
+
+::: fragment
+But this *statistical expectation* does not mean that the statistics from any particular sample will be equal to the population parameters, only that the sample statistics are no more likely to overestimate than to underestimate the population parameters
+
+-   This is a critical point that we will return to throughout the semester
+:::
+
+## Randomization {.smaller}
+
+In our previous example, imagine we could only reach branches near the bottom of the trees, so all of our samples came from this region
+
+![](fig/non-random.png){width="33%" height="40%" fig-align="center"}
+
+::: fragment
+Are these samples sufficiently randomized?
+:::
+
+::: fragment
+How could we revise our protocol to achieve a more representative sample?
+:::
+
+## Randomization {.smaller}
+
+In some cases, completely random sampling is not sufficient to obtain representative samples
+
+::: fragment
+[Example]{.highlight}: Suppose the study area where we are conducting our exclosure experiments is composed of both oak and fir trees. We have enough money to build 10 exclosures so we randomly select 10 trees to receive the treatment
+
+![](fig/random_trees.png){width="40%" height="55%" fig-align="center"}
+:::
+
+::: fragment
+[Questions]{.highlight}: What is the "population" in this example? Are these samples likely to representative of that population?
+:::
+
+## Randomization {.smaller}
+
+In cases where sampling units can be divided into discrete groups, *stratified random sampling* is often used to ensure representative samples
+
+![](fig/stratified_trees.png){fig-align="center"}
+
+Stratified random sampling consists of:
+
+1)  Dividing sampling units into groups
+
+2)  Deciding how to allocate sampling effort across groups (often proportional to % of population)
+
+3)  Randomly selecting sampling units within each group
+
+## Randomization {.smaller}
+
+Stratified random sampling helps ensure that our sample, and corresponding sample statistics, are representative of the overall population
+
+::: fragment
+Also helps ensure that replication within groups is adequate to test for different responses across groups
+:::
+
+::: fragment
+Other types of sampling are also possible and sometimes used, including
+
+-   Cluster sampling
+
+-   Systematic sampling
+
+-   See Quinn textbook (section 7.1.1) for more details
+:::
+
+## Randomization {.smaller}
+
+Random sampling is not always possible for a variety of reasons, including:
+
+-   Logistical/financial constraints
+
+-   Safety issues
+
+-   Ethics
+
+::: fragment
+[Questions]{.highlight}:
+
+::: incremental
+-   Are there examples in your research where samples cannot be selected randomly?
+
+-   What are the consequences of non-random sampling for statistical inference?
+:::
+:::
+
+## Randomization {.smaller}
+
+Random allocation of treatments to experimental units is also a critical aspect of experimental design
+
+::: fragment
+This form of randomization helps ensure that treatments are not confounded with other sources of variation. How? By reducing the chance that treatments are correlated with other sources of variation
+
+```{r fig.height = 3, fig.width=4}
+samp_df <- data.frame(x = runif(100), 
+                      y = runif(100),
+                      Trait = rnorm(1000))
+
+ggplot(samp_df, aes(x = x, y = y, color = Trait)) +
+  geom_point() +
+  theme_void() 
+```
+:::
+
+## Randomization {.smaller}
+
+Random allocation of treatments to experimental units is also a critical aspect of experimental design
+
+This form of randomization helps ensure that treatments are not confounded with other sources of variation. How? By reducing the chance that treatments are correlated with other sources of variation
+
+```{r fig.height = 3, fig.width=4}
+samp1 <- sample(1:100, 20)
+samp2 <- sample(seq(1, 100)[-samp1], 20)
+ggplot() +
+  geom_point(data = samp_df, aes(x = x, y = y, color = Trait)) +
+  geom_point(data = samp_df[samp1,], aes(x = x, y = y), shape = 21, fill = NA, color = "black", size = 5) +
+  geom_point(data = samp_df[samp2,], aes(x = x, y = y), shape = 21, fill = NA, color = "red", size = 5) +
+  theme_void() 
+```
+
+## Randomization {.smaller}
+
+Random allocation of treatments to experimental units is also a critical aspect of experimental design
+
+This form of randomization helps ensure that treatments are not confounded with other sources of variation. How? By reducing the chance that treaments are correlated with other sources of variation
+
+```{r fig.height = 3, fig.width=7}
+
+p <- ggplot() +
+  geom_point(data = samp_df, aes(x = x, y = y, color = Trait)) +
+  geom_point(data = samp_df[samp1,], aes(x = x, y = y), shape = 21, fill = NA, color = "black", size = 5) +
+  geom_point(data = samp_df[samp2,], aes(x = x, y = y), shape = 21, fill = NA, color = "red", size = 5) +
+  theme_void() 
+
+samp_df2 <- dplyr::bind_rows(samp_df[samp1,], samp_df[samp2,])
+samp_df2$Treatment <- rep(c("A", "B"), each = 20)
+
+q <- ggplot(samp_df2, aes(x = Treatment, y = Trait)) +
+  geom_boxplot() +
+  geom_point(alpha = 0.5) 
+
+cowplot::plot_grid(p, q, nrow = 1)
+```
+
+As before, randomized designs help reduce the risk of confounding, but do not guarantee it
+
+## Randomization vs interspersion {.smaller}
+
+It is important to note that randomization is a *method* for reducing for confounding, not a *goal* in and of itself
+
+::: fragment
+An example to illustrate the difference. Assume in our previous example that we randomly selected trees for the exclosure experiment and ended up with the following design:
+
+![](fig/clustered.png){width="40%" height="50%" fig-align="center"}
+:::
+
+::: fragment
+[Questions]{.highlight}: Is this a good experimental design? How should we proceed?
+:::
+
+## Randomization vs interspersion {.smaller}
+
+This design is random but it is not *interspersed*
+
+![](fig/clustered.png){fig-align="center"}
+
+::: fragment
+Random sampling can result in clustered designs, especially with small sample sizes, that may violate the exchangeability assumption
+:::
+
+::: fragment
+How should we proceed? We could re-randomize...
+:::
+
+## Randomization vs interspersion {.smaller}
+
+Is this sample adequately interspersed? Is potential for confounding minimized?
+
+![](fig/randomized.png){fig-align="center"}
+
+::: fragment
+One risk of re-randomizing to achieve interspersion is that we risk re-randomizing until we get a design that "looks" random/interspersed
+:::
+
+::: incremental
+-   Do we still have a randomized design?
+
+-   Pre-defined criteria can help reduce potential for randomizing your way to a non-randomized design
+:::
+
+## Randomization vs interspersion {.smaller}
+
+Another option is to use regular/systematic allocation of treatments
+
+![](fig/interspersed.png){fig-align="center"}
+
+::: fragment
+Systematic/regular allocation can be more appropriate to achieve adequate interspersion, but risks of confounding remain
+:::
+
+::: fragment
+Often, final design will be compromise between randomization, risk of confounding, and logistical constraints
+
+-   No easy answer
+
+-   Make decisions ahead of time, document process, and be transparent
+
+-   In certain situations, confounding can be addressed statistically (more on this later)
+:::
+
+## Randomization {.smaller}
+
+Randomization helps meet both the exchangeability and positivity assumptions
+
+-   Randomizing treatments breaks confounding
+
+-   Because the probability of receiving a treatment is determined through the design, researchers can ensure all units have \>0% chance of receiving each treatment[^Though in studies with small samples sizes, stochastic violations of positivity can still happen]
+
+## Controls {.smaller}
+
+The final component of good experimental design that will discuss is the use of [controls]{.highlight}
+
+::: fragment
+If our goal is to determine whether a change in $x$ causes a corresponding change in $y$, controls allow us to answer the question:
+
+> What would happen to $\large y$ if we didn't change $\large x$?
+:::
+
+::: fragment
+This is the *counterfactual* we discussed in the previous lecture
+
+-   Well-designed treatments and controls allow us to estimate *both* potential outcomes of our treatment[^When combined with adequate replication and randomization]
+
+-   True controls are generally hard to accomplish in observational studies. Why?
+:::
+
+
+## Controls {.smaller}
+
+[Example]{.highlight}: We are interested in whether two closely related salamander species compete with each other. To test this, we establish study plots and count the number of individuals of the focal species in each plot. After four years, we randomly select half the plots and remove all individuals of the other species. We then monitor abundance of the focal species for 4 more years (ensuring no individuals of the other species re-colonize the plots)
+
+-   In this case, one might use the "before" and "after" periods as treatments to test for an effect
+
+```{r}
+#| fig-width: 5
+#| fig-height: 2
+sal_data <- data.frame(Year = c(1,2,3,4,5,6,7, 8),
+                       Count = c(42, 43, 41, 44, 47, 51, 52, 55,
+                                 43, 42, 43, 44, 48, 50, 53, 54),
+                       Treatment = rep(c("Competitor removed", "Control"), each = 8))
+
+ggplot(sal_data[sal_data$Treatment == "Competitor removed",], aes(x = Year, y = Count, color = Treatment)) +
+  geom_vline(xintercept = 4, color = "grey30", linetype = "longdash") +
+  geom_path() +
+  geom_point() +
+  scale_x_continuous(breaks = 1:8)
+
+```
+
+[Question]{.highlight}: Does our data provide evidence that the species compete?
+
+## Controls {.smaller}
+
+Although it seems clear that abundance increased after the competitor was removed, we do not know what would have happened if we hadn't remove the competitor (i.e., the counterfactual)
+
+::: fragment
+The plots where the competitor wasn't removed serve as controls, allowing us to formally test whether the response variable changed in the absence of the treatment
+
+```{r}
+#| fig-width: 6
+#| fig-height: 3
+ggplot(sal_data, aes(x = Year, y = Count, color = Treatment)) +
+  geom_vline(xintercept = 4, color = "grey30", linetype = "longdash") +
+  geom_path() +
+  geom_point() +
+  scale_x_continuous(breaks = 1:8)
+
+```
+:::
+
+::: fragment
+[Question]{.highlight}: Does our data provide evidence that the species compete?
+:::
+
+## Controls {.smaller}
+
+The purpose of controls are to eliminate all sources of variation *except* the treatment
+
+::: fragment
+Although straightforward in concept, creating suitable controls that meet the consistency assumpstion is often very challenging in practice
+:::
+
+::: fragment
+Are the following examples adequate controls?
+
+::: incremental
+-   To test the effects of an experimental drug, researchers capture individuals and inject the drug via a syringe. Control individuals are not captured or given the drug. Survival of both groups is monitored
+
+-   Researchers are trying to establish a new population of an endangered species via translocation to restored habitat. To test reproductive success is lower in the restored habitat, researchers monitor nests of translocated and non-translocated individuals
+
+-   Researchers test the effectiveness of a new pesticide by spraying randomly selected plants and not spraying others. Insect damage is quantified on both groups
+:::
+:::
+
+## Summary {.smaller}
+
+The three main elements of experimental design are:
+
+::: fragment
+1)  Replication
+
+-   Confounding cannot be eliminated in un-replicated experiments
+
+-   Allows quantifying within and among group variation, necessary for statistical tests
+
+-   More replication = better. Why?
+
+-   Can be challenging/impossible in large-scale field experiments
+:::
+
+## Summary {.smaller}
+
+The three main elements of experimental design are:
+
+1)  Replication
+
+2)  Randomization
+
+-   Random selection of sampling units produces representative samples
+
+-   Random allocation of treatments to experimental units produces exchangeable groups
+
+-   Alternative sampling methods (stratified, clustering, systematic) are sometimes preferred to complete randomization
+
+-   When sample sizes are small, randomization can result in inadequate interspersion; alternative designs often necessary
+
+-   The inability to randomize treatments is what distinguishes manipulative experiments from quasi-experiments and observational studies. What is the consequence for inference?
+
+## Summary {.smaller}
+
+The three main elements of experimental design are:
+
+1)  Replication
+
+2)  Randomization
+
+3)  Controls
+
+-   Controls are necessary to evaluate response in the absence of treatment
+
+-   Important in manipulative and observational experiments
+
+-   Suitable controls eliminate all sources of variation except the treatment effect. Not always easy/possible to achieve
+
+## Summary {.smaller}
+
+The three main elements of experimental design are:
+
+1)  Replication
+
+2)  Randomization
+
+3)  Controls
+
+Well-designed experiments are essential to test hypotheses
+
+-   Plan ahead! Design choices must be made before data collection begins
+
+-   No amount of fancy statistical methodology can compensate for a poorly designed experiment!
+
+-   Other considerations (sample sizes, independence, logistical constraints, appropriate response variables) are also important
+
+## For thought {.smaller}
+
+-   Do manipulative experiments guarantee estimates of causal effects?
+
+-   
+
+## Looking ahead
+
+<br/>
+
+[Next time]{.highlight}: Linear models part 2: categorical predictor w/ \>2 levels
+
+<br/>
+
+[Reading]{.highlight}: [Fieberg chp. 3.6](https://statistics4ecologists-v3.netlify.app/03-multipleregression#categorical-predictors)

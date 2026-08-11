@@ -1,11 +1,10 @@
 ---
-title: "LECTURE 0: course overview"
-subtitle: "FANR 6750 (Experimental Design)<br><small>Fall 2026</small>"
 format:
   revealjs:
-    theme: default
     highlight-style: github
     incremental: false
+    theme: FANR6750.scss
+    reference-location: document
 ---
 
 ```{r setup-lecture00, echo=FALSE, include=FALSE}
@@ -13,261 +12,278 @@ format:
 options(htmltools.dir.version = FALSE)
 
 #library(gganimate)
-#source(here::here("R/zzz.R"))
+source(here::here("R/zzz.R"))
 ```
 
+## LECTURE 0: course overview {.theme-title .center}
+
+::: footer
+FANR 6750  
+Fall 2026
+:::
 
 
-# logistics
+## Logistics
 
-**Lecture**: Monday, Wednesday, Friday 11:30-12:20, 1-304  
-**Lab**: Monday **or** Tuesday **or** Wednesday  
-**Credits**: 3  
+<br/>
 
+**Lecture**: Monday, Wednesday, Friday 1:15-2:10, 1-304\
+**Lab**: Monday **or** Tuesday 2:55-5:35, 4-419\
+**Credits**: 3
 
-# instructors
+## Instructors {.smaller}
 
-::::{.columns}
-
+::: columns
 ::: {.column width="50%"}
-Dr. Clark Rushing  
-[clark.rushing@uga.edu](clark.rushing@uga.edu)   
-**Office**: 3-409  
+Dr. Clark Rushing\
+[clark.rushing\@uga.edu](clark.rushing@uga.edu)\
+**Office**: 3-409\
 **Office hours**: M 1:00-2:30
 :::
 
 ::: {.column width="50%"}
+**TAs**
 
-**TAs**  
+Alan Bond (M)\
+[alan.bond1\@uga.edu](alan.bond1@uga.edu)\
+**Office**: 1-102\
+**Office hours**: Th 10-12  
 
-Anna Willoughby (M)  
-[anna.willoughby@uga.edu](Anna.Willoughby@uga.edu)  
-**Office**: Odum Rm. 140  
-**Office hours**: W 3:30-5pm  
-
-Alan Bond (Tu)  
-[alan.bond1@uga.edu](alan.bond1@uga.edu)  
-**Office**: 1-102  
-**Office hours**: F 10:00-12:00  
-
-Himasree Kolla (W)  
-[himasree.kolla@uga.edu](himasree.kolla@uga.edu)  
-**Office**: TBD  
-**Office hours**: TBD  
+Hannah Wright (Tu)\
+[Hannah.Wright1@uga.edu](Hannah.Wright1@uga.edu)  
+**Office**: 3-402  
+**Office hours**:  M 10-12 or by appointment
 
 :::
+:::
 
-::::
+## Course schedule and materials {.smaller}
 
+<br/>
 
-# course schedule and materials
+Lectures and labs: [rushinglab.github.io/FANR6750](https://rushinglab.github.io/FANR6750)[^1]
 
-Lectures and labs: [rushinglab.github.io/FANR6750](https://rushinglab.github.io/FANR6750)^[Bookmark this page!]
+[^1]: Bookmark this page!
 
-::::{.columns}
+<br/>
 
-:::{.column width="60%"}
+::: columns
+::: {.column width="60%"}
 **Primary texts** (not required)
 
-Fieberg, J. (2022). Statistics for Ecologists - A Frequentist and Bayesian Treatment of Modern Regression Models. [An open-source online textbook.](https://fw8051statistics4ecologists.netlify.app/)
+Fieberg, J. (2022). *Statistics for Ecologists - A Frequentist and Bayesian Treatment of Modern Regression Models*. [An open-source online textbook.](https://fw8051statistics4ecologists.netlify.app/)
 
-Quinn, G.P. & Keough, M.J. 2002. Experimental Design and Data Analysis for Biologists. Cambridge University Press.
+Quinn, G.P. & Keough, M.J. 2002. *Experimental Design and Data Analysis for Biologists*. Cambridge University Press.
 :::
 
-:::{.column width="40%"}
-![](fig/experimental-design-and-data-analysis-for-biologists-1.jpg){height=300}
+::: {.column width="40%"}
+![](fig/experimental-design-and-data-analysis-for-biologists-1.jpg){height="300"}
+:::
 :::
 
-::::
+## Lecture slides
 
+All slides are shared as HTML presentations via the course website. 
 
-# labs
+See [these instructions](https://quarto.org/docs/presentations/revealjs/presenting.html) for details about: 
+
+- Navigating
+
+- Footnotes (hover and end)
+
+- Presentation notes
+
+- Printing
+
+## Labs {.smaller}
 
 **Meet weekly**
 
-...
+-   You should have registered for one and only one lab section
 
-- You should have registered for one and only one lab section
-
-...
-
-- Always attend your assigned lab section unless both TA's have provided prior approval to attend the other section
-
-...
+-   Always attend your assigned lab section unless both TA's have provided prior approval to attend the other section
 
 **Taught in R**
 
-...
+-   No prior experience required
 
-- No prior experience required
+-   But those without prior experience may need to spend time learning outside of class
 
-...
-
-- But those without prior experience may need to spend time learning outside of class
-
-...
-
-- You can use your own laptop but make sure you have R and RStudio installed prior the first lab ^[See [here](https://rushinglab.github.io/FANR6750/articles/syllabus.html#course-resources-1) for instructions]
+-   You can use your own laptop but make sure you have R and RStudio installed prior the first lab [^2]
 
 
-# lab assignments
+[^2]: See [here](https://rushinglab.github.io/FANR6750/articles/syllabus.html#course-resources-1) for instructions
 
-...
+## Lab assignments {.smaller}
 
-- 8 throughout semester 
+::: {.incremental}
 
-...
+-   8 throughout semester
 
-- Meant to help with
-    + Understanding lecture/lab concepts
-    + Implementing statistical procedures in R
-    + Interpreting and presenting results
-    
-...
+-   Meant to help with
+    -   Understanding lecture/lab concepts
+    -   Implementing statistical procedures in R
+    -   Interpreting and presenting results
 
-- Worth 10 points each
-    + Grade based on turning in **complete** assignment **on time**
-    + Answer keys will be posted after all assignments have been submitted
+-   Worth 10 points each
+    -   Grade based on turning in **complete** assignment **on time**
+    -   Answer keys will be posted after all assignments have been submitted
 
+:::
 
-# grading
+## Grading {.smaller}
 
-#### 200 points total
-...
+200 points total 
 
-- 3 lecture exams, 40 points (20%) each
+. . . 
 
-    + In-class format using eLC/Lockdown Browser ^[Remote students must take exams during class period in an approved setting]
-    + Primarily focused on concepts, not coding
-    + Pool of 8-10 potential questions provided in advance
-    + Exam consists of 2 questions chosen by me, 2 questions chosen by student
-    + Not (explicitly) cumulative
-    + See schedule for approximate dates (subject to change)
+-   3 lecture exams, 40 points (20%) each
 
-...
+    -   In-class format using eLC/Lockdown Browser [^3]
+    -   Primarily focused on concepts, not coding
+    -   Pool of 8-10 potential questions provided in advance
+    -   Exam consists of 2 questions chosen by me, 2 questions chosen by student
+    -   Not (explicitly) cumulative
+    -   See schedule for approximate dates (subject to change)
 
-- 8 lab assignments, 10 points (5%) each
+[^3]: Remote students must take exams during class period in an approved setting
 
+. . .
 
-# a note on ai
+-   8 lab assignments, 10 points (5%) each
 
-AI tools (e.g., ChatGPT) have advanced very rapidly in a very short time  
+## Note on ai {.smaller}
 
-...
-- AI can increasingly help answer questions about statistical concepts, coding, etc.  
+AI tools (e.g., ChatGPT) have advanced very rapidly in a very short time
 
-...
+. . . 
 
-AI = resource (similar to Google, Cross Validated, etc.)  
+- AI can increasingly help answer questions about statistical concepts, coding, etc.
 
-- AI can help you perform statistical analyses but **it cannot replace your own statistical knowledge**  
+. . . 
 
-...
+AI = resource (similar to Google, Cross Validated, etc.)
 
-My goal is not to fight AI, but instead focus on responsible and appropriate use   
+-   AI can help you perform statistical analyses but **it cannot replace your own statistical knowledge**
 
-- Students may use AI to assist with lab assignments but must acknowledge, document, and assess all AI use  
+. . . 
 
-- Students may use AI to assist with exam preparation but must complete exams without the use of AI
+My goal is not to fight AI, but instead focus on responsible and appropriate use
 
-- Unacknowledged use of AI will be considered a violation of course policy. Suspected violations will be referred to the Office of Academic Honesty
+-   Students may use AI to assist with lab assignments but must acknowledge, document, and assess all AI use
 
+-   Students may use AI to assist with exam preparation but must complete exams without the use of AI
 
-# a note on ai
+-   Unacknowledged use of AI will be considered a violation of course policy. Suspected violations will be referred to the Office of Academic Honesty
+
+## Note on ai {.smaller}
 
 Later in the semester, we will have a class discussion on the role of AI in research/statistical analysis
 
-...
+. . . 
 
-In preparation for that discussion, I highly recommend reading [Bull$&!t Machines](https://thebullshitmachines.com/table-of-contents/index.html), a short, self-paced course on the LLM
+In preparation for that discussion, I highly recommend reading [Bull\$&!t Machines](https://thebullshitmachines.com/table-of-contents/index.html), a short, self-paced course on the LLM
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, eval = FALSE}
 knitr::include_graphics("fig/bs_machines.png")
 ```
 
-# remote students
+## Remote students {.smaller}
 
 Although we do our best to make instruction and materials accessible to remote students, *this is not officially a hybrid class*. That has several implications
 
-- Teaching to in-person and remote students is hard, especially labs. Technology problems are inevitable  
+-   Teaching to in-person and remote students is hard, especially labs. Technology problems are inevitable
 
-- Remote students should be prepared to spend extra effort engaging with course materials   
+-   Remote students should be prepared to spend extra effort engaging with course materials
 
-- Remote students must arrange to take exams with a proctor present and exam arrangements must be approved by the instructor prior to the exam
+-   Remote students must arrange to take exams with a proctor present and exam arrangements must be approved by the instructor prior to the exam
 
-- MAKE SURE YOU HAVE ACCESS TO THE PRIMARY eLC PAGE!
+-   MAKE SURE YOU HAVE ACCESS TO THE PRIMARY eLC PAGE!
 
-...
+. . . 
 
-**A note to in-person students:**  
+**A note to in-person students:**
 
 In my experience, lab and lecture attendance are strong predictors of performance. Although zoom links can be used for brief or unanticipated absences, students based in Athens should attend classes in person
 
+## Course objectives {.smaller}
 
-# course objectives
-
-**To understand:**  
 <br/>
 
-...
-1) the logical structure of experiments, including the design of manipulative and observational experiments;  
+. . . 
+
+**To understand**:
+
+. . . 
+
+1) The logical structure of experiments, including the design of manipulative and observational experiments
 <br/>
 
-...
-2) the analysis of such experiments, focusing on linear models;  
+. . . 
+
+2) The logic of statistical inference, including causation, from manipulative and observational experiments
 <br/>
 
-...
-3) the use of models in ecological studies (experimental and observational);  
+. . . 
+
+3) The analysis of such experiments, focusing on linear models
+<br/>
+
+. . . 
+
+4) The use and interpretation of models in ecological studies
 <br/>
 
 
-# basic structure
 
-...
+## Basic structure {.smaller}
 
-1) Foundational concepts for statistical inference and experimental design
+:::{.incremental}
 
-...
+1)  Foundational concepts for statistical inference
+<br/>
 
-2) Linear model basics
+2)  Linear model basics
+<br/>
 
-...
+3)  Null hypothesis significance testing
+<br/>
 
-3) Null hypothesis significance testing
+4) Experimental design and causal inference
+<br/>
 
-...
+5)  Linear model variations for experiments (t-tests, ANOVA, ANCOVA)
+<br/>
 
-4) Linear model variations for experiments (t-tests, ANOVA, ANCOVA)
+6)  Generalized linear models and model selection
+:::
 
-...
-
-5) Generalized linear models and model selection
-
-
-# pre- and post-course assessment
+## Pre- and post-course assessment {.smaller}
 
 Two short quizzes used to assess collective learning outcomes
 
-- Posted under `Quizzes` on eLC
+-   Posted under `Quizzes` on eLC
 
-- Require Lockdown Browser extension
+-   Require Lockdown Browser extension
 
-- Pre-assessment available until 8/17/2026
+-   Pre-assessment available until 8/24/2026
 
-...
+. . .
 
 The assessments do **not** count towards your grade, but students who complete them will receive extra credit on their final grade
 
-- 2 points for completing pre-assessment
+-   2 points for completing pre-assessment
 
-- 2 points for completing post-assessment
+-   2 points for completing post-assessment
 
-- 1 points for completing both assessments (5 points total) 
+-   1 points for completing both assessments (5 points total)
 
+## Looking ahead
 
-# looking ahead
+<br/>
 
-### Next time: Basic Concepts in Statistics
+[Next time]{.highlight}: Basic Concepts in Statistics
 
-### Reading: [Quinn chp. 1](https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&%20Keough.pdf#page=21.08)
+<br/>
+
+[Reading]{.highlight}: [Quinn chp. 1](https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&%20Keough.pdf#page=21.08)

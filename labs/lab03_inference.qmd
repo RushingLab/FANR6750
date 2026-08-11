@@ -92,10 +92,10 @@ Today we will dive deeper into several key topics from lecture related to statis
 
 The debate over graphics in `R` usually boils down to using the built-in graphing functions ("base graphics") vs the `ggplot2` package. There are some advantages to both approaches, but for the most part the newer generations of `R` users prefer `ggplot2`. Therefore most of the sample code provided in lab will reflect that preference. However, **I don't care how you make your plots as long as they effectively display the information you are trying to convey**. If you prefer base graphics, by all means use base graphics.^[Keep in mind that although we will be using ggplot2, it is a good idea to have some understanding of how base `R` graphics work. Most packages in `R`, when they produce some sort of output in the form of a plot, will still create that plot using base `R` graphics rather than ggplot. In order to alter those graphics without having to start from scratch, it will be useful to know a little about base `R` graphics.]  
 
-For this exercise, we will use a small data set that comes with the `FANR6750` package:
+For this exercise, we will use a small data set that comes with the `FANR6750data` package:
 
 ```{r}
-library(FANR6750)
+library(FANR6750data)
 library(ggplot2)
 data("thrushdata")
 str(thrushdata)
@@ -278,7 +278,7 @@ One of the most foundational topics for everything we will learn about this seme
 
 To explore the concept of sampling error in more detail, and to build some intuition for how sampling error influences conclusions from our samples, we will expand on the previous exercise by generating a very large number of samples from the population. 
 
-In the real world, of course, we generally only have a single sample. But `R` makes it easy to explore what we would see *if* we could repeat our sampling process many times. This is essentially the entire concept of *frequentist statistics*
+In the real world, of course, we generally only have a single sample. But `R` makes it easy to explore what we would see *if* we could repeat our sampling process many times. This is essentially the entire basis of *frequentist statistics*
 
 To repeat the sampling process we implemented above, we could just copy and paste the `samp <- rnorm(15, 500, 30)` code over and over again, each time naming the sample object something different:
 

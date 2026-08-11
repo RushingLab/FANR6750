@@ -1,0 +1,816 @@
+---
+format:
+  revealjs:
+    highlight-style: github
+    incremental: false
+    theme: FANR6750.scss
+    reference-location: document
+knitr:
+  opts_chunk:
+    dev: png
+    dev.args: { bg: "transparent" }
+from: markdown+emoji
+---
+
+```{r setup}
+#| echo: false
+#| include: false
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning = FALSE,
+                      message = FALSE, fig.retina = 2)
+source(here::here("R/zzz.R"))
+library(FANR6750)
+library(dplyr)
+library(kableExtra)
+library(ggdag)
+```
+
+## LECTURE 14: causal inference in observational studies {.theme-title .center}
+
+::: footer
+FANR 6750\
+Fall 2026
+:::
+
+## Outline {.theme-inverse .smaller}
+
+<br/>
+
+### 1) Motivation
+
+<br/>
+
+::: {.fragment}
+### 2) Examples
+
+<br/>
+:::
+
+::: {.fragment}
+### 3) Causal inference (continued)
+
+<br/>
+:::
+
+
+::: {.fragment}
+### 4) Multiple regression
+
+<br/>
+:::
+
+::: {.fragment}
+### 5) Examples (revisited)
+
+<br/>
+:::
+
+## Motivation {.smaller}
+
+In the last two lectures, we learned about fitting and interpreting multiple regression models
+
+:::{.fragment}
+
+The flexibility of multiple regression models makes them powerful statistical tools but also raises an important question: 
+
+:::
+
+:::{.fragment}
+
+> *How do you know what predictors to include in your model?* 
+
+:::
+
+:::{.incremental}
+- In experimental settings, the structure of multiple regression models is often determined by the experimental design
+
+    + All treatments are included as predictors in the model
+    
+    + Interactions are included based on *a priori* hypotheses^[Assuming adequate replication of all treatment combinations]
+    
+- In observational studies, it is is often less clear which combination(s) of predictors should be included in a model 
+
+    + It is increasingly common to have dozens (or more) predictors associated with each reponse
+    
+    + As the number of predictors grows, the number of potential combinations grows even faster
+:::
+
+## A few points {.smaller}
+
+:::{.incremental}
+- Although deciding which predictors to include is really an issue of selecting among alternative models, this lecture is not about "*model selection*" in the conventional sense
+
+- In fact, this lecture is not really about statistics at all. It is about using our *scientific* understanding to learn about cause and effect
+
+- [Warning]{.red}: Some of the material in this lecture goes against conventional practices used in ecology/natural resources
+
+    + Although causal inference is a well-developed field in its own right, these topics are not widely used in natural resources
+    
+    + In fact, many common practices you will encounter or be advised to use^[including in previous versions of this course] actually conflict with best practices for causal inference
+    
+    + Often, there is no right or wrong "answer." Using and defending your choices requires confidence and some degree of comfort with uncertainty
+:::
+
+
+## Example 1 {.smaller}
+
+:::{.incremental}
+
+- The Bleary Groundfinch is an imaginary bird species that is sexually-dimorphic (males are larger than females) 
+
+- During winter, both sexes defend individual territories that are mainly used for nocturnal roost sites
+
+- The species roosts on the ground and it is thought that they compete for territories with dense shrub cover to minimize predation risk 
+
+- To determine whether shrub cover influences survival, researchers radio-tagged an equal number of male and female birds and then tracked them for several weeks, recording the fate (survived or died) of each bird
+
+- They also located the nocturnal roost location of each individual and used vegetation surveys to quantify the average shrub density of each roost location 
+
+:::
+
+:::{.fragment}
+
+[Question:]{.highlight} Which covariates (cover, sex, or both) should the researchers include in their analysis? Why?
+
+:::
+
+## Example 1 {.smaller}
+
+Initially, the researchers fit two regression models^[specifically, they fit logistic regression models, which used for binary response data. We will learn more about logistic regression later in the semester but conclusions about the direction/significance of slope coefficients are the same as for linear regression], one for each covariate
+
+::::{.columns}
+
+::: {.column width="50%"}
+
+<br/>
+<br/>
+
+```{r echo = F}
+set.seed(23932)
+N <- 100
+sex <- rbinom(N, 1, 0.5)
+Sex <- ifelse(sex == 0, "Male", "Female")
+mu <- c(2, -2)
+Cover <- rnorm(N, mu[sex + 1], 1)
+
+encounter <-  -0.5 * Cover
+
+phi <- plogis(-encounter + 2.5 * sex)
+
+s <- rbinom(N, 1, phi)
+
+GroundFinchData <- data.frame(Sex = Sex, Cover = Cover, survive = s)
+
+ggplot(GroundFinchData, aes(x = Cover, y = survive)) +
+  geom_point() +
+  stat_smooth(method = "glm", method.args = list(family = "binomial")) +
+  scale_y_continuous("Survival probability") +
+  scale_x_continuous("Cover")
+```
+
+:::
+
+::: {.column width="50%"}
+
+<br/>
+```{r echo = T}
+fit1 <- glm(survive ~ Sex, data = GroundFinchData, family = "binomial")
+broom::tidy(fit1)
+```
+
+<br/>
+
+
+```{r echo = T}
+fit2 <- glm(survive ~ Cover, data = GroundFinchData, family = "binomial")
+broom::tidy(fit2)
+```
+
+:::
+
+::::
+
+## Example 1 {.smaller}
+
+Next, they fit a model with both covariates:
+::::{.columns}
+
+::: {.column width="50%"}
+
+```{r}
+ggplot(GroundFinchData, aes(x = Cover, y = survive, color = Sex)) +
+  geom_point() +
+  stat_smooth(method = "glm", method.args = list(family = "binomial")) +
+  scale_y_continuous("Survival probability") +
+  scale_x_continuous("Cover")
+```
+
+:::
+
+::: {.column width="50%"}
+
+```{r echo = T}
+fit3 <- glm(survive ~ Sex + Cover, data = GroundFinchData, family = "binomial")
+broom::tidy(fit3)
+```
+
+:::
+
+::::
+
+:::{.fragment}
+[Questions:]{.highlight}
+
+- What are your conclusions about the effect of sex and cover on survival? 
+
+- Why might the effect size (and sign) of sex have changed so dramatically when cover was added to the model?
+:::
+
+
+## Example 2 {.smaller}
+
+:::{.incremental}
+
+- A grad student is studying efforts to recover populations of the made-up, endangered Heirloom Trillium. 
+
+- The student is sent a dataset containing 20 years of surveys from a nature preserve containing a large population of the species. 
+
+- The data includes:
+
+    + The number of Trillium plants found at the beginning of the spring 
+    + The number of plants at the end of summer
+    + An index of acorn mast the previous fall
+    + The estimated number of deer within the study area 
+
+:::
+
+:::{.fragment}
+
+[Question:]{.highlight} Which covariates should the student include in their analysis? Why?
+
+:::
+
+## Example 2 {.smaller}
+
+The student initially notices that there is a strong negative association between mast and final abundance 
+
+::::{.columns}
+
+::: {.column width="50%"}
+
+```{r}
+set.seed(4243)
+N <- 20
+mast <- rnorm(20)
+
+initN <- rpois(N, lambda = 25)
+deer <- rpois(N, lambda = exp(2 + 0.5 * mast))
+survival <- plogis(5 - 0.5 * deer)
+finalN <- rbinom(N, initN, survival)
+
+TrilliumData <- data.frame(mast = mast, initN = initN, finalN = finalN, 
+                           deer = deer)
+ggplot(TrilliumData, aes(x = mast, y = finalN)) +
+  geom_point() +
+  stat_smooth(method = "glm", method.args = list(family = "poisson"))
+```
+
+:::
+
+
+::: {.column width="50%"}
+
+```{r echo = T}
+fit1 <- lm(finalN ~ mast, data = TrilliumData)
+broom::tidy(fit1)
+```
+
+:::
+
+::::
+
+## Example 2 {.smaller}
+
+Nervous that his analysis was insufficient, the student decided to fit additional models to test whether other predictors may also influence Trillium abundance. 
+
+::::{.columns}
+
+::: {.column width="50%"}
+
+```{r}
+ggplot(TrilliumData, aes(x = deer, y = finalN)) +
+  geom_point() +
+  stat_smooth(method = "glm", method.args = list(family = "poisson"))
+```
+
+:::
+
+
+::: {.column width="50%"}
+
+```{r echo = T}
+fit2 <- lm(finalN ~ mast + initN, data = TrilliumData)
+broom::tidy(fit2)
+```
+
+```{r echo = T}
+fit3 <- lm(finalN ~ mast + initN + deer, data = TrilliumData)
+broom::tidy(fit3)
+```
+
+:::
+
+::::
+
+:::{.fragment}
+
+[Questions:]{.highlight} 
+
+- Why did the effect of acorn mast change when deer abundance was added to the model? 
+- Is it reasonable to conclude that acorn mast affects Trillium abundance?
+
+:::
+
+
+## Example 3 {.smaller}
+
+::::{.columns}
+
+::: {.column width="50%"}
+
+:::{.incremental}
+
+- Researchers are studying the traits that influence “boldness” in fictitious Fruitcake Lizards
+
+- The researchers searched for and captured lizards that they encounter, then used a well-established method to quantify the boldness of each individual 
+
+- The researchers used a linear model to quantify the relationship between body mass and boldness and found a strong negative association
+
+- This result conflicts with previous studies of captive-reared Fruitcake Lizards that found no relationship between body size and boldness
+
+:::
+
+:::
+
+::: {.column width="50%" .fragment}
+
+```{r}
+set.seed(1302)
+N <- 600
+size <- rnorm(N)
+boldness <- rnorm(N)
+
+p <- plogis(-10 +  10 * size + 10 * boldness)
+captured <- as.logical(rbinom(N, 1, p))
+
+BoldnessData <- data.frame(Size = size, Boldness = boldness, score = p, 
+                           Captured = captured)
+ggplot(BoldnessData[BoldnessData$Captured == TRUE,], aes(x = Size, y = Boldness)) +
+  geom_point() +
+  scale_color_manual(values = c("grey", "red")) +
+  stat_smooth(method = "lm")
+```
+
+:::{.fragment}
+[Question:]{.highlight} Assuming that captive-rearing has no effect on boldness, why might the researchers have observed this strong, negative association?
+:::
+
+:::
+
+::::
+
+
+## Building multiple regression models {.smaller}
+
+The previous examples, although somewhat simplified, illustrate a common scenario you will encounter: multiple models can be fit to the same data set and your conclusions depend on which model you choose
+
+:::{.fragment}
+Conventional approaches to selecting among models are based on associations among predictor variables (e.g., strong correlations) and/or some type of model selection procedure (e.g., AIC)
+
+:::{.incremental}
+
+- As with any statistical procedure, these approaches base modeling decisions on the strength of statistical associations
+
+- However, we should usually base these decisions on our understanding of *why* variables are associated with each other 
+
+:::
+
+:::
+
+## Causal inference {.smaller}
+
+From lecture 7, we learned that: [Correlation = Causation + Confounding + Noise]{.highlight}
+
+:::{.fragment}
+
+The goal of manipulative experiments is to remove the effects of confounding by randomizing treatments or holding confounding sources of variation constant^[Experimental design helps with confounding but how do we deal with noise?]
+
+:::
+
+:::{.fragment}
+
+But how do we know what sources of variation we need to worry about when designing experiments? 
+
+- Answering this question will help understand how we can (sometimes) learn about cause and effect in observational studies
+
+:::
+
+
+## Sources of variation {.smaller}
+
+[Example:]{.highlight} A common question in life history studies is whether there is a trade off (i.e., negative relationship) between reproduction and survival. Researchers monitor the annual reproductive effort and subsequent survival of wild coyotes and find that, in contrast to their predictions, individuals that raised more offspring had higher survival than individuals that raised fewer offspring
+
+:::{.fragment}
+We can't conclude that higher reproductive effort causes higher survival because coyotes with different reproductive success are unlikely to be *exchangeable*
+
+- Individuals with high reproductive success likely differ in many ways from individuals with low reproductive success. If these other sources of variation influence survival, they could be the cause of the differences observed by the researchers
+
+- If the researchers want to design an experiment to test this question, what are some sources of variation they need to consider as part of their experimental design?
+
+:::
+
+## Visualizing your hypotheses {.smaller}
+
+When thinking about sources of variation, it can be helpful to visualize hypothesized relationships among variables
+
+- Simple graphical models with nodes (variables) and edges (arrows pointing from cause to effect) are often useful for this goal
+
+:::{.fragment}
+In our example, we might hypothesize the following:
+
+:::
+
+:::{.fragment}
+This type of graphical model is referred to as a *directed acyclical graph* (DAG), and they are central to many causal inference methods
+:::
+
+## Building DAGs {.smaller}
+
+DAGs are graphical models that describe [causal]{.highlight} relationships between variables 
+
+:::{.fragment}
+The purpose of a DAG is to articulate the direction of causal effects that influence both the response variable and covariates
+:::
+
+:::{.fragment}
+
+All DAGs must be:
+
+- Directed: $X \longleftrightarrow Y$ is not possible
+
+- Acyclic: $X \longrightarrow Y \longrightarrow Z \longrightarrow X$ is not possible
+
+:::
+
+:::{.fragment}
+
+DAGs:
+
+- Do not encode anything about the form of relationships (e.g., direction, non-linearity, interactions, etc.)
+
+- Should include all important variables^[*Important* is a vague term but generally a DAG should include any variables that could be biologically-relevant sources of variation], regardless of whether you have data on them or not!
+
+:::
+
+## Using a DAG for causal inference {.smaller}
+
+The benefit of DAGs is that they allow us to identify variables that could prevent conclusions about whether $X$ causes $Y$
+
+
+:::{.incremental}
+- As we've already seen, one type of variable DAGs help us identify are confounders
+
+- Confounders open *backdoor paths* that can create statistical associations between $X$ and $Y$, even when no causal effect exists^[A common metaphor for DAGs is the flow of electricity. We want to know if electricity flows from $X$ to $Y$. Backdoor paths are those that allow electricity to flow into both $X$ and $Y$ from other variables]
+
+- The goal of randomization is to close these backdoor paths by removing the arrow between $Z$ and $X$ (i.e., closing the backdoor path)^[Closing the door is equivalent to blocking the flow of electricity]
+:::
+
+## Identifying confounders using DAGs {.smaller}
+
+So far, we've used very simple graphs to show confounding caused by a single variable $Z$.
+
+:::{.fragment}
+However, confounding can often show up in more complex DAGs in ways that are not always quite so obvious. 
+
+Do you see any confounders in the following graphs?
+:::
+
+## Confounding in observational studies {.smaller}
+
+In experimental settings, we can remove the effects of confounders by either holding them constant or randomizing treatments
+
+:::{.fragment}
+But how do we remove the effect of confounders in observational studies? 
+:::
+
+:::{.fragment}
+Multiple regression!^[Multiple regression is not the only method to address confounding, but it is the only one we will cover in this class. For an overview of other methods, see...]
+:::
+
+:::{.fragment}
+In observational studies, we use multiple regression to accomplish *statistically* what experiments handle using design/randomization
+:::
+
+## Using multiple regression to remove confounding {.smaller}
+
+Remember from lecture 12 how to interpret the slope parameters from multiple regression models:
+
+Sound familiar? 
+
+This is what is meant by "conditioning on" or "controlling for" a variable 
+
+[Note]{.highlight}: We do not have to condition on every confounder. Instead, we generally try to find the *minimal adjustment set* that blocks confounding paths
+
+## Example 1 {.smaller}
+
+Let's use a DAG to figure out what might be happening in example 1 
+
+:::{.fragment}
+What is the relationship between predation risk, cover, and sex?
+:::
+
+:::{.incremental}
+- From this DAG, it is clear that sex is a [confounder]{.highlight} of both cover *and* predation.
+
+- Because it is a confounder, we have to control for it to quantify the causal effect of cover on survival^[Assuming there are no other confounders] 
+
+- We can also conclude that the model that only includes sex is the *wrong model* for our question. No model selection necessary!
+:::
+
+## Multicolinearity {.theme-inverse .center}
+
+## Multicolinearity {.smaller}
+
+One of the most commonly used justifications for excluding covariates from a model is *multicolinearity*, which is often defined as predictor variables that are strongly correlated with each other^[Though this is not quite the actual meaning]
+
+:::{.fragment}
+
+Typical advice is to remove covariates that have strong, pairwise correlations (e.g., > 0.7)
+
+:::
+
+:::{.fragment}
+But this is [NOT]{.highlight} good advice:
+
+:::{.incremental}
+- Including correlated predictors does not violate any assumptions of linear models
+
+- The *purpose* of multiple regression is to measure the effect of one predictor while holding others constant
+
+- As we have seen, confounding variables *need to* be included *because* they are correlated
+
+:::
+:::
+
+## Multicolinearity does not violate assumptions {.smaller}
+
+## Multicolinearity may indicate you need to *include* a predictor {.smaller}
+
+Remember from the causal inference lecture:
+
+So in this case, we expect $Z$ and $X$ to be correlated because $Z$ *causes* $X$^[There are other reasons they may be correlated, including a shared confounder of $X$ and $Z$. Also, $Z$ may not be the only cause of $X$. Regardless, the effect of $X$ on $Y$ is still confounded by $Z$]
+
+## Multicolinearity - practical advice {.smaller}
+
+
+If covariates are correlated because of confounding, you need to include the confounder
+
+If covariates are correlated because they essentially measure the same thing, you should remove all but one
+
+If covariates have a structural correlation (e.g., sum to 1), ...
+
+Be prepared for larger SE (but that's what is supposed to happen)
+
+## Other types of associations {.smaller}
+
+Confounders are only one type of causal relationship. Several others are important to know about:
+
+- Mediators
+
+- Colliders
+
+- Competing exposures 
+
+:::{.fragment}
+
+As with confounders, DAGs are a critical tool for understanding and identifying each of these types of relationships
+
+:::
+
+## Mediators {.smaller}
+
+Mediators are variables that exist along a path *between* $X$ and $Y$
+
+```{r}
+coords <- list(
+  x = c(Y = 2, Z = 1, X = 0),
+  y = c(Y = 1, X = 1, Z = 1)
+)
+
+mediator <- dagify(
+  Y ~ Z,
+  Z ~ X,
+  exposure = "X",
+  outcome = "Y",
+  coords = coords
+)
+
+ggdag(mediator) +
+  theme_dag()
+```
+
+:::{.incremental}
+- Often, mediators are the mechanism that causes $X$ to influence $Y$
+
+- In a DAG, mediators have arrows pointing *from* $X$ and *to* $Y$
+
+- If $Z$ is a mediator, including it in the model "blocks" the effect of $X$
+
+    + What is the effect of $X$ after accounting for $Z$? None, if $X$ acts through it's effect of $Z$
+
+- Mediators can sometimes be included in models to test whether $Z$ might be the mechanism 
+
+- In some cases, including a mediator allows you to measure the effect of $X$ that is not due to $Z$
+:::
+
+## Colliders {.smaller}
+
+Confounders are common *causes of* $X$ and $Y$, colliders are common *effects of* $X$ and $Y$
+
+```{r}
+coords <- list(
+  x = c(Y = 2, Z = 1, X = 0),
+  y = c(Y = 2, X = 2, Z = 1)
+)
+
+collider <- dagify(
+  Z ~ Y,
+  Z ~ X,
+  exposure = "X",
+  outcome = "Y",
+  coords = coords
+)
+
+ggdag(collider) +
+  theme_dag()
+```
+
+:::{.incremental}
+- In a DAG, colliders have arrows pointing *towards* them from both $X$ and $Y$
+
+- Including colliders in models can cause 
+:::
+
+## Competing exposures {.smaller}
+
+Competing exposures are variables that effect the response variable $Y$ but are independent of the cause $X$
+
+```{r}
+coords <- list(
+  x = c(Y = 2, Z = 1, X = 0),
+  y = c(Y = 2, X = 2, Z = 1)
+)
+
+ce <- dagify(
+  Y ~ X + Z,
+  exposure = "X",
+  outcome = "Y",
+  coords = coords
+)
+
+ggdag(ce) +
+  theme_dag()
+```
+
+:::{.incremental}
+- In a DAG, competing exposures have arrows pointing towards $Y$ but not $X$
+
+- Including competing exposures in models does not directly influence inference about the effect of $X$ on $Y$ 
+
+- Because competing exposures don't influence causal inference about $X$, choices about whether to include them in the model should be based on other considerations
+
+    + Are they of interest?
+    
+    + Does including them provide more power for detecting the effect of $X$?
+    
+    + Does including them reduce precision of other model parameters? 
+:::
+
+
+## Examples {.smaller}
+
+Let's return to the three examples from the beginning of lecture
+
+
+## Example 2 {.smaller}
+
+Why did the effect of mast change when deer abundance was included in the model? 
+
+:::{.fragment}
+Because deer is a [mediator]{.highlight}, including it in the model removes the effect of mast. But that does not mean mast is not a cause of Trillium abundance!
+:::
+
+What is the role of initial abundance?
+
+:::{.fragment}
+Because initial abundance is not a confounder or a mediator, including it in the model does not bias estimates of deer or mast. But there are reasons to include it in the model!
+:::
+
+
+## Example 3 {.smaller}
+
+In laboratory studies, there was no effect of body size on boldness. So why did the researchers studying wild lizards find this relationship? 
+
+::::{.columns}
+
+::: {.column width="50%"}
+
+:::{.incremental}
+
+- Lizards only end up in the data set *if they are captured*
+
+- Who gets captured? Lizards that are big *or* [bold]{.highlight}
+
+- Who doesn't get captured? Lizards that are small *and* shy
+
+- In the observed sample, small lizards are almost guaranteed to be bolder than average^[Otherwise they wouldn't be captured]
+
+:::
+
+:::
+
+::: {.column width="50%" .fragment}
+
+In the population, there is no link between boldness and body size
+
+```{r}
+ggplot(BoldnessData, aes(x = size, y = boldness)) +
+  geom_point(aes(color = captured)) +
+  scale_color_manual(values = c("grey", "red")) +
+  stat_smooth(method = "lm")
+```
+
+:::
+
+::::
+
+:::{.fragment}
+Capture acted as a *collider*, which created a relationship where none actually existed. 
+:::
+
+## More on DAGs {.smaller}
+
+Building DAGs can be overwhelming due to the complexity of ecological systems
+
+Start with the response variable and think about variables that are likely to have meaningful effects
+
+If you were to do conduct an experiment, which variables would you try to hold constant? What variables would you try to randomize? 
+
+
+## More on colliders {.smaller}
+
+Colliders are challenging to understand and identify in part because they are often not variables we measure
+
+- There is not a column in the data set called "captured" 
+
+When colliders are measured, they [should not]{.highlight} be included in the model
+
+When colliders are not measured, they are essentially in the model by default
+
+## Summary {.smaller}
+
+Multiple regression is...
+
+Using multiple regression to disentangle the effects of different covariates requires 
+
+DAGs are graphical models that represent hypothesized relationships between variables that influence (or are influenced by) $X$ and $Y$
+
+DAGs are useful for identifying confounders, mediators, and colliders
+
+If your goal is to estimate causal effects of $X$ on $Y$, your regression model *must* include known confounders^[Technically, not all confounders need to be included. Only the *minimal adjustment set* need to block all open paths between $X$ and $Y$ need to be included]
+
+    + Note that this does not depend on pairwise correlations, AIC scores, etc. Statistical control is equivalent to randomization in manipulative experiments
+    
+You should treat mediators with caution. Including mediators blocks paths between $X$ and $Y$, which will change results
+
+Beware of colliders, they are often lurking behind the scenes
+
+    + Colliders can also cause spurious relationships, which make them tempting to ignore
+
+Identifying confounders, mediators, and colliders is a [scientific]{.highlight} process, not a statistical one
+
+## Advice and resources {.smaller}
+
+We have purposefully used simple examples in this lecture. In reality, ecological systems are very complex and constructing a complete DAG is challenging
+
+
+## Looking ahead
+
+<br/>
+
+[Next time]{.highlight}: Multiple regression (and more causal inference)
+
+<br/>
+
+[Reading]{.highlight}: [Fieberg chp. 3.2-3.5](https://statistics4ecologists-v3.netlify.app/03-multipleregression#introduction-to-multiple-regression) and [Fieberg chp. 7.3](https://statistics4ecologists-v3.netlify.app/07-causalnetworks#directed-acyclical-graphs-and-conditional-independencies)
+

@@ -1,20 +1,14 @@
 ---
-title: "LECTURE 1: introduction to statistics"
-subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2026"
 format:
   revealjs:
-    theme: simple
     highlight-style: github
     incremental: false
-    css: FANR6750-revealjs.css
-    width: 1050
-    height: 700
-    margin: 0.1
-    slide-number: true
-    transition: none
-    background-transition: none
-    center: false
+    theme: FANR6750.scss
+    reference-location: document
+knitr:
+  opts_chunk:
+    dev: png
+    dev.args: { bg: "transparent" }
 ---
 
 ```{r setup}
@@ -26,29 +20,36 @@ knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning = FALSE,
 source(here::here("R/zzz.R"))
 ```
 
-## outline {.inverse}
+## LECTURE 1: introduction to statistics {.theme-title .center}
+
+::: footer
+FANR 6750  
+Fall 2026
+:::
+
+## Outline {.theme-inverse}
 <br/>
 
-> #### 1) What is statistics?
+### 1) What is statistics?
 
 <br/>
 
-> #### 2) Statistics and the scientific method
+### 2) Statistics and the scientific method
 
 <br/>
 
-> #### 3) Populations vs. samples
-
----
-
-## what is statistics?
+### 3) Populations vs. samples
 
 <br/>
+
+### 4) Causal inference
+
+
+## What is statistics? {.smaller}
+
 <br/>
 
 > The study of the collection, analysis, interpretation, presentation, and organization of data (Dodge 2006)
-
-<br/>
 
 . . .
 
@@ -62,9 +63,9 @@ source(here::here("R/zzz.R"))
 
 $$Statistics = Information + Uncertainty$$
 
----
+## Why do we need statistics? {.smaller}
 
-## why do we need statistics?
+<br/>
 
 ### Common tasks
 
@@ -84,18 +85,23 @@ $$Statistics = Information + Uncertainty$$
 - Make predictions that account for uncertainty
 :::
 
----
 
-## stats and the scientific method
+## Statistics and the scientific method {.smaller}
+
+<style>
+.add-space{
+padding-right: 11%;
+}
+</style>
 
 #### Ways of learning
 
 :::: {.columns}
 
-::: {.fragment .column width="50%"}
+::: {.fragment .column width="44%" .add-space}
 **Inductive reasoning**
 
-- Often attributed to Francis Bacon (and others)
+- Often attributed to Francis Bacon
 
 - Consistent observations -> general principle
 
@@ -104,7 +110,7 @@ $$Statistics = Information + Uncertainty$$
 - Example: I've only seen birds that fly :: all birds can fly
 :::
 
-::: {. fragment.column width="50%"}
+::: {.fragment .column width="44%"}
 **Deductive reasoning**
 
 - Formalized by Karl Popper
@@ -118,22 +124,20 @@ $$Statistics = Information + Uncertainty$$
 
 ::::
 
----
 
-## stats and the scientific method
+## Statistics and the scientific method {.smaller}
 
-#### Ways of learning (real world)
+### Ways of learning (real world)
 
 1) Pattern identification (i.e., exploratory studies)
     - Anecdotes
     - Correlations/visual analysis
     - Exploratory modeling (i.e., fishing)
 
----
 
-## stats and the scientific method
+## Statistics and the scientific method {.smaller}
 
-#### Ways of learning (real world)
+### Ways of learning (real world)
 
 1) Pattern identification (i.e., exploratory studies)
 
@@ -143,11 +147,10 @@ $$Statistics = Information + Uncertainty$$
     - Should be falsifiable
     - Ideally > 1 alternatives
 
----
 
-## stats and the scientific method
+## Statistics and the scientific method {.smaller}
 
-#### Ways of learning (real world)
+### Ways of learning (real world)
 
 1) Pattern identification (i.e., exploratory studies)
 
@@ -159,11 +162,10 @@ $$Statistics = Information + Uncertainty$$
     - More = better
     - "associated", "correlated", "greater/less than"
 
----
 
-## stats and the scientific method
+## Statistics and the scientific method {.smaller}
 
-#### Ways of learning (real world)
+### Ways of learning (real world)
 
 1) Pattern identification (i.e., exploratory studies)
 
@@ -175,11 +177,10 @@ $$Statistics = Information + Uncertainty$$
     - Can be observational but ideally manipulative experiment
     - Sampling must be *designed* to answer question
 
----
 
-## stats and the scientific method
+## Statistics and the scientific method {.smaller}
 
-#### Ways of learning (real world)
+### Ways of learning (real world)
 
 1) Pattern identification (i.e., exploratory studies)
 
@@ -194,11 +195,10 @@ $$Statistics = Information + Uncertainty$$
     - Model used to "confront" hypothesis with data (via predictions)
     - Draw conclusions: Does data support hypothesis?
 
----
 
-## stats and the scientific method
+## Statistics and the scientific method
 
-#### Example
+### Example
 
 ::: {.incremental}
 1) **Pattern**: Trees at higher elevations are shorter than at low elevations
@@ -212,65 +212,55 @@ $$Statistics = Information + Uncertainty$$
 5) **Models**^[We'll get to these!]
 :::
 
----
 
-## causal inference {.inverse .center-slide background-color="#2e2e2e"}
 
----
+## Uncertainty {.theme-inverse .center}
 
-## causal inference
 
-#### Often, we want to know whether $x$ influences $y$
+## Populations vs samples {.smaller}
 
-::: {.incremental}
-- In other words, if we change $x$, will $y$ change also (and by how much)?
-
-- Harder than it seems! Why?
-
-- Generally restricted to *manipulative* experiments
-
-    + Well-designed experiments ensure that "treatment assignment is independent of the potential outcomes" (Gelman et al. 2021)
-
-- Increasing interest in causal inference from observational studies
-
-    + This is something we will discuss later in the semester
-:::
-
----
-
-## uncertainty {.inverse .center-slide background-color="#2e2e2e"}
-
----
-
-## populations vs samples
-
-#### **Hypothesis**: New plant variety is more disease resistant than current variety
+[Hypothesis]{.highlight}: New plant variety is more disease resistant than current variety^[Note that this hypothesis is [causal]{.highlight}. Hypotheses *should*, in general, be causal since our goal is (usually) to learn about the mechanisms that underlie patterns we observe]
 
 ```{r leaf_rust}
 #| out-width: "35%"
 knitr::include_graphics("https://upload.wikimedia.org/wikipedia/commons/3/3e/Hemileia_vastatrix_-_coffee_leaf_rust.jpg")
 ```
 
-#### **Prediction**: Disease prevalence is lower in new variety than in current variety
+:::{.fragment}
+[Prediction]{.highlight}: Disease prevalence is lower in new variety than in current variety
+:::
 
+<br/>
+
+:::{.fragment}
 ### How can we determine whether the hypothesis is true?
+:::
 
----
 
-## populations vs samples {.inverse background-color="#2e2e2e"}
 
-#### Population
+## Populations vs samples {.theme-inverse .smaller}
+
+:::{.fragment}
+
+### Population
+
+:::
+
+:::{.incremental}
+
 - A collection of subjects of interest
 
 - Often, a biologically meaningful unit
 
 - Sometimes a process of interest
 
+:::
+
+:::{.fragment}
 ### Question: What is the population in our example?
+:::
 
----
-
-## population
+## Population {.smaller}
 
 ```{r pop}
 #| fig-width: 9
@@ -290,25 +280,30 @@ ggplot(delta_df) +
   labs(subtitle = "Disease prevalance in population")
 ```
 
-#### Note:
-1) These are **the** *populations*
+### Note:
+1) These are [the]{.highlight} *populations*
 
-2) There is **variation** within and among populations, but:
+2) There is [variation]{.highlight} within and among populations, but:
 
 3) The hypothesis is correct (mean prevalence is lower in new vs. current variety)
 
----
+::: {.notes}
+I say [the]{.highlight} populations because these distributions represent all individuals of each variety. Because we know (in this example) prevalence in every individual, there is no uncertainty about whether the hypothesis is true or not. The mean of each population tells us **exactly** how different prevalence is between the two varities. Of course, in reality, we could never measure every individual in each population so cannot know the true difference in prevalence
+:::
 
-## populations vs samples {.inverse background-color="#2e2e2e"}
+## Populations vs samples {.theme-inverse .smaller}
 
-#### Population
+:::{.fragment .semi-fade-out fragment-index=1}
+### Population
 - A collection of subjects of interest
 
 - Often, a biologically meaningful unit
 
 - Sometimes a process of interest
+:::
 
-#### Sample
+:::{.fragment fragment-index=2}
+### Sample
 
 - A finite subset of the population of interest, i.e. the data we collect
 
@@ -319,9 +314,9 @@ ggplot(delta_df) +
     + Representative
     + Sufficiently large
 
----
+:::
 
-## sample
+## Sample
 
 ```{r samp1}
 #| fig-width: 9
@@ -343,9 +338,11 @@ ggplot() +
   labs(subtitle = "Disease prevalence in samples (n = 15)")
 ```
 
----
+:::{.notes}
+Each orange and blue tick mark under the distributions shows the prevalence value of a single observation in each sample. The histogram bars show the observed frequency of prevalence values in the samples.
+:::
 
-## sample
+## Sample {.smaller}
 
 ```{r samp_lab}
 #| fig-width: 9
@@ -376,16 +373,16 @@ ggplot() +
   labs(subtitle = "Disease prevalence in samples (n = 15)")
 ```
 
-#### Note:
+### Note:
+
 1) These are *samples*
 
 2) The sample means are our best estimates of the population means
 
 3) But the sample means will never equal the population means (uncertainty!)
 
----
 
-## summary statistics
+## Summary statistics {.smaller}
 
 ### Measures of central tendency
 
@@ -401,9 +398,8 @@ $$\large \bar{y} = \frac{\sum_{i=1}^n y_i}{n}$$
 
 - Mode
 
----
 
-## summary statistics
+## Summary statistics {.smaller}
 
 ### Measures of dispersion
 
@@ -421,15 +417,14 @@ $$\large s = \sqrt{s^2}$$
 
 - Range
 
----
 
-## sampling error
+## Sampling error
 
-Every sample has a different mean (and standard deviation) - more uncertainty!
+Every sample has a different mean (and standard deviation)^[We have now mentioned two types of uncertainty: The sample mean will never equal the population mean *and* no two samples will ever have exactly the same mean]
 
 ```{r samp1_again}
-#| fig-width: 9
-#| fig-height: 3
+#| fig-width: 6
+#| fig-height: 2.5
 ggplot() +
   geom_histogram(data = samp_df, aes(x = y2, y = ..density.., fill = Variety),
                  color = "white", alpha = 0.6) +
@@ -442,8 +437,8 @@ ggplot() +
 ```
 
 ```{r samp2}
-#| fig-width: 9
-#| fig-height: 3
+#| fig-width: 6
+#| fig-height: 2.5
 set.seed(59403)
 samp_df <- data.frame(y2 = c(rnorm(15, 48, 5), rnorm(15, 55, 15)),
                       Variety = rep(c("New", "Current"), each = 15))
@@ -461,34 +456,137 @@ ggplot() +
   labs(subtitle = "Sample 2 (n = 15)")
 ```
 
----
 
-## sampling = uncertainty
+## Sampling = uncertainty {.smaller}
 
-#### Because populations (usually) cannot be measured, sampling is essential
+::: {.incremental}
+- Because populations (usually) cannot be measured, sampling is essential
 
-#### But sampling is inherently *stochastic*
+- But sampling is inherently *stochastic*
 
-- sampling produces uncertainty
+    + Sampling produces uncertainty
 
-- unavoidable (but that's ok!)
+    + Unavoidable (but that's ok!)
 
+- Statistics is what allows us to learn about the [population]{.highlight} using [samples]{.highlight} in the face of [uncertainty]{.highlight}
+
+    + The primary goal of this class is for you to understand how to make robust inferences that account for uncertainty (and the limitations of those inferences)
+
+    + We will return to this basic concept (sampling error) many times this semester
+:::
+
+:::{.fragment}
 > Doubt is not a pleasant condition, but certainty is absurd -- Voltaire
 
-#### Statistics is what allows us to learn about the **population** using **samples** in the face of **uncertainty**
+:::
 
-- the primary goal of this class is for you to understand how to make robust inferences that account for uncertainty (and the limitations of those inferences)
+## Causal inference {.theme-inverse .center}
 
-- we will return to this basic concept (sampling error) many times this semester
 
----
+## Causal inference {.smaller}
 
-## looking ahead
+<style>
+.add-space{
+padding-right: 11%;
+}
+</style>
+
+
+:::: {.columns}
+
+::: {.column width="44%" .add-space}
+
+::: {layout="[[-1], [1], [-1]]"}
+```{r xy}
+#| fig-width: 6
+#| fig-height: 4.5
+
+x <- rnorm(30)
+y <- rnorm(30, -2 + 0.75 * x, 0.5)
+xy_df <- data.frame(x = x,
+                    y = y)
+
+ggplot(xy_df, aes(x = x, y = y)) +
+  geom_point(size = 1.75) +
+  stat_smooth(method = "lm", se = F, color = "#b58900") +
+  theme(axis.text = element_blank(), axis.ticks = element_blank())
+```
+:::
+
+:::
+
+::: {.fragment .column width="44%"}
+
+::: {.incremental}
+- Often, we want to know whether $x$ influences $y$
+
+    + In other words, if we change $x$, will $y$ also change (and by how much)?
+
+- Statistical models measure [associations]{.highlight} between variables
+
+    + In other words, when $x$ changes, $y$ also tends to change^[Note the subtle difference here - in the previous sentence, we said "we change $x$. Here, we say "when $x$ changes. In one case, our definition is based on intervening in the system to specifically change the value of $x$. If a change in $y$ follows, we can (under certain circumstances) conclude $x$ causes $y$. In the other case, we observe a change in $x$. Generally, we can't conclude $x$ causes $y$ in that case. Why not?]
+
+- Do associations tell us anything about cause and effect?
+
+    + Correlation is not causation
+:::
+
+:::
+
+::::
+
+## Causal inference {.smaller}
+::: {.incremental}
+
+- If correlation is not causation, what is it?
+
+- $Correlation = Causation + Confounding + Noise$
+
+- [Confounding]{.highlight}: Both $x$ and $y$ are influenced by a third variable $z$
+
+- Separating causation, confounding, and noise is one of the central challenges of scientific inference
+
+    + Statistics can help with this challenge but [cannot]{.highlight} tell us whether associations we observe are the result of causation, confounding, or noise
+
+    + Manipulative experiments are generally considered the "gold standard" for causal inference because of [randomization]{.highlight}
+
+    + But causal inference from observational studies is also possible
+
+    + We will discuss all of these topics in more detail throughout the semester
+:::
+
+::: {.notes}
+Sampling error is the main source of noise and can make associations larger or smaller than they actually are. We will return to this point throughout the semester because of accounting for the risk of *spurious* associations due to sampling error is one of the main goals of statistical inference
+:::
+
+
+## Summary {.smaller}
+
+:::{.incremental}
+- Statistical models allow us to quantify [associations]{.highlight} between variables
+
+- Statistical models also allow us to makes inferences about associations in the face of [uncertainty]{.highlight}
+
+- Uncertainty stems from multiple processes, the most fundamental of which is [sampling]{.highlight}
+
+    + Inferences based on finite samples from a population will [always]{.highlight} be uncertain
+    
+    + Sampling error can make associations look bigger or smaller than they actually are
+
+    + Sampling error is one of the reasons statistical associations may not be causal (or even real)
+    
+- We often want to know if one variable causes another but drawing causal inferences is challenging
+
+    + As we will see, causal inference is primarily a [scientific]{.highlight} challenge, not a statistical one
+
+:::
+
+## Looking ahead
 
 <br/>
 
-### **Next time**: Introduction to linear models
+[Next time]{.highlight}: Introduction to linear models
 
 <br/>
 
-### **Reading**: [Fieberg chp. 1.2-1.4](https://statistics4ecologists-v3.netlify.app/01-linearregression)
+[Reading]{.highlight}: [Fieberg chp. 1.2-1.4](https://statistics4ecologists-v3.netlify.app/01-linearregression)

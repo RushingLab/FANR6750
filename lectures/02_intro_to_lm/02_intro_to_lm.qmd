@@ -1,20 +1,15 @@
 ---
-title: "LECTURE 2: introduction to linear models"
-subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2026"
 format:
   revealjs:
-    theme: simple
     highlight-style: github
     incremental: false
-    css: FANR6750-revealjs.css
-    width: 1050
-    height: 700
-    margin: 0.1
-    slide-number: true
-    transition: none
-    background-transition: none
-    center: false
+    theme: FANR6750.scss
+    reference-location: document
+    html-math-method: mathjax
+knitr:
+  opts_chunk:
+    dev: png
+    dev.args: { bg: "transparent" }
 ---
 
 ```{r setup}
@@ -26,86 +21,103 @@ knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning = FALSE,
 source(here::here("R/zzz.R"))
 ```
 
-## outline {.inverse}
+## LECTURE 2: Introduction to linear models {.theme-title .center}
+
+::: footer
+FANR 6750  
+Fall 2026
+:::
+
+## Outline {.theme-inverse}
 
 <br/>
 
-#### 1) Basic structure of a linear model
+### 1) Basic structure of a linear model
 
 <br/>
 
 ::: {.fragment}
-#### 2) Parameter interpretation
+### 2) Parameter interpretation
 
 <br/>
 :::
 
 ::: {.fragment}
-#### 3) Assumptions
+### 3) Assumptions
 :::
 
-## {.inverse}
+## {.theme-inverse}
 
 ### Statistics = Information + Uncertainty
 
 <br/>
 
-#### In the last lecture, we learned that statistics is what allows us to make inferences about a population in the face of uncertainty
+::: {.fragment}
+
+In the last lecture, we learned that statistics is what allows us to make inferences about a population in the face of uncertainty
+
+:::
 
 <br/>
 
 ::: {.fragment}
-#### Statistical inference requires **models**
+Statistical inference requires *models*
 :::
 
-## what is a model?
+## What is a model?
 
 ![](https://media.giphy.com/media/12npFVlmZoXN4Y/giphy.gif)
 
-## what is a model?
+## What is a model? {.smaller}
 
-> an abstraction of reality used to describe the relationship between two or more variables
+> An abstraction of reality used to describe the relationship between two or more variables
+
+<br/>
 
 ::: {.fragment}
-#### Many types (conceptual, graphical, mathematical)
+Many types (conceptual, graphical, mathematical)
 
 <br/>
 :::
 
 ::: {.fragment}
-#### In this class, we will deal with *statistical* models
+In this class, we will deal with *statistical* models^[Though graphical models will play an important role later in the semester]
 :::
 
 :::{.incremental}
 - Mathematical representation of our hypothesis
+
+- Explicitly measure and account for uncertainty
 
 - By necessity, models will be simplifications of reality ("all models are wrong...")
 
 - Do not have to be complex
 :::
 
-## but i don't want to be a modeler!
+## But i don't want to be a modeler! {.smaller}
 
-```{r out.width="30%"}
+```{r out.width="60%"}
 knitr::include_graphics("puffy_shirt.png")
 ```
 
 :::{.incremental}
-- Inference **requires** models
+- Inference [requires]{.highlight} models
 
-- Models link **observations** to **processes**
+- Models link [observations]{.highlight} to [processes]{.highlght}
 
-- Models are tools that allow us understand processes that we **cannot directly observe** based on quantities that we **can** observe
+- Models are tools that allow us understand processes that we [cannot directly observe]{.highlght} based on quantities that we [can]{.highlight} observe
 :::
 
-## a simple example
+## A simple example {.smaller}
 
-#### Suppose we are interested in the hypothesis that water availability limits acorn production by oak trees
+Suppose we are interested in the hypothesis that water availability limits acorn production by oak trees
 
-- **Prediction**: Acorn production will increase following years with higher rainfall
+- [Prediction]{.highlight}: Acorn production increases following years with higher rainfall
 
 ::: {.fragment}
-```{r fig.height=4, fig.width=6}
+```{r}
+#| fig-width: 6
+#| fig-height: 4
 x <- seq(from = 0, to = 200, by = 0.1)
 x2 <- runif(n = 50, 0, 200)
 line_df <- data.frame(x = x,
@@ -118,15 +130,16 @@ ggplot(line_df, aes(x = x, y = y)) +
 ```
 :::
 
-## a simple model
+## A simple model {.smaller}
 
 <br/>
-<br/>
 
-$$\Huge y = a + bx$$
+$$\LARGE y = a + bx$$
 
 ::: {.fragment}
-```{r fig.height=2.5, fig.width=5}
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
 ggplot(line_df, aes(x = x, y = y)) +
   geom_path(color = "#446E9B")
 ```
@@ -136,101 +149,86 @@ ggplot(line_df, aes(x = x, y = y)) +
 It may not be obvious, but this is essentially the only model we will use this semester^[With some minor variations, mainly in $x$]
 :::
 
-## a simple model
+## A simple model {.smaller}
 
 <br/>
-<br/>
 
-$$\Huge y = a + bx$$
+$$\LARGE y = a + bx$$
 
-```{r fig.height=2.5, fig.width=5}
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
 ggplot(line_df, aes(x = x, y = y)) +
   geom_path(color = "#446E9B")
 ```
 
+:::{.fragment}
 If we want to use this as a *statistical* model, what's missing?
+:::
 
-## a simple model
+:::{.fragment}
+[Stochasticity]{.highlight}
+:::
 
-<br/>
-<br/>
 
-$$\Huge y = a + bx$$
-
-```{r fig.height=2.5, fig.width=5}
-ggplot(line_df, aes(x = x, y = y)) +
-  geom_path(color = "#446E9B")
-```
-
-If we want to use this as a statistical model, what's missing?
-
-#### **Stochasticity!**
-
-## a simple model
+## A simple model {.smaller}
 
 <br/>
-<br/>
 
-$$\Huge y = a + bx$$
+$$\LARGE y = a + bx$$
 
-```{r fig.height=2.5, fig.width=5}
+```{r}
+#| fig-width: 5
+#| fig-height: 2.5
 ggplot(line_df, aes(x = x, y = y)) +
   geom_path(color = "#446E9B") +
-  geom_point(data = samp_df, aes(x = x, y = y), color = "#D47500", alpha = 0.75) +
+  geom_point(data = samp_df, aes(x = x, y = y), color = "#D47500",
+             size = 1, alpha = 0.75) +
   scale_x_continuous("Rainfall (mm)") +
   scale_y_continuous("Acorns")
 ```
 
 If we want to use this as a statistical model, what's missing?
 
-#### **Stochasticity!**
+[Stochasticity]{.highlight}
 
-## the linear model {.inverse .center}
+## The linear model {.theme-inverse .center}
 
-## statistics cookbook
+## Statistics cookbook
 
-```{r out.width="50%"}
-knitr::include_graphics("stats_flow_chart.png")
-```
+![](stats_flow_chart.png){height=50%, fig-align="center"}
 
-## the linear model
+## The linear model
 
 <br/>
-<br/>
 
-$$\Large response = deterministic\; part+stochastic\; part$$
-
-<br/>
-<br/>
+$$ response = deterministic\; part+stochastic\; part$$
 
 ::: {.fragment}
-$$\underbrace{\LARGE E[y_i] = \beta_0 + \beta_1 \times x_i}_{Deterministic}$$
-
-<br/>
-<br/>
+$$\underbrace{\large E[y_i] = \beta_0 + \beta_1 \times x_i}_{Deterministic}$$
 :::
 
 ::: {.fragment}
-$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma)}_{Stochastic}$$
+$$\underbrace{\large y_i \sim normal(E[y_i], \sigma)}_{Stochastic}$$
 :::
 
-## the linear model
+## The linear model {.smaller}
 
-#### Sometimes you will see linear models written as:
+Sometimes you will see linear models written as:
 
-$$\LARGE y_i = \beta_0 + \beta_1  x_i + \epsilon_i$$
+$$\Large y_i = \beta_0 + \beta_1  x_i + \epsilon_i$$
 
-$$\LARGE \epsilon_i \sim normal(0, \sigma)$$
+$$\Large \epsilon_i \sim normal(0, \sigma)$$
 
-#### with the $\large \epsilon_i$ terms referred to as *residuals* or *residual error*
+with the $\large \epsilon_i$ terms referred to as *residuals* or *residual error*
 
 - Mathematically, the two formulations are identical
 
 - We will use both formulations
 
-## a note on notation {.inverse}
+## A note on notation {.theme-inverse .smaller}
 
-#### Throughout the semester, we will try to be consistent with mathematical notation, e.g.
+Throughout the semester, we will try to be consistent with mathematical notation, e.g.
 
 - $y$ = response/dependent variable
 - $x$ = predictor/independent variable
@@ -239,14 +237,14 @@ $$\LARGE \epsilon_i \sim normal(0, \sigma)$$
 - $\beta$ = model parameter (i.e., intercept/slope)
 
 ::: {.fragment}
-#### To the extent possible, these follow conventions used in many textbooks/papers (but there is a lot of variation between authors)
+To the extent possible, these follow conventions used in many textbooks/papers (but there is a lot of variation between authors)
 :::
 
 ::: {.fragment}
-#### Remember that these are just *symbols* - you could replace them with other symbols (e.g., emoji) and it would not change their interpretation!
+Remember that these are just *symbols* - you could replace them with other symbols (e.g., emoji) and it would not change their interpretation!
 :::
 
-## parameter interpretation
+## Parameter interpretation {.smaller}
 
 $\large \beta_0$ = intercept
 
@@ -266,21 +264,27 @@ Ecologically, the interpretation will depend on:
 - the structure of the predictor variables (continuous vs. categorical)
 - the units of the predictor variables (e.g., scaled vs unscaled)
 - the inclusion of interaction terms
+:::
+
+::: {.fragment}
 We will discuss each of these scenarios in detail as the semester progresses
 :::
 
-## the linear model
 
-#### A "simple" example
+## The linear model {.smaller}
 
-$$\underbrace{\LARGE E[y_i] = -2 + 0.5 \times x_i}_{Deterministic}$$
+A "simple" example
+
+$$\underbrace{\large E[y_i] = -2 + 0.5 \times x_i}_{Deterministic}$$
 
 ::: {.fragment}
-$$\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}$$
+$$\underbrace{\large y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}$$
 :::
 
 ::: {.fragment}
-```{r fig.height=4, fig.width=6}
+```{r}
+#| fig-width: 5
+#| fig-height: 3
 x <- rnorm(100)
 y <- -2 + 0.5 * x + rnorm(100, 0, 0.25)
 mu <- -2 + 0.5 * x
@@ -290,13 +294,13 @@ df <- data.frame(x = x, y = y, mu = mu, Residuals = resid)
 ggplot(df, aes(x, y)) +
   geom_abline(slope = 0.5, intercept = -2, color = "#446E9B", size = 1.5) +
   scale_y_continuous("y") +
-  geom_point(color = "#D47500", alpha = 0.75)
+  geom_point(color = "#D47500", alpha = 0.75, size = 1)
 ```
 :::
 
-## the linear model
+## The linear model {.smaller}
 
-#### A more complex model
+A more complex model
 
 $$\large y_i = \beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + ... + \beta_px_{ip} + \epsilon_i$$
 
@@ -306,11 +310,13 @@ $$\large y_i = \beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + ... + \beta_px_{ip} + \
 - We will cover more complex models (and interpretation) later
 :::
 
-## is this a linear model?
+## Is this a linear model?
 
-$$\Large y = 20 + 0.5x - 0.3x^2$$
+$$\large y = 20 + 0.5x - 0.3x^2$$
 
-```{r fig.height=3.5, fig.width=5.5}
+```{r}
+#| fig-width: 5.5
+#| fig-height: 3.5
 x <- seq(from = 0, to = 10, 0.1)
 lm2 <- data.frame(x = x,
                   y = 20 + 0.5 * x - 0.3 * x^2)
@@ -319,14 +325,16 @@ ggplot(lm2, aes(x = x, y = y)) +
   geom_line()
 ```
 
-## residuals
-
-#### One concept we will talk about a lot is *residuals*, i.e., $\Large \epsilon_i$
+## Residuals {.smaller}
+ 
+One concept we will talk about a lot is *residuals*, i.e., $\epsilon_i$
 
 ::: {.fragment}
-- Residuals are the difference between the observed values $\large y_i$ and the predicted values $\large E[y_i]$ — how much variation in $\large y$ is explained by $\large x$?
+- Residuals are the difference between the observed values $y_i$ and the predicted values $E[y_i]$ — how much variation in $y$ is explained by $x$?
 
-```{r fig.height=5, fig.width=7}
+```{r}
+#| fig-width: 6
+#| fig-height: 4
 ggplot(df, aes(x, y)) +
   geom_segment(aes(x = x, xend = x, y = mu, yend = y), color = "#3CB521", size = 1) +
   geom_abline(slope = 0.5, intercept = -2, color = "#446E9B", size = 1.5) +
@@ -335,13 +343,15 @@ ggplot(df, aes(x, y)) +
 ```
 :::
 
-## residuals
+## Residuals {.smaller}
 
-#### One concept we will talk about a lot is *residuals*, i.e., $\Large \epsilon_i$
+One concept we will talk about a lot is *residuals*, i.e., $\epsilon_i$
 
-- Residuals are the difference between the observed values $\large y_i$ and the predicted values $\large E[y_i]$ — how much variation in $\large y$ is explained by $\large x$?
+- Residuals are the difference between the observed values $y_i$ and the predicted values $E[y_i]$ — how much variation in $y$ is explained by $x$?
 
-```{r fig.height=3.5, fig.width=5.5}
+```{r}
+#| fig-width: 5.5
+#| fig-height: 3.5
 ggplot(df, aes(x, Residuals)) +
   geom_abline(slope = 0, intercept = 0, color = "grey40", linetype = "dashed", size = 1.5) +
   geom_point(color = "#D47500", alpha = 0.75)
@@ -352,11 +362,11 @@ ggplot(df, aes(x, Residuals)) +
 - Useful for assessing whether data violate model assumptions
 :::
 
-## assumptions {.inverse .center}
+## Assumptions {.theme-inverse .center}
 
-## assumptions
+## Assumptions {.smaller}
 
-#### **EVERY** model has assumptions
+**EVERY** model has assumptions
 
 :::{.incremental}
 - Assumptions are necessary to simplify real world to workable model
@@ -364,7 +374,7 @@ ggplot(df, aes(x, Residuals)) +
 - **Always** know (and test) the assumptions of your model^[You know what happens when you assume...]
 :::
 
-## linear model assumptions
+## Linear model assumptions {.smaller}
 
 <br/>
 
@@ -381,12 +391,14 @@ $$\Large \epsilon_i \sim normal(0, \sigma)$$
 4) **Independence**: The residuals are independent (i.e., uncorrelated with each other)
 :::
 
-## assumptions
+## Assumptions
 
 $$\large y_i = \beta_0 + \beta_1x_i + \epsilon_i$$
 $$\large \epsilon_i \sim normal(0, \sigma)$$
 
-```{r fig.height=6, fig.width=8}
+```{r}
+#| fig-width: 8
+#| fig-height: 6
 x <- runif(100, 0, 60)
 ey <- 10 + 1 * x
 eps <- rnorm(100, 0, 3)
@@ -418,23 +430,27 @@ ggplot(df_assump, mapping = aes(x = x, y = y)) +
   geom_point(color = "#446E9B", alpha = 0.5)
 ```
 
-## assumptions - linearity
+## Assumptions - linearity
 
 $$\large y_i = \color{#D47500}{\beta_0 + \beta_1x_i} + \epsilon_i$$
 $$\large \epsilon_i \sim normal(0, \sigma)$$
 
-```{r fig.height=6, fig.width=8}
+```{r}
+#| fig-width: 8
+#| fig-height: 6
 ggplot(df_assump, mapping = aes(x = x, y = y)) +
   geom_point(color = "#446E9B", alpha = 0.5) +
   geom_smooth(method = 'lm', se = FALSE, color = "#D47500", alpha = 0.5)
 ```
 
-## assumptions - normality
+## Assumptions - normality
 
 $$\large y_i = \color{#D47500}{\beta_0 + \beta_1x_i} + \epsilon_i$$
 $$\large \epsilon_i \sim \color{#3CB521}{normal}(0, \sigma)$$
 
-```{r fig.height=6, fig.width=8}
+```{r}
+#| fig-width: 8
+#| fig-height: 6
 ggplot(df_assump, mapping = aes(x = x, y = y)) +
   geom_point(color = "#446E9B", alpha = 0.5) +
   geom_smooth(method = 'lm', se = FALSE, color = "#D47500", alpha = 0.5) +
@@ -444,12 +460,14 @@ ggplot(df_assump, mapping = aes(x = x, y = y)) +
   geom_path(aes(x, y), data = path4, linewidth = 1, color = "#3CB521")
 ```
 
-## assumptions - homogeneity
+## Assumptions - homogeneity
 
 $$\large y_i = \color{#D47500}{\beta_0 + \beta_1x_i} + \epsilon_i$$
 $$\large \epsilon_i \sim \color{#3CB521}{normal}(0, \color{#CD0200}\sigma)$$
 
-```{r fig.height=6, fig.width=8}
+```{r}
+#| fig-width: 8
+#| fig-height: 6
 ggplot(df_assump, mapping = aes(x = x, y = y)) +
   geom_point(color = "#446E9B", alpha = 0.5) +
   geom_smooth(method = 'lm', se = FALSE, color = "#D47500", alpha = 0.5) +
@@ -467,14 +485,16 @@ ggplot(df_assump, mapping = aes(x = x, y = y)) +
                linewidth = 0.6, color = "#CD0200")
 ```
 
-## assumptions - normality
+## Assumptions - normality {.smaller}
 
 Remember that the normality assumption applies to the *residuals* not the data.
 
 ::: {.fragment}
 In the data below, the histogram of the response variable *y* shows that the data is clearly not normally distributed
 
-```{r fig.width=9, fig.height=4}
+```{r}
+#| fig-width: 9
+#| fig-height: 4
 set.seed(97342)
 xn <- c(rnorm(60, 7, 3), runif(40, 15, 60))
 eyn <- -3 + 1.2 * xn
@@ -504,7 +524,7 @@ cowplot::plot_grid(plot_xy1, plot_y, nrow = 1, ncol = 3)
 ```
 :::
 
-## assumptions - normality
+## Assumptions - normality {.smaller}
 
 Remember that the normality assumption applies to the *residuals* not the data.
 
@@ -512,13 +532,15 @@ In the data below, the histogram of the response variable *y* shows that the dat
 
 But a histogram of the residuals (green lines) shows that they are normal (or at least close)
 
-```{r fig.width=9, fig.height=4}
+```{r}
+#| fig-width: 9
+#| fig-height: 4
 cowplot::plot_grid(plot_xy2, plot_y, plot_r, nrow = 1, ncol = 3)
 ```
 
-## linear models
+## Linear models {.smaller}
 
-#### Very flexible
+Very flexible
 
 :::{.incremental}
 - Predictor(s) can take different forms (binary, continuous, factor)
@@ -527,11 +549,11 @@ cowplot::plot_grid(plot_xy2, plot_y, plot_r, nrow = 1, ncol = 3)
 :::
 
 ::: {.fragment}
-#### Link different "tests" (e.g., t-tests, ANOVA, ANCOVA, linear regression)
+Link different "tests" (e.g., t-tests, ANOVA, ANCOVA, linear regression)
 :::
 
 ::: {.fragment}
-#### Can be used for different statistical goals
+Can be used for different statistical goals
 
 - Estimating unknown parameters
 - Testing hypotheses
@@ -539,35 +561,36 @@ cowplot::plot_grid(plot_xy2, plot_y, plot_r, nrow = 1, ncol = 3)
 - Making predictions that account for uncertainty
 :::
 
-## statistical inference
+## Statistical inference {.smaller}
 
-#### Linear models allow us to quantify relationships between variables
+Linear models allow us to quantify relationships between variables
 
 ::: {.fragment}
-#### Generally, models are fit to **samples**
+Generally, models are fit to **samples**
 
 - The intercept and slope values correspond to the *observed* response and predictor values
+
 - If we repeated our study, the sampled values would change and so would the intercept/slope values
 :::
 
 ::: {.fragment}
-#### We're generally interested in the **population**, not the sample
+We're generally interested in the **population**, not the sample
 
 - The intercept and slope values fitted to a particular sample are considered *estimates* of the true population values
 :::
 
 ::: {.fragment}
-#### Inference about populations requires quantifying how well our estimated values represent the true population values (which we can never know)
+Inference about populations requires quantifying how well our estimated values represent the true population values (which we can never know)
 
 - This will be the topic of the next lecture (and a theme we will revisit throughout the semester)
 :::
 
-## looking ahead
+## Looking ahead
 
 <br/>
 
-### **Next time**: Principles of statistical inference
+[Next time]{.highlight}: Principles of statistical inference
 
 <br/>
 
-### **Reading**: [Feiberg chp. 1.6-1.8](https://statistics4ecologists-v3.netlify.app/01-linearregression#sec-sampdist)
+[Reading]{.highlight}: [Feiberg chp. 1.6-1.8](https://statistics4ecologists-v3.netlify.app/01-linearregression#sec-sampdist)

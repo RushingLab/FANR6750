@@ -1,0 +1,368 @@
+---
+format:
+  revealjs:
+    highlight-style: github
+    incremental: false
+    theme: FANR6750.scss
+    reference-location: document
+knitr:
+  opts_chunk:
+    dev: png
+    dev.args: { bg: "transparent" }
+from: markdown+emoji
+---
+
+```{r setup}
+#| echo: false
+#| include: false
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning = FALSE,
+                      message = FALSE, fig.retina = 2)
+source(here::here("R/zzz.R"))
+library(FANR6750)
+library(dplyr)
+```
+
+## LECTURE 6: evaluating linear model assumptions {.theme-title .center}
+
+::: footer
+FANR 6750  
+Fall 2026
+:::
+
+## Outline {.theme-inverse .smaller}
+
+<br/>
+
+### 1) Review of linear model assumptions
+
+<br/>  
+
+::: {.fragment}
+### 2) Evaulating assumptions
+
+<br/> 
+:::
+
+::: {.fragment}
+### 3) Robustness to assumption violations
+
+<br/> 
+:::
+
+## Assumptions {.smaller}
+
+[EVERY]{.highlight} model has assumptions
+
+:::{.incremental}
+
+- Assumptions are necessary to simplify real world to workable model
+
+
+- If your data violate the assumptions of your model, inferences *may* be invalid
+
+
+- [Always]{.assumptions} know (and test) the assumptions of your model
+:::
+
+
+## Linear model assumptions {.smaller}
+
+</br>
+
+$$\large y_i = \beta_0 + \beta_1 x_i + \epsilon_i$$
+
+$$\large \epsilon_i \sim normal(0, \sigma)$$
+
+:::{.incremental}
+
+1) [Linearity]{.highlight}: The relationship between $x$ and $y$ is linear
+
+
+2) [Normality]{.highlight}: The residuals are normally distributed
+
+
+3) [Homogeneity]{.highlight}: The residuals have a constant variance at every level of $x$
+
+4) [Independence]{.highlight}: The residuals are independent (i.e., uncorrelated with each other)
+
+:::
+
+## Evaluating assumptions {.smaller}
+
+Evaluating whether your data violate the linear model assumptions relies heavily on [residuals]{.highlight} 
+
+:::{.incremental}
+- Residuals are the difference between the observed and predicted response value of each observation
+
+    + $r_i = (y_i - \hat{y}_i)$
+
+- Plotting the residuals vs the predicted values provides a visual assessment of the linearity assumptions
+
+- Plotting the residuals vs the predicted values or $X$ provides a visual assessment of the variance assumption
+
+- Plotting a Q-Q plot or histogram of the residuals provides visual assessments of the normality assumption
+:::
+
+
+## Evaluating assumptions {.smaller}
+
+Fortunately, multiple `R` packages include functions for making diagnostic plots from a fitted `lm` object
+
+```{r echo = TRUE, fig.height=5, fig.width=8}
+library(performance)
+data("biomassdata")
+fm1 <- lm(biomass ~ elevation + rainfall, data = biomassdata)
+check_model(fm1, check = c("linearity", "homogeneity", "qq", "normality"))
+```
+
+
+## Linearity {.smaller}
+
+Deviations from linearity will appear as patterns in the residual plot
+
+```{r fig.height=5, fig.width=6}
+fm1_df <- data.frame(Residuals = fm1$residuals,
+                     Fitted = fm1$fitted.values)
+ggplot(fm1_df, aes(x = Fitted, y = Residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, color = "grey40", linetype = "dashed") +
+  stat_smooth()
+```
+
+```{r fig.height=5, fig.width=6}
+x <- runif(50, 0, 10)
+ey <- x^1.5
+y <- rnorm(50, ey, 1)
+fm2 <- lm(y ~ x)
+fm2_df <- data.frame(Residuals = fm2$residuals,
+                     Fitted = fm2$fitted.values)
+ggplot(fm2_df, aes(x = Fitted, y = Residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, color = "grey40", linetype = "dashed") +
+  stat_smooth()
+```
+
+
+## Homogeneity of variance {.smaller}
+
+Heteroscedasticity will appear as patterns (often funnel-shaped) in the residual plot
+
+```{r fig.height=5, fig.width=6}
+fm1_df2 <- data.frame(Residuals = fm1$residuals,
+                     Fitted = fm1$fitted.values)
+ggplot(fm1_df2, aes(x = Fitted, y = Residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, color = "grey40", linetype = "dashed") +
+  stat_smooth()
+```
+
+```{r fig.height=5, fig.width=6}
+x <- runif(50, 0, 10)
+ey <- 2 + 1.5 * x
+sig <- 0.25 * 0.75 * x
+y <- rnorm(50, ey, sig)
+fm3 <- lm(y ~ x)
+fm3_df <- data.frame(Residuals = fm3$residuals,
+                     Fitted = fm3$fitted.values)
+ggplot(fm3_df, aes(x = Fitted, y = Residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, color = "grey40", linetype = "dashed") +
+  stat_smooth()
+```
+
+
+
+## Homogeneity of variance {.smaller}
+
+Heteroscedasticity can also be assessed by plotting the square root of residuals. Violations will appear as increasing or decreasing trends
+
+```{r fig.height=5, fig.width=6}
+fm1_r <- sqrt(abs(fm1$residuals/sd(fm1$residuals)))
+fm1_df2 <- data.frame(Residuals = fm1_r,
+                     Fitted = fm1$fitted.values)
+ggplot(fm1_df2, aes(x = Fitted, y = Residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, color = "grey40", linetype = "dashed") +
+  stat_smooth() +
+  scale_y_continuous("sqrt(|stn. r|)")
+```
+
+```{r fig.height=5, fig.width=6}
+fm3_r <- sqrt(abs(fm3$residuals/sd(fm3$residuals)))
+fm3_df2 <- data.frame(Residuals = fm3_r,
+                     Fitted = fm3$fitted.values)
+ggplot(fm3_df2, aes(x = Fitted, y = Residuals)) +
+  geom_point() +
+  geom_hline(yintercept = 0, color = "grey40", linetype = "dashed") +
+  stat_smooth() +
+  scale_y_continuous("sqrt(|stn. r|)")
+```
+
+
+## Normality {.smaller}
+
+Normality is usually assessed using *quantile-quantile* (Q-Q) plots, which plots the observed quantiles of the residuals vs. the expected quantiles of normally distributed data 
+
+```{r fig.height=5, fig.width=6}
+ggplot(biomassdata, aes(sample = biomass)) +
+  stat_qq() +
+  stat_qq_line() +
+  scale_y_continuous("Sample quantiles") +
+  scale_x_continuous("Standard normal quantiles")
+```
+
+```{r fig.height=5, fig.width=6}
+q_df <- data.frame(x = runif(60),
+                   eps = rlnorm(60)) %>%
+  mutate(ey = 3.2 + 1.2 * x,
+         y = ey + eps)
+
+ggplot(q_df, aes(sample = y)) +
+  stat_qq() +
+  stat_qq_line() +
+  scale_y_continuous("Sample quantiles") +
+  scale_x_continuous("Standard normal quantiles")
+```
+
+
+Large deviations from the line indicate deviations from normality
+
+## Evaluating models with factors {.smaller}
+
+Because all of the models we have seen so far this semester are linear models, they all share the same assumptions
+
+
+Testing assumptions of models with factors (*t*-test, ANOVA) is therefore no different than testing assumptions of models with continuous predictors
+
+```{r echo = TRUE, fig.height=3, fig.width=6}
+data("tunadata")
+fm2 <- lm(growth ~ status, data = tunadata)
+```
+
+```{r fig.height = 3.5, fig.width=7.5}
+qq <- ggplot(tunadata, aes(sample = growth)) +
+  stat_qq() +
+  stat_qq_line() +
+  scale_y_continuous("Sample quantiles") +
+  scale_x_continuous("Standard normal quantiles")
+
+fm2_df <- data.frame(Residuals = sqrt(abs(fm2$residuals/sd(fm2$residuals))),
+                     Fitted = fm2$fitted.values,
+                     X = tunadata$status)
+h <- ggplot(fm2_df, aes(x = X, y = Residuals)) +
+  geom_boxplot() +
+  stat_smooth(method = "lm") +
+  scale_x_discrete("Status") +
+  scale_y_continuous("sqrt(|stn. r|)")
+
+cowplot::plot_grid(h, qq, nrow = 1)
+```
+
+
+## Null hypothesis testing {.smaller}
+
+It is also possible to "test" whether assumptions are met:
+
+```{r echo = TRUE, fig.height=3, fig.width=6}
+check_normality(fm1)
+check_heteroscedasticity(fm1)
+```
+
+where the null hypothesis is that the data don't violate the assumption being test (so $p>0.05$ is good)
+
+
+However, remember that the assumptions are about the population, not the sample
+
+- samples can deviate from assumptions, even if they are met for the population
+
+- deviations are more likely for small sample sizes
+
+- there is always some judgement necessary when testing assumptions
+
+We will explore some of these tests in lab
+
+
+## Independence {.smaller}
+
+Non-independence of residuals is more difficult to test but is often related to un-modeled structure in the data
+
+- points close in space/time tend to be more alike than distance points
+
+- observations within "groups" (e.g., study plots, growth chamber, lakes) tend to be more alike than individuals from other groups
+
+
+Often, non-independence can be judged based on knowledge of the sampling design/system
+
+- sometimes can be seen as "clustering" in residual plots
+
+```{r fig.width = 4, fig.height=2.5}
+x <- rnorm(50)
+group <- sample(1:5, 50, replace = TRUE)
+nu <- c(-5, -2, 0, 2, 5)
+ey <- 5  + nu[group] + (1.2) * x
+y <- ey + rnorm(50, 0, 0.5)
+
+fm <- lm(y ~ x)
+
+df <- data.frame(x = x, y = y, r = fm$residuals, 
+                 e = fm$fitted.values, Lake = as.factor(group))
+ggplot(df, aes(x = e, y = r, color = Lake)) + 
+  geom_point() +
+  scale_x_continuous("Expected value") +
+  scale_y_continuous("Residuals") +
+  theme(legend.title = element_text())
+```
+
+
+## Independence {.smaller}
+
+```{r fig.width = 6, fig.height=4}
+ggplot(df, aes(x = e, y = r, color = Lake)) + 
+  geom_point() +
+  scale_x_continuous("Expected value") +
+  scale_y_continuous("Residuals") +
+  theme(legend.title = element_text())
+```
+
+Sometimes, non-independence can be remedied by including relevant covariates in the model
+
+- e.g. `lm(y ~ x + Lake)`
+
+- we'll learn more about this and related approaches in a few weeks
+
+## What happens when assumptions are violated? {.smaller}
+
+One consequences of sampling is that our samples will likely depart from assumptions to some degree
+
+So rather than asking:
+
+> "Do my data violate the assumptions of my model?"
+
+It can be useful to ask:
+
+> "Do my data violate the assumptions of my model *enough to change my conclusions*?"
+
+Fortunately, linear models are relatively robust to minor (or even moderate) departures from the assumptions
+
+## What happens when assumptions are violated? {.smaller}
+
+General rules of thumb:
+
+- Minor assumption violations will not generally bias estimates of $\hat{\beta}_0$, $\hat{\beta}_1$, etc.
+
+- For large sample sizes, Central Limit Theorem often ensures that residuals of many types of data are normally distributed (or at least pretty close)
+
+- Standard errors (and therefore confidence intervals, p-values, etc) *will* be biased when assumptions are violated
+
+- In general, violating assumptions results in standard errors that are too small. What does this do to p-values?
+
+## Looking ahead
+
+<br/>
+
+[Next time]{.highlight}: Principles of Causal Inference
+
+<br/>
+
+[Reading]{.highlight}: [Causal Inference in R, chp 3](https://www.r-causal.org/chapters/03-po-counterfactuals)

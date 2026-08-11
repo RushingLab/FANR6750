@@ -46,23 +46,21 @@ Even if you don't pursue a career in one of these fields, the ability to manipul
 
 We will go over the basics of using `R` during lab sessions but there are many good online resources for learning `R` and getting help. A few of my favorites (from which some of this material is developed) include: 
 
-- Tom Edward's online [Learning R](http://learnr.usu.edu/) course
+- John Fieberg's online [Statistics for Ecologists](https://statistics4ecologists-v3.netlify.app/) book
 
-- John Fieberg's online [Statistics for Ecologists](https://fw8051statistics4ecologists.netlify.app/) book
-
-- [Data Analysis and Visualization in R for Ecologists](https://datacarpentry.org/R-ecology-lesson/)
+- [Data Analysis and Visualization in R for Ecologists](https://datacarpentry.github.io/R-ecology-lesson/introduction-r-rstudio.html)
 
 Of course, if you encounter error messages you don't understand or need help figuring out how to accomplish something in `R`, google is your best friend (even the most experienced `R` users use google on a daily basis). The key to finding answers on google is asking the right questions. Because we will not spend much time on this topic in lab, please refer to these links for advice on formulating `R`-related questions:
 
-- [How to ask for R help](https://blog.revolutionanalytics.com/2014/01/how-to-ask-for-r-help.html)
+- [Asking for help in R](https://rbook.flavioazevedo.com/asking-for-help)
 
-- [Seeking help](https://datacarpentry.org/R-ecology-lesson/00-before-we-start.html#seeking_help) from *Data Analysis and Visualization in R for Ecologists* 
+- [Seeking help](https://datacarpentry.github.io/R-ecology-lesson/aio.html#aside-getting-help) from *Data Analysis and Visualization in R for Ecologists* 
 
 # Using `R`- the very basics 
 
 ## The RStudio interface and panes
 
-Although users can work directly in `R`, most choose to use RStudio which is the IDE (Integrated Development Environment) for `R`. To use RStudio, you must first have `R` installed.
+Although users can work directly in `R`, most choose to use RStudio which is the IDE (Integrated Development Environment) for `R`^[Note that you are still using `R` to do statistical analyses, visualizations, etc! So when writing a methods section, be sure to cite `R` (and any packages you use) rather than RStudio]. To use RStudio, you must first have `R` installed.
 
 After opening RStudio, you will see 3 panes^[The location of these panes on the screen can be adjusted by clicking `View` --> `Panes` --> `Pane Layout`].
 
@@ -441,7 +439,7 @@ Although useful for many applications, vectors and matrices are limited in their
 
 This is where data frames become useful. Perhaps the most common type of data object you will use in `R` is the data frame. Data frames are tabular objects (rows and columns) similar in structure to spreadsheets (think Excel or GoogleSheets). In effect, data frames store multiple vectors - each column of the data frame is a vector. The advantage they have over matrices is that each column can be a different class (numeric, character, etc.) but all values within a column must be the same class. Just as the first row of an Excel spreadsheet can be a list of column names, each column in a data frame has a name that (hopefully) provides information about what the values in that column represent.  
 
-To see how data frames work, let's load a data frame called `jayData` that comes with the `FANR6750` package. 
+To see how data frames work, let's load a data frame called `jayData` that comes with the `FANR6750data` package. 
 
 
 ### An aside about packages
@@ -467,7 +465,7 @@ Unlike `install.packages()`, `library()` must be re-run each time you open `R`. 
 Occasionally, some packages are stored in other places (e.g., github). These packages can be installed using different functions. For example, I created a package for this course that contains small data sets we will use in labs throughout the semester. The package is stored on github and can be installed by running:
 
 ```{r eval = FALSE}
-install_github("RushingLab/FANR6750")
+install_github("RushingLab/FANR6750data")
 ```
 
 Note that the `install_github()` function is from the `devtools` package so you need to run `library(devtools)` before you install the package. Make sure you install the `FANR6750` package now so you have access to the data sets. 
@@ -490,7 +488,7 @@ Alternatively, you can access functions from a given package without loading the
 To get a quick idea of what information this data frame contains, we can use the `head()` and `tail()` functions, which will print the first and last 6 rows of the data frame:
 
 ```{r}
-library(FANR6750)
+library(FANR6750data)
 data("jaydata") # the data() function loads data sets the come with packages
 
 head(jaydata)
@@ -537,7 +535,7 @@ jaydata$jays
 
 Notice that if you hit `tab` after you type the `$`, RStudio will bring up all of the columns and you can use the up or down buttons to find the one you want. 
 
-Sometimes you may want to select more than one column. One way to do that is by indexing using the column names^[You may begin to notice that as we stack functions inside of eachother, it becomes difficult to keep track of matching parentheses and brackets. Newer versions of `R` have resolved this problem using a handy tool. Click `Code` --> `Rainbow parentheses` to make color matched parentheses and brackets for easier code reading.]:
+Sometimes you may want to select more than one column. One way to do that is by indexing using the column names^[You may begin to notice that as we stack functions inside of each other, it becomes difficult to keep track of matching parentheses and brackets. Newer versions of `R` have resolved this problem using a handy tool. Click `Code` --> `Rainbow parentheses` to make color matched parentheses and brackets for easier code reading.]:
 
 ```{r}
 head(jaydata[, c('x', 'y', 'jays')])

@@ -1,20 +1,15 @@
 ---
-title: "LECTURE 3: principles of statistical inference"
-subtitle: "FANR 6750 (Experimental design)"
-author: "<br/><br/><br/>Fall 2026"
 format:
   revealjs:
-    theme: simple
     highlight-style: github
     incremental: false
-    css: FANR6750-revealjs.css
-    width: 1050
-    height: 700
-    margin: 0.1
-    slide-number: true
-    transition: none
-    background-transition: none
-    center: false
+    theme: FANR6750.scss
+    reference-location: document
+knitr:
+  opts_chunk:
+    dev: png
+    dev.args: { bg: "transparent" }
+from: markdown+emoji
 ---
 
 ```{r setup}
@@ -26,103 +21,117 @@ knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning = FALSE,
 source(here::here("R/zzz.R"))
 ```
 
-## outline {.inverse}
+## LECTURE 3: principles of statistical inference {.theme-title .center}
+
+::: footer
+FANR 6750  
+Fall 2026
+:::
+
+## Outline {.theme-inverse}
 
 <br/>
 
-#### 1) Uncertainty in statistical models
+### 1) Uncertainty in statistical models
 
 <br/>  
 
 ::: {.fragment}
-#### 2) Sampling distributions
+### 2) Sampling distributions
 
 <br/> 
 :::
 ::: {.fragment}
-#### 3) Standard error
+### 3) Standard error
 
 <br/> 
 :::
+
 ::: {.fragment}
-#### 4) Confidence intervals
+### 4) Confidence intervals
 
 <br/> 
 :::
 
-## {.inverse}
+## {.theme-inverse .smaller}
 
-### Statistics = Information + Uncertainty
+$$\Large Statistics = Information + Uncertainty$$
 
-#### In the last lecture, we learned that models allow us to quantify relationships between variables based on **samples**
+</br> 
 
-<br/>
+In the last lecture, we learned that models allow us to quantify relationships between variables based on **samples**
+
+</br>
 
 :::{.fragment}
-#### We also learned that sampling = uncertainty
+We also learned that sampling = uncertainty
 
 - Parameter estimates from samples will never exactly equal population parameters
 
-<br/>
+</br>
 :::
 
 :::{.fragment}
-#### Inference about populations requires quantifying the magnitude of this uncertainty
+Inference about populations requires quantifying the magnitude of this uncertainty
 
-<br/> 
+</br>
 :::
 
 :::{.fragment}
-#### But how can we measure how far our estimates are from the population parameters if we don't know the population parameters? 
+But how can we measure how far our estimates are from the population parameters if we don't know the population parameters? 
 :::
 
-## parameters vs statistics
+## Parameters vs statistics {.smaller}
 
-:::{.fragment}
-### Parameters 
+:::: {.columns}
+
+::: {.fragment .column width="50%"}
+[Parameters]{.highlight}
 
 - Attributes of the population  
   + Mean ( $\mu$ )  
   + Variance ( $\sigma^2$ )  
   + Standard deviation ( $\sigma$ )  
 
-:::
-
 :::{.fragment}
 - Usually unknown
-- Parameters are the quantities of interest  
+- Parameters are the quantities of interest
+- Generally denoted using Greek letters
 :::
 
-:::{.fragment}
-### Statistics
+:::
+:::{.fragment .column width="50%"}
+[Statistics]{.highlight}
 
 - Attributes of the sample  
   + Mean ( $\bar{y}$ or $\hat{\mu}$ )  
   + Variance ( $s^2$ or $\hat{\sigma}^2$ )  
   + Standard deviation ( $s$ or $\hat{\sigma}$ )  
 
+:::{.fragment}
+- English alphabet generally used to denote summary statistics of a sample^[The mean of sample is often denoted as $\bar{y}$]
+
+- Often treated as estimates of parameters^["hat" notation (e.g., $\hat{\mu}$) is generally used to indicate that the sample statistics is being treated as an *estimate* of a parameter]
+:::
+
+:::
+
+::::
+
+## Sampling error {.smaller}
+
+Question: What is the probability that $\bar{y} = \mu$?
+
+:::{.fragment}
+- Answer: 0
 :::
 
 :::{.fragment}
-- Often treated as estimates of parameters
-:::
-
-
-## sampling error
-
-#### Question: What is the probablity that $\large \bar{y} = \mu$?
-
-
-:::{.fragment}
-- Answer: 0 (why?)
+- Fact: The sample mean will never equal the population mean
 :::
 
 :::{.fragment}
-#### Fact: The sample mean will never equal the population mean
-:::
-
-:::{.fragment}
-- The difference between $\large \bar{y}$ and $\large \mu$ is **sampling error** 
+- The difference between $\bar{y}$ and $\mu$ is **sampling error**
 :::
 
 :::{.fragment}
@@ -130,7 +139,7 @@ source(here::here("R/zzz.R"))
 :::
 
 :::{.fragment}
-#### Problem: If we don't know $\large \mu$, how do we know how far our estimate is from the true value?
+Problem: If we don't know $\mu$, how do we know how far our estimate is from the true value?
 :::
 
 :::{.fragment}
@@ -141,37 +150,85 @@ source(here::here("R/zzz.R"))
 - BUT...we do know how far, on average, a sample of size $n$ will be from the true value
 :::
 
+## The sampling distribution {.theme-inverse .center}
 
-## the sampling distribution {.inverse .center}
 
-
-## a single sample (n = 25)
+## A population
 
 <br/>
 
-```{r sampling, fig.width=9, fig.height=5.6}
+```{r pop1}
+#| fig-width: 9
+#| fig-height: 5.6
+#| 
+set.seed(42231)
+x <- seq(from = 60, to = 80, length.out = 100)
+
+pop_df <- data.frame(x = x,
+                     y = c(dnorm(x, 70, 2)))
+
+samp_df <- data.frame(y = c(rnorm(25, 70, 2)),
+                      Sample = "1")
+mean_df <- data.frame(x = mean(samp_df$y))
+ggplot() +
+  geom_path(data = pop_df, aes(x = x, y = y), size = 1, color = "#446E9B") +
+  geom_vline(xintercept = 70, size = 1, color = "#446E9B") +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  labs()
+```
+
+## A single sample (n = 25)
+
+<br/>
+
+```{r samp1}
+#| fig-width: 9
+#| fig-height: 5.6
+#| 
+ggplot() +
+  geom_path(data = pop_df, aes(x = x, y = y), size = 1, color = "#446E9B") +
+  geom_vline(xintercept = 70, size = 1, color = "#446E9B", linetype = "longdash") +
+  geom_rug(data = samp_df, aes(x = y), sides = "b", color = "#D47500") +
+  geom_vline(data = mean_df, aes(xintercept = x), size = 0.6, 
+             color = "#D47500") +
+  scale_x_continuous("") +
+  scale_y_continuous("") +
+  labs()
+```
+
+## A single sample (n = 25)
+
+<br/>
+
+```{r sampling}
+#| fig-width: 9
+#| fig-height: 5.6
 set.seed(623451)
 
 samp <- data.frame(Experiment = 1:100,
                    time = 1:100,
                    Estimate = numeric(length = 100),
                    SE = numeric(length = 100))
-
-for(i in 1:100){
+  samp$Estimate[1] <- mean(samp_df$y)
+  samp$SD[1] <- sd(samp_df$y)
+  samp$SE[1] <- sd(samp_df$y)/sqrt(25)
+  
+for(i in 2:100){
   x <- rnorm(25, 70, 2)
   samp$Estimate[i] = mean(x)
   samp$SD[i] = sd(x)
-  samp$SE = sd(x)/sqrt(25)
+  samp$SE[i] = sd(x)/sqrt(25)
 }
 
 p <- ggplot(samp[samp$Experiment==1,], aes(x = Experiment, y = Estimate)) +
   geom_point() +
-  geom_hline(yintercept = 70, color = "red", linetype = "longdash") +
+  geom_hline(yintercept = 70,  color = "#446E9B", linetype = "longdash") +
   scale_y_continuous(name = "", limits = c(66, 73), breaks = seq(from = 66, to = 73)) +
   scale_x_continuous(limits = c(0, 100)) +
   theme_classic() +
   geom_segment(aes(y = 72.75, yend = 72.75, x = 1, xend = 12), 
-               color = "red", linetype = "longdash") +
+                color = "#446E9B", linetype = "longdash") +
   annotate(x = 15, y = 72.75, label = "True parameter value", geom = "text", hjust = 0) +
   geom_point(aes(y = 72.25, x = 6)) +
   annotate(x = 15, y = 72.25, label = "Sample mean", geom = "text", hjust = 0) 
@@ -179,31 +236,35 @@ p
 ```
 
 
-## standard deviation
+## Standard deviation
 
 <br/>
 
-```{r sampling_sd, fig.width=9, fig.height=5.6}
+```{r sampling_sd}
+#| fig-width: 9
+#| fig-height: 5.6
 p + geom_errorbar(data = samp[samp$Experiment==1,], aes(x = Experiment, ymin = Estimate - SD, ymax = Estimate + SD), width = 0)
 ```
 
 :::{.fragment}
-**Remember** - this error bar is the standard deviation **of our sample**!  
+This error bar is the standard deviation [of our sample]{.highlight}!  
 :::
 
-## standard deviation
+## Standard deviation
 
 But remember, what we really want to know is, how far is the sample mean from the true parameter value?
 
 :::{.fragment}
 
-```{r sample_se, fig.width=9, fig.height=5.6}
-p + geom_segment(aes(x = 1, xend = 1, y = 70, yend = Estimate), color = "blue")
+```{r sample_se}
+#| fig-width: 9
+#| fig-height: 5
+p + geom_segment(aes(x = 1, xend = 1, y = 70, yend = Estimate), color = "red")
 ```
 :::
 
 
-## the sampling distribution
+## The sampling distribution
 
 Imagine we could repeat our experiment many, many times
 
@@ -216,25 +277,30 @@ knitr::include_graphics("samples.gif")
 
 The collection of sample means is referred to as the **sampling distribution**  
 
-```{r sampling_dist, , fig.width=9, fig.height=5.6}
+```{r sampling_dist}
+#| fig-width: 9
+#| fig-height: 5.6
 ggplot(samp, aes(x = Experiment, y = Estimate)) +
   geom_point() +
-  geom_hline(yintercept = 70, color = "red", linetype = "longdash") +
+  geom_hline(yintercept = 70, color = "#446E9B",  linetype = "longdash") +
   scale_y_continuous(name = "", limits = c(68, 73), breaks = seq(from = 68, to = 73)) +
   scale_x_continuous(limits = c(0, 100)) +
   theme_classic() +
   geom_segment(aes(y = 72.75, yend = 72.75, x = 1, xend = 12), 
-               color = "red", linetype = "longdash") +
+               color = "#446E9B", linetype = "longdash") +
   annotate(x = 15, y = 72.75, label = "True parameter value", geom = "text", hjust = 0) +
   geom_point(aes(y = 72.25, x = 6)) +
   annotate(x = 15, y = 72.25, label = "Sample mean", geom = "text", hjust = 0) 
 ```
 
-## the sampling distribution
+## The sampling distribution
 
 The collection of sample means is referred to as the **sampling distribution**  
 
-```{r sampling_dist2, , fig.width=9, fig.height=5.6}
+```{r sampling_dist2}
+#| fig-width: 9
+#| fig-height: 5.6
+
 wing_df <- data.frame(z = seq(from = 63, to = 77, by = 0.1),
                       pr_z = dnorm(x = seq(from = 63, to = 77, by = 0.1), 70, 2))
 
@@ -260,11 +326,13 @@ ggplot() +
   scale_x_continuous("Sample mean", expand = c(0, 0))
 ```
 
-## the sampling distribution
+## The sampling distribution
 
 The standard deviation *of the sampling distribution* measures, on average, how far each sample mean from the true population value
 
-```{r sampling_se, , fig.width=9, fig.height=5.6}
+```{r sampling_se}
+#| fig-width: 9
+#| fig-height: 5.6
 ggplot(samp, aes(x = Experiment, y = Estimate)) +
   geom_segment(aes(x = Experiment, xend = Experiment, y = 70, yend = Estimate), color = "blue") +
   geom_point() +
@@ -280,28 +348,30 @@ ggplot(samp, aes(x = Experiment, y = Estimate)) +
 ```
 
 
-## the sampling distribution
+## The sampling distribution
 
-#### We rarely repeat experiments
+We rarely repeat experiments
 
 <br/>
 
 :::{.fragment}
-#### But we can estimate the standard deviation of the sampling distribution from a single sample!
+But we can estimate the standard deviation of the sampling distribution from a single sample!
 <br/>
 :::
 
 :::{.fragment}
-#### How? The **central limit theorem**!
+How? The **central limit theorem**!
 :::
 
 
-## central limit theorem {.inverse}
+## Central limit theorem {.theme-inverse .smaller}
 
 > For a population with mean $\mu$ and standard deviation $\sigma$, the sampling distribution will be (approximately) normally distributed with mean $\mu_X = \mu$ and standard deviation $\sigma_X = \sigma/\sqrt{n}$. 
 
 
-```{r clt, fig.width=9, fig.height=5.6}
+```{r clt}
+#| fig-width: 9
+#| fig-height: 5.6
 samp2 <- data.frame(Experiment = 1:1000,
                    time = 1:1000,
                    Estimate = numeric(length = 1000),
@@ -330,7 +400,7 @@ ggplot() +
 
 
 
-## central limit theorem {.inverse}
+## Central limit theorem {.theme-inverse .smaller}
 
 > For a population with mean $\mu$ and standard deviation $\sigma$, the sampling distribution will be (approximately) normally distributed with mean $\mu_X = \mu$ and standard deviation $\sigma_X = \sigma/\sqrt{n}$. 
 
@@ -345,11 +415,12 @@ This might seem academic but it is hugely important
 - [Demonstration using simulations](http://www.ltcconline.net/greenl/java/Statistics/clt/cltsimulation.html)
 
 
-## standard error
+## Standard error {.smaller}
 
-#### The standard deviation of the sampling distribution is called the **standard error of the mean** (or just the standard error)
+The standard deviation of the sampling distribution is called the **standard error of the mean** (or just the standard error)
 
 $$\Large SE =\frac{s}{\sqrt{n}}$$
+
 - Standard error tells us how far (on average) our sample mean is likely to be from the population mean
 
 - It is the key to estimating uncertainty in our estimates
@@ -357,64 +428,59 @@ $$\Large SE =\frac{s}{\sqrt{n}}$$
 - Smaller is better
 
 
-## descriptive vs inferential statistics {.inverse}
+## Descriptive vs inferential statistics {.theme-inverse .smaller}
 
 > The sample standard deviation ( $s$ ) is a descriptive statistic  
 
-$$\Large s = \sqrt{s^2}$$
+$$\large s = \sqrt{s^2}$$
 
-- $\large s$ tells us how far, on average, each observation $\large y$ is from the sample mean $\large \bar{y}$
+- $s$ tells us how far, on average, each observation $y$ is from the sample mean $\bar{y}$
 
-<br/>
 
 :::{.fragment}
 > The standard error (SE) is an inferential statistic  
 
-$$\Large SE = \frac{s}{\sqrt{n}}$$
-- $\large SE$ tells us how far, on average, each sample mean $\large \bar{y}$ is from the population mean $\large \mu$
+$$\large SE = \frac{s}{\sqrt{n}}$$
+
+- $SE$ tells us how far, on average, each sample mean $\bar{y}$ is from the population mean $\mu$
 :::
 
 
-## quick review
+## Quick review {.smaller}
 
-1) sampling is a stochastic process 
+1) Sampling is a stochastic process 
 
-- sample statistics (mean, standard deviation) will vary from sample to sample
+- Sample statistics (mean, standard deviation) will vary from sample to sample
 
 :::{.fragment}
-2) the sampling distribution is an (imaginary) collection of statistics from repeated samples of the same population
+2) The sampling distribution is an (imaginary) collection of statistics from repeated samples of the same population
 
-- assumes that the procedure for generating samples (e.g., sample size) is identical
+- Assumes that the procedure for generating samples (e.g., sample size) is identical
 :::
 
 :::{.fragment}
 3) Standard error is the standard deviation of the sampling distribution
 
-- $\large SE =  s/\sqrt{n}$
+- $SE =  s/\sqrt{n}$
 
 - measures how far, on average, sample statistics are from the true population value (smaller is better!)
 :::
 
 :::{.fragment}
-#### We will explore these concepts in lab, using `R` to generate and visualize repeated samples, calculate properties of the sampling distribution
+We will explore these concepts in lab, using `R` to generate and visualize repeated samples, calculate properties of the sampling distribution
 :::
 
-## confidence intervals {.inverse}
+## Confidence intervals {.theme-inverse}
 
 
-## confidence intervals
+## Confidence intervals {.smaller}
 
-#### Uncertainty is commonly reported using *confidence intervals* 
+Uncertainty is commonly reported using *confidence intervals* 
 
 - this is a concept that seems intuitive but in reality it is commonly misunderstood
 
-
-:::{.inverse}
 > If we calculated a $x$% confidence interval from repeated samples of the population, about $x$% of those confidence intervals would contain the true population mean  
 
-:::
-
-:::{.inverse}
 ```{r ci, fig.width=8, fig.height=4}
 samp <- dplyr::mutate(samp, LCI = Estimate - 1.96 * SE,
                       UCI = Estimate + 1.96 * SE,
@@ -435,9 +501,8 @@ ggplot(samp, aes(x = Experiment, y = Estimate)) +
 
 ```
 
-:::
 
-## calculating confidence intervals
+## Calculating confidence intervals {.smaller}
 
 
 :::{.fragment}
@@ -467,28 +532,28 @@ Question - if this is the sampling distribution, what is the standard deviation?
 :::
 
 
-## confidence intervals
+## Confidence intervals {.smaller}
 
-#### What a confidence interval is **NOT**:
+What a confidence interval is **NOT**:
 
 - "there is an $x$% probability that the true population parameter is inside this interval" 
 
 
 :::{.fragment}
-#### The true population value is considered a *fixed* parameter
+The true population value is considered a *fixed* parameter
 :::
 
 :::{.fragment}
-#### Before we collect our sample, the ends of the confidence intervals are considered *random variables* (i.e., their value will change each time we collect a sample)
+Before we collect our sample, the ends of the confidence intervals are considered *random variables* (i.e., their value will change each time we collect a sample)
 
 -  Like all random variables, we can describe the long-term (i.e., asymptotic) expectations of confidence intervals if we repeated the experiment many times
 :::
 
 :::{.fragment}
-#### After we collect our sample, the confidence interval either *does* or *does not* contain the true population value
+After we collect our sample, the confidence interval either *does* or *does not* contain the true population value
 :::
 
-## confidence intervals
+## Confidence intervals {.smaller}
 
 ::::{.columns}
 
@@ -520,16 +585,16 @@ tt
 ::::
 
 
-## confidence intervals
+## Confidence intervals {.smaller}
 
 I like to think of confidence intervals as providing a range of values that, based on our sample, are consistent with the population mean (*plausible interval*?)
 
 - If want to be more confident that the CI contains the parameter (e.g., 50% CI vs 95% CI), what happens to the size of the interval?
 
 :::{.fragment}
-It's worth remembering that 1 - $x$% of the time, the confidence interval we calculate from our sample **will not** include the true population mean. 
+The confidence interval we calculate from our sample **will not** include the true population mean 1 - $x$% of the time
 
-```{r ci2, fig.width=7, fig.height=2.5}
+```{r ci2, fig.width=4.5, fig.height=2}
 ggplot(samp, aes(x = Experiment, y = Estimate)) +
   geom_errorbar(aes(ymin = LCI, ymax = UCI, color = Coverage), width = 0) +
   geom_point(aes(color = Coverage)) +
@@ -549,26 +614,24 @@ ggplot(samp, aes(x = Experiment, y = Estimate)) +
 Of course, with our real data, we have no way of knowing if our sample is one of the black points on this graph :grinning: or one of the red dots :sob:
 :::
 
-## for thought
+## For thought
 
-#### If our goal is generally to decrease uncertainty in parameter estimates:
+If our goal is generally to decrease uncertainty in parameter estimates:
 
-:::{.fragment}
 - What factors determine the magnitude of our uncertainty estimates (SE or confidence intervals)?
 
 <br/>
 
-:::
 - What can we, as researchers, control when we design experiments to minimize uncertainty? What can we not control?
 
 
 
-## looking ahead
+## Looking ahead
 
 <br/>
 
-### **Next time**: Principles of Experimental Design
+[Next time]{.highlight}: Linear models part 1: categorical predictor w/ 2 levels
 
 <br/>
 
-### **Reading**: [Quinn chp. 7.1-7.2](https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&%20Keough.pdf#page=175.08)
+[Reading]{.highlight}: [Fieberg chp. 3.6](https://statistics4ecologists-v3.netlify.app/03-multipleregression#categorical-predictors)

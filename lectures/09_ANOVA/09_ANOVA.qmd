@@ -1,0 +1,864 @@
+---
+format:
+  revealjs:
+    highlight-style: github
+    incremental: false
+    theme: FANR6750.scss
+    reference-location: document
+knitr:
+  opts_chunk:
+    dev: png
+    dev.args: { bg: "transparent" }
+from: markdown+emoji
+---
+
+```{r setup}
+#| echo: false
+#| include: false
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning = FALSE,
+                      message = FALSE, fig.retina = 2)
+source(here::here("R/zzz.R"))
+library(FANR6750)
+library(dplyr)
+library(kableExtra)
+```
+
+## LECTURE 9: linear models part 2: categorical predictor w/ \>2 levels {.theme-title .center}
+
+::: footer
+FANR 6750\
+Fall 2026
+:::
+
+## Outline {.theme-inverse .smaller}
+
+<br/>
+
+### 1) Motivating example
+
+<br/>
+
+::: {.fragment}
+### 2) Extending the linear model
+
+<br/>
+:::
+
+::: {.fragment}
+### 3) Dummy variables with > 2 levels
+
+<br/>
+:::
+
+::: {.fragment}
+### 4) *F*-tests
+
+<br/>
+:::
+
+::: {.fragment}
+### 5) Comparing linear model and ANOVA approaches
+
+<br/>
+:::
+
+## Categorical predictors {.smaller}
+
+In lecture 4, we learned about fitting models with categorical predictors with 1 (measurement error) or 2 (frog) levels
+
+
+:::{.incremental}
+- Linear models with these categorical predictors correspond to one-sample or two-sample *t*-tests
+
+
+
+- Binary categorical predictors are quite common in ecological studies (e.g., male vs female, juvenile vs adult, disturbed vs undisturbed)
+
+:::
+
+:::{.fragment}
+However, you will often encounter categorical predictors with >2 levels
+
+- What are some examples? 
+:::
+
+
+## Motivating example {.smaller}
+
+Foresters are studying the effect of 4 different fertilizers (treatments) on the growth of loblolly pine, which are grown on 3 plots (replicates) receiving each treatment. Data are average height per plot after 5 years:
+
+::::{.columns}
+
+::: {.column width="50%"}
+```{r echo = FALSE}
+data("loblollydata")
+pine_wide <- tidyr::pivot_wider(loblollydata, names_from = Treatment, values_from = Height)
+
+pine_wide %>%
+  kable("html", align = 'c') %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 18) %>%
+  add_header_above(c(" " = 1, "Treatment" = 4))
+```
+
+:::
+
+::: {.column width="50%"}
+Notation
+
+- The number of groups (treatments) is $a=4$
+
+- The number of observations within each group (replicates) is $n=3$
+
+- $y_{ij}$ denotes the $j$th observation from the $i$th group
+:::
+
+::::
+
+
+## a brief tangent {.smaller .theme-inverse}
+
+What counts as an observation?
+
+:::{.fragment}
+
+Experimental unit
+
+> the physical unit that receives a particular treatment
+
+:::
+
+:::{.fragment}
+
+Observational unit
+
+> the physical unit on which measurements are taken
+
+:::
+
+:::{.fragment}
+
+These are not always the same! 
+
+:::
+
+:::{.fragment}
+Examples
+
+:::{.incremental}
+- Agricultural fields given different fertilizer, crop yield measured  
+
+- Rats given different diets, disease state measured
+
+- Microcosm given different predator abundance, tadpole growth measured
+:::
+:::
+
+## Motivating example {.smaller}
+
+[Question]{.highlight}: Is there a difference in growth among the four treatment groups?
+
+::: {.fragment}
+```{r pine1}
+#| fig-width: 8
+#| fig-height: 6
+loblollydata$x <- c(0.8, 1, 1.2, 1.8, 2, 2.2, 2.8, 3, 3.2, 3.8, 4, 4.2)
+ggplot(loblollydata, aes(x = x, y = Height)) + 
+  geom_point(aes(color = Treatment), size = 5) +
+  scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
+  scale_y_continuous("Height") +
+  guides(color = FALSE)
+```
+:::
+
+## Motivating example {.smaller}
+
+Hypotheses:
+
+- $\large H_0 : \mu_A = \mu_B = \mu_C = \mu_D$
+
+- $\large H_a :$ At least one inequality
+
+:::{.fragment}
+
+How should we test the null?
+
+:::
+
+:::{.fragment}
+- We could do this using 6 *t*-tests  
+
+:::
+
+:::{.fragment}
+- But this would alter the overall (experiment-wise) $\alpha$ level because each individual test has a chance (usually $\alpha = 0.05$) of incorrectly rejecting a true null hypothesis, and this is multiplied when multiple tests are used^[We will discuss this issue in detail in the next lecture]  
+:::
+
+
+## Extending the linear model {.smaller}
+
+Fortunately, extending the previous linear model to include additional predictor levels is "straightforward"
+
+- The model looks familiar
+
+$$\large y_{ij} = \beta_0 + \beta_ix_{ij} + \epsilon_{ij}$$
+
+$$\large \epsilon_{ij} \sim normal(0, \sigma)$$
+
+
+:::{.incremental}
+
+- What's tricky is how we code $\large x_{ij}$ when it is more than just 0 or 1
+
+
+- Fortunately, what we learned about how `R` codes dummy variables will help
+
+:::
+
+
+## Dummy variable coding {.smaller}
+
+View a subset (rows 1, 4, 7, & 10) of the data:
+
+```{r echo = TRUE}
+data(loblollydata)
+loblollydata[c(1,4,7,10),]
+```
+
+:::{.fragment}
+
+View the corresponding rows of the *model matrix*^[Sometimes referred to as the *design matrix*]
+```{r echo = TRUE}
+fit1 <- lm(Height ~ Treatment, data = loblollydata)
+
+model.matrix(fit1)[c(1,4,7,10),]
+```
+
+:::
+
+## Dummy variable coding {.smaller}
+
+```{r echo = TRUE}
+model.matrix(fit1)[c(1,4,7,10),]
+```
+
+The model matrix has one row for each observation and one column for every parameter in the model
+
+- How many parameters is this model estimating?
+
+:::{.fragment}
+
+Multiplying the model matrix by the parameter matrix gives the expected value of each observation^[For a model with $b$ parameters and $n$ observations, the model matrix $X$ is a $n \times b$ matrix. The parameters themselves form a $b \times 1$ matrix denoted $B$. Using matrix multiplication, $X * B$ returns a $n \times 1$ matrix with each value corresponding to $E[y_i]$ for each observation]
+:::
+
+:::{.fragment}
+
+$$\large E[y_{ij}] = \beta_0 + \beta_1 I(B)_{ij} + \beta_2 I(C)_{ij} + \beta_3 I(D)_{ij}$$
+
+where $I(B/C/D)_{ij}$ are dummy variables (0/1 depending on treatment)
+
+:::{.incremental}
+
+- What is the interpretation of each parameter?
+
+:::
+
+:::
+
+
+## Motivating example {.smaller}
+
+```{r echo = TRUE}
+broom::tidy(fit1)
+```
+
+:::{.incremental}
+
+- Be sure you understand what each parameter means!
+
+
+- *t*-statistics and *p*-values are calculated and interpreted in the same way as the frog example
+
+
+- But wait, the null hypothesis was $\mu_A = \mu_B = \mu_C = \mu_D$
+
+:::
+
+## Regression f-statistic {.smaller}
+
+```{r echo = TRUE}
+summary(fit1)
+```
+
+Notice the last line of this output. Where did this *p*-value come from and what does it mean?
+
+## Regression f-statistic {.smaller}
+
+The *F*-statistic tests whether all regression coefficients (other than the intercept) are all 0
+
+- $H_0$: All regression coefficients are 0
+
+- $H_A$: At least one regression coefficient is not 0
+
+:::{.fragment}
+
+*F*-statistics are the ratio of *sample variances*
+
+$$F = \frac{s^2_A}{s^2_B}$$
+
+- Null hypothesis is that population variances are equal ( $\sigma^2_A = \sigma^2_B$ )
+
+- Always positive (variances cannot be negative)
+
+- Usually > 1 (by putting larger variance in the numerator)
+
+:::
+
+:::{.fragment}
+
+Where do the variances come from in the linear model and what do they tell us about differences among groups?
+
+:::
+
+
+## Regression f-statistic {.smaller}
+
+To understand why the test is based on variance, it is helpful to consider several types of means:
+
+::::{.columns}
+
+:::{.fragment .column width="50%"}
+
+- Grand mean
+
+$$\large \bar{y}. = \frac{\sum_i \sum_jy_{ij}}{a \times n}$$
+
+:::
+
+:::{.fragment .column width="50%"}
+```{r pine_grm}
+#| fig-width: 4
+#| fig-height: 4
+loblollydata$x <- c(0.8, 1, 1.2, 1.8, 2, 2.2, 2.8, 3, 3.2, 3.8, 4, 4.2)
+ggplot(loblollydata, aes(x = x, y = Height)) + 
+  geom_point(aes(color = Treatment), size = 5) +
+  scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
+  scale_y_continuous("Height") +
+  guides(color = FALSE) +
+  geom_hline(yintercept = mean(loblollydata$Height)) +
+  annotate("text", label = "bar(y)[.]", x = 4.25, y = mean(loblollydata$Height) + 0.6, 
+           parse = TRUE, size = 8)
+```
+:::
+
+::::
+
+## Regression f-statistic {.smaller}
+
+To understand why the test is based on variance, it is helpful to consider several types of means:
+
+
+::::{.columns}
+
+:::{.fragment .column width="50%"}
+
+- Grand mean
+
+$$\large \bar{y}. = \frac{\sum_i \sum_jy_{ij}}{a \times n}$$
+
+- Group means
+
+$$\large \bar{y}_i = \frac{\sum_j y_{ij}}{n}$$
+:::
+
+:::{.fragment .column width="50%"}
+```{r loblollydata_gm}
+#| fig-width: 4
+#| fig-height: 4
+library(dplyr)
+ybari <- loblollydata %>%
+  group_by(Treatment) %>%
+  summarise(y = mean(Height)) %>%
+  mutate(x = 1:4, 
+         label = c("bar(y)[A]", "bar(y)[B]", "bar(y)[C]", "bar(y)[D]"))
+
+ggplot(loblollydata, aes(x = x, y = Height)) + 
+  geom_point(aes(color = Treatment), size = 5) +
+  scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
+  scale_y_continuous("Height") +
+  guides(color = FALSE) +
+  geom_hline(yintercept = mean(loblollydata$Height)) +
+  annotate("text", label = "bar(y)[.]", x = 4.25, y = mean(loblollydata$Height) + 0.6, 
+           parse = TRUE, size = 8) +
+  geom_segment(data = ybari, aes(x = x - 0.25, xend = x + 0.25, y = y, yend = y, color = Treatment)) +
+  geom_text(data = ybari, aes(x = x + 0.5, y = y, label = label), 
+            parse = TRUE, size = 6)
+```
+:::
+
+::::
+
+
+## Regression f-statistic {.smaller}
+
+To understand why the test is based on variance, it is helpful to consider several types of means:
+
+::::{.columns}
+
+:::{.column width="50%"}
+
+- Grand mean
+
+$$\large \bar{y}. = \frac{\sum_i \sum_jy_{ij}}{a \times n}$$
+
+- Group means
+
+$$\large \bar{y}_i = \frac{\sum_j y_{ij}}{n}$$
+
+:::
+
+:::{.fragment .column width="50%"}
+
+We can now decompose the observations as^[Notice that this is just an algebraic manipulation of the linear model. We've re-written the equation but it returns the same value as the previous equation we used]:
+
+$$y_{ij} = \color{#446E9B}{\bar{y}.} + \color{#D47500}{(\bar{y}_i - \bar{y}.)} + \color{#3CB521}{(y_{ij} - \bar{y}_i)}$$
+
+```{r loblollydata_var}
+#| fig-width: 3.5
+#| fig-height: 3.5
+loblollydata$ybar <- rep(ybari$y, each = 3)
+ggplot(loblollydata, aes(x = x, y = Height)) + 
+  geom_point(size = 5) +
+  scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
+  scale_y_continuous("Height") +
+  guides(color = FALSE) +
+  geom_hline(yintercept = mean(loblollydata$Height), color = "#446E9B") +
+  geom_segment(data = ybari, aes(x = x - 0.25, xend = x + 0.25, y = y, yend = y)) +
+  geom_segment(data = ybari, aes(x = x, xend = x, y = mean(loblollydata$Height), yend = y), color = "#D47500") +
+  geom_segment(data = loblollydata, aes(x = x, xend = x, y = ybar, yend = Height), color = "#3CB521")
+```
+:::
+
+::::
+
+
+## The additive model {.smaller}
+
+The decomposition:
+
+$$\large y_{ij} = \color{#446E9B}{\bar{y}.} + \color{#D47500}{(\bar{y}_i - \bar{y}.)} + \color{#3CB521}{(y_{ij} - \bar{y}_i)}$$
+
+:::{.fragment}
+
+The additive model:
+
+$$\large y_{ij} = \color{#446E9B}{\mu} + \color{#D47500}{\alpha_i} + \color{#3CB521}{\epsilon_{ij}}$$
+
+where
+
+$$\large \epsilon_{ij} \sim normal(0, \sigma^2)$$
+
+:::
+
+
+## The additive model {.smaller}
+
+$$\large y_{ij} = \mu + \alpha_i + \epsilon_{ij}$$
+
+$$\large \epsilon_{ij} \sim normal(0, \sigma^2)$$
+
+[Notes:]{.highlight}
+
+:::{.incremental}
+- $\mu$ is the grand mean of the population, estimated by $\bar{y}.$  
+  
+
+- $\alpha_i$ is the effect of treatment *i*, estimated by $\bar{y}_i - \bar{y}.$  
+
+    + It is the deviation of the group mean from the grand mean  
+
+    + If all $\alpha_i = 0$, there is no treatment effect  
+
+    + Thus, we can re-write the null hypothesis $H_0 : \alpha_1 = \alpha_2=... =\alpha_a = 0$  
+
+
+- $\epsilon_{ij}$ is the residual error, estimated by $y_{ij} - \bar{y}_i$  
+
+    + It is the unexplained (random) deviation of the observation from the group mean
+
+- Note that this is just a re-arrangement of the linear model
+:::
+
+
+## Sums of squares {.smaller}
+
+Back to the *F*-test. Where to the variances for the test come from and how do they related to the null hypothesis? 
+
+:::{.incremental}
+- To answer those questions, we need to quantify *where* the variation in our data comes from
+
+- To do that, we calculate *sums of squares*
+
+:::
+
+:::{.fragment}
+
+First, we calculate the sums of squares *among*, which quantifies variation among treatment groups^[Note what this equation is doing: We take the difference between each group mean and the grand mean and square them so there are no negative values (essentially, the length of the orange bars on the previous graph regardless of direction). Then we add them together to get the total length of those lines. Multiplying by $n$ is basically a way to account for how many observations this variation in based on. The equation here assumes a balanced design (same $n$ for each group), though $SS_A$ can be calculated for unbalanced designs] 
+
+$$\large SS_A = n \sum_i (\bar{y}_i - \bar{y}.)^2$$
+:::
+
+## Motivating example {.smaller}
+
+[Question]{.highlight}: Is there a difference in growth among the four treatment groups?
+
+```{r loblollydata_ssa}
+#| fig-width: 8
+#| fig-height: 6
+ggplot(loblollydata, aes(x = x, y = Height)) + 
+  geom_point(aes(color = Treatment), size = 5) +
+  scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
+  scale_y_continuous("Height") +
+  guides(color = FALSE) +
+  geom_hline(yintercept = mean(loblollydata$Height)) +
+  geom_segment(data = ybari, aes(x = x - 0.25, xend = x + 0.25, y = y, yend = y, color = Treatment)) +
+  geom_segment(data = ybari, aes(x = x, xend = x, y= mean(loblollydata$Height), yend = y))
+```
+
+
+## Sums of squares {.smaller}
+
+Variation among groups 
+
+$$\large SS_A = n \sum_i (\bar{y}_i - \bar{y}.)^2$$
+
+:::{.fragment}
+
+Next, we calculate the sums of squares *within*, which quantifies variation within treatment groups
+
+$$\large SS_W = \sum_i \sum_j (y_{ij} - \bar{y}_i)^2$$
+:::
+
+## Motivating example {.smaller}
+
+[Question]{.smaller}: Is there a difference in growth among the four treatment groups?
+
+```{r loblollydata_ssw}
+#| fig-width: 8
+#| fig-height: 6
+loblollydata$ybari <- rep(ybari$y, each = 3)
+ggplot(loblollydata, aes(x = x, y = Height)) + 
+  geom_point(aes(color = Treatment), size = 5) +
+  scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
+  scale_y_continuous("Height") +
+  guides(color = FALSE) +
+  geom_hline(yintercept = mean(loblollydata$Height)) +
+  geom_segment(data = ybari, aes(x = x - 0.25, xend = x + 0.25, y = y, yend = y, color = Treatment)) +
+  geom_segment(data = loblollydata, 
+               aes(x = x, xend = x, y = ybari, yend = Height))
+```
+
+
+## Sums of squares {.smaller}
+
+Variation among groups 
+
+$$\large SS_A = n \sum_i (\bar{y}_i - \bar{y}.)^2$$
+
+
+Variation within groups
+
+$$\large SS_W = \sum_i \sum_j (y_{ij} - \bar{y}_i)^2$$
+
+Note that we can also calculate the total variation in our observations^[And, importantly, that $SS_A$ and $SS_W$ partition all of the variation into two categories: variation due to differences among treatments ($SS_A$) and variation *not* due to treatments $SS_W$]
+
+$$\large SS_T =  \sum_i \sum_j (y_{ij} - \bar{y}.)^2= SS_A + SS_W$$
+
+
+## Motivating example {.smaller}
+
+[Question]{.highlight}: Is there a difference in growth among the four treatment groups?
+
+```{r loblollydata_sst}
+#| fig-width: 8
+#| fig-height: 6
+ggplot(loblollydata, aes(x = x, y = Height)) + 
+  geom_point(aes(color = Treatment), size = 5) +
+  scale_x_continuous("Fertilizer treatment", labels = c("A", "B", "C", "D"), breaks = 1:4) +
+  scale_y_continuous("Height") +
+  guides(color = FALSE) +
+  geom_hline(yintercept = mean(loblollydata$Height)) +
+  geom_segment(data = ybari, aes(x = x - 0.25, xend = x + 0.25, y = y, yend = y, color = Treatment)) +
+  geom_segment(data = loblollydata, 
+               aes(x = x, xend = x, y = mean(loblollydata$Height), yend = Height))
+```
+
+
+## Mean squares {.smaller}
+
+The *F*-test is based on variances. Sums of squares quantify variation but they are not technically variances. 
+
+To covert the sums of squares to variances, divide by the degrees of freedom:^[Degrees of freedom are measures of how much information we have, specially how many independent pieces of information we have to estimate parameters. Generally, degrees of freedom are equal to the number of observations minus the number of parameters we need to estimate from those observations. Another way to view degrees of freedom. Imagine you know the mean of 10 observations is $\bar{y}$. Based on this information, you have no way of knowing the value of the fist 9 observations - they are free to be any value. But once you know the value of observations 1-9, the value of observation 10 is also known - it is not free to vary. So to estimate the mean from $n=10$, you have $df = 9$]
+
+:::{.fragment}
+
+Mean squares among
+
+$$\large MS_A = \frac{SS_A}{a-1}$$
+
+:::
+
+:::{.fragment}
+
+Mean squares within
+
+$$\large MS_W = \frac{SS_W}{a(n-1)}$$
+:::
+
+
+## f-statistic {.smaller}
+
+From the mean squares, we can finally calculate the *F*-statistic:
+
+$$\large F = \frac{MS_A}{MS_W}$$
+
+:::{.fragment}
+
+[Note]{.highlight}:
+
+:::{.incremental}
+
+- *F* is a ratio measuring the variance among groups to the variance within groups
+
+
+- If there is a large treatment effect, what happens to $MS_A$?
+
+
+- If there is little residual variation, what happens to $MS_W$?
+
+- Large values of $F$ indicate treatment effects are large relative to residual variation, but can we conclude there is a treatment effect? 
+
+:::
+
+:::
+
+## The f-distribution {.smaller}
+
+[If the null hypothesis is true]{.highlight} ($\sigma^2_A = \sigma^2_B$), the ratio of sample variances follows an *F*-distribution
+
+::::{.columns}
+
+:::{.fragment .column width="50%"}
+
+Properties:  
+
+- $F > 0$  
+
+- $F$-distribution is not symmetrical  
+
+- Shape of distribution depends on an ordered pair of degrees of freedom, $df_A$
+and $df_B$
+:::
+
+:::{.fragment .column width="50%"}
+```{r f}
+#| fig-width: 4
+#| fig-height: 4
+curve(df(x, 3, 8), 0, 5, xlab="F value", ylab="Probability density",
+      main="F distribution with df=3,8")
+```
+:::
+
+::::
+
+
+## The f-distribution {.smaller}
+
+<br/>
+```{r f2}
+#| fig-width: 7
+#| fig-height: 5
+op <- par(mai=c(0.8, 0.2, 0.2, 0.2))
+curve(df(x, 3, 8), 0, 10, xlab="F value", ylab="", yaxt="n",
+      ylim=c(0,1),
+      frame=FALSE , main="F distribution with df1=3 and df2=8", cex.main=1.5)
+# xs1 <- seq(qf(.025, 9, 9), 0, by=-0.01)
+# ys1 <- df(xs1, 9, 9)
+xs2 <- seq(4.2, 10, by=0.01)
+ys2 <- df(xs2, 3, 8)
+# polygon(c(xs1, rev(xs1)), c(rep(0, length(xs1)), rev(ys1)), col=gray(0.7))
+polygon(c(xs2, rev(xs2)), c(rep(0, length(xs2)), rev(ys2)), col=gray(0.7))
+# text(xs1[1], 0.9, "critical value\nF=0.25", pos=3)
+text(xs2[1], 0.9, "F=4.1 \n p = 0.05", pos=3)
+# arrows(xs1[1], 0.9, xs1[1], ys1[1], length=0.1)
+arrows(xs2[1], 0.9, xs2[1], ys2[1], length=0.1)
+par(op)
+```
+
+Just like the *t*-distribution, we can use the *F*-distribution to calculate *p*-values and test the null hypothesis that the variances are equal
+
+
+## Analysis of variance {.smaller}
+
+Using the *F*-statistic to test whether there is a treatment effect is commonly referred to as *Analysis of Variance* (ANOVA)
+
+:::{.incremental}
+
+- Especially in experimental settings, ANOVA is very commonly used  
+
+- When treated as an ANOVA, the model is usually presented in a table providing the degrees of freedom, sums of squares, mean squares, *F*-statistic, and *p*-value
+
+- The linear model approach is increasingly common, especially in observational settings
+
+- From a practical standpoint, the linear model and ANOVA approaches provide exactly the same information, just presented in different ways (just like the linear model vs t-test we saw previously)
+
+:::
+
+
+## Worked example {.smaller}
+
+Suppose we are interested in the effect of elevation on the abundance of Canada Warblers
+
+::::{.columns}
+
+:::{.fragment .column width="50%"}
+
+![](https://upload.wikimedia.org/wikipedia/commons/b/b1/8G7D5475-Canada.jpg){width="80%" fig-align="center" fig-alt="Canada Warbler. Image courtesy of William H. Majoros via Wikicommons"}
+
+:::
+
+:::{.fragment .column width="50%"}
+```{r cawa1, echo = FALSE}
+cawa <- data.frame(Replicate = c("1", "2", "3", "4"),
+                   Low = as.character(c(1, 3, 0, 2)),
+                   Medium = as.character(c(2, 0, 4, 3)),
+                   High = as.character(c(4, 7, 5, 5)))
+
+cawa %>%
+  kable("html", align = 'c') %>%
+  kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 14) %>%
+  add_header_above(c(" " = 1, "Elevation" = 3))
+```
+:::
+::::
+
+## Worked example {.smaller}
+
+```{r echo = TRUE}
+data(warblerdata)
+
+fit.lm <- lm(Count ~ Elevation, data = warblerdata)
+
+summary(fit.lm)
+```
+
+## Worked example {.smaller}
+
+```{r echo = TRUE}
+data(warblerdata)
+
+fit.aov <- aov(Count ~ Elevation, data = warblerdata)
+
+summary(fit.aov)
+```
+
+[Note]{.highlight}:
+
+- The row named for the treatment variable (e.g., `Elevation`) is the *among* group variation
+
+- The row named `Residuals` is the *within* group variation
+
+- The degrees of freedom, *F*-statistic, and *p*-value are [exactly]{.highlight} the same as returned by `lm()`^[Which makes sense, because they are from the [exact]{.highlight} same model, just presented in two different ways]
+
+## Anova table from `lm` {.smaller}
+
+In case you want more detail about the relationship between `lm` and `aov` output:
+
+- `lm()` function also returns residuals (e.g., $y_i - E[y_i]$)
+
+```{r echo = TRUE}
+fit.lm$residual
+```
+
+- Residual sum of squares
+
+```{r echo = TRUE}
+sum(fit.lm$residuals^2)
+```
+
+- Residual mean square
+
+```{r echo = TRUE}
+sum(fit.lm$residuals^2)/9
+```
+
+## Anova table from `lm` {.smaller}
+
+In case you want more detail about the relationship between `lm` and `aov` output:
+
+What about among group variation?
+
+```{r echo = TRUE}
+fit.lm$fitted.values
+```
+
+- Treatment sum of squares
+
+```{r echo = TRUE}
+sum((fit.lm$fitted.values - mean(fit.lm$fitted.values))^2)
+```
+
+- Treatment mean square
+
+```{r echo = TRUE}
+sum((fit.lm$fitted.values - mean(fit.lm$fitted.values))^2)/2
+```
+
+
+## Anova table from `lm` {.smaller}
+
+In case you want more detail about the relationship between `lm` and `aov` output:
+
+*F*-statistic and *p*-value^[The `pf()` function calculates the area under an F-distribution with $df1$ and $df2$ degrees of freedom. `lower.tail = FALSE` returns only the area under the upper tail, which is what we want since we testing whether $MS_A$ is *greater* than $MS_W$]
+
+```{r echo = TRUE}
+MSa <- sum((fit.lm$fitted.values - mean(fit.lm$fitted.values))^2)/2
+MSe <- sum(fit.lm$residuals^2)/9
+
+(F <- MSa/MSe)
+
+(p <- pf(F, 2, 9, lower.tail = FALSE))
+
+```
+
+
+## Summary {.smaller}
+
+:::{.incremental}
+
+1) Models with categorical variables can be fit using either `lm()` or `aov()`
+
+2) The test traditionally known as *ANOVA* is just a linear model, slightly modified from the one used analyze binary predictor variables
+
+3) `R` codes categorical predictors using dummy variables and `lm` coefficients correspond to the difference between the reference level and the other treatment levels
+
+4) `lm()` or `aov()` provide the exact same information, just presented in different ways
+
+5) ANOVA output is commonly used for manipulative experiments, linear model output for observational studies^[This is just convention. Since they are the same model, you could use either one regardless of the type of experiment]
+
+6) But how do we tell which groups differ from each other (aside from just the reference level)...
+
+:::
+
+
+## Looking ahead
+
+<br/>
+
+[Next time]{.highlight}: Multiple comparisons
+
+<br/>
+
+[Reading]{.highlight}: [Fieberg chp. 3.9](https://statistics4ecologists-v3.netlify.app/03-multipleregression#pairwise-comparisons) and [3.12](https://statistics4ecologists-v3.netlify.app/03-multipleregression#sec-contrasts)

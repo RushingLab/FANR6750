@@ -1,0 +1,187 @@
+/**
+ * Solarized Dark theme for reveal.js.
+ * Author: Achim Staebler
+ *
+ * Adapted for Quarto by Posit, PBC
+ * Copyright (C) 2024 Posit, PBC
+ */
+
+/*-- scss:defaults --*/
+
+// Include theme-specific fonts
+@import url(./fonts/league-gothic/league-gothic.css);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic);
+
+// fonts
+$font-family-sans-serif: Lato, sans-serif !default;
+
+/**
+ * Solarized colors by Ethan Schoonover
+ */
+
+// Solarized colors
+$base03: #eeeeee;
+$base02: #073642;
+$base01: #333333;
+$base00: #657b83;
+$base0: #839496;
+$base1: #93a1a1;
+$base2: #eee8d5;
+$base3: #fdf6e3;
+$yellow: #b58900;
+$orange: #cb4b16;
+$red: #dc322f;
+$magenta: #d33682;
+$violet: #6c71c4;
+$blue: #268bd2;
+$cyan: #2aa198;
+$green: #859900;
+
+
+// Override theme settings (see ../template/settings.scss)
+$body-color: darken($base0, 25%) !default;
+$font-size-base: 16px;
+$presentation-heading-color: $base02 !default;
+$presentation-heading-text-shadow: none !default;
+$body-bg: $base03 !default;
+$link-color: $orange !default;
+$selection-bg: $magenta !default;
+$presentation-heading-font-weight: 300;
+$presentation-heading-text-transform: smallcaps !default; // from settings.scss
+$presentation-heading-font: "Lato", sans-serif !default; // from settings.scss
+
+// Change text colors against light slide backgrounds
+$light-bg-text-color: #222 !default;
+
+// input panel
+$input-panel-bg: rgba(233, 236, 239, 0.2) !default;
+
+$code-block-bg: #eee8d5; /* Your desired hex code */
+$code-block-border-color: #073642;
+
+/*-- scss:rules --*/
+
+.center-v {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+@mixin center-text {
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+.small-caps { // Declare before @extends that depend on it.
+  font-variant: small-caps;
+}
+
+.blue {
+  color: $blue;
+  font-weight: bold;
+}
+
+.yellow {
+  color: $yellow;
+  font-weight: bold;
+}
+
+.orange {
+  color: $orange;
+  font-weight: bold;
+}
+
+.red {
+  color: $red;
+  font-weight: bold;
+}
+
+.green {
+  color: $green;
+  font-weight: bold;
+}
+
+.highlight {
+  color: darken($base0, 33%);
+  font-weight: bold;
+}
+
+.highlight-inverse {
+  color: $base03;
+  font-weight: bold;
+}
+
+
+  h2 {
+    color:#eee8d5;
+    font-size: 1.6em;
+    font-variant: small-caps;
+    font-weight: normal;
+    text-shadow: none;
+    letter-spacing: 2px; /* Increases spacing by 2 pixels */
+  }
+
+  h3 {
+    color: darken($base0, 25%);
+    font-size: 1.15em !important;
+    font-weight: normal;
+    text-shadow: none;
+  }
+
+@mixin background-full {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.theme-title {
+  &:is(.slide-background) {
+      background-image: url(https://raw.githubusercontent.com/RushingLab/rushinglabslides/master/img/logo/WSFNR-FS-CW.png);
+      background-position: 90% 10%;
+      background-size: 260px auto;
+      background-repeat: no-repeat;
+      background-color: #2e2e2e !important;
+      text-align: left;
+      padding-left: 80px;
+  }
+
+  h2 {
+    color:#eee8d5;
+    text-align: center;
+    font-size: 1.6em;
+    font-variant: small-caps;
+    font-weight: normal;
+    text-align: left;
+    text-shadow: none;
+    padding-top: 160px;
+    margin-bottom: 0.4em;
+    letter-spacing: 2px; /* Increases spacing by 2 pixels */
+  }
+  h3 {
+    color:#eee8d5;
+    font-size: 1.15em;
+    font-weight: normal;
+    text-align: left;
+    letter-spacing: 0.5px; /* Increases spacing by 2 pixels */
+  }
+}
+
+.theme-inverse{
+  background-color: #2e2e2e !important;
+  text-align: left;
+
+  h2 {
+    color:#eee8d5;
+    font-size: 2em;
+    font-variant: small-caps;
+    font-weight: normal;
+    text-shadow: none;
+    letter-spacing: 2.5px; /* Increases spacing by 2 pixels */
+  }
+  h3 {
+    color:#eee8d5;
+    font-size: 1.15em;
+    text-align: left;
+  }
+}
+
