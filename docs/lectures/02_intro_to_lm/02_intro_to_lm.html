@@ -6,21 +6,26 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-234273d1456647dabc34a594ac50e507.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
-  <meta name="author" content=" Fall 2026">
-  <title>FANR6750 – LECTURE 2: introduction to linear models</title>
+  <title>FANR6750 – intro_to_lm</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -29,8 +34,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-2c1b5f745a11cfad616ebade4a4a7d24.css">
-  <link rel="stylesheet" href="FANR6750-revealjs.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-ae7982bc92338f23a6bbc8aaeb8d5ad3.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -127,78 +131,77 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">LECTURE 2: introduction to linear models</h1>
-  <p class="subtitle">FANR 6750 (Experimental design)</p>
 
-<div class="quarto-title-authors">
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-<br><br><br>Fall 2026 
+<section id="lecture-2-introduction-to-linear-models" class="slide level2 theme-title center">
+<h2>LECTURE 2: Introduction to linear models</h2>
+<div class="footer">
+<p>FANR 6750<br>
+Fall 2026</p>
 </div>
-</div>
-</div>
-
 </section>
-<section id="outline" class="slide level2 inverse">
-<h2>outline</h2>
+<section id="outline" class="slide level2 theme-inverse">
+<h2>Outline</h2>
 <p><br></p>
-<h4 id="basic-structure-of-a-linear-model">1) Basic structure of a linear model</h4>
+<h3 id="basic-structure-of-a-linear-model">1) Basic structure of a linear model</h3>
 <p><br></p>
 <div class="fragment">
-<h4 id="parameter-interpretation">2) Parameter interpretation</h4>
+<h3 id="parameter-interpretation">2) Parameter interpretation</h3>
 <p><br></p>
 </div>
 <div class="fragment">
-<h4 id="assumptions">3) Assumptions</h4>
+<h3 id="assumptions">3) Assumptions</h3>
 </div>
 </section>
-<section id="section" class="slide level2 inverse">
+<section id="section" class="slide level2 theme-inverse">
 <h2></h2>
 <h3 id="statistics-information-uncertainty">Statistics = Information + Uncertainty</h3>
 <p><br></p>
-<h4 id="in-the-last-lecture-we-learned-that-statistics-is-what-allows-us-to-make-inferences-about-a-population-in-the-face-of-uncertainty">In the last lecture, we learned that statistics is what allows us to make inferences about a population in the face of uncertainty</h4>
+<div class="fragment">
+<p>In the last lecture, we learned that statistics is what allows us to make inferences about a population in the face of uncertainty</p>
+</div>
 <p><br></p>
 <div class="fragment">
-<h4 id="statistical-inference-requires-models">Statistical inference requires <strong>models</strong></h4>
+<p>Statistical inference requires <em>models</em></p>
 </div>
 </section>
 <section id="what-is-a-model" class="slide level2">
-<h2>what is a model?</h2>
+<h2>What is a model?</h2>
 
 <img data-src="https://media.giphy.com/media/12npFVlmZoXN4Y/giphy.gif" class="r-stretch"></section>
-<section id="what-is-a-model-1" class="slide level2">
-<h2>what is a model?</h2>
+<section id="what-is-a-model-1" class="slide level2 smaller">
+<h2>What is a model?</h2>
 <blockquote>
-<p>an abstraction of reality used to describe the relationship between two or more variables</p>
+<p>An abstraction of reality used to describe the relationship between two or more variables</p>
 </blockquote>
+<p><br></p>
 <div class="fragment">
-<h4 id="many-types-conceptual-graphical-mathematical">Many types (conceptual, graphical, mathematical)</h4>
+<p>Many types (conceptual, graphical, mathematical)</p>
 <p><br></p>
 </div>
 <div class="fragment">
-<h4 id="in-this-class-we-will-deal-with-statistical-models">In this class, we will deal with <em>statistical</em> models</h4>
+<p>In this class, we will deal with <em>statistical</em> models<a href="#/footnotes" class="footnote-ref" id="fnref1" role="doc-noteref" data-footnote-href="#/fn1" onclick=""><sup>1</sup></a></p>
 </div>
 <ul>
 <li class="fragment"><p>Mathematical representation of our hypothesis</p></li>
+<li class="fragment"><p>Explicitly measure and account for uncertainty</p></li>
 <li class="fragment"><p>By necessity, models will be simplifications of reality (“all models are wrong…”)</p></li>
 <li class="fragment"><p>Do not have to be complex</p></li>
 </ul>
-</section>
-<section id="but-i-dont-want-to-be-a-modeler" class="slide level2">
-<h2>but i don’t want to be a modeler!</h2>
+<aside></aside></section>
+<section id="but-i-dont-want-to-be-a-modeler" class="slide level2 smaller">
+<h2>But i don’t want to be a modeler!</h2>
 
-<img data-src="puffy_shirt.png" class="quarto-figure quarto-figure-center r-stretch" style="width:30.0%"><ul>
-<li class="fragment"><p>Inference <strong>requires</strong> models</p></li>
-<li class="fragment"><p>Models link <strong>observations</strong> to <strong>processes</strong></p></li>
-<li class="fragment"><p>Models are tools that allow us understand processes that we <strong>cannot directly observe</strong> based on quantities that we <strong>can</strong> observe</p></li>
+<img data-src="puffy_shirt.png" class="quarto-figure quarto-figure-center r-stretch" style="width:60.0%"><ul>
+<li class="fragment"><p>Inference <span class="highlight">requires</span> models</p></li>
+<li class="fragment"><p>Models link <span class="highlight">observations</span> to <span class="highlght">processes</span></p></li>
+<li class="fragment"><p>Models are tools that allow us understand processes that we <span class="highlght">cannot directly observe</span> based on quantities that we <span class="highlight">can</span> observe</p></li>
 </ul>
 </section>
-<section id="a-simple-example" class="slide level2">
-<h2>a simple example</h2>
-<h4 id="suppose-we-are-interested-in-the-hypothesis-that-water-availability-limits-acorn-production-by-oak-trees">Suppose we are interested in the hypothesis that water availability limits acorn production by oak trees</h4>
+<section id="a-simple-example" class="slide level2 smaller">
+<h2>A simple example</h2>
+<p>Suppose we are interested in the hypothesis that water availability limits acorn production by oak trees</p>
 <ul>
-<li><strong>Prediction</strong>: Acorn production will increase following years with higher rainfall</li>
+<li><span class="highlight">Prediction</span>: Acorn production increases following years with higher rainfall</li>
 </ul>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
@@ -212,10 +215,10 @@
 </div>
 </div>
 </section>
-<section id="a-simple-model" class="slide level2">
-<h2>a simple model</h2>
-<p><br> <br></p>
-<p><span class="math display">\[\Huge y = a + bx\]</span></p>
+<section id="a-simple-model" class="slide level2 smaller">
+<h2>A simple model</h2>
+<p><br></p>
+<p><span class="math display">\[\LARGE y = a + bx\]</span></p>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -228,66 +231,61 @@
 </div>
 </div>
 <div class="fragment">
-<p>It may not be obvious, but this is essentially the only model we will use this semester<sup>1</sup></p>
+<p>It may not be obvious, but this is essentially the only model we will use this semester<a href="#/footnotes" class="footnote-ref" id="fnref2" role="doc-noteref" data-footnote-href="#/fn2" onclick=""><sup>2</sup></a></p>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>With some minor variations, mainly in <span class="math inline">\(x\)</span></p></li></ol></aside></section>
-<section id="a-simple-model-1" class="slide level2">
-<h2>a simple model</h2>
-<p><br> <br></p>
-<p><span class="math display">\[\Huge y = a + bx\]</span></p>
+<aside></aside></section>
+<section id="a-simple-model-1" class="slide level2 smaller">
+<h2>A simple model</h2>
+<p><br></p>
+<p><span class="math display">\[\LARGE y = a + bx\]</span></p>
 
-<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"><p>If we want to use this as a <em>statistical</em> model, what’s missing?</p>
+<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"><div class="fragment">
+<p>If we want to use this as a <em>statistical</em> model, what’s missing?</p>
+</div>
+<div class="fragment">
+<p><span class="highlight">Stochasticity</span></p>
+</div>
 </section>
-<section id="a-simple-model-2" class="slide level2">
-<h2>a simple model</h2>
-<p><br> <br></p>
-<p><span class="math display">\[\Huge y = a + bx\]</span></p>
+<section id="a-simple-model-2" class="slide level2 smaller">
+<h2>A simple model</h2>
+<p><br></p>
+<p><span class="math display">\[\LARGE y = a + bx\]</span></p>
 
 <img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"><p>If we want to use this as a statistical model, what’s missing?</p>
-<h4 id="stochasticity"><strong>Stochasticity!</strong></h4>
+<p><span class="highlight">Stochasticity</span></p>
 </section>
-<section id="a-simple-model-3" class="slide level2">
-<h2>a simple model</h2>
-<p><br> <br></p>
-<p><span class="math display">\[\Huge y = a + bx\]</span></p>
-
-<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"><p>If we want to use this as a statistical model, what’s missing?</p>
-<h4 id="stochasticity-1"><strong>Stochasticity!</strong></h4>
-</section>
-<section id="the-linear-model" class="slide level2 inverse center">
-<h2>the linear model</h2>
+<section id="the-linear-model" class="slide level2 theme-inverse center">
+<h2>The linear model</h2>
 </section>
 <section id="statistics-cookbook" class="slide level2">
-<h2>statistics cookbook</h2>
+<h2>Statistics cookbook</h2>
 
-<img data-src="stats_flow_chart.png" class="quarto-figure quarto-figure-center r-stretch" style="width:50.0%"></section>
+<img data-src="stats_flow_chart.png" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="the-linear-model-1" class="slide level2">
-<h2>the linear model</h2>
-<p><br> <br></p>
-<p><span class="math display">\[\Large response = deterministic\; part+stochastic\; part\]</span></p>
-<p><br> <br></p>
+<h2>The linear model</h2>
+<p><br></p>
+<p><span class="math display">\[ response = deterministic\; part+stochastic\; part\]</span></p>
 <div class="fragment">
-<p><span class="math display">\[\underbrace{\LARGE E[y_i] = \beta_0 + \beta_1 \times x_i}_{Deterministic}\]</span></p>
-<p><br> <br></p>
+<p><span class="math display">\[\underbrace{\large E[y_i] = \beta_0 + \beta_1 \times x_i}_{Deterministic}\]</span></p>
 </div>
 <div class="fragment">
-<p><span class="math display">\[\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma)}_{Stochastic}\]</span></p>
+<p><span class="math display">\[\underbrace{\large y_i \sim normal(E[y_i], \sigma)}_{Stochastic}\]</span></p>
 </div>
 </section>
-<section id="the-linear-model-2" class="slide level2">
-<h2>the linear model</h2>
-<h4 id="sometimes-you-will-see-linear-models-written-as">Sometimes you will see linear models written as:</h4>
-<p><span class="math display">\[\LARGE y_i = \beta_0 + \beta_1  x_i + \epsilon_i\]</span></p>
-<p><span class="math display">\[\LARGE \epsilon_i \sim normal(0, \sigma)\]</span></p>
-<h4 id="with-the-large-epsilon_i-terms-referred-to-as-residuals-or-residual-error">with the <span class="math inline">\(\large \epsilon_i\)</span> terms referred to as <em>residuals</em> or <em>residual error</em></h4>
+<section id="the-linear-model-2" class="slide level2 smaller">
+<h2>The linear model</h2>
+<p>Sometimes you will see linear models written as:</p>
+<p><span class="math display">\[\Large y_i = \beta_0 + \beta_1  x_i + \epsilon_i\]</span></p>
+<p><span class="math display">\[\Large \epsilon_i \sim normal(0, \sigma)\]</span></p>
+<p>with the <span class="math inline">\(\large \epsilon_i\)</span> terms referred to as <em>residuals</em> or <em>residual error</em></p>
 <ul>
 <li><p>Mathematically, the two formulations are identical</p></li>
 <li><p>We will use both formulations</p></li>
 </ul>
 </section>
-<section id="a-note-on-notation" class="slide level2 inverse">
-<h2>a note on notation</h2>
-<h4 id="throughout-the-semester-we-will-try-to-be-consistent-with-mathematical-notation-e.g.">Throughout the semester, we will try to be consistent with mathematical notation, e.g.</h4>
+<section id="a-note-on-notation" class="slide level2 theme-inverse smaller">
+<h2>A note on notation</h2>
+<p>Throughout the semester, we will try to be consistent with mathematical notation, e.g.</p>
 <ul>
 <li><span class="math inline">\(y\)</span> = response/dependent variable</li>
 <li><span class="math inline">\(x\)</span> = predictor/independent variable</li>
@@ -296,14 +294,14 @@
 <li><span class="math inline">\(\beta\)</span> = model parameter (i.e., intercept/slope)</li>
 </ul>
 <div class="fragment">
-<h4 id="to-the-extent-possible-these-follow-conventions-used-in-many-textbookspapers-but-there-is-a-lot-of-variation-between-authors">To the extent possible, these follow conventions used in many textbooks/papers (but there is a lot of variation between authors)</h4>
+<p>To the extent possible, these follow conventions used in many textbooks/papers (but there is a lot of variation between authors)</p>
 </div>
 <div class="fragment">
-<h4 id="remember-that-these-are-just-symbols---you-could-replace-them-with-other-symbols-e.g.-emoji-and-it-would-not-change-their-interpretation">Remember that these are just <em>symbols</em> - you could replace them with other symbols (e.g., emoji) and it would not change their interpretation!</h4>
+<p>Remember that these are just <em>symbols</em> - you could replace them with other symbols (e.g., emoji) and it would not change their interpretation!</p>
 </div>
 </section>
-<section id="parameter-interpretation-1" class="slide level2">
-<h2>parameter interpretation</h2>
+<section id="parameter-interpretation-1" class="slide level2 smaller">
+<h2>Parameter interpretation</h2>
 <p><span class="math inline">\(\large \beta_0\)</span> = intercept</p>
 <ul>
 <li>The <em>expected</em> value of the response variable, <span class="math inline">\(\large E[y_i]\)</span>, when all predictors <span class="math inline">\(=0\)</span></li>
@@ -320,18 +318,54 @@
 <ul>
 <li>the structure of the predictor variables (continuous vs.&nbsp;categorical)</li>
 <li>the units of the predictor variables (e.g., scaled vs unscaled)</li>
-<li>the inclusion of interaction terms We will discuss each of these scenarios in detail as the semester progresses</li>
+<li>the inclusion of interaction terms</li>
 </ul>
 </div>
-</section>
-<section id="the-linear-model-3" class="slide level2">
-<h2>the linear model</h2>
-<h4 id="a-simple-example-1">A “simple” example</h4>
-<p><span class="math display">\[\underbrace{\LARGE E[y_i] = -2 + 0.5 \times x_i}_{Deterministic}\]</span></p>
 <div class="fragment">
-<p><span class="math display">\[\underbrace{\LARGE y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}\]</span></p>
+<p>We will discuss each of these scenarios in detail as the semester progresses</p>
+</div>
+</section>
+<section id="the-linear-model-3" class="slide level2 smaller">
+<h2>The linear model</h2>
+<p>A “simple” example</p>
+<p><span class="math display">\[\underbrace{\large E[y_i] = -2 + 0.5 \times x_i}_{Deterministic}\]</span></p>
+<div class="fragment">
+<p><span class="math display">\[\underbrace{\large y_i \sim normal(E[y_i], \sigma=0.25)}_{Stochastic}\]</span></p>
 </div>
 <div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="the-linear-model-4" class="slide level2 smaller">
+<h2>The linear model</h2>
+<p>A more complex model</p>
+<p><span class="math display">\[\large y_i = \beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + ... + \beta_px_{ip} + \epsilon_i\]</span></p>
+<ul>
+<li class="fragment">Each <span class="math inline">\(\beta\)</span> coefficient is the effect of a specific predictor variables <span class="math inline">\(x\)</span></li>
+<li class="fragment">Predictor variables may be continuous, binary, factors, or a combination</li>
+<li class="fragment">We will cover more complex models (and interpretation) later</li>
+</ul>
+</section>
+<section id="is-this-a-linear-model" class="slide level2">
+<h2>Is this a linear model?</h2>
+<p><span class="math display">\[\large y = 20 + 0.5x - 0.3x^2\]</span></p>
+
+<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center r-stretch" width="528"></section>
+<section id="residuals" class="slide level2 smaller">
+<h2>Residuals</h2>
+<p>One concept we will talk about a lot is <em>residuals</em>, i.e., <span class="math inline">\(\epsilon_i\)</span></p>
+<div class="fragment">
+<ul>
+<li>Residuals are the difference between the observed values <span class="math inline">\(y_i\)</span> and the predicted values <span class="math inline">\(E[y_i]\)</span> — how much variation in <span class="math inline">\(y\)</span> is explained by <span class="math inline">\(x\)</span>?</li>
+</ul>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -343,98 +377,65 @@
 </div>
 </div>
 </section>
-<section id="the-linear-model-4" class="slide level2">
-<h2>the linear model</h2>
-<h4 id="a-more-complex-model">A more complex model</h4>
-<p><span class="math display">\[\large y_i = \beta_0 + \beta_1x_{i1} + \beta_2x_{i2} + ... + \beta_px_{ip} + \epsilon_i\]</span></p>
+<section id="residuals-1" class="slide level2 smaller">
+<h2>Residuals</h2>
+<p>One concept we will talk about a lot is <em>residuals</em>, i.e., <span class="math inline">\(\epsilon_i\)</span></p>
 <ul>
-<li class="fragment">Each <span class="math inline">\(\beta\)</span> coefficient is the effect of a specific predictor variables <span class="math inline">\(x\)</span></li>
-<li class="fragment">Predictor variables may be continuous, binary, factors, or a combination</li>
-<li class="fragment">We will cover more complex models (and interpretation) later</li>
-</ul>
-</section>
-<section id="is-this-a-linear-model" class="slide level2">
-<h2>is this a linear model?</h2>
-<p><span class="math display">\[\Large y = 20 + 0.5x - 0.3x^2\]</span></p>
-
-<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" width="528"></section>
-<section id="residuals" class="slide level2">
-<h2>residuals</h2>
-<h4 id="one-concept-we-will-talk-about-a-lot-is-residuals-i.e.-large-epsilon_i">One concept we will talk about a lot is <em>residuals</em>, i.e., <span class="math inline">\(\Large \epsilon_i\)</span></h4>
-<div class="fragment">
-<ul>
-<li>Residuals are the difference between the observed values <span class="math inline">\(\large y_i\)</span> and the predicted values <span class="math inline">\(\large E[y_i]\)</span> — how much variation in <span class="math inline">\(\large y\)</span> is explained by <span class="math inline">\(\large x\)</span>?</li>
-</ul>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="residuals-1" class="slide level2">
-<h2>residuals</h2>
-<h4 id="one-concept-we-will-talk-about-a-lot-is-residuals-i.e.-large-epsilon_i-1">One concept we will talk about a lot is <em>residuals</em>, i.e., <span class="math inline">\(\Large \epsilon_i\)</span></h4>
-<ul>
-<li>Residuals are the difference between the observed values <span class="math inline">\(\large y_i\)</span> and the predicted values <span class="math inline">\(\large E[y_i]\)</span> — how much variation in <span class="math inline">\(\large y\)</span> is explained by <span class="math inline">\(\large x\)</span>?</li>
+<li>Residuals are the difference between the observed values <span class="math inline">\(y_i\)</span> and the predicted values <span class="math inline">\(E[y_i]\)</span> — how much variation in <span class="math inline">\(y\)</span> is explained by <span class="math inline">\(x\)</span>?</li>
 </ul>
 
-<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" width="528"><ul>
+<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center r-stretch" width="528"><ul>
 <li class="fragment">Parameters are generally estimated by finding values that minimize residual error (e.g., ordinary least squares)</li>
 <li class="fragment">Useful for assessing whether data violate model assumptions</li>
 </ul>
 </section>
-<section id="assumptions-1" class="slide level2 inverse center">
-<h2>assumptions</h2>
+<section id="assumptions-1" class="slide level2 theme-inverse center">
+<h2>Assumptions</h2>
 </section>
-<section id="assumptions-2" class="slide level2">
-<h2>assumptions</h2>
-<h4 id="every-model-has-assumptions"><strong>EVERY</strong> model has assumptions</h4>
+<section id="assumptions-2" class="slide level2 smaller">
+<h2>Assumptions</h2>
+<p><strong>EVERY</strong> model has assumptions</p>
 <ul>
 <li class="fragment">Assumptions are necessary to simplify real world to workable model</li>
 <li class="fragment">If your data violate the assumptions of your model, inferences <em>may</em> be invalid</li>
-<li class="fragment"><strong>Always</strong> know (and test) the assumptions of your model<sup>1</sup></li>
+<li class="fragment"><strong>Always</strong> know (and test) the assumptions of your model<a href="#/footnotes" class="footnote-ref" id="fnref3" role="doc-noteref" data-footnote-href="#/fn3" onclick=""><sup>3</sup></a></li>
 </ul>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>You know what happens when you assume…</p></li></ol></aside></section>
-<section id="linear-model-assumptions" class="slide level2">
-<h2>linear model assumptions</h2>
+<aside></aside></section>
+<section id="linear-model-assumptions" class="slide level2 smaller">
+<h2>Linear model assumptions</h2>
 <p><br></p>
 <p><span class="math display">\[\Large y_i = \beta_0 + \beta_1 x_i + \epsilon_i\]</span></p>
 <p><span class="math display">\[\Large \epsilon_i \sim normal(0, \sigma)\]</span></p>
 <p><br></p>
 <ol type="1">
 <li class="fragment"><strong>Linearity</strong>: The relationship between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> is linear</li>
-<li class="fragment"><strong>Normality</strong>: The residuals are normally distributed<sup>1</sup></li>
+<li class="fragment"><strong>Normality</strong>: The residuals are normally distributed<a href="#/footnotes" class="footnote-ref" id="fnref4" role="doc-noteref" data-footnote-href="#/fn4" onclick=""><sup>4</sup></a></li>
 <li class="fragment"><strong>Homogeneity</strong>: The residuals have a constant variance at every level of <span class="math inline">\(x\)</span></li>
 <li class="fragment"><strong>Independence</strong>: The residuals are independent (i.e., uncorrelated with each other)</li>
 </ol>
-<aside><ol class="aside-footnotes"><li id="fn3"><p>Note that these assumptions apply to the residuals, not the data!</p></li></ol></aside></section>
+<aside></aside></section>
 <section id="assumptions-3" class="slide level2">
-<h2>assumptions</h2>
+<h2>Assumptions</h2>
 <p><span class="math display">\[\large y_i = \beta_0 + \beta_1x_i + \epsilon_i\]</span> <span class="math display">\[\large \epsilon_i \sim normal(0, \sigma)\]</span></p>
 
-<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
+<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-10-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
 <section id="assumptions---linearity" class="slide level2">
-<h2>assumptions - linearity</h2>
+<h2>Assumptions - linearity</h2>
 <p><span class="math display">\[\large y_i = \color{#D47500}{\beta_0 + \beta_1x_i} + \epsilon_i\]</span> <span class="math display">\[\large \epsilon_i \sim normal(0, \sigma)\]</span></p>
 
-<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
+<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
 <section id="assumptions---normality" class="slide level2">
-<h2>assumptions - normality</h2>
+<h2>Assumptions - normality</h2>
 <p><span class="math display">\[\large y_i = \color{#D47500}{\beta_0 + \beta_1x_i} + \epsilon_i\]</span> <span class="math display">\[\large \epsilon_i \sim \color{#3CB521}{normal}(0, \sigma)\]</span></p>
 
-<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
+<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
 <section id="assumptions---homogeneity" class="slide level2">
-<h2>assumptions - homogeneity</h2>
+<h2>Assumptions - homogeneity</h2>
 <p><span class="math display">\[\large y_i = \color{#D47500}{\beta_0 + \beta_1x_i} + \epsilon_i\]</span> <span class="math display">\[\large \epsilon_i \sim \color{#3CB521}{normal}(0, \color{#CD0200}\sigma)\]</span></p>
 
-<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
-<section id="assumptions---normality-1" class="slide level2">
-<h2>assumptions - normality</h2>
+<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
+<section id="assumptions---normality-1" class="slide level2 smaller">
+<h2>Assumptions - normality</h2>
 <p>Remember that the normality assumption applies to the <em>residuals</em> not the data.</p>
 <div class="fragment">
 <p>In the data below, the histogram of the response variable <em>y</em> shows that the data is clearly not normally distributed</p>
@@ -442,33 +443,33 @@
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center" width="864"></p>
+<p><img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center" width="864"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="assumptions---normality-2" class="slide level2">
-<h2>assumptions - normality</h2>
+<section id="assumptions---normality-2" class="slide level2 smaller">
+<h2>Assumptions - normality</h2>
 <p>Remember that the normality assumption applies to the <em>residuals</em> not the data.</p>
 <p>In the data below, the histogram of the response variable <em>y</em> shows that the data is clearly not normally distributed</p>
 <p>But a histogram of the residuals (green lines) shows that they are normal (or at least close)</p>
 
-<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
-<section id="linear-models" class="slide level2">
-<h2>linear models</h2>
-<h4 id="very-flexible">Very flexible</h4>
+<img data-src="02_intro_to_lm_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
+<section id="linear-models" class="slide level2 smaller">
+<h2>Linear models</h2>
+<p>Very flexible</p>
 <ul>
 <li class="fragment">Predictor(s) can take different forms (binary, continuous, factor)</li>
 <li class="fragment">Can contain many predictors</li>
 <li class="fragment">Can model non-linear relationships</li>
 </ul>
 <div class="fragment">
-<h4 id="link-different-tests-e.g.-t-tests-anova-ancova-linear-regression">Link different “tests” (e.g., t-tests, ANOVA, ANCOVA, linear regression)</h4>
+<p>Link different “tests” (e.g., t-tests, ANOVA, ANCOVA, linear regression)</p>
 </div>
 <div class="fragment">
-<h4 id="can-be-used-for-different-statistical-goals">Can be used for different statistical goals</h4>
+<p>Can be used for different statistical goals</p>
 <ul>
 <li>Estimating unknown parameters</li>
 <li>Testing hypotheses</li>
@@ -477,39 +478,47 @@
 </ul>
 </div>
 </section>
-<section id="statistical-inference" class="slide level2">
-<h2>statistical inference</h2>
-<h4 id="linear-models-allow-us-to-quantify-relationships-between-variables">Linear models allow us to quantify relationships between variables</h4>
+<section id="statistical-inference" class="slide level2 smaller">
+<h2>Statistical inference</h2>
+<p>Linear models allow us to quantify relationships between variables</p>
 <div class="fragment">
-<h4 id="generally-models-are-fit-to-samples">Generally, models are fit to <strong>samples</strong></h4>
+<p>Generally, models are fit to <strong>samples</strong></p>
 <ul>
-<li>The intercept and slope values correspond to the <em>observed</em> response and predictor values</li>
-<li>If we repeated our study, the sampled values would change and so would the intercept/slope values</li>
+<li><p>The intercept and slope values correspond to the <em>observed</em> response and predictor values</p></li>
+<li><p>If we repeated our study, the sampled values would change and so would the intercept/slope values</p></li>
 </ul>
 </div>
 <div class="fragment">
-<h4 id="were-generally-interested-in-the-population-not-the-sample">We’re generally interested in the <strong>population</strong>, not the sample</h4>
+<p>We’re generally interested in the <strong>population</strong>, not the sample</p>
 <ul>
 <li>The intercept and slope values fitted to a particular sample are considered <em>estimates</em> of the true population values</li>
 </ul>
 </div>
 <div class="fragment">
-<h4 id="inference-about-populations-requires-quantifying-how-well-our-estimated-values-represent-the-true-population-values-which-we-can-never-know">Inference about populations requires quantifying how well our estimated values represent the true population values (which we can never know)</h4>
+<p>Inference about populations requires quantifying how well our estimated values represent the true population values (which we can never know)</p>
 <ul>
 <li>This will be the topic of the next lecture (and a theme we will revisit throughout the semester)</li>
 </ul>
 </div>
 </section>
 <section id="looking-ahead" class="slide level2">
-<h2>looking ahead</h2>
+<h2>Looking ahead</h2>
 <p><br></p>
-<h3 id="next-time-principles-of-statistical-inference"><strong>Next time</strong>: Principles of statistical inference</h3>
+<p><span class="highlight">Next time</span>: Principles of statistical inference</p>
 <p><br></p>
-<h3 id="reading-feiberg-chp.-1.6-1.8"><strong>Reading</strong>: <a href="https://statistics4ecologists-v3.netlify.app/01-linearregression#sec-sampdist">Feiberg chp. 1.6-1.8</a></h3>
+<p><span class="highlight">Reading</span>: <a href="https://statistics4ecologists-v3.netlify.app/01-linearregression#sec-sampdist">Feiberg chp. 1.6-1.8</a></p>
 
 
 </section>
+<section id="footnotes" class="footnotes footnotes-end-of-document smaller scrollable" role="doc-endnotes"><h2>Footnotes</h2>
 
+<ol>
+<li id="fn1"><p>Though graphical models will play an important role later in the semester</p></li>
+<li id="fn2"><p>With some minor variations, mainly in <span class="math inline">\(x\)</span></p></li>
+<li id="fn3"><p>You know what happens when you assume…</p></li>
+<li id="fn4"><p>Note that these assumptions apply to the residuals, not the data!</p></li>
+</ol>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
@@ -566,7 +575,7 @@
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: 'c/t',
+        slideNumber: false,
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -699,7 +708,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -726,80 +735,42 @@
       });
     </script>
     
-
     <script>
-
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
       // slide changes (different for each slide format).
-
       (function () {
-
         // dispatch for htmlwidgets
-
         function fireSlideEnter() {
-
           const event = window.document.createEvent("Event");
-
           event.initEvent("slideenter", true, true);
-
           window.document.dispatchEvent(event);
-
         }
-
-    
 
         function fireSlideChanged(previousSlide, currentSlide) {
-
           fireSlideEnter();
 
-    
-
           // dispatch for shiny
-
           if (window.jQuery) {
-
             if (previousSlide) {
-
               window.jQuery(previousSlide).trigger("hidden");
-
             }
-
             if (currentSlide) {
-
               window.jQuery(currentSlide).trigger("shown");
-
             }
-
           }
-
         }
-
-    
 
         // hookup for slidy
-
         if (window.w3c_slidy) {
-
           window.w3c_slidy.add_observer(function (slide_num) {
-
             // slide_num starts at position 1
-
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
           });
-
         }
 
-    
-
       })();
-
     </script>
-
-    
 
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -849,13 +820,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
@@ -870,7 +842,7 @@
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/djklement\.github\.io\/FANR6750\/");
+            var filterRegex = new RegExp("https:\/\/rushinglab\.github\.io\/FANR6750\/");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

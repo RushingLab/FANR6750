@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <title>FANR6750 – expdesign</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-fc859e93a8aea861b048bf3194d4829c.css">
+  <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+
+<section id="lecture-8-principles-of-experimental-design" class="slide level2 theme-title center">
+<h2>LECTURE 8: principles of experimental design</h2>
+<div class="footer">
+<p>FANR 6750<br>
+Fall 2026</p>
+</div>
+</section>
+<section id="outline" class="slide level2 theme-inverse smaller">
+<h2>Outline</h2>
+<p><br></p>
+<h3 id="overview">1) Overview</h3>
+<p><br></p>
+<div class="fragment">
+<h3 id="replication">2) Replication</h3>
+<p><br></p>
+</div>
+<div class="fragment">
+<h3 id="randomization">3) Randomization</h3>
+<p><br></p>
+</div>
+<div class="fragment">
+<h3 id="controls">4) Controls</h3>
+<p><br></p>
+</div>
+</section>
+<section id="experimental-design" class="slide level2 smaller">
+<h2>Experimental design</h2>
+<p>Experiments are often treated as the <em>only</em> way to infer cause and effect</p>
+<div class="fragment">
+<ul>
+<li>Although not technically true<a href="#/footnotes" class="footnote-ref" id="fnref1" role="doc-noteref" data-footnote-href="#/fn1" onclick=""><sup>1</sup></a>, certain types of experiments can strengthen causal inference</li>
+</ul>
+</div>
+<div class="fragment">
+<p>In this lecture, we will discuss why experiments can improve causal inference and the elements of experimental design that must be considered for this objective. Specifically, we will discuss:</p>
+<ul>
+<li class="fragment"><p>Types of experiments</p></li>
+<li class="fragment"><p>Elements of experimental design</p></li>
+<li class="fragment"><p>Causal inference</p></li>
+</ul>
+</div>
+<aside></aside></section>
+<section id="types-of-experiments" class="slide level2 smaller">
+<h2>Types of experiments</h2>
+<p>What is an experiment?</p>
+<div class="fragment">
+<blockquote>
+<p>A scientific procedure undertaken to make a discovery, test a hypothesis, or demonstrate a known fact</p>
+</blockquote>
+</div>
+<div class="fragment">
+<p>Generally, experiments fall into one of three types:</p>
+<ol type="1">
+<li class="fragment"><p>Manipulative experiment</p></li>
+<li class="fragment"><p>Quasi-experiment</p></li>
+<li class="fragment"><p>Mensurative experiment (i.e., observational)</p></li>
+</ol>
+</div>
+<div class="fragment">
+<p>The principles discussed in this lecture are important for understanding the differences between these types, and the limitations of each</p>
+</div>
+</section>
+<section id="components-of-an-experiment" class="slide level2 smaller">
+<h2>Components of an experiment</h2>
+<p>Regardless of type, all experiments require:</p>
+<ol type="1">
+<li class="fragment"><p>Hypothesis</p></li>
+<li class="fragment"><p>Experimental design</p></li>
+<li class="fragment"><p>Experimental execution</p></li>
+<li class="fragment"><p>Statistical analysis</p></li>
+<li class="fragment"><p>Interpretation</p></li>
+</ol>
+<div class="fragment">
+<p>Which of these do you think is most important? Which takes the most time?</p>
+</div>
+</section>
+<section id="experimental-design-1" class="slide level2 smaller">
+<h2>Experimental design</h2>
+<p>What is experimental design?</p>
+<ol type="1">
+<li class="fragment"><p>The number, type, and arrangement of experimental units</p></li>
+<li class="fragment"><p>The number and type of treatments</p></li>
+<li class="fragment"><p>The assignment of treatments to experimental units</p></li>
+<li class="fragment"><p>The response variables that will be measured</p></li>
+</ol>
+</section>
+<section id="the-elements-of-experimental-design" class="slide level2 theme-inverse center">
+<h2>The elements of experimental design</h2>
+</section>
+<section id="elements-of-experimental-design" class="slide level2 smaller">
+<h2>Elements of experimental design</h2>
+<p>If the goal of experiments is to test a hypothesis, a good experiment must:</p>
+<ol type="1">
+<li><p>Isolate the effects of the hypothesized treatment variables from other sources of variation<a href="#/footnotes" class="footnote-ref" id="fnref2" role="doc-noteref" data-footnote-href="#/fn2" onclick=""><sup>2</sup></a></p></li>
+<li><p>Have a reasonable chance of detecting a treatment effect, if one exists<a href="#/footnotes" class="footnote-ref" id="fnref3" role="doc-noteref" data-footnote-href="#/fn3" onclick=""><sup>3</sup></a></p></li>
+</ol>
+<p>The first goal can be generally be met by careful consideration of:</p>
+<ol type="1">
+<li><p>Replication</p></li>
+<li><p>Randomization</p></li>
+<li><p>Controls</p></li>
+</ol>
+<p>We will discuss the second goal in another lecture</p>
+<aside></aside></section>
+<section id="replication-1" class="slide level2 smaller">
+<h2>Replication</h2>
+<p>Imagine we are interested in whether predation by birds reduces the abundance of phytophagous insects on trees</p>
+<p>To test this hypothesis, we place an wire exclosure around one tree and leave the neighboring tree unmanipulated. We then collect 10 branches from each tree, count the number of insects on each branch, and calculate the average number of insects per branch on each tree</p>
+
+<img data-src="fig/unreplicated_ybar.png" class="quarto-figure quarto-figure-center r-stretch"><div class="fragment">
+<p><span class="highlight">Question</span>: Can these samples test the hypothesis that birds influence insect abundance?</p>
+</div>
+</section>
+<section id="replication-2" class="slide level2 smaller">
+<h2>Replication</h2>
+<p>This design is inadequate for testing our hypothesis because it is <span class="highlight">unreplicated</span> (among other reasons)</p>
+
+<img data-src="fig/unreplicated_ybar.png" class="quarto-figure quarto-figure-center r-stretch"><div class="fragment">
+<p>Why is replication important?</p>
+<ul>
+<li class="fragment"><p>Experimental units will differ from one another, or from their expected value, for many reasons</p></li>
+<li class="fragment"><p>Without replication, our treatment will <em>always be confounded</em> with other sources of variation</p></li>
+<li class="fragment"><p>Due to this confounding, it is <em>impossible</em> to conclude whether observed differences are due to the treatment</p></li>
+</ul>
+</div>
+</section>
+<section id="replication-3" class="slide level2 smaller">
+<h2>Replication</h2>
+<p>Replication is critical because it allows us to quantify how much variation there is between treatments <em>relative to</em> all the other sources of variability</p>
+
+<img data-src="fig/replicated.png" class="quarto-figure quarto-figure-center r-stretch"><div class="fragment">
+<p>If differences among treatment groups are larger than differences within groups, we are more confident about the treatment effect</p>
+<ul>
+<li><p>We will return to this idea throughout the semester, as it is key to interpreting the output of statistical models</p></li>
+<li><p>Replication is necessary for any type of experiment (manipulative, quasi-experiments, observational)</p></li>
+</ul>
+</div>
+<div class="fragment">
+<p>How does replication help with confounding?</p>
+</div>
+</section>
+<section id="replication-4" class="slide level2 smaller">
+<h2>Replication</h2>
+<p><span class="highlight">Question</span>: Can these samples test the hypothesis that birds influence insect abundance?</p>
+
+<img data-src="fig/replicated.png" class="quarto-figure quarto-figure-center r-stretch"><div class="fragment">
+<p>Replication is necessary, but not sufficient, to remove confounding</p>
+<ul>
+<li class="fragment"><p>Replication, when combined with <span class="highlight">randomization</span>, helps to ensure that treatment effects are not confounded with other sources of variation</p></li>
+<li class="fragment"><p>For this reason, randomization is arguably the most important component of a good experiment!</p></li>
+</ul>
+</div>
+</section>
+<section id="randomization-1" class="slide level2 smaller">
+<h2>Randomization</h2>
+<p>There are two elements to randomization:</p>
+<ol type="1">
+<li>Random selection of sampling units from the population</li>
+</ol>
+<ul>
+<li><p>Helps to ensure[^But does not guarantee!] that the sample is representative of population</p></li>
+<li><p>Critical for all types of experiments</p></li>
+</ul>
+<div class="fragment">
+<ol start="2" type="1">
+<li>Random allocation of treatments to experimental units</li>
+</ol>
+<ul>
+<li><p>Helps to ensure[^But does not guarantee!] that treatment effects are not confounded with other sources of variability</p></li>
+<li><p>Not possible in quasi-experiments or observational studies. What is the consequence?</p></li>
+</ul>
+</div>
+</section>
+<section id="randomization-2" class="slide level2 smaller">
+<h2>Randomization</h2>
+<p>As discussed previously, samples (and the statistics calculated from samples) allow us to learn about populations</p>
+<div class="fragment">
+<p>Sample statistics will only provide accurate (i.e., unbiased) estimates of population parameters if the sample is <em>representative</em> of the population we are trying to study</p>
+</div>
+<div class="fragment">
+<p>Random selection of experimental units is one way to generate samples that are representative of the population</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="08_expdesign_files/figure-revealjs/samp-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="a-note-on-bias-and-expectations" class="slide level2 theme-inverse smaller">
+<h2>A note on bias and expectations</h2>
+<p>Sample statistics from truly randomized sampling provide <span class="highlight-inverse">unbiased</span> estimators of population parameters</p>
+<div class="fragment">
+<p>In this context, <em>unbiased</em> simply means that, <span class="highlight-inverse">on average</span>, the sample statistics are expected to be equal to the population parameters</p>
+<ul>
+<li>Put another way, the expected value of the sample statistics is the population parameter, e.g.,</li>
+</ul>
+<p><span class="math display">\[E[\bar{y}] = \mu\]</span></p>
+</div>
+<div class="fragment">
+<p>But this <em>statistical expectation</em> does not mean that the statistics from any particular sample will be equal to the population parameters, only that the sample statistics are no more likely to overestimate than to underestimate the population parameters</p>
+<ul>
+<li>This is a critical point that we will return to throughout the semester</li>
+</ul>
+</div>
+</section>
+<section id="randomization-3" class="slide level2 smaller">
+<h2>Randomization</h2>
+<p>In our previous example, imagine we could only reach branches near the bottom of the trees, so all of our samples came from this region</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="fig/non-random.png" class="quarto-figure quarto-figure-center" style="width:33.0%;height:40.0%"></p>
+</figure>
+</div>
+<div class="fragment">
+<p>Are these samples sufficiently randomized?</p>
+</div>
+<div class="fragment">
+<p>How could we revise our protocol to achieve a more representative sample?</p>
+</div>
+</section>
+<section id="randomization-4" class="slide level2 smaller">
+<h2>Randomization</h2>
+<p>In some cases, completely random sampling is not sufficient to obtain representative samples</p>
+<div class="fragment">
+<p><span class="highlight">Example</span>: Suppose the study area where we are conducting our exclosure experiments is composed of both oak and fir trees. We have enough money to build 10 exclosures so we randomly select 10 trees to receive the treatment</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="fig/random_trees.png" class="quarto-figure quarto-figure-center" style="width:40.0%;height:55.0%"></p>
+</figure>
+</div>
+</div>
+<div class="fragment">
+<p><span class="highlight">Questions</span>: What is the “population” in this example? Are these samples likely to representative of that population?</p>
+</div>
+</section>
+<section id="randomization-5" class="slide level2 smaller">
+<h2>Randomization</h2>
+<p>In cases where sampling units can be divided into discrete groups, <em>stratified random sampling</em> is often used to ensure representative samples</p>
+
+<img data-src="fig/stratified_trees.png" class="quarto-figure quarto-figure-center r-stretch"><p>Stratified random sampling consists of:</p>
+<ol type="1">
+<li><p>Dividing sampling units into groups</p></li>
+<li><p>Deciding how to allocate sampling effort across groups (often proportional to % of population)</p></li>
+<li><p>Randomly selecting sampling units within each group</p></li>
+</ol>
+</section>
+<section id="randomization-6" class="slide level2 smaller">
+<h2>Randomization</h2>
+<p>Stratified random sampling helps ensure that our sample, and corresponding sample statistics, are representative of the overall population</p>
+<div class="fragment">
+<p>Also helps ensure that replication within groups is adequate to test for different responses across groups</p>
+</div>
+<div class="fragment">
+<p>Other types of sampling are also possible and sometimes used, including</p>
+<ul>
+<li><p>Cluster sampling</p></li>
+<li><p>Systematic sampling</p></li>
+<li><p>See Quinn textbook (section 7.1.1) for more details</p></li>
+</ul>
+</div>
+</section>
+<section id="randomization-7" class="slide level2 smaller">
+<h2>Randomization</h2>
+<p>Random sampling is not always possible for a variety of reasons, including:</p>
+<ul>
+<li><p>Logistical/financial constraints</p></li>
+<li><p>Safety issues</p></li>
+<li><p>Ethics</p></li>
+</ul>
+<div class="fragment">
+<p><span class="highlight">Questions</span>:</p>
+<ul>
+<li class="fragment"><p>Are there examples in your research where samples cannot be selected randomly?</p></li>
+<li class="fragment"><p>What are the consequences of non-random sampling for statistical inference?</p></li>
+</ul>
+</div>
+</section>
+<section id="randomization-8" class="slide level2 smaller">
+<h2>Randomization</h2>
+<p>Random allocation of treatments to experimental units is also a critical aspect of experimental design</p>
+<div class="fragment">
+<p>This form of randomization helps ensure that treatments are not confounded with other sources of variation. How? By reducing the chance that treatments are correlated with other sources of variation</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="08_expdesign_files/figure-revealjs/unnamed-chunk-1-1.png" class="quarto-figure quarto-figure-center" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="randomization-9" class="slide level2 smaller">
+<h2>Randomization</h2>
+<p>Random allocation of treatments to experimental units is also a critical aspect of experimental design</p>
+<p>This form of randomization helps ensure that treatments are not confounded with other sources of variation. How? By reducing the chance that treatments are correlated with other sources of variation</p>
+
+<img data-src="08_expdesign_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="384"></section>
+<section id="randomization-10" class="slide level2 smaller">
+<h2>Randomization</h2>
+<p>Random allocation of treatments to experimental units is also a critical aspect of experimental design</p>
+<p>This form of randomization helps ensure that treatments are not confounded with other sources of variation. How? By reducing the chance that treaments are correlated with other sources of variation</p>
+
+<img data-src="08_expdesign_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="672"><p>As before, randomized designs help reduce the risk of confounding, but do not guarantee it</p>
+</section>
+<section id="randomization-vs-interspersion" class="slide level2 smaller">
+<h2>Randomization vs interspersion</h2>
+<p>It is important to note that randomization is a <em>method</em> for reducing for confounding, not a <em>goal</em> in and of itself</p>
+<div class="fragment">
+<p>An example to illustrate the difference. Assume in our previous example that we randomly selected trees for the exclosure experiment and ended up with the following design:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="fig/clustered.png" class="quarto-figure quarto-figure-center" style="width:40.0%;height:50.0%"></p>
+</figure>
+</div>
+</div>
+<div class="fragment">
+<p><span class="highlight">Questions</span>: Is this a good experimental design? How should we proceed?</p>
+</div>
+</section>
+<section id="randomization-vs-interspersion-1" class="slide level2 smaller">
+<h2>Randomization vs interspersion</h2>
+<p>This design is random but it is not <em>interspersed</em></p>
+
+<img data-src="fig/clustered.png" class="quarto-figure quarto-figure-center r-stretch"><div class="fragment">
+<p>Random sampling can result in clustered designs, especially with small sample sizes, that may violate the exchangeability assumption</p>
+</div>
+<div class="fragment">
+<p>How should we proceed? We could re-randomize…</p>
+</div>
+</section>
+<section id="randomization-vs-interspersion-2" class="slide level2 smaller">
+<h2>Randomization vs interspersion</h2>
+<p>Is this sample adequately interspersed? Is potential for confounding minimized?</p>
+
+<img data-src="fig/randomized.png" class="quarto-figure quarto-figure-center r-stretch"><div class="fragment">
+<p>One risk of re-randomizing to achieve interspersion is that we risk re-randomizing until we get a design that “looks” random/interspersed</p>
+</div>
+<ul>
+<li class="fragment"><p>Do we still have a randomized design?</p></li>
+<li class="fragment"><p>Pre-defined criteria can help reduce potential for randomizing your way to a non-randomized design</p></li>
+</ul>
+</section>
+<section id="randomization-vs-interspersion-3" class="slide level2 smaller">
+<h2>Randomization vs interspersion</h2>
+<p>Another option is to use regular/systematic allocation of treatments</p>
+
+<img data-src="fig/interspersed.png" class="quarto-figure quarto-figure-center r-stretch"><div class="fragment">
+<p>Systematic/regular allocation can be more appropriate to achieve adequate interspersion, but risks of confounding remain</p>
+</div>
+<div class="fragment">
+<p>Often, final design will be compromise between randomization, risk of confounding, and logistical constraints</p>
+<ul>
+<li><p>No easy answer</p></li>
+<li><p>Make decisions ahead of time, document process, and be transparent</p></li>
+<li><p>In certain situations, confounding can be addressed statistically (more on this later)</p></li>
+</ul>
+</div>
+</section>
+<section id="randomization-11" class="slide level2 smaller">
+<h2>Randomization</h2>
+<p>Randomization helps meet both the exchangeability and positivity assumptions</p>
+<ul>
+<li><p>Randomizing treatments breaks confounding</p></li>
+<li><p>Because the probability of receiving a treatment is determined through the design, researchers can ensure all units have &gt;0% chance of receiving each treatment[^Though in studies with small samples sizes, stochastic violations of positivity can still happen]</p></li>
+</ul>
+</section>
+<section id="controls-1" class="slide level2 smaller">
+<h2>Controls</h2>
+<p>The final component of good experimental design that will discuss is the use of <span class="highlight">controls</span></p>
+<div class="fragment">
+<p>If our goal is to determine whether a change in <span class="math inline">\(x\)</span> causes a corresponding change in <span class="math inline">\(y\)</span>, controls allow us to answer the question:</p>
+<blockquote>
+<p>What would happen to <span class="math inline">\(\large y\)</span> if we didn’t change <span class="math inline">\(\large x\)</span>?</p>
+</blockquote>
+</div>
+<div class="fragment">
+<p>This is the <em>counterfactual</em> we discussed in the previous lecture</p>
+<ul>
+<li><p>Well-designed treatments and controls allow us to estimate <em>both</em> potential outcomes of our treatment[^When combined with adequate replication and randomization]</p></li>
+<li><p>True controls are generally hard to accomplish in observational studies. Why?</p></li>
+</ul>
+</div>
+</section>
+<section id="controls-2" class="slide level2 smaller">
+<h2>Controls</h2>
+<p><span class="highlight">Example</span>: We are interested in whether two closely related salamander species compete with each other. To test this, we establish study plots and count the number of individuals of the focal species in each plot. After four years, we randomly select half the plots and remove all individuals of the other species. We then monitor abundance of the focal species for 4 more years (ensuring no individuals of the other species re-colonize the plots)</p>
+<ul>
+<li>In this case, one might use the “before” and “after” periods as treatments to test for an effect</li>
+</ul>
+
+<img data-src="08_expdesign_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"><p><span class="highlight">Question</span>: Does our data provide evidence that the species compete?</p>
+</section>
+<section id="controls-3" class="slide level2 smaller">
+<h2>Controls</h2>
+<p>Although it seems clear that abundance increased after the competitor was removed, we do not know what would have happened if we hadn’t remove the competitor (i.e., the counterfactual)</p>
+<div class="fragment">
+<p>The plots where the competitor wasn’t removed serve as controls, allowing us to formally test whether the response variable changed in the absence of the treatment</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="08_expdesign_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="fragment">
+<p><span class="highlight">Question</span>: Does our data provide evidence that the species compete?</p>
+</div>
+</section>
+<section id="controls-4" class="slide level2 smaller">
+<h2>Controls</h2>
+<p>The purpose of controls are to eliminate all sources of variation <em>except</em> the treatment</p>
+<div class="fragment">
+<p>Although straightforward in concept, creating suitable controls that meet the consistency assumpstion is often very challenging in practice</p>
+</div>
+<div class="fragment">
+<p>Are the following examples adequate controls?</p>
+<ul>
+<li class="fragment"><p>To test the effects of an experimental drug, researchers capture individuals and inject the drug via a syringe. Control individuals are not captured or given the drug. Survival of both groups is monitored</p></li>
+<li class="fragment"><p>Researchers are trying to establish a new population of an endangered species via translocation to restored habitat. To test reproductive success is lower in the restored habitat, researchers monitor nests of translocated and non-translocated individuals</p></li>
+<li class="fragment"><p>Researchers test the effectiveness of a new pesticide by spraying randomly selected plants and not spraying others. Insect damage is quantified on both groups</p></li>
+</ul>
+</div>
+</section>
+<section id="summary" class="slide level2 smaller">
+<h2>Summary</h2>
+<p>The three main elements of experimental design are:</p>
+<div class="fragment">
+<ol type="1">
+<li>Replication</li>
+</ol>
+<ul>
+<li><p>Confounding cannot be eliminated in un-replicated experiments</p></li>
+<li><p>Allows quantifying within and among group variation, necessary for statistical tests</p></li>
+<li><p>More replication = better. Why?</p></li>
+<li><p>Can be challenging/impossible in large-scale field experiments</p></li>
+</ul>
+</div>
+</section>
+<section id="summary-1" class="slide level2 smaller">
+<h2>Summary</h2>
+<p>The three main elements of experimental design are:</p>
+<ol type="1">
+<li><p>Replication</p></li>
+<li><p>Randomization</p></li>
+</ol>
+<ul>
+<li><p>Random selection of sampling units produces representative samples</p></li>
+<li><p>Random allocation of treatments to experimental units produces exchangeable groups</p></li>
+<li><p>Alternative sampling methods (stratified, clustering, systematic) are sometimes preferred to complete randomization</p></li>
+<li><p>When sample sizes are small, randomization can result in inadequate interspersion; alternative designs often necessary</p></li>
+<li><p>The inability to randomize treatments is what distinguishes manipulative experiments from quasi-experiments and observational studies. What is the consequence for inference?</p></li>
+</ul>
+</section>
+<section id="summary-2" class="slide level2 smaller">
+<h2>Summary</h2>
+<p>The three main elements of experimental design are:</p>
+<ol type="1">
+<li><p>Replication</p></li>
+<li><p>Randomization</p></li>
+<li><p>Controls</p></li>
+</ol>
+<ul>
+<li><p>Controls are necessary to evaluate response in the absence of treatment</p></li>
+<li><p>Important in manipulative and observational experiments</p></li>
+<li><p>Suitable controls eliminate all sources of variation except the treatment effect. Not always easy/possible to achieve</p></li>
+</ul>
+</section>
+<section id="summary-3" class="slide level2 smaller">
+<h2>Summary</h2>
+<p>The three main elements of experimental design are:</p>
+<ol type="1">
+<li><p>Replication</p></li>
+<li><p>Randomization</p></li>
+<li><p>Controls</p></li>
+</ol>
+<p>Well-designed experiments are essential to test hypotheses</p>
+<ul>
+<li><p>Plan ahead! Design choices must be made before data collection begins</p></li>
+<li><p>No amount of fancy statistical methodology can compensate for a poorly designed experiment!</p></li>
+<li><p>Other considerations (sample sizes, independence, logistical constraints, appropriate response variables) are also important</p></li>
+</ul>
+</section>
+<section id="for-thought" class="slide level2 smaller">
+<h2>For thought</h2>
+<ul>
+<li><p>Do manipulative experiments guarantee estimates of causal effects?</p></li>
+<li></li>
+</ul>
+</section>
+<section id="looking-ahead" class="slide level2">
+<h2>Looking ahead</h2>
+<p><br></p>
+<p><span class="highlight">Next time</span>: Linear models part 2: categorical predictor w/ &gt;2 levels</p>
+<p><br></p>
+<p><span class="highlight">Reading</span>: <a href="https://statistics4ecologists-v3.netlify.app/03-multipleregression#categorical-predictors">Fieberg chp. 3.6</a></p>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document smaller scrollable" role="doc-endnotes"><h2>Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Causal inference from observational studies will be the focus of lecture?</p></li>
+<li id="fn2"><p>In other words, to distinguish between causal vs.&nbsp;confounding effects</p></li>
+<li id="fn3"><p>In other words, to distinguish between causal effects vs.&nbsp;noise</p></li>
+</ol>
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/djklement\.github\.io\/FANR6750\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

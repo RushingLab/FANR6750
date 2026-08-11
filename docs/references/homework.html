@@ -2,18 +2,24 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-02-08">
+<meta name="dcterms.date" content="2026-08-10">
 
 <title>Homework instructions – FANR6750</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -37,10 +43,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a786baa6f14ee79d175f6472c084195c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-37142c45f769db7649b307dbfb96c11d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -114,92 +120,60 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-lectures">    
         <li>
-    <a class="dropdown-item" href="../lectures/00_course_intro.qmd">
+    <a class="dropdown-item" href="../lectures/00_course_intro/00_course_intro.html">
  <span class="dropdown-text">Lecture 0: Course introduction</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/01_intro_to_stats.qmd">
+    <a class="dropdown-item" href="../lectures/01_intro_to_stats/01_intro_to_stats.html">
  <span class="dropdown-text">Lecture 1: Introduction to statistics</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/02_intro_to_lm.qmd">
+    <a class="dropdown-item" href="../lectures/02_intro_to_lm/02_intro_to_lm.html">
  <span class="dropdown-text">Lecture 2: Introduction to linear models</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/03_inference.qmd">
- <span class="dropdown-text">Lecture 3: Principles of inference</span></a>
+    <a class="dropdown-item" href="../lectures/03_inference/03_inference.html">
+ <span class="dropdown-text">Lecture 3: Principles of statistical inference</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/04_expdesign.qmd">
- <span class="dropdown-text">Lecture 4: Principles of experimental design</span></a>
+    <a class="dropdown-item" href="../lectures/04_ttest/04_ttest.html">
+ <span class="dropdown-text">Lecture 4: Linear models part 1: categorical predictor w/ 2 levels</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/05_t_test.qmd">
- <span class="dropdown-text">Lecture 5: Linear models part 1</span></a>
+    <a class="dropdown-item" href="../lectures/05_nhst/05_nhst.html">
+ <span class="dropdown-text">Lecture 5: Null hypothesis testing</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/06_nht.qmd">
- <span class="dropdown-text">Lecture 6: Null hypothesis testing</span></a>
+    <a class="dropdown-item" href="../lectures/06_assumptions/06_assumptions.html">
+ <span class="dropdown-text">Lecture 6: Evaluation Assumptions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/07_power.qmd">
- <span class="dropdown-text">Lecture 7: Statistical power</span></a>
+    <a class="dropdown-item" href="../lectures/07_causal_inference/07_causal_inference.html">
+ <span class="dropdown-text">Lecture 7: Principles of causal inference</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/08_anova.qmd">
- <span class="dropdown-text">Lecture 8: ANOVA</span></a>
+    <a class="dropdown-item" href="../lectures/08_expdesign/08_expdesign.html">
+ <span class="dropdown-text">Lecture 8: Principles of experimental design</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/09_mult_comp.qmd">
- <span class="dropdown-text">Lecture 9: Multiple Comparisons</span></a>
+    <a class="dropdown-item" href="../lectures/09_ANOVA/09_ANOVA.html">
+ <span class="dropdown-text">Lecture 9: Linear models part 2: categorical predictor w/ &gt; 2 levels</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/10_regression.qmd">
- <span class="dropdown-text">Lecture 10: Multiple Regression</span></a>
+    <a class="dropdown-item" href="../lectures/10_multcomp/10_multcomp.html">
+ <span class="dropdown-text">Lecture 10: Multiple Comparisons</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/11_interactions.qmd">
- <span class="dropdown-text">Lecture 11: Interactions</span></a>
+    <a class="dropdown-item" href="../lectures/11_power/11_power.html">
+ <span class="dropdown-text">Lecture 11: Power</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/12_assumptions.qmd">
- <span class="dropdown-text">Lecture 12: Evaluating assumptions</span></a>
+    <a class="dropdown-item" href="../lectures/12_multreg/12_multreg.html">
+ <span class="dropdown-text">Lecture 12: Multiple Regression</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/13_model_selection.qmd">
- <span class="dropdown-text">Lecture 13: Model selection</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/14_random_effects.qmd">
- <span class="dropdown-text">Lecture 14: Random effects</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/15_nested.qmd">
- <span class="dropdown-text">Lecture 15: Nested designs</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/16_split_plot.qmd">
- <span class="dropdown-text">Lecture 16: Split-plot designs</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/17_repeated_measures.qmd">
- <span class="dropdown-text">Lecture 17: Repeated measures</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/18_glm.qmd">
- <span class="dropdown-text">Lecture 18: Generalized linear models</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/19_logistic_regression.qmd">
- <span class="dropdown-text">Lecture 19: Logistic regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/20_poisson_regression.qmd">
- <span class="dropdown-text">Lecture 20: Poisson regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/21_zero_inflation.qmd">
- <span class="dropdown-text">Lecture 21: Zero-inflated regression</span></a>
+    <a class="dropdown-item" href="../lectures/13_interactions/13_interactions.html">
+ <span class="dropdown-text">Lecture 13: Interactions</span></a>
   </li>  
     </ul>
   </li>
@@ -215,11 +189,11 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">Lab 1: Introduction to R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab02_Intro_project_and_Rmd.html">
+    <a class="dropdown-item" href="../labs/lab02_Intro_project_and_Rmd.qmd">
  <span class="dropdown-text">Lab 2: Introduction to projects and RMarkdown</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab03_inference.html">
+    <a class="dropdown-item" href="../labs/lab03_inference.qmd">
  <span class="dropdown-text">Lab 3: Using R to explore sampling error</span></a>
   </li>  
         <li>
@@ -227,44 +201,8 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">Lab 4: t-tests</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab05_ANOVA.html">
- <span class="dropdown-text">Lab 5: ANOVA</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab06_multiple_regression.html">
- <span class="dropdown-text">Lab 6: Multiple Regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab07_interactions.html">
- <span class="dropdown-text">Lab 7: Interactions</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab08_linear_model_assumptions.html">
- <span class="dropdown-text">Lab 8: Evaluating assumptions</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab09_model_selection.html">
- <span class="dropdown-text">Lab 9: Model selection</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab10_nested.html">
- <span class="dropdown-text">Lab 10: Nested designs</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab11_split_plot.html">
- <span class="dropdown-text">Lab 11: Split-plot designs</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab12_glm_lr.qmd">
- <span class="dropdown-text">Lab 12: Logistic regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab13_glm_pr.qmd">
- <span class="dropdown-text">Lab 13: Poisson regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab12_repeated_measures.html">
- <span class="dropdown-text">Bonus lab: Repeated measures</span></a>
+    <a class="dropdown-item" href="../labs/lab05_linear_model_assumptions.qmd">
+ <span class="dropdown-text">Lab 5: Evaluating assumptions</span></a>
   </li>  
     </ul>
   </li>
@@ -336,7 +274,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 8, 2026</p>
+      <p class="date">August 10, 2026</p>
     </div>
   </div>
   
@@ -433,13 +371,14 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

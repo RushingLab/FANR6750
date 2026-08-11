@@ -6,21 +6,26 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-234273d1456647dabc34a594ac50e507.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
-  <meta name="author" content=" Fall 2026">
-  <title>FANR6750 – LECTURE 3: principles of statistical inference</title>
+  <title>FANR6750 – inference</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -29,8 +34,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-2c1b5f745a11cfad616ebade4a4a7d24.css">
-  <link rel="stylesheet" href="FANR6750-revealjs.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-ae7982bc92338f23a6bbc8aaeb8d5ad3.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -127,61 +131,58 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">LECTURE 3: principles of statistical inference</h1>
-  <p class="subtitle">FANR 6750 (Experimental design)</p>
 
-<div class="quarto-title-authors">
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-<br><br><br>Fall 2026 
+<section id="lecture-3-principles-of-statistical-inference" class="slide level2 theme-title center">
+<h2>LECTURE 3: principles of statistical inference</h2>
+<div class="footer">
+<p>FANR 6750<br>
+Fall 2026</p>
 </div>
-</div>
-</div>
-
 </section>
-<section id="outline" class="slide level2 inverse">
-<h2>outline</h2>
+<section id="outline" class="slide level2 theme-inverse">
+<h2>Outline</h2>
 <p><br></p>
-<h4 id="uncertainty-in-statistical-models">1) Uncertainty in statistical models</h4>
+<h3 id="uncertainty-in-statistical-models">1) Uncertainty in statistical models</h3>
 <p><br></p>
 <div class="fragment">
-<h4 id="sampling-distributions">2) Sampling distributions</h4>
+<h3 id="sampling-distributions">2) Sampling distributions</h3>
 <p><br></p>
 </div>
 <div class="fragment">
-<h4 id="standard-error">3) Standard error</h4>
+<h3 id="standard-error">3) Standard error</h3>
 <p><br></p>
 </div>
 <div class="fragment">
-<h4 id="confidence-intervals">4) Confidence intervals</h4>
+<h3 id="confidence-intervals">4) Confidence intervals</h3>
 <p><br></p>
 </div>
 </section>
-<section id="section" class="slide level2 inverse">
+<section id="section" class="slide level2 theme-inverse smaller">
 <h2></h2>
-<h3 id="statistics-information-uncertainty">Statistics = Information + Uncertainty</h3>
-<h4 id="in-the-last-lecture-we-learned-that-models-allow-us-to-quantify-relationships-between-variables-based-on-samples">In the last lecture, we learned that models allow us to quantify relationships between variables based on <strong>samples</strong></h4>
+<p><span class="math display">\[\Large Statistics = Information + Uncertainty\]</span></p>
+<p><br></p>
+<p>In the last lecture, we learned that models allow us to quantify relationships between variables based on <strong>samples</strong></p>
 <p><br></p>
 <div class="fragment">
-<h4 id="we-also-learned-that-sampling-uncertainty">We also learned that sampling = uncertainty</h4>
+<p>We also learned that sampling = uncertainty</p>
 <ul>
 <li>Parameter estimates from samples will never exactly equal population parameters</li>
 </ul>
 <p><br></p>
 </div>
 <div class="fragment">
-<h4 id="inference-about-populations-requires-quantifying-the-magnitude-of-this-uncertainty">Inference about populations requires quantifying the magnitude of this uncertainty</h4>
+<p>Inference about populations requires quantifying the magnitude of this uncertainty</p>
 <p><br></p>
 </div>
 <div class="fragment">
-<h4 id="but-how-can-we-measure-how-far-our-estimates-are-from-the-population-parameters-if-we-dont-know-the-population-parameters">But how can we measure how far our estimates are from the population parameters if we don’t know the population parameters?</h4>
+<p>But how can we measure how far our estimates are from the population parameters if we don’t know the population parameters?</p>
 </div>
 </section>
-<section id="parameters-vs-statistics" class="slide level2">
-<h2>parameters vs statistics</h2>
-<div class="fragment">
-<h3 id="parameters">Parameters</h3>
+<section id="parameters-vs-statistics" class="slide level2 smaller">
+<h2>Parameters vs statistics</h2>
+<div class="columns">
+<div class="fragment column" style="width:50%;">
+<p><span class="highlight">Parameters</span></p>
 <ul>
 <li>Attributes of the population
 <ul>
@@ -192,16 +193,15 @@
 <li>Standard deviation ( <span class="math inline">\(\sigma\)</span> )</li>
 </ul></li>
 </ul>
-</div>
 <div class="fragment">
 <ul>
 <li>Usually unknown</li>
-<li>Parameters are the quantities of interest<br>
-</li>
+<li>Parameters are the quantities of interest</li>
+<li>Generally denoted using Greek letters</li>
 </ul>
 </div>
-<div class="fragment">
-<h3 id="statistics">Statistics</h3>
+</div><div class="fragment column" style="width:50%;">
+<p><span class="highlight">Statistics</span></p>
 <ul>
 <li>Attributes of the sample
 <ul>
@@ -212,27 +212,30 @@
 <li>Standard deviation ( <span class="math inline">\(s\)</span> or <span class="math inline">\(\hat{\sigma}\)</span> )</li>
 </ul></li>
 </ul>
-</div>
 <div class="fragment">
 <ul>
-<li>Often treated as estimates of parameters</li>
+<li><p>English alphabet generally used to denote summary statistics of a sample<a href="#/footnotes" class="footnote-ref" id="fnref1" role="doc-noteref" data-footnote-href="#/fn1" onclick=""><sup>1</sup></a></p></li>
+<li><p>Often treated as estimates of parameters<a href="#/footnotes" class="footnote-ref" id="fnref2" role="doc-noteref" data-footnote-href="#/fn2" onclick=""><sup>2</sup></a></p></li>
 </ul>
 </div>
-</section>
-<section id="sampling-error" class="slide level2">
-<h2>sampling error</h2>
-<h4 id="question-what-is-the-probablity-that-large-bary-mu">Question: What is the probablity that <span class="math inline">\(\large \bar{y} = \mu\)</span>?</h4>
+</div></div>
+<aside></aside></section>
+<section id="sampling-error" class="slide level2 smaller">
+<h2>Sampling error</h2>
+<p>Question: What is the probability that <span class="math inline">\(\bar{y} = \mu\)</span>?</p>
 <div class="fragment">
 <ul>
-<li>Answer: 0 (why?)</li>
+<li>Answer: 0</li>
 </ul>
 </div>
 <div class="fragment">
-<h4 id="fact-the-sample-mean-will-never-equal-the-population-mean">Fact: The sample mean will never equal the population mean</h4>
+<ul>
+<li>Fact: The sample mean will never equal the population mean</li>
+</ul>
 </div>
 <div class="fragment">
 <ul>
-<li>The difference between <span class="math inline">\(\large \bar{y}\)</span> and <span class="math inline">\(\large \mu\)</span> is <strong>sampling error</strong></li>
+<li>The difference between <span class="math inline">\(\bar{y}\)</span> and <span class="math inline">\(\mu\)</span> is <strong>sampling error</strong></li>
 </ul>
 </div>
 <div class="fragment">
@@ -241,7 +244,7 @@
 </ul>
 </div>
 <div class="fragment">
-<h4 id="problem-if-we-dont-know-large-mu-how-do-we-know-how-far-our-estimate-is-from-the-true-value">Problem: If we don’t know <span class="math inline">\(\large \mu\)</span>, how do we know how far our estimate is from the true value?</h4>
+<p>Problem: If we don’t know <span class="math inline">\(\mu\)</span>, how do we know how far our estimate is from the true value?</p>
 </div>
 <div class="fragment">
 <ul>
@@ -254,24 +257,34 @@
 </ul>
 </div>
 </section>
-<section id="the-sampling-distribution" class="slide level2 inverse center">
-<h2>the sampling distribution</h2>
+<section id="the-sampling-distribution" class="slide level2 theme-inverse center">
+<h2>The sampling distribution</h2>
 </section>
+<section id="a-population" class="slide level2">
+<h2>A population</h2>
+<p><br></p>
+
+<img data-src="03_inference_files/figure-revealjs/pop1-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
 <section id="a-single-sample-n-25" class="slide level2">
-<h2>a single sample (n = 25)</h2>
+<h2>A single sample (n = 25)</h2>
+<p><br></p>
+
+<img data-src="03_inference_files/figure-revealjs/samp1-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
+<section id="a-single-sample-n-25-1" class="slide level2">
+<h2>A single sample (n = 25)</h2>
 <p><br></p>
 
 <img data-src="03_inference_files/figure-revealjs/sampling-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
 <section id="standard-deviation" class="slide level2">
-<h2>standard deviation</h2>
+<h2>Standard deviation</h2>
 <p><br></p>
 
 <img data-src="03_inference_files/figure-revealjs/sampling_sd-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"><div class="fragment">
-<p><strong>Remember</strong> - this error bar is the standard deviation <strong>of our sample</strong>!</p>
+<p>This error bar is the standard deviation <span class="highlight">of our sample</span>!</p>
 </div>
 </section>
 <section id="standard-deviation-1" class="slide level2">
-<h2>standard deviation</h2>
+<h2>Standard deviation</h2>
 <p>But remember, what we really want to know is, how far is the sample mean from the true parameter value?</p>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
@@ -286,7 +299,7 @@
 </div>
 </section>
 <section id="the-sampling-distribution-1" class="slide level2">
-<h2>the sampling distribution</h2>
+<h2>The sampling distribution</h2>
 <p>Imagine we could repeat our experiment many, many times</p>
 
 <img data-src="samples.gif" class="quarto-figure quarto-figure-center r-stretch"></section>
@@ -294,38 +307,37 @@
 <h2>the sampling distribution</h2>
 <p>The collection of sample means is referred to as the <strong>sampling distribution</strong></p>
 
-<img data-src="03_inference_files/figure-revealjs/sampling_dist, -1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
+<img data-src="03_inference_files/figure-revealjs/sampling_dist-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
 <section id="the-sampling-distribution-3" class="slide level2">
-<h2>the sampling distribution</h2>
+<h2>The sampling distribution</h2>
 <p>The collection of sample means is referred to as the <strong>sampling distribution</strong></p>
 
-<img data-src="03_inference_files/figure-revealjs/sampling_dist2, -1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
+<img data-src="03_inference_files/figure-revealjs/sampling_dist2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
 <section id="the-sampling-distribution-4" class="slide level2">
-<h2>the sampling distribution</h2>
+<h2>The sampling distribution</h2>
 <p>The standard deviation <em>of the sampling distribution</em> measures, on average, how far each sample mean from the true population value</p>
 
-<img data-src="03_inference_files/figure-revealjs/sampling_se, -1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
+<img data-src="03_inference_files/figure-revealjs/sampling_se-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
 <section id="the-sampling-distribution-5" class="slide level2">
-<h2>the sampling distribution</h2>
-<h4 id="we-rarely-repeat-experiments">We rarely repeat experiments</h4>
+<h2>The sampling distribution</h2>
+<p>We rarely repeat experiments</p>
 <p><br></p>
 <div class="fragment">
-<h4 id="but-we-can-estimate-the-standard-deviation-of-the-sampling-distribution-from-a-single-sample">But we can estimate the standard deviation of the sampling distribution from a single sample!</h4>
-<p><br></p>
+<p>But we can estimate the standard deviation of the sampling distribution from a single sample! <br></p>
 </div>
 <div class="fragment">
-<h4 id="how-the-central-limit-theorem">How? The <strong>central limit theorem</strong>!</h4>
+<p>How? The <strong>central limit theorem</strong>!</p>
 </div>
 </section>
-<section id="central-limit-theorem" class="slide level2 inverse">
-<h2>central limit theorem</h2>
+<section id="central-limit-theorem" class="slide level2 theme-inverse smaller">
+<h2>Central limit theorem</h2>
 <blockquote>
 <p>For a population with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, the sampling distribution will be (approximately) normally distributed with mean <span class="math inline">\(\mu_X = \mu\)</span> and standard deviation <span class="math inline">\(\sigma_X = \sigma/\sqrt{n}\)</span>.</p>
 </blockquote>
 
 <img data-src="03_inference_files/figure-revealjs/clt-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"></section>
-<section id="central-limit-theorem-1" class="slide level2 inverse">
-<h2>central limit theorem</h2>
+<section id="central-limit-theorem-1" class="slide level2 theme-inverse smaller">
+<h2>Central limit theorem</h2>
 <blockquote>
 <p>For a population with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, the sampling distribution will be (approximately) normally distributed with mean <span class="math inline">\(\mu_X = \mu\)</span> and standard deviation <span class="math inline">\(\sigma_X = \sigma/\sqrt{n}\)</span>.</p>
 </blockquote>
@@ -337,46 +349,49 @@
 <li><p><a href="http://www.ltcconline.net/greenl/java/Statistics/clt/cltsimulation.html">Demonstration using simulations</a></p></li>
 </ul>
 </section>
-<section id="standard-error-1" class="slide level2">
-<h2>standard error</h2>
-<h4 id="the-standard-deviation-of-the-sampling-distribution-is-called-the-standard-error-of-the-mean-or-just-the-standard-error">The standard deviation of the sampling distribution is called the <strong>standard error of the mean</strong> (or just the standard error)</h4>
-<p><span class="math display">\[\Large SE =\frac{s}{\sqrt{n}}\]</span> - Standard error tells us how far (on average) our sample mean is likely to be from the population mean</p>
+<section id="standard-error-1" class="slide level2 smaller">
+<h2>Standard error</h2>
+<p>The standard deviation of the sampling distribution is called the <strong>standard error of the mean</strong> (or just the standard error)</p>
+<p><span class="math display">\[\Large SE =\frac{s}{\sqrt{n}}\]</span></p>
 <ul>
+<li><p>Standard error tells us how far (on average) our sample mean is likely to be from the population mean</p></li>
 <li><p>It is the key to estimating uncertainty in our estimates</p></li>
 <li><p>Smaller is better</p></li>
 </ul>
 </section>
-<section id="descriptive-vs-inferential-statistics" class="slide level2 inverse">
-<h2>descriptive vs inferential statistics</h2>
+<section id="descriptive-vs-inferential-statistics" class="slide level2 theme-inverse smaller">
+<h2>Descriptive vs inferential statistics</h2>
 <blockquote>
 <p>The sample standard deviation ( <span class="math inline">\(s\)</span> ) is a descriptive statistic</p>
 </blockquote>
-<p><span class="math display">\[\Large s = \sqrt{s^2}\]</span></p>
+<p><span class="math display">\[\large s = \sqrt{s^2}\]</span></p>
 <ul>
-<li><span class="math inline">\(\large s\)</span> tells us how far, on average, each observation <span class="math inline">\(\large y\)</span> is from the sample mean <span class="math inline">\(\large \bar{y}\)</span></li>
+<li><span class="math inline">\(s\)</span> tells us how far, on average, each observation <span class="math inline">\(y\)</span> is from the sample mean <span class="math inline">\(\bar{y}\)</span></li>
 </ul>
-<p><br></p>
 <div class="fragment">
 <blockquote>
 <p>The standard error (SE) is an inferential statistic</p>
 </blockquote>
-<p><span class="math display">\[\Large SE = \frac{s}{\sqrt{n}}\]</span> - <span class="math inline">\(\large SE\)</span> tells us how far, on average, each sample mean <span class="math inline">\(\large \bar{y}\)</span> is from the population mean <span class="math inline">\(\large \mu\)</span></p>
+<p><span class="math display">\[\large SE = \frac{s}{\sqrt{n}}\]</span></p>
+<ul>
+<li><span class="math inline">\(SE\)</span> tells us how far, on average, each sample mean <span class="math inline">\(\bar{y}\)</span> is from the population mean <span class="math inline">\(\mu\)</span></li>
+</ul>
 </div>
 </section>
-<section id="quick-review" class="slide level2">
-<h2>quick review</h2>
+<section id="quick-review" class="slide level2 smaller">
+<h2>Quick review</h2>
 <ol type="1">
-<li>sampling is a stochastic process</li>
+<li>Sampling is a stochastic process</li>
 </ol>
 <ul>
-<li>sample statistics (mean, standard deviation) will vary from sample to sample</li>
+<li>Sample statistics (mean, standard deviation) will vary from sample to sample</li>
 </ul>
 <div class="fragment">
 <ol start="2" type="1">
-<li>the sampling distribution is an (imaginary) collection of statistics from repeated samples of the same population</li>
+<li>The sampling distribution is an (imaginary) collection of statistics from repeated samples of the same population</li>
 </ol>
 <ul>
-<li>assumes that the procedure for generating samples (e.g., sample size) is identical</li>
+<li>Assumes that the procedure for generating samples (e.g., sample size) is identical</li>
 </ul>
 </div>
 <div class="fragment">
@@ -384,44 +399,32 @@
 <li>Standard error is the standard deviation of the sampling distribution</li>
 </ol>
 <ul>
-<li><p><span class="math inline">\(\large SE =  s/\sqrt{n}\)</span></p></li>
+<li><p><span class="math inline">\(SE =  s/\sqrt{n}\)</span></p></li>
 <li><p>measures how far, on average, sample statistics are from the true population value (smaller is better!)</p></li>
 </ul>
 </div>
 <div class="fragment">
-<h4 id="we-will-explore-these-concepts-in-lab-using-r-to-generate-and-visualize-repeated-samples-calculate-properties-of-the-sampling-distribution">We will explore these concepts in lab, using <code>R</code> to generate and visualize repeated samples, calculate properties of the sampling distribution</h4>
+<p>We will explore these concepts in lab, using <code>R</code> to generate and visualize repeated samples, calculate properties of the sampling distribution</p>
 </div>
 </section>
-<section id="confidence-intervals-1" class="slide level2 inverse">
-<h2>confidence intervals</h2>
+<section id="confidence-intervals-1" class="slide level2 theme-inverse">
+<h2>Confidence intervals</h2>
 </section>
-<section id="confidence-intervals-2" class="slide level2">
-<h2>confidence intervals</h2>
-<h4 id="uncertainty-is-commonly-reported-using-confidence-intervals">Uncertainty is commonly reported using <em>confidence intervals</em></h4>
+<section id="confidence-intervals-2" class="slide level2 smaller">
+<h2>Confidence intervals</h2>
+<p>Uncertainty is commonly reported using <em>confidence intervals</em></p>
 <ul>
 <li>this is a concept that seems intuitive but in reality it is commonly misunderstood</li>
 </ul>
-<div class="inverse">
 <blockquote>
 <p>If we calculated a <span class="math inline">\(x\)</span>% confidence interval from repeated samples of the population, about <span class="math inline">\(x\)</span>% of those confidence intervals would contain the true population mean</p>
 </blockquote>
-</div>
-<div class="inverse">
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="03_inference_files/figure-revealjs/ci-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="calculating-confidence-intervals" class="slide level2">
-<h2>calculating confidence intervals</h2>
+
+<img data-src="03_inference_files/figure-revealjs/ci-1.png" class="quarto-figure quarto-figure-center r-stretch" width="768"></section>
+<section id="calculating-confidence-intervals" class="slide level2 smaller">
+<h2>Calculating confidence intervals</h2>
 <div class="fragment">
-<p>95% of a normal distribution falls between -1.96 and 1.96 standard deviation of the mean<sup>1</sup></p>
+<p>95% of a normal distribution falls between -1.96 and 1.96 standard deviation of the mean<a href="#/footnotes" class="footnote-ref" id="fnref3" role="doc-noteref" data-footnote-href="#/fn3" onclick=""><sup>3</sup></a></p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -438,28 +441,28 @@
 <div class="fragment">
 <p>95% CI = <span class="math inline">\(\large \bar{y} \pm 1.96 \times SE\)</span></p>
 </div>
-<aside><ol class="aside-footnotes"><li id="fn1"><p>Can easily be calculated for other percentages using <code>R</code></p></li></ol></aside></section>
-<section id="confidence-intervals-3" class="slide level2">
-<h2>confidence intervals</h2>
-<h4 id="what-a-confidence-interval-is-not">What a confidence interval is <strong>NOT</strong>:</h4>
+<aside></aside></section>
+<section id="confidence-intervals-3" class="slide level2 smaller">
+<h2>Confidence intervals</h2>
+<p>What a confidence interval is <strong>NOT</strong>:</p>
 <ul>
 <li>“there is an <span class="math inline">\(x\)</span>% probability that the true population parameter is inside this interval”</li>
 </ul>
 <div class="fragment">
-<h4 id="the-true-population-value-is-considered-a-fixed-parameter">The true population value is considered a <em>fixed</em> parameter</h4>
+<p>The true population value is considered a <em>fixed</em> parameter</p>
 </div>
 <div class="fragment">
-<h4 id="before-we-collect-our-sample-the-ends-of-the-confidence-intervals-are-considered-random-variables-i.e.-their-value-will-change-each-time-we-collect-a-sample">Before we collect our sample, the ends of the confidence intervals are considered <em>random variables</em> (i.e., their value will change each time we collect a sample)</h4>
+<p>Before we collect our sample, the ends of the confidence intervals are considered <em>random variables</em> (i.e., their value will change each time we collect a sample)</p>
 <ul>
 <li>Like all random variables, we can describe the long-term (i.e., asymptotic) expectations of confidence intervals if we repeated the experiment many times</li>
 </ul>
 </div>
 <div class="fragment">
-<h4 id="after-we-collect-our-sample-the-confidence-interval-either-does-or-does-not-contain-the-true-population-value">After we collect our sample, the confidence interval either <em>does</em> or <em>does not</em> contain the true population value</h4>
+<p>After we collect our sample, the confidence interval either <em>does</em> or <em>does not</em> contain the true population value</p>
 </div>
 </section>
-<section id="confidence-intervals-4" class="slide level2">
-<h2>confidence intervals</h2>
+<section id="confidence-intervals-4" class="slide level2 smaller">
+<h2>Confidence intervals</h2>
 <div class="columns">
 <div class="fragment column" style="width:50%;">
 <p>Think of confidence intervals like trying to determine where the stake is in a game of horseshoes by looking at where the horseshoes landed</p>
@@ -482,49 +485,54 @@
 </div>
 </div></div>
 </section>
-<section id="confidence-intervals-5" class="slide level2">
-<h2>confidence intervals</h2>
+<section id="confidence-intervals-5" class="slide level2 smaller">
+<h2>Confidence intervals</h2>
 <p>I like to think of confidence intervals as providing a range of values that, based on our sample, are consistent with the population mean (<em>plausible interval</em>?)</p>
 <ul>
 <li>If want to be more confident that the CI contains the parameter (e.g., 50% CI vs 95% CI), what happens to the size of the interval?</li>
 </ul>
 <div class="fragment">
-<p>It’s worth remembering that 1 - <span class="math inline">\(x\)</span>% of the time, the confidence interval we calculate from our sample <strong>will not</strong> include the true population mean.</p>
+<p>The confidence interval we calculate from our sample <strong>will not</strong> include the true population mean 1 - <span class="math inline">\(x\)</span>% of the time</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="03_inference_files/figure-revealjs/ci2-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
+<p><img data-src="03_inference_files/figure-revealjs/ci2-1.png" class="quarto-figure quarto-figure-center" width="432"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Of course, with our real data, we have no way of knowing if our sample is one of the black points on this graph :grinning: or one of the red dots :sob:</p>
+<p>Of course, with our real data, we have no way of knowing if our sample is one of the black points on this graph <span class="emoji" data-emoji="grinning">😀</span> or one of the red dots <span class="emoji" data-emoji="sob">😭</span></p>
 </div>
 </section>
 <section id="for-thought" class="slide level2">
-<h2>for thought</h2>
-<h4 id="if-our-goal-is-generally-to-decrease-uncertainty-in-parameter-estimates">If our goal is generally to decrease uncertainty in parameter estimates:</h4>
-<div class="fragment">
+<h2>For thought</h2>
+<p>If our goal is generally to decrease uncertainty in parameter estimates:</p>
 <ul>
 <li>What factors determine the magnitude of our uncertainty estimates (SE or confidence intervals)?</li>
 </ul>
 <p><br></p>
-</div>
 <ul>
 <li>What can we, as researchers, control when we design experiments to minimize uncertainty? What can we not control?</li>
 </ul>
 </section>
 <section id="looking-ahead" class="slide level2">
-<h2>looking ahead</h2>
+<h2>Looking ahead</h2>
 <p><br></p>
-<h3 id="next-time-principles-of-experimental-design"><strong>Next time</strong>: Principles of Experimental Design</h3>
+<p><span class="highlight">Next time</span>: Linear models part 1: categorical predictor w/ 2 levels</p>
 <p><br></p>
-<h3 id="reading-quinn-chp.-7.1-7.2"><strong>Reading</strong>: <a href="https://www2.ib.unicamp.br/profs/fsantos/apostilas/Quinn%20&amp;%20Keough.pdf#page=175.08">Quinn chp. 7.1-7.2</a></h3>
+<p><span class="highlight">Reading</span>: <a href="https://statistics4ecologists-v3.netlify.app/03-multipleregression#categorical-predictors">Fieberg chp. 3.6</a></p>
 
 
 </section>
+<section id="footnotes" class="footnotes footnotes-end-of-document smaller scrollable" role="doc-endnotes"><h2>Footnotes</h2>
 
+<ol>
+<li id="fn1"><p>The mean of sample is often denoted as <span class="math inline">\(\bar{y}\)</span></p></li>
+<li id="fn2"><p>“hat” notation (e.g., <span class="math inline">\(\hat{\mu}\)</span>) is generally used to indicate that the sample statistics is being treated as an <em>estimate</em> of a parameter</p></li>
+<li id="fn3"><p>Can easily be calculated for other percentages using <code>R</code></p></li>
+</ol>
+</section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <div class="footer footer-default">
@@ -581,7 +589,7 @@
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: 'c/t',
+        slideNumber: false,
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -714,7 +722,7 @@
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -741,80 +749,42 @@
       });
     </script>
     
-
     <script>
-
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
       // slide changes (different for each slide format).
-
       (function () {
-
         // dispatch for htmlwidgets
-
         function fireSlideEnter() {
-
           const event = window.document.createEvent("Event");
-
           event.initEvent("slideenter", true, true);
-
           window.document.dispatchEvent(event);
-
         }
-
-    
 
         function fireSlideChanged(previousSlide, currentSlide) {
-
           fireSlideEnter();
 
-    
-
           // dispatch for shiny
-
           if (window.jQuery) {
-
             if (previousSlide) {
-
               window.jQuery(previousSlide).trigger("hidden");
-
             }
-
             if (currentSlide) {
-
               window.jQuery(currentSlide).trigger("shown");
-
             }
-
           }
-
         }
-
-    
 
         // hookup for slidy
-
         if (window.w3c_slidy) {
-
           window.w3c_slidy.add_observer(function (slide_num) {
-
             // slide_num starts at position 1
-
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
           });
-
         }
 
-    
-
       })();
-
     </script>
-
-    
 
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -864,13 +834,14 @@
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
