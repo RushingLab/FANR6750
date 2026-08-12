@@ -27,8 +27,8 @@ Fall 2026
 
 <br/>
 
-**Lecture**: Monday, Wednesday, Friday 1:15-2:10, 1-304\
-**Lab**: Monday **or** Tuesday 2:55-5:35, 4-419\
+**Lecture**: Monday, Wednesday, Friday 1:15-2:10, 1-304  
+**Lab**: Monday **or** Tuesday **or** Friday 2:55-5:35, 4-419  
 **Credits**: 3
 
 ## Instructors {.smaller}
