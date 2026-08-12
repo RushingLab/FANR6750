@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Lab 11: Split plot designs – FANR6750</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -71,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a786baa6f14ee79d175f6472c084195c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-37142c45f769db7649b307dbfb96c11d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -117,7 +123,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -190,79 +196,51 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="../lectures/03_inference.qmd">
- <span class="dropdown-text">Lecture 3: Principles of inference</span></a>
+ <span class="dropdown-text">Lecture 3: Principles of statistical inference</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/04_expdesign.qmd">
- <span class="dropdown-text">Lecture 4: Principles of experimental design</span></a>
+    <a class="dropdown-item" href="../lectures/04_ttestn.qmd">
+ <span class="dropdown-text">Lecture 4: Linear models part 1: categorical predictor w/ 2 levels</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/05_t_test.qmd">
- <span class="dropdown-text">Lecture 5: Linear models part 1</span></a>
+    <a class="dropdown-item" href="../lectures/05_nhst.qmd">
+ <span class="dropdown-text">Lecture 5: Null hypothesis testing</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/06_nht.qmd">
- <span class="dropdown-text">Lecture 6: Null hypothesis testing</span></a>
+    <a class="dropdown-item" href="../lectures/06_assumptions.qmd">
+ <span class="dropdown-text">Lecture 6: Evaluation Assumptions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/07_power.qmd">
- <span class="dropdown-text">Lecture 7: Statistical power</span></a>
+    <a class="dropdown-item" href="../lectures/07_causal_inference.qmd">
+ <span class="dropdown-text">Lecture 7: Principles of causal inference</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/08_anova.qmd">
- <span class="dropdown-text">Lecture 8: ANOVA</span></a>
+    <a class="dropdown-item" href="../lectures/08_expdesign.qmd">
+ <span class="dropdown-text">Lecture 8: Principles of experimental design</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/09_mult_comp.qmd">
- <span class="dropdown-text">Lecture 9: Multiple Comparisons</span></a>
+    <a class="dropdown-item" href="../lectures/09_ANOVA.qmd">
+ <span class="dropdown-text">Lecture 9: Linear models part 2: categorical predictor w/ &gt; 2 levels</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/10_regression.qmd">
- <span class="dropdown-text">Lecture 10: Multiple Regression</span></a>
+    <a class="dropdown-item" href="../lectures/10_multcomp.qmd">
+ <span class="dropdown-text">Lecture 10: Multiple Comparisons</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/11_interactions.qmd">
- <span class="dropdown-text">Lecture 11: Interactions</span></a>
+    <a class="dropdown-item" href="../lectures/11_power.qmd">
+ <span class="dropdown-text">Lecture 11: Power</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/12_assumptions.qmd">
- <span class="dropdown-text">Lecture 12: Evaluating assumptions</span></a>
+    <a class="dropdown-item" href="../lectures/12_multreg.qmd">
+ <span class="dropdown-text">Lecture 12: Multiple Regression</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/13_model_selection.qmd">
- <span class="dropdown-text">Lecture 13: Model selection</span></a>
+    <a class="dropdown-item" href="../lectures/13_interactions.qmd">
+ <span class="dropdown-text">Lecture 13: Interactions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/14_random_effects.qmd">
- <span class="dropdown-text">Lecture 14: Random effects</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/15_nested.qmd">
- <span class="dropdown-text">Lecture 15: Nested designs</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/16_split_plot.qmd">
- <span class="dropdown-text">Lecture 16: Split-plot designs</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/17_repeated_measures.qmd">
- <span class="dropdown-text">Lecture 17: Repeated measures</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/18_glm.qmd">
- <span class="dropdown-text">Lecture 18: Generalized linear models</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/19_logistic_regression.qmd">
- <span class="dropdown-text">Lecture 19: Logistic regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/20_poisson_regression.qmd">
- <span class="dropdown-text">Lecture 20: Poisson regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/21_zero_inflation.qmd">
- <span class="dropdown-text">Lecture 21: Zero-inflated regression</span></a>
+    <a class="dropdown-item" href="../lectures/14_causal_inference_part2.qmd">
+ <span class="dropdown-text">Lecture 14:Causal Inference in Observational Studies</span></a>
   </li>  
     </ul>
   </li>
@@ -276,58 +254,6 @@ window.Quarto = {
         <li>
     <a class="dropdown-item" href="../labs/lab01_intro_to_R.html">
  <span class="dropdown-text">Lab 1: Introduction to R</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab02_Intro_project_and_Rmd.html">
- <span class="dropdown-text">Lab 2: Introduction to projects and RMarkdown</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab03_inference.html">
- <span class="dropdown-text">Lab 3: Using R to explore sampling error</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab04_t_tests.qmd">
- <span class="dropdown-text">Lab 4: t-tests</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab05_ANOVA.html">
- <span class="dropdown-text">Lab 5: ANOVA</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab06_multiple_regression.html">
- <span class="dropdown-text">Lab 6: Multiple Regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab07_interactions.html">
- <span class="dropdown-text">Lab 7: Interactions</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab08_linear_model_assumptions.html">
- <span class="dropdown-text">Lab 8: Evaluating assumptions</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab09_model_selection.html">
- <span class="dropdown-text">Lab 9: Model selection</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab10_nested.html">
- <span class="dropdown-text">Lab 10: Nested designs</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab11_split_plot.html">
- <span class="dropdown-text">Lab 11: Split-plot designs</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab12_glm_lr.qmd">
- <span class="dropdown-text">Lab 12: Logistic regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab13_glm_pr.html">
- <span class="dropdown-text">Lab 13: Poisson regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab12_repeated_measures.html">
- <span class="dropdown-text">Bonus lab: Repeated measures</span></a>
   </li>  
     </ul>
   </li>
@@ -467,7 +393,7 @@ window.Quarto = {
 <p>After treatment, a coring device is used to make four cores of meat near the center of each roast. The cores are left in place and the three roasts from the same carcass are placed together in a oven and allowed to cook. After 30 minutes, one of the cores is taken at random from each roast, another drawn randomly after 36 minutes, a third at 42 minutes, and the final at 48 minutes</p>
 <p>After cooling, the cores are measured for tenderness using the Warner-Bratzler device. The response variable is the WB score for each core.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"meatdata"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(meatdata)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 'data.frame':    72 obs. of  5 variables:</span></span>
@@ -483,21 +409,21 @@ window.Quarto = {
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median :4.25   Mode  :character   Median :39.0   Median :3.5   Median : 9.5  </span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   :4.78                      Mean   :39.0   Mean   :3.5   Mean   : 9.5  </span></span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:6.25                      3rd Qu.:43.5   3rd Qu.:5.0   3rd Qu.:14.0  </span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :8.25                      Max.   :48.0   Max.   :6.0   Max.   :18.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :8.25                      Max.   :48.0   Max.   :6.0   Max.   :18.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>As we’ve done with other examples, we need to convert each predictor to a factor (in this case, converting to factors is necessary to use the <code>mcp()</code> function, later in the analysis):</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>meatdata<span class="sc">$</span>time <span class="ot">&lt;-</span> <span class="fu">factor</span>(meatdata<span class="sc">$</span>time)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>meatdata<span class="sc">$</span>time <span class="ot">&lt;-</span> <span class="fu">factor</span>(meatdata<span class="sc">$</span>time)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>meatdata<span class="sc">$</span>carcass <span class="ot">&lt;-</span> <span class="fu">factor</span>(meatdata<span class="sc">$</span>carcass)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>meatdata<span class="sc">$</span>roast <span class="ot">&lt;-</span> <span class="fu">factor</span>(meatdata<span class="sc">$</span>roast)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>meatdata<span class="sc">$</span>tenderizer <span class="ot">&lt;-</span> <span class="fu">factor</span>(meatdata<span class="sc">$</span>tenderizer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>meatdata<span class="sc">$</span>tenderizer <span class="ot">&lt;-</span> <span class="fu">factor</span>(meatdata<span class="sc">$</span>tenderizer)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><br> <br></p>
 <p><strong>What does it mean to treat time as a factor? How would you interpret the results from a model that treated time as a continuous predictor vs a factor?</strong></p>
 <p><br> <br></p>
 <p>Notice that all the roast column does is enumerate the tenderizer × carcass combinations (which explains why the corresponding term in the additive model is <span class="math inline">\(\delta_{ik}\)</span>):</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(meatdata, <span class="at">n=</span><span class="dv">12</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(meatdata, <span class="at">n=</span><span class="dv">12</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Wbscore tenderizer time carcass roast</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     8.25          C   30       1     1</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     7.50          C   36       1     1</span></span>
@@ -510,13 +436,13 @@ window.Quarto = {
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9     6.50          P   30       1     3</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10    4.50          P   36       1     3</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11    3.50          P   42       1     3</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12    2.50          P   48       1     3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12    2.50          P   48       1     3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="using-aov" class="level2">
 <h2 class="anchored" data-anchor-id="using-aov">Using <code>aov()</code></h2>
 <p>Because only one <code>Error()</code> term is allowed in <code>aov()</code>, we can treat the block effect as fixed:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>aov.meat <span class="ot">&lt;-</span> <span class="fu">aov</span>(Wbscore <span class="sc">~</span> tenderizer <span class="sc">+</span> time <span class="sc">+</span> tenderizer<span class="sc">:</span>time <span class="sc">+</span> carcass <span class="sc">+</span> <span class="fu">Error</span>(roast), <span class="at">data =</span> meatdata)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>aov.meat <span class="ot">&lt;-</span> <span class="fu">aov</span>(Wbscore <span class="sc">~</span> tenderizer <span class="sc">+</span> time <span class="sc">+</span> tenderizer<span class="sc">:</span>time <span class="sc">+</span> carcass <span class="sc">+</span> <span class="fu">Error</span>(roast), <span class="at">data =</span> meatdata)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov.meat)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Error: roast</span></span>
@@ -533,7 +459,7 @@ window.Quarto = {
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tenderizer:time  6    9.6     1.6    18.5 1.1e-10 ***</span></span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals       45    3.9     0.1                    </span></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Notice how the ANOVA table is split up into the whole unit error and the sub unit error. Which effects does this table tell us about? Are there any that it does not explain?</strong></p>
 <p><br> <br></p>
@@ -543,19 +469,19 @@ window.Quarto = {
 <p>Using the <code>lme()</code> function, we are able to have multiple random effects in our model. The notation looks slightly different but we are able to essentially replicate our results from <code>aov()</code>.</p>
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>lme.meat <span class="ot">&lt;-</span> <span class="fu">lme</span>(Wbscore <span class="sc">~</span> tenderizer <span class="sc">*</span> time,</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> meatdata,</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">correlation =</span> <span class="fu">corCompSymm</span>(), <span class="co"># To make results same as aov()</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">random =</span> <span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>carcass<span class="sc">/</span>roast)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">random =</span> <span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>carcass<span class="sc">/</span>roast)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The first row of the ANOVA table is for the (Intercept) term, which we can ignore here (hence the <code>[-1,]</code> indexing operation):</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lme.meat)[<span class="sc">-</span><span class="dv">1</span>,]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lme.meat)[<span class="sc">-</span><span class="dv">1</span>,]</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                 numDF denDF F-value p-value</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tenderizer          2    10   190.0  &lt;.0001</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; time                3    45   656.6  &lt;.0001</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tenderizer:time     6    45    18.5  &lt;.0001</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tenderizer:time     6    45    18.5  &lt;.0001</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="exploring-the-interaction" class="level2">
@@ -563,41 +489,41 @@ window.Quarto = {
 <p>Is the time effect significant for each level of tenderizer?</p>
 <p>Similar to a few labs ago, we can create subsetted ANOVAs to look at the effect of one variable across multiple levels of another.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lme.meatP <span class="ot">&lt;-</span> <span class="fu">lme</span>(Wbscore <span class="sc">~</span> time, <span class="at">data =</span> meatdata,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>lme.meatP <span class="ot">&lt;-</span> <span class="fu">lme</span>(Wbscore <span class="sc">~</span> time, <span class="at">data =</span> meatdata,</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">random =</span> <span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>carcass<span class="sc">/</span>roast, </span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">correlation =</span> <span class="fu">corCompSymm</span>(),</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subset =</span> tenderizer<span class="sc">==</span><span class="st">"P"</span>)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lme.meatP, <span class="at">Terms =</span> <span class="st">"time"</span>)</span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-test for: time </span></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   numDF denDF F-value p-value</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     3    15   126.7  &lt;.0001</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     3    15   126.7  &lt;.0001</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lme.meatV <span class="ot">&lt;-</span> <span class="fu">lme</span>(Wbscore <span class="sc">~</span> time, <span class="at">data =</span> meatdata,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>lme.meatV <span class="ot">&lt;-</span> <span class="fu">lme</span>(Wbscore <span class="sc">~</span> time, <span class="at">data =</span> meatdata,</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">random =</span> <span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>carcass<span class="sc">/</span>roast, </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">correlation =</span> <span class="fu">corCompSymm</span>(),</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subset =</span> tenderizer<span class="sc">==</span><span class="st">"V"</span>)</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lme.meatV, <span class="at">Terms =</span> <span class="st">"time"</span>)</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-test for: time </span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   numDF denDF F-value p-value</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     3    15   274.7  &lt;.0001</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     3    15   274.7  &lt;.0001</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lme.meatC <span class="ot">&lt;-</span> <span class="fu">lme</span>(Wbscore <span class="sc">~</span> time, <span class="at">data =</span> meatdata, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>lme.meatC <span class="ot">&lt;-</span> <span class="fu">lme</span>(Wbscore <span class="sc">~</span> time, <span class="at">data =</span> meatdata, </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">random =</span> <span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>carcass<span class="sc">/</span>roast, </span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">correlation =</span> <span class="fu">corCompSymm</span>(),</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subset =</span> tenderizer<span class="sc">==</span><span class="st">"C"</span>)</span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lme.meatC, <span class="at">Terms =</span> <span class="st">"time"</span>)</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-test for: time </span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   numDF denDF F-value p-value</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     3    15   305.7  &lt;.0001</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     3    15   305.7  &lt;.0001</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Yes it is.</p>
 </section>
 <section id="multiple-comparisons-using-glht-package-multcomp" class="level2">
 <h2 class="anchored" data-anchor-id="multiple-comparisons-using-glht-package-multcomp">Multiple comparisons using <code>glht()</code> (package <code>multcomp</code>)</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>mcP <span class="ot">&lt;-</span> <span class="fu">glht</span>(lme.meatP, <span class="at">linfct =</span> <span class="fu">mcp</span>(<span class="at">time=</span><span class="st">"Tukey"</span>))</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mcP)</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
@@ -612,19 +538,19 @@ window.Quarto = {
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Linear Hypotheses:</span></span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 36 - 30 == 0    -1.25       0.18   -6.94   &lt;1e-07 ***</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 42 - 30 == 0    -2.33       0.18  -12.96   &lt;1e-07 ***</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 - 30 == 0    -3.33       0.18  -18.52   &lt;1e-07 ***</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 42 - 36 == 0    -1.08       0.18   -6.02   &lt;1e-07 ***</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 - 36 == 0    -2.08       0.18  -11.57   &lt;1e-07 ***</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 - 42 == 0    -1.00       0.18   -5.55   &lt;1e-07 ***</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 36 - 30 == 0    -1.25       0.18   -6.94   &lt;1e-06 ***</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 42 - 30 == 0    -2.33       0.18  -12.96   &lt;1e-06 ***</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 - 30 == 0    -3.33       0.18  -18.52   &lt;1e-06 ***</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 42 - 36 == 0    -1.08       0.18   -6.02   &lt;1e-06 ***</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 - 36 == 0    -2.08       0.18  -11.57   &lt;1e-06 ***</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 - 42 == 0    -1.00       0.18   -5.55   &lt;1e-06 ***</span></span>
 <span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
 <span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Adjusted p values reported -- single-step method)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Adjusted p values reported -- single-step method)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can also easily plot the differences between cooking times for “P” tenderizer (and for the other 2 levels of tenderizer as well)</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mcP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mcP)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -640,8 +566,8 @@ window.Quarto = {
 <p>A Nested-and-Crossed Design is similar to a Split-Plot but without the block. Here we have a study where sweet potato yield is measured in response to (<span class="math inline">\(a=3\)</span>) types of herbicide. Each herbicide is applied to 5 fields. Each field is divided into 4 plots where each plot is treated with one of (<span class="math inline">\(b=4\)</span>) fertilizers.</p>
 <p>The data can be accessed using:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"yielddata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"yielddata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol type="1">
 <li><p>Conduct the appropriate ANOVA using both the <code>aov()</code> and <code>lme()</code> functions (1 pt).</p></li>
@@ -725,13 +651,14 @@ window.Quarto = {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

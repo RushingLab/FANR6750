@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Lab 12: Repeated measures – FANR6750</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -71,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a786baa6f14ee79d175f6472c084195c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-37142c45f769db7649b307dbfb96c11d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -117,7 +123,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -190,67 +196,67 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="../lectures/03_inference.qmd">
- <span class="dropdown-text">Lecture 3: Principles of inference</span></a>
+ <span class="dropdown-text">Lecture 3: Principles of statistical inference</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/04_expdesign.qmd">
- <span class="dropdown-text">Lecture 4: Principles of experimental design</span></a>
+    <a class="dropdown-item" href="../lectures/04_ttestn.qmd">
+ <span class="dropdown-text">Lecture 4: Linear models part 1: categorical predictor w/ 2 levels</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/05_t_test.qmd">
- <span class="dropdown-text">Lecture 5: Linear models part 1</span></a>
+    <a class="dropdown-item" href="../lectures/05_nhst.qmd">
+ <span class="dropdown-text">Lecture 5: Null hypothesis testing</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/06_nht.qmd">
- <span class="dropdown-text">Lecture 6: Null hypothesis testing</span></a>
+    <a class="dropdown-item" href="../lectures/06_assumptions.qmd">
+ <span class="dropdown-text">Lecture 6: Evaluation Assumptions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/07_power.qmd">
- <span class="dropdown-text">Lecture 7: Statistical power</span></a>
+    <a class="dropdown-item" href="../lectures/07_causal_inference.qmd">
+ <span class="dropdown-text">Lecture 7: Principles of causal inference</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/08_anova.qmd">
- <span class="dropdown-text">Lecture 8: ANOVA</span></a>
+    <a class="dropdown-item" href="../lectures/08_expdesign.qmd">
+ <span class="dropdown-text">Lecture 8: Principles of experimental design</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/09_mult_comp.qmd">
- <span class="dropdown-text">Lecture 9: Multiple Comparisons</span></a>
+    <a class="dropdown-item" href="../lectures/09_ANOVA.qmd">
+ <span class="dropdown-text">Lecture 9: Linear models part 2: categorical predictor w/ &gt; 2 levels</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/10_regression.qmd">
- <span class="dropdown-text">Lecture 10: Multiple Regression</span></a>
+    <a class="dropdown-item" href="../lectures/10_multcomp.qmd">
+ <span class="dropdown-text">Lecture 10: Multiple Comparisons</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/11_interactions.qmd">
- <span class="dropdown-text">Lecture 11: Interactions</span></a>
+    <a class="dropdown-item" href="../lectures/11_power.qmd">
+ <span class="dropdown-text">Lecture 11: Power</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/12_assumptions.qmd">
- <span class="dropdown-text">Lecture 12: Evaluating assumptions</span></a>
+    <a class="dropdown-item" href="../lectures/12_multreg.qmd">
+ <span class="dropdown-text">Lecture 12: Multiple Regression</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/13_model_selection.qmd">
- <span class="dropdown-text">Lecture 13: Model selection</span></a>
+    <a class="dropdown-item" href="../lectures/13_interactions.qmd">
+ <span class="dropdown-text">Lecture 13: Interactions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/14_random_effects.qmd">
- <span class="dropdown-text">Lecture 14: Random effects</span></a>
+    <a class="dropdown-item" href="../lectures/14_causal_inference_part2.qmd">
+ <span class="dropdown-text">Lecture 14:Causal Inference in Observational Studies</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/15_nested.qmd">
- <span class="dropdown-text">Lecture 15: Nested designs</span></a>
+    <a class="dropdown-item" href="../lectures/15_model_selection.qmd">
+ <span class="dropdown-text">Lecture 15: Model Selection</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/16_split_plot.qmd">
- <span class="dropdown-text">Lecture 16: Split-plot designs</span></a>
+    <a class="dropdown-item" href="../lectures/16_random_eff.qmd">
+ <span class="dropdown-text">Lecture 16: Random Effects</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/17_repeated_measures.qmd">
- <span class="dropdown-text">Lecture 17: Repeated measures</span></a>
+    <a class="dropdown-item" href="../lectures/17_nested.qmd">
+ <span class="dropdown-text">Lecture 17: Psuedoreplication Part 1: Nested Designs</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/18_glm.qmd">
- <span class="dropdown-text">Lecture 18: Generalized linear models</span></a>
+    <a class="dropdown-item" href="../lectures/18_repeated_measures.qmd">
+ <span class="dropdown-text">Lecture 18: Psuedoreplication Part 2: Repeated Measures</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../lectures/19_logistic_regression.qmd">
@@ -259,10 +265,6 @@ window.Quarto = {
         <li>
     <a class="dropdown-item" href="../lectures/20_poisson_regression.qmd">
  <span class="dropdown-text">Lecture 20: Poisson regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/21_zero_inflation.qmd">
- <span class="dropdown-text">Lecture 21: Zero-inflated regression</span></a>
   </li>  
     </ul>
   </li>
@@ -318,11 +320,11 @@ window.Quarto = {
  <span class="dropdown-text">Lab 11: Split-plot designs</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab12_glm_lr.qmd">
+    <a class="dropdown-item" href="../labs/lab13_glm_lr.html">
  <span class="dropdown-text">Lab 12: Logistic regression</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab13_glm_pr.qmd">
+    <a class="dropdown-item" href="../labs/lab14_glm_pr.html">
  <span class="dropdown-text">Lab 13: Poisson regression</span></a>
   </li>  
         <li>
@@ -497,12 +499,12 @@ window.Quarto = {
 <h1>Univariate Approach</h1>
 <p>The dataset below contains information on leaf growth by 10 plants subjected to different fertilizer treatments. Leaf growth on each plant was measured weekly for 5 weeks.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"plantdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"plantdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Before begining the analysis, we will want to convert some variables to factors.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plantdata<span class="sc">$</span>plant <span class="ot">&lt;-</span> <span class="fu">factor</span>(plantdata<span class="sc">$</span>plant)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>plantdata<span class="sc">$</span>plant <span class="ot">&lt;-</span> <span class="fu">factor</span>(plantdata<span class="sc">$</span>plant)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>plantdata<span class="sc">$</span>fertilizer <span class="ot">&lt;-</span> <span class="fu">factor</span>(plantdata<span class="sc">$</span>fertilizer)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>plantdata<span class="sc">$</span>week <span class="ot">&lt;-</span> <span class="fu">factor</span>(plantdata<span class="sc">$</span>week)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -511,18 +513,18 @@ window.Quarto = {
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ plant     : Factor w/ 10 levels "1","2","3","4",..: 1 1 1 1 1 2 2 2 2 2 ...</span></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ fertilizer: Factor w/ 2 levels "H","L": 2 2 2 2 2 2 2 2 2 2 ...</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ week      : Factor w/ 5 levels "1","2","3","4",..: 1 2 3 4 5 1 2 3 4 5 ...</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ leaves    : int  4 5 6 8 10 3 4 6 6 9 ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ leaves    : int  4 5 6 8 10 3 4 6 6 9 ...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>As always, it helps to visualize the data:</p>
 <div class="cell" data-layout-align="left">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plantdata, <span class="fu">aes</span>(<span class="at">x =</span> week, <span class="at">y =</span> leaves, </span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">group =</span> plant, </span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color =</span> fertilizer)) <span class="sc">+</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>() <span class="sc">+</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="st">"Week"</span>) <span class="sc">+</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Number of leaves"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Number of leaves"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -551,7 +553,7 @@ y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \delta_{ik} + \epsilon_{
 <p><br> <br></p>
 <p>Now let’s fit the univariate model:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>aov1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(leaves <span class="sc">~</span> fertilizer <span class="sc">*</span> week <span class="sc">+</span> <span class="fu">Error</span>(plant),</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>aov1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(leaves <span class="sc">~</span> fertilizer <span class="sc">*</span> week <span class="sc">+</span> <span class="fu">Error</span>(plant),</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> plantdata)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov1)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
@@ -566,14 +568,14 @@ y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \delta_{ik} + \epsilon_{
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; fertilizer:week  4    5.1     1.3    3.01  0.033 *  </span></span>
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals       32   13.5     0.4                   </span></span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><br></p>
 <p>Although this output looks ok, remember that we need to adjust the <em>p</em>-values for the time and interaction effects. <strong>Why?</strong> In <code>R</code>, this requires reformatting the data and conducting a multivariate analysis of variance (MANOVA).</p>
 <p>Specifically, we need to covert the data from the “long” format that it is currently in (each measurement on each plant is contained in its own row) to the “wide” format (each plant is one row, with separate columns for each weekly measurement). There are a number of ways to convert between long and wide formats in <code>R</code> but we’ll use the <code>pivot_wider()</code> function from the <code>tidyr</code> package<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>:</p>
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plantdata_wide <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">data =</span> plantdata, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plantdata_wide <span class="ot">&lt;-</span> tidyr<span class="sc">::</span><span class="fu">pivot_wider</span>(<span class="at">data =</span> plantdata, </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">names_from =</span> week, </span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">names_prefix =</span> <span class="st">"week"</span>,</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">values_from =</span> leaves)</span>
@@ -586,7 +588,7 @@ y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \delta_{ik} + \epsilon_{
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 3     L              6     7     9    10    12</span></span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 4     L              5     7     8    10    12</span></span>
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 5     L              5     6     7     8    10</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 6     H              4     6     9     9    11</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6 6     H              4     6     9     9    11</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="a-brief-aside-about-manova" class="level2">
@@ -606,12 +608,12 @@ Y_{ij} = N_i(\mu_i, \Sigma)
 <p>Here we have modified this statement to represent that there are not just one, but several (i) response variables that we are estimating each with (j) number of observations. As a result, there is not just one expected value, but a vector of expected values (one for each response variable). Additionally, each response variable has its own variance term so we no longer consider only <span class="math inline">\(\sigma^2\)</span> but instead consider a matrix <span class="math inline">\(\Sigma\)</span> which contains the variance and covariances of each response variable.</p>
 <p>Now we can run the MANOVA:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>manova1 <span class="ot">&lt;-</span> <span class="fu">manova</span>(<span class="fu">cbind</span>(week1, week2, week3, week4, week5) <span class="sc">~</span> fertilizer, </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> plantdata_wide)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>manova1 <span class="ot">&lt;-</span> <span class="fu">manova</span>(<span class="fu">cbind</span>(week1, week2, week3, week4, week5) <span class="sc">~</span> fertilizer, </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> plantdata_wide)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>And the results will contain the adjusted <em>p</em>-values:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(manova1, <span class="at">X =</span> <span class="sc">~</span><span class="dv">1</span>, <span class="at">test =</span> <span class="st">"Spherical"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(manova1, <span class="at">X =</span> <span class="sc">~</span><span class="dv">1</span>, <span class="at">test =</span> <span class="st">"Spherical"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Analysis of Variance Table</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
@@ -624,7 +626,7 @@ Y_{ij} = N_i(\mu_i, \Sigma)
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Df      F num Df den Df Pr(&gt;F) G-G Pr H-F Pr</span></span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)  1 158.22      4     32 0.0000 0.0000 0.0000</span></span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; fertilizer   1   3.01      4     32 0.0326 0.0666 0.0422</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals    8</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals    8</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>A few things to notice here</strong></p>
 <ol type="1">
@@ -638,7 +640,7 @@ Y_{ij} = N_i(\mu_i, \Sigma)
 <h1>Profile analysis</h1>
 <p>A profile analysis requires calculating the differences in growth during each time interval (i.e., the number of leaves grown each week):</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>manova2 <span class="ot">&lt;-</span> <span class="fu">manova</span>(<span class="fu">cbind</span>(week2 <span class="sc">-</span> week1, week3 <span class="sc">-</span> week2, week4 <span class="sc">-</span> week3, week5 <span class="sc">-</span> week4) <span class="sc">~</span> fertilizer, <span class="at">data =</span> plantdata_wide)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>manova2 <span class="ot">&lt;-</span> <span class="fu">manova</span>(<span class="fu">cbind</span>(week2 <span class="sc">-</span> week1, week3 <span class="sc">-</span> week2, week4 <span class="sc">-</span> week3, week5 <span class="sc">-</span> week4) <span class="sc">~</span> fertilizer, <span class="at">data =</span> plantdata_wide)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary.aov</span>(manova2)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Response 1 :</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Df Sum Sq Mean Sq F value Pr(&gt;F)   </span></span>
@@ -660,14 +662,14 @@ Y_{ij} = N_i(\mu_i, \Sigma)
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Response 4 :</span></span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Df Sum Sq Mean Sq F value Pr(&gt;F)</span></span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; fertilizer   1    0.1     0.1    0.09   0.77</span></span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals    8    8.8     1.1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals    8    8.8     1.1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Why are there only four responses shown here even though there are five weeks in the study?</strong></p>
 <p><strong>What do these responses tell us? What does it mean that the first is significant while the others are not?</strong></p>
 <p><br></p>
 <p>We can also plot the growth rates. First, calculate mean growth rate for each time interval:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>leavesMat <span class="ot">&lt;-</span> plantdata_wide[,<span class="dv">3</span><span class="sc">:</span><span class="dv">7</span>]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>leavesMat <span class="ot">&lt;-</span> plantdata_wide[,<span class="dv">3</span><span class="sc">:</span><span class="dv">7</span>]</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>growthMat <span class="ot">&lt;-</span> leavesMat[,<span class="dv">2</span><span class="sc">:</span><span class="dv">5</span>] <span class="sc">-</span> leavesMat[,<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(growthMat) <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"interval"</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">sep=</span><span class="st">"."</span>)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>(lowFertilizer <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(growthMat[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,]))</span>
@@ -676,18 +678,18 @@ Y_{ij} = N_i(\mu_i, \Sigma)
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>(highFertilizer <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(growthMat[<span class="dv">6</span><span class="sc">:</span><span class="dv">10</span>,]))</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; interval.1 interval.2 interval.3 interval.4 </span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        2.2        2.2        1.0        2.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        2.2        2.2        1.0        2.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Next, calculate the standard errors for these growth rates:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(stats<span class="sc">:::</span><span class="fu">vcov.mlm</span>(manova2)))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(stats<span class="sc">:::</span><span class="fu">vcov.mlm</span>(manova2)))</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> SE[<span class="fu">names</span>(SE)<span class="sc">==</span><span class="st">":(Intercept)"</span>] <span class="co"># Only use "intercept" SEs</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">unname</span>(SE) <span class="do">## Ignore the names</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.2000 0.3162 0.5657 0.4690</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.2000 0.3162 0.5657 0.4690</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now, create a data frame and plot the results:</p>
 <div class="cell" data-layout-align="left">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>growthDF  <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">interval =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>),</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>growthDF  <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">interval =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="dv">2</span>),</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">fertilizer =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Low"</span>, <span class="st">"High"</span>), <span class="at">each =</span> <span class="dv">4</span>),</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">growth =</span> <span class="fu">c</span>(lowFertilizer, highFertilizer), </span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">SE =</span> <span class="fu">rep</span>(SE, <span class="dv">2</span>))</span>
@@ -699,7 +701,7 @@ Y_{ij} = N_i(\mu_i, \Sigma)
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> growth <span class="sc">-</span> SE, <span class="at">ymax =</span> growth <span class="sc">+</span> SE), <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">color =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Time interval"</span>) <span class="sc">+</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Growth rate (leaves/week)"</span>, <span class="at">limits  =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Growth rate (leaves/week)"</span>, <span class="at">limits  =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">4</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -717,8 +719,8 @@ Y_{ij} = N_i(\mu_i, \Sigma)
 <h1>Assignment (optional)</h1>
 <p>A researcher wants to assess the effects of crowding on the growth of the dark toadfish (<em>Neophrynichthys latus</em>). Fifteen fish tanks are stocked with three densities of toadfish. Five tanks have low density (1 fish), 5 tanks have medium density (5 fish), and 5 tanks have high density (10 fish). In each tank, the weight of one “focal fish” is recorded on 6 consecutive weeks. The data can be loaded using:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"fishdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"fishdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol type="1">
 <li><p>Conduct the repeated measures ANOVA using <code>aov()</code>. Calculate the adjusted <em>p</em>-values using the Huynh-Feldt method. Does the effect of density on growth change over time?</p></li>
@@ -801,13 +803,14 @@ Y_{ij} = N_i(\mu_i, \Sigma)
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

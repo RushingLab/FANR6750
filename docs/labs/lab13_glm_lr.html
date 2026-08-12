@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Lab 12: Generalized linear models: Logistic Regression – FANR6750</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -71,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a786baa6f14ee79d175f6472c084195c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-37142c45f769db7649b307dbfb96c11d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -117,7 +123,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -190,79 +196,51 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="../lectures/03_inference.qmd">
- <span class="dropdown-text">Lecture 3: Principles of inference</span></a>
+ <span class="dropdown-text">Lecture 3: Principles of statistical inference</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/04_expdesign.qmd">
- <span class="dropdown-text">Lecture 4: Principles of experimental design</span></a>
+    <a class="dropdown-item" href="../lectures/04_ttestn.qmd">
+ <span class="dropdown-text">Lecture 4: Linear models part 1: categorical predictor w/ 2 levels</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/05_t_test.qmd">
- <span class="dropdown-text">Lecture 5: Linear models part 1</span></a>
+    <a class="dropdown-item" href="../lectures/05_nhst.qmd">
+ <span class="dropdown-text">Lecture 5: Null hypothesis testing</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/06_nht.qmd">
- <span class="dropdown-text">Lecture 6: Null hypothesis testing</span></a>
+    <a class="dropdown-item" href="../lectures/06_assumptions.qmd">
+ <span class="dropdown-text">Lecture 6: Evaluation Assumptions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/07_power.qmd">
- <span class="dropdown-text">Lecture 7: Statistical power</span></a>
+    <a class="dropdown-item" href="../lectures/07_causal_inference.qmd">
+ <span class="dropdown-text">Lecture 7: Principles of causal inference</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/08_anova.qmd">
- <span class="dropdown-text">Lecture 8: ANOVA</span></a>
+    <a class="dropdown-item" href="../lectures/08_expdesign.qmd">
+ <span class="dropdown-text">Lecture 8: Principles of experimental design</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/09_mult_comp.qmd">
- <span class="dropdown-text">Lecture 9: Multiple Comparisons</span></a>
+    <a class="dropdown-item" href="../lectures/09_ANOVA.qmd">
+ <span class="dropdown-text">Lecture 9: Linear models part 2: categorical predictor w/ &gt; 2 levels</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/10_regression.qmd">
- <span class="dropdown-text">Lecture 10: Multiple Regression</span></a>
+    <a class="dropdown-item" href="../lectures/10_multcomp.qmd">
+ <span class="dropdown-text">Lecture 10: Multiple Comparisons</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/11_interactions.qmd">
- <span class="dropdown-text">Lecture 11: Interactions</span></a>
+    <a class="dropdown-item" href="../lectures/11_power.qmd">
+ <span class="dropdown-text">Lecture 11: Power</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/12_assumptions.qmd">
- <span class="dropdown-text">Lecture 12: Evaluating assumptions</span></a>
+    <a class="dropdown-item" href="../lectures/12_multreg.qmd">
+ <span class="dropdown-text">Lecture 12: Multiple Regression</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/13_model_selection.qmd">
- <span class="dropdown-text">Lecture 13: Model selection</span></a>
+    <a class="dropdown-item" href="../lectures/13_interactions.qmd">
+ <span class="dropdown-text">Lecture 13: Interactions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/14_random_effects.qmd">
- <span class="dropdown-text">Lecture 14: Random effects</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/15_nested.qmd">
- <span class="dropdown-text">Lecture 15: Nested designs</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/16_split_plot.qmd">
- <span class="dropdown-text">Lecture 16: Split-plot designs</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/17_repeated_measures.qmd">
- <span class="dropdown-text">Lecture 17: Repeated measures</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/18_glm.qmd">
- <span class="dropdown-text">Lecture 18: Generalized linear models</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/19_logistic_regression.qmd">
- <span class="dropdown-text">Lecture 19: Logistic regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/20_poisson_regression.qmd">
- <span class="dropdown-text">Lecture 20: Poisson regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/21_zero_inflation.qmd">
- <span class="dropdown-text">Lecture 21: Zero-inflated regression</span></a>
+    <a class="dropdown-item" href="../lectures/14_causal_inference_part2.qmd">
+ <span class="dropdown-text">Lecture 14:Causal Inference in Observational Studies</span></a>
   </li>  
     </ul>
   </li>
@@ -276,58 +254,6 @@ window.Quarto = {
         <li>
     <a class="dropdown-item" href="../labs/lab01_intro_to_R.html">
  <span class="dropdown-text">Lab 1: Introduction to R</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab02_Intro_project_and_Rmd.html">
- <span class="dropdown-text">Lab 2: Introduction to projects and RMarkdown</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab03_inference.html">
- <span class="dropdown-text">Lab 3: Using R to explore sampling error</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab04_t_tests.qmd">
- <span class="dropdown-text">Lab 4: t-tests</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab05_ANOVA.html">
- <span class="dropdown-text">Lab 5: ANOVA</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab06_multiple_regression.html">
- <span class="dropdown-text">Lab 6: Multiple Regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab07_interactions.html">
- <span class="dropdown-text">Lab 7: Interactions</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab08_linear_model_assumptions.html">
- <span class="dropdown-text">Lab 8: Evaluating assumptions</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab09_model_selection.html">
- <span class="dropdown-text">Lab 9: Model selection</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab10_nested.html">
- <span class="dropdown-text">Lab 10: Nested designs</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab11_split_plot.html">
- <span class="dropdown-text">Lab 11: Split-plot designs</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab12_glm_lr.qmd">
- <span class="dropdown-text">Lab 12: Logistic regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab13_glm_pr.qmd">
- <span class="dropdown-text">Lab 13: Poisson regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../labs/lab12_repeated_measures.html">
- <span class="dropdown-text">Bonus lab: Repeated measures</span></a>
   </li>  
     </ul>
   </li>
@@ -460,7 +386,7 @@ window.Quarto = {
 <section id="example-orchid-data" class="level2">
 <h2 class="anchored" data-anchor-id="example-orchid-data">Example: Orchid data</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"orchiddata"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(orchiddata)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   presence abundance elevation habitat</span></span>
@@ -469,7 +395,7 @@ window.Quarto = {
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3        0         0        43     Oak</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4        1        11       374     Oak</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5        1        11       337     Oak</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6        1         1        64     Oak</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6        1         1        64     Oak</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -525,12 +451,12 @@ window.Quarto = {
 </div>
 <p>First, lets visualize our data.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> orchiddata, <span class="fu">aes</span>(<span class="at">x =</span> elevation, <span class="at">y =</span> presence)) <span class="sc">+</span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Presence"</span>) <span class="sc">+</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Elevation (m)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Elevation (m)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -543,7 +469,7 @@ window.Quarto = {
 <p><br></p>
 <p>Here we are interested in estimating presence. We could start by constructing a model that estimates presence as a function of elevation.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(presence<span class="sc">~</span> elevation, <span class="at">data=</span> orchiddata)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(presence<span class="sc">~</span> elevation, <span class="at">data=</span> orchiddata)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
@@ -562,17 +488,17 @@ window.Quarto = {
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.384 on 28 degrees of freedom</span></span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.295,  Adjusted R-squared:  0.269 </span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 11.7 on 1 and 28 DF,  p-value: 0.00194</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 11.7 on 1 and 28 DF,  p-value: 0.00194</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now let’s add our model predictions to the plot from above.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod1)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>model_pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod1)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> orchiddata, <span class="fu">aes</span>(<span class="at">x =</span> elevation, <span class="at">y =</span> presence)) <span class="sc">+</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(orchiddata<span class="sc">$</span>elevation, model_pred)) <span class="sc">+</span> </span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Presence"</span>) <span class="sc">+</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Elevation (m)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Elevation (m)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -601,7 +527,7 @@ p(x) = \frac{1}{1 + e^{-\beta_0 + \beta_1x1 + ... + \beta_zx_z}}
 </ul>
 <p>Let’s start by using the <code>glm()</code> function to model the relationship between orchid detections (0 = not detected, 1 = detected), habitat, and elevation:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fm1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(presence <span class="sc">~</span> habitat <span class="sc">+</span> elevation, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>), <span class="at">data =</span> orchiddata)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fm1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(presence <span class="sc">~</span> habitat <span class="sc">+</span> elevation, <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>), <span class="at">data =</span> orchiddata)</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fm1)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
@@ -660,15 +586,15 @@ p(x) = \frac{1}{1 + e^{-\beta_0 + \beta_1x1 + ... + \beta_zx_z}}
 <span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0 1 1 2</span></span>
 <span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,"contrasts")</span></span>
 <span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; attr(,"contrasts")$habitat</span></span>
-<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "contr.treatment"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "contr.treatment"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Notice that we use the <code>family =</code> argument to tell <code>R</code> that this is a logistic (i.e., binomial) glm with a logit link function.</p>
 <p><strong>What do the parameter estimates from this model represent, including the intercept? What can we say about the effects of habitat and elevation on the probability of detecting an orchid?</strong></p>
 <p><br> <br></p>
 <p>As we have seen previously, we can use <code>predict()</code> to estimate occurrence probability at different combinations of elevation and habitat. For example, how does probability of occurrence differ across elevations in oak habitat:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>predData.elev <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">elevation =</span> <span class="fu">seq</span>(<span class="fu">min</span>(orchiddata<span class="sc">$</span>elevation), <span class="fu">max</span>(orchiddata<span class="sc">$</span>elevation), <span class="at">length =</span> <span class="dv">50</span>),<span class="at">habitat =</span> <span class="st">"Oak"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(predData.elev)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>predData.elev <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">elevation =</span> <span class="fu">seq</span>(<span class="fu">min</span>(orchiddata<span class="sc">$</span>elevation), <span class="fu">max</span>(orchiddata<span class="sc">$</span>elevation), <span class="at">length =</span> <span class="dv">50</span>),<span class="at">habitat =</span> <span class="st">"Oak"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(predData.elev)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -710,21 +636,21 @@ p(x) = \frac{1}{1 + e^{-\beta_0 + \beta_1x1 + ... + \beta_zx_z}}
 </div>
 <p>By default, the predictions are on the link scale so to get confidence intervals on the probability scale, we have to back transform using the inverse-link (<code>plogis()</code>):</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pred.link <span class="ot">&lt;-</span> <span class="fu">predict</span>(fm1, <span class="at">newdata =</span> predData.elev, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pred.link <span class="ot">&lt;-</span> <span class="fu">predict</span>(fm1, <span class="at">newdata =</span> predData.elev, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>predData.elev<span class="sc">$</span>p <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred.link<span class="sc">$</span>fit) <span class="co"># back transform to probability scale</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>predData.elev<span class="sc">$</span>lower <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred.link<span class="sc">$</span>fit <span class="sc">-</span> <span class="fl">1.96</span> <span class="sc">*</span> pred.link<span class="sc">$</span>se.fit)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>predData.elev<span class="sc">$</span>upper <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred.link<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> pred.link<span class="sc">$</span>se.fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>predData.elev<span class="sc">$</span>upper <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred.link<span class="sc">$</span>fit <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> pred.link<span class="sc">$</span>se.fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><br> <br></p>
 <p>And now plot the predictions and observations:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> orchiddata, <span class="fu">aes</span>(<span class="at">x =</span> elevation, <span class="at">y =</span> presence)) <span class="sc">+</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> predData.elev, <span class="fu">aes</span>(<span class="at">x =</span> elevation, <span class="at">y =</span> p)) <span class="sc">+</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> predData.elev, <span class="fu">aes</span>(<span class="at">x =</span> elevation, <span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper),</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>              <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype =</span> <span class="st">"longdash"</span>) <span class="sc">+</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Probability of occurrence"</span>) <span class="sc">+</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Elevation (m)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Elevation (m)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -737,7 +663,7 @@ p(x) = \frac{1}{1 + e^{-\beta_0 + \beta_1x1 + ... + \beta_zx_z}}
 <p><br> <br></p>
 <p>What about occurrence probability in each habitat type at a particular elevation:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>predData.hab <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">habitat =</span> <span class="fu">c</span>(<span class="st">"Oak"</span>, <span class="st">"Maple"</span>, <span class="st">"Pine"</span>), <span class="at">elevation =</span> <span class="dv">250</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>predData.hab <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">habitat =</span> <span class="fu">c</span>(<span class="st">"Oak"</span>, <span class="st">"Maple"</span>, <span class="st">"Pine"</span>), <span class="at">elevation =</span> <span class="dv">250</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pred.hab <span class="ot">&lt;-</span> <span class="fu">predict</span>(fm1, <span class="at">newdata =</span> predData.hab, <span class="at">se.fit =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>predData.hab<span class="sc">$</span>p <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred.hab<span class="sc">$</span>fit) <span class="co"># back transform to probability scale</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>predData.hab<span class="sc">$</span>lower <span class="ot">&lt;-</span> <span class="fu">plogis</span>(pred.hab<span class="sc">$</span>fit <span class="sc">-</span> pred.hab<span class="sc">$</span>se.fit)</span>
@@ -748,7 +674,7 @@ p(x) = \frac{1}{1 + e^{-\beta_0 + \beta_1x1 + ... + \beta_zx_z}}
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="at">data =</span> predData.hab, <span class="fu">aes</span>(<span class="at">x =</span> habitat, <span class="at">ymin =</span> lower, <span class="at">ymax =</span> upper),</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">width =</span> <span class="fl">0.1</span>) <span class="sc">+</span></span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Probability of occurrence"</span>) <span class="sc">+</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="st">"Habitat type"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="st">"Habitat type"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -766,8 +692,8 @@ p(x) = \frac{1}{1 + e^{-\beta_0 + \beta_1x1 + ... + \beta_zx_z}}
 <p>Researchers want to know how latitude and landscape type influence the probability that American Crows are infected by West Nile Virus. One hundred crows are captured and tested for West Nile Virus in urban and rural landscapes spanning a latitude gradient.</p>
 <p>The data can be loaded using:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"crowdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"crowdata"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Create an R markdown report to do the following:</p>
 <ol type="1">
@@ -920,13 +846,14 @@ p(x) = \frac{1}{1 + e^{-\beta_0 + \beta_1x1 + ... + \beta_zx_z}}
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

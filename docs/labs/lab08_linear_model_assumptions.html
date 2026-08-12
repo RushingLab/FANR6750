@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lab 8: Evaluating assumptions of Linear Models – FANR6750 2026.1.0</title>
+<title>Lab 8: Evaluating assumptions of Linear Models – FANR6750</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -71,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a786baa6f14ee79d175f6472c084195c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-37142c45f769db7649b307dbfb96c11d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -117,7 +123,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -143,7 +149,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">FANR6750 <span class="version-text">2026.1.0</span></span>
+    <span class="navbar-title">FANR6750</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -190,67 +196,67 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="../lectures/03_inference.qmd">
- <span class="dropdown-text">Lecture 3: Principles of inference</span></a>
+ <span class="dropdown-text">Lecture 3: Principles of statistical inference</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/04_expdesign.qmd">
- <span class="dropdown-text">Lecture 4: Principles of experimental design</span></a>
+    <a class="dropdown-item" href="../lectures/04_ttestn.qmd">
+ <span class="dropdown-text">Lecture 4: Linear models part 1: categorical predictor w/ 2 levels</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/05_t_test.qmd">
- <span class="dropdown-text">Lecture 5: Linear models part 1</span></a>
+    <a class="dropdown-item" href="../lectures/05_nhst.qmd">
+ <span class="dropdown-text">Lecture 5: Null hypothesis testing</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/06_nht.qmd">
- <span class="dropdown-text">Lecture 6: Null hypothesis testing</span></a>
+    <a class="dropdown-item" href="../lectures/06_assumptions.qmd">
+ <span class="dropdown-text">Lecture 6: Evaluation Assumptions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/07_power.qmd">
- <span class="dropdown-text">Lecture 7: Statistical power</span></a>
+    <a class="dropdown-item" href="../lectures/07_causal_inference.qmd">
+ <span class="dropdown-text">Lecture 7: Principles of causal inference</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/08_anova.qmd">
- <span class="dropdown-text">Lecture 8: ANOVA</span></a>
+    <a class="dropdown-item" href="../lectures/08_expdesign.qmd">
+ <span class="dropdown-text">Lecture 8: Principles of experimental design</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/09_mult_comp.qmd">
- <span class="dropdown-text">Lecture 9: Multiple Comparisons</span></a>
+    <a class="dropdown-item" href="../lectures/09_ANOVA.qmd">
+ <span class="dropdown-text">Lecture 9: Linear models part 2: categorical predictor w/ &gt; 2 levels</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/10_regression.qmd">
- <span class="dropdown-text">Lecture 10: Multiple Regression</span></a>
+    <a class="dropdown-item" href="../lectures/10_multcomp.qmd">
+ <span class="dropdown-text">Lecture 10: Multiple Comparisons</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/11_interactions.qmd">
- <span class="dropdown-text">Lecture 11: Interactions</span></a>
+    <a class="dropdown-item" href="../lectures/11_power.qmd">
+ <span class="dropdown-text">Lecture 11: Power</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/12_assumptions.qmd">
- <span class="dropdown-text">Lecture 12: Evaluating assumptions</span></a>
+    <a class="dropdown-item" href="../lectures/12_multreg.qmd">
+ <span class="dropdown-text">Lecture 12: Multiple Regression</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/13_model_selection.qmd">
- <span class="dropdown-text">Lecture 13: Model selection</span></a>
+    <a class="dropdown-item" href="../lectures/13_interactions.qmd">
+ <span class="dropdown-text">Lecture 13: Interactions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/14_random_effects.qmd">
- <span class="dropdown-text">Lecture 14: Random effects</span></a>
+    <a class="dropdown-item" href="../lectures/14_causal_inference_part2.qmd">
+ <span class="dropdown-text">Lecture 14:Causal Inference in Observational Studies</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/15_nested.qmd">
- <span class="dropdown-text">Lecture 15: Nested designs</span></a>
+    <a class="dropdown-item" href="../lectures/15_model_selection.qmd">
+ <span class="dropdown-text">Lecture 15: Model Selection</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/16_split_plot.qmd">
- <span class="dropdown-text">Lecture 16: Split-plot designs</span></a>
+    <a class="dropdown-item" href="../lectures/16_random_eff.qmd">
+ <span class="dropdown-text">Lecture 16: Random Effects</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/17_repeated_measures.qmd">
- <span class="dropdown-text">Lecture 17: Repeated measures</span></a>
+    <a class="dropdown-item" href="../lectures/17_nested.qmd">
+ <span class="dropdown-text">Lecture 17: Psuedoreplication Part 1: Nested Designs</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/18_glm.qmd">
- <span class="dropdown-text">Lecture 18: Generalized linear models</span></a>
+    <a class="dropdown-item" href="../lectures/18_repeated_measures.qmd">
+ <span class="dropdown-text">Lecture 18: Psuedoreplication Part 2: Repeated Measures</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../lectures/19_logistic_regression.qmd">
@@ -259,10 +265,6 @@ window.Quarto = {
         <li>
     <a class="dropdown-item" href="../lectures/20_poisson_regression.qmd">
  <span class="dropdown-text">Lecture 20: Poisson regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/21_zero_inflation.qmd">
- <span class="dropdown-text">Lecture 21: Zero-inflated regression</span></a>
   </li>  
     </ul>
   </li>
@@ -306,27 +308,27 @@ window.Quarto = {
  <span class="dropdown-text">Lab 8: Evaluating assumptions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab09_model_selection.qmd">
+    <a class="dropdown-item" href="../labs/lab09_model_selection.html">
  <span class="dropdown-text">Lab 9: Model selection</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab10_nested.qmd">
+    <a class="dropdown-item" href="../labs/lab10_nested.html">
  <span class="dropdown-text">Lab 10: Nested designs</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab11_split_plot.qmd">
+    <a class="dropdown-item" href="../labs/lab11_split_plot.html">
  <span class="dropdown-text">Lab 11: Split-plot designs</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab13_glm_lr.qmd">
+    <a class="dropdown-item" href="../labs/lab13_glm_lr.html">
  <span class="dropdown-text">Lab 12: Logistic regression</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab14_glm_pr.qmd">
+    <a class="dropdown-item" href="../labs/lab14_glm_pr.html">
  <span class="dropdown-text">Lab 13: Poisson regression</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab12_repeated_measures.qmd">
+    <a class="dropdown-item" href="../labs/lab12_repeated_measures.html">
  <span class="dropdown-text">Bonus lab: Repeated measures</span></a>
   </li>  
     </ul>
@@ -560,12 +562,12 @@ MSE = Bias(\hat\beta)^2 + Var(\hat\beta)
 <p>Below is a dataset containing information about 150 radio collared bucks. The total movement (m) in one day was recorded for each deer across several tracts of land in Arkansas. Other information which was also collected includes the day on which the tracking was conducted (either the last day before hunting season starts, the day hunting season starts, or the first day after hunting season ends), the average temperature (F) on that day, the average wind speed (mi/hr) on that day, and the patch size (categorical) where the deer resides.</p>
 <p>Let’s start by loading the <code>deerdata</code> dataset and examining the data.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">'deerdata'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">'deerdata'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We should also examine the structure and summary of the dataset:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(deerdata)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(deerdata)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 'data.frame':    150 obs. of  6 variables:</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Deer    : int  1 2 3 4 5 6 7 8 9 10 ...</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Movement: int  6676 6290 5038 6849 7313 6725 7471 5845 9220 5138 ...</span></span>
@@ -588,18 +590,18 @@ MSE = Bias(\hat\beta)^2 + Var(\hat\beta)
 <span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median :16.0   Mode  :character  </span></span>
 <span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   :15.9                     </span></span>
 <span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:19.0                     </span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :24.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :24.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><br></p>
 <p>It appears that two of the variables are being read as characters but we will want them to be factors. In this case, it also makes sense to manually define the factor levels.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>deerdata<span class="sc">$</span>Season <span class="ot">&lt;-</span> <span class="fu">factor</span>(deerdata<span class="sc">$</span>Season, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'Prehunt'</span>, <span class="st">'Hunt'</span>, <span class="st">'Posthunt'</span>))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>deerdata<span class="sc">$</span>Patch <span class="ot">&lt;-</span> <span class="fu">factor</span>(deerdata<span class="sc">$</span>Patch, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'Small'</span>, <span class="st">'Medium'</span>, <span class="st">'Large'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>deerdata<span class="sc">$</span>Season <span class="ot">&lt;-</span> <span class="fu">factor</span>(deerdata<span class="sc">$</span>Season, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'Prehunt'</span>, <span class="st">'Hunt'</span>, <span class="st">'Posthunt'</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>deerdata<span class="sc">$</span>Patch <span class="ot">&lt;-</span> <span class="fu">factor</span>(deerdata<span class="sc">$</span>Patch, <span class="at">levels=</span> <span class="fu">c</span>(<span class="st">'Small'</span>, <span class="st">'Medium'</span>, <span class="st">'Large'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><br></p>
 <p>The researchers who set up this study already have a model in mind. Before they write up their conclusions though, they have come to you to check the model assumptions to see how reasonably they are being met.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">scipen =</span> <span class="dv">999</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>deerdata<span class="sc">$</span>Wind.sq <span class="ot">&lt;-</span> deerdata<span class="sc">$</span>Wind<span class="sc">^</span><span class="dv">2</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Movement<span class="sc">~</span> Temp <span class="sc">+</span> Wind <span class="sc">+</span> Wind.sq <span class="sc">+</span> Season <span class="sc">+</span> Patch <span class="sc">+</span> Season<span class="sc">:</span>Patch, <span class="at">data=</span> deerdata)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span>
@@ -631,7 +633,7 @@ MSE = Bias(\hat\beta)^2 + Var(\hat\beta)
 <span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 887 on 138 degrees of freedom</span></span>
 <span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.851,  Adjusted R-squared:  0.839 </span></span>
-<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 71.7 on 11 and 138 DF,  p-value: &lt;0.0000000000000002</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 71.7 on 11 and 138 DF,  p-value: &lt;0.0000000000000002</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>On the surface, this looks great. The researchers have included several predictor variables including a quadratic term for wind (perhaps they expect a happy medium of wind conditions?) and an interaction term that suggests that patch size may matter but only during certain seasons.</p>
 <p><strong>Can you interpret each of the parameter estimates? Which variables ended up being significant in this model?</strong></p>
@@ -642,9 +644,9 @@ MSE = Bias(\hat\beta)^2 + Var(\hat\beta)
 <h3 class="anchored" data-anchor-id="residual-vs-fitted-plots">Residual vs fitted plots</h3>
 <p>We’ll start by creating a plot of the model residuals as a function of the predicted values. This can be done either using base R plotting or ggplot.</p>
 <div class="cell" data-layout-align="left" data-fig.fullwidth="true">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mod1, <span class="fu">aes</span>(<span class="at">x=</span> .fitted, <span class="at">y=</span> .resid)) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mod1, <span class="fu">aes</span>(<span class="at">x=</span> .fitted, <span class="at">y=</span> .resid)) <span class="sc">+</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -661,9 +663,9 @@ MSE = Bias(\hat\beta)^2 + Var(\hat\beta)
 </ol>
 <p>Notice what happens if we re-create this plot but change the points so that the color of the points represents the season of the tracking event.</p>
 <div class="cell" data-layout-align="left" data-fig.fullwidth="true">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mod1, <span class="fu">aes</span>(<span class="at">x=</span> .fitted, <span class="at">y=</span> .resid, <span class="at">color=</span> deerdata<span class="sc">$</span>Season)) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mod1, <span class="fu">aes</span>(<span class="at">x=</span> .fitted, <span class="at">y=</span> .resid, <span class="at">color=</span> deerdata<span class="sc">$</span>Season)) <span class="sc">+</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -677,8 +679,8 @@ MSE = Bias(\hat\beta)^2 + Var(\hat\beta)
 <p>We can now see that there appears to be a very different relationship during the posthunt season. Additionally, there appears to be much less variation during that season compared to the other two seasons.</p>
 <p>We could see this same trend if we were to create a boxplot of movement as a function of season.</p>
 <div class="cell" data-layout-align="left" data-fig.fullwidth="true">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(deerdata, <span class="fu">aes</span>(<span class="at">x=</span> Season, <span class="at">y=</span> Movement)) <span class="sc">+</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(deerdata, <span class="fu">aes</span>(<span class="at">x=</span> Season, <span class="at">y=</span> Movement)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -695,9 +697,9 @@ MSE = Bias(\hat\beta)^2 + Var(\hat\beta)
 <h4 class="anchored" data-anchor-id="histograms">Histograms</h4>
 <p>Next, we can check the normality of the residuals coming from our model. We can do this in a couple ways. One is to create a histogram of the residuals.</p>
 <div class="cell" data-layout-align="left" data-fig.fullwidth="true">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mod1, <span class="fu">aes</span>(<span class="at">x=</span> .resid)) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mod1, <span class="fu">aes</span>(<span class="at">x=</span> .resid)) <span class="sc">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span> <span class="fu">mean</span>(mod1<span class="sc">$</span>residuals))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept=</span> <span class="fu">mean</span>(mod1<span class="sc">$</span>residuals))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -715,11 +717,11 @@ MSE = Bias(\hat\beta)^2 + Var(\hat\beta)
 <p>We can also assess the normality assumption using QQ plots. QQ plots essentially tell us whether or not two samples of data come from the same distribution. For our purposes, we will plot the residuals (in ascending order) vs the theoretical order of the residuals if they truly came from a normal distribution. Ideally, the points in the plot should fall along the center line. Deviations from the line can tell us a great deal about issues in the data.</p>
 <p>You can find lots of resources online which help to explain patterns that you might see in QQ plots. One such resource can be found <a href="https://seankross.com/2016/02/29/A-Q-Q-Plot-Dissection-Kit.html">here</a>.</p>
 <div class="cell" data-layout-align="left" data-fig.fullwidth="true">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mod1, <span class="fu">aes</span>(<span class="at">sample=</span> .resid)) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(mod1, <span class="fu">aes</span>(<span class="at">sample=</span> .resid)) <span class="sc">+</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq</span>() <span class="sc">+</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_qq_line</span>() <span class="sc">+</span> </span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Sample quantiles"</span>) <span class="sc">+</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Theoretical quantiles"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="st">"Theoretical quantiles"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -736,7 +738,7 @@ MSE = Bias(\hat\beta)^2 + Var(\hat\beta)
 <p>We can assess the independence of residuals using an autocorrelation function. Typically correlated residuals result from either temporal (serial) autocorrelation or spatial autocorrelation of data points. Autocorrelated residuals would manifest as trends along the x-axis of the ACF plot. As we might expect, because there are no spatial or temporal trends in our dataset, we do not see any trends in the plot.</p>
 <p>Note: while this class does not delve into time series modeling, there are a few courses on campus which specifically address this topic.</p>
 <div class="cell" data-layout-align="left" data-fig.fullwidth="true">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(mod1<span class="sc">$</span>residuals, <span class="at">plot=</span> T, <span class="at">main=</span> <span class="st">''</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(mod1<span class="sc">$</span>residuals, <span class="at">plot=</span> T, <span class="at">main=</span> <span class="st">''</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -751,16 +753,16 @@ MSE = Bias(\hat\beta)^2 + Var(\hat\beta)
 <h3 class="anchored" data-anchor-id="multicollinearity">Multicollinearity</h3>
 <p>We can assess multicollinearity of predictors (only the continuous ones!) by creating a covariance matrix in <code>R</code>. There are numerous opinions by different researchers as far as how highly correlated predictors need to be before you consider throwing one of them out of the model. <a href="https://onlinelibrary.wiley.com/doi/epdf/10.1111/j.1600-0587.2012.07348.x">Here</a> and <a href="https://ia903007.us.archive.org/21/items/identifyingproxy470boot/identifyingproxy470boot.pdf">here</a> are two papers which have addressed this issue through extensive simulations.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(deerdata[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>)])</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          Movement      Temp     Wind</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Movement   1.0000 -0.318801 0.134070</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Temp      -0.3188  1.000000 0.008585</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Wind       0.1341  0.008585 1.000000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Wind       0.1341  0.008585 1.000000</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-layout-align="left" data-fig.fullwidth="true">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(<span class="fu">cor</span>(deerdata[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>)]), <span class="at">method=</span> <span class="st">'number'</span>, <span class="at">type =</span> <span class="st">"upper"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(<span class="fu">cor</span>(deerdata[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">5</span>)]), <span class="at">method=</span> <span class="st">'number'</span>, <span class="at">type =</span> <span class="st">"upper"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -776,14 +778,14 @@ MSE = Bias(\hat\beta)^2 + Var(\hat\beta)
 <h3 class="anchored" data-anchor-id="getting-r-to-do-it-all">Getting R to do it all</h3>
 <p>While we have made each of these plots individually (which makes them more easily edited), we can also get <code>R</code> to create all of these plots at once.</p>
 <div class="cell" data-layout-align="left" data-fig.fullwidth="false">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(performance)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(mod1, <span class="at">check=</span> <span class="fu">c</span>(<span class="st">'linearity'</span>, <span class="st">'homogeneity'</span>, <span class="st">'qq'</span>, <span class="st">'normality'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>performance<span class="sc">::</span><span class="fu">check_model</span>(mod1, <span class="at">check=</span> <span class="fu">c</span>(<span class="st">'linearity'</span>, <span class="st">'homogeneity'</span>, <span class="st">'qq'</span>, <span class="st">'normality'</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><br> <br></p>
 <p>We can also formally test some of these assumptions with functions in <code>R</code>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linearity</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linearity</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">resettest</span>(mod1)</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
@@ -805,7 +807,7 @@ MSE = Bias(\hat\beta)^2 + Var(\hat\beta)
 <span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="fu">ncvTest</span>(mod1, <span class="sc">~</span> Season) <span class="co"># Breusch-Pagan test</span></span>
 <span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Non-constant Variance Score Test </span></span>
 <span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Variance formula: ~ Season </span></span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare = 20.85, Df = 2, p = 0.00003</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Chisquare = 20.85, Df = 2, p = 0.00003</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><br> <br></p>
 </section>
@@ -824,8 +826,8 @@ MSE = Bias(\hat\beta)^2 + Var(\hat\beta)
 <p><br> <br></p>
 <p>Several plots can be made in <code>R</code> which will help us to identify outliers and data points that are exerting high degrees of leverage on the model. Below we have plotted the studentized residuals (residuals divided by their sd) as a function of leverage. Data points deviating too far on the y-axis from zero are considered outliers and those with leverage exceeding a threshold (defined as a function of the data) are considered high leverage.</p>
 <div class="cell" data-layout-align="left" data-fig.fullwidth="true">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(olsrr)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ols_plot_resid_lev</span>(mod1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(olsrr)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ols_plot_resid_lev</span>(mod1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -860,15 +862,15 @@ MSE = Bias(\hat\beta)^2 + Var(\hat\beta)
 <p>The dataset below contains information about 90 juvenile mussels which were housed in a laboratory setting and monitored to assess their burrowing behavior. Information related to the burrow depth (cm) was collected as well as the temperature (F) of the system and the flow (<span class="math inline">\(m^3\)</span>/s) through the system. To translate the flow into biologically relevant terms, the researchers categorized flow to represent the severity of drought which that flow would represent. Because the researchers were interested in how these burrow dynamics might vary across species, they used three species of mussel in the study design. They made sure, however, that all individuals within a particular species were approximately the same size.</p>
 <p>Your task should you choose to accept it is to help these researchers determine whether their data reasonably meet the linear modeling assumptions which are assumed in the model they have constructed.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Depth <span class="ot">=</span> Species <span class="sc">+</span> Temp <span class="sc">+</span> Flow <span class="sc">+</span> Drought</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Depth <span class="ot">=</span> Species <span class="sc">+</span> Temp <span class="sc">+</span> Flow <span class="sc">+</span> Drought</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Create an R Markdown file to do the following:</p>
 <ol type="1">
 <li>Create an <code>R</code> chunk to load the data using:</li>
 </ol>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">'burrowdata'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">'burrowdata'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ol start="2" type="1">
 <li><p>Formulate the linear model in R and interpret the results of the model. Which predictors appear to be significant? Explain these results in the context of the biological system (1 pt).</p></li>
@@ -962,13 +964,14 @@ For the purposes of this analysis, remove the outlier and rerun the model.</p></
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

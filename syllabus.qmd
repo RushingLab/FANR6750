@@ -32,7 +32,7 @@ source(here::here("R/zzz.R"))
 **Lecture**: Monday, Wednesday, Friday 1:15-2:10  
 **Location**: 1-304  
 
-**Lab**: Monday 2:55 – 5:35 OR Tuesday 2:55 – 5:35
+**Lab**: Monday 2:55 – 5:35 OR Tuesday 2:55 – 5:35  
 **Location**: 4-419  
 
 # INSTRUCTOR
@@ -43,15 +43,16 @@ clark.rushing@uga.edu
 
 # TEACHING ASSISTANTS
 
+Alan Bond (Monday lab)  
+[alan.bond1@uga.edu](alan.bond1@uga.edu)  
+**Office**: 1-102  
+**Office hours**: Th 10-12  
+
 Hannah Wright (Tuesday lab)  
 [Hannah.Wright1@uga.edu](Hannah.Wright1@uga.edu)  
 **Office**: 3-402  
 **Office hours**: M 10-12 or by appointment 
 
-Alan Bond (Monday lab)  
-[alan.bond1@uga.edu](alan.bond1@uga.edu)  
-**Office**: 1-102  
-**Office hours**: Th 10-12  
 
 
 

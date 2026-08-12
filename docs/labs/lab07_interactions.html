@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lab 7: Interactions – FANR6750 2026.1.0</title>
+<title>Lab 7: Interactions – FANR6750</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -71,10 +77,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a786baa6f14ee79d175f6472c084195c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-37142c45f769db7649b307dbfb96c11d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,7 +110,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -117,7 +123,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -143,7 +149,7 @@ window.Quarto = {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">FANR6750 <span class="version-text">2026.1.0</span></span>
+    <span class="navbar-title">FANR6750</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -190,67 +196,67 @@ window.Quarto = {
   </li>  
         <li>
     <a class="dropdown-item" href="../lectures/03_inference.qmd">
- <span class="dropdown-text">Lecture 3: Principles of inference</span></a>
+ <span class="dropdown-text">Lecture 3: Principles of statistical inference</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/04_expdesign.qmd">
- <span class="dropdown-text">Lecture 4: Principles of experimental design</span></a>
+    <a class="dropdown-item" href="../lectures/04_ttestn.qmd">
+ <span class="dropdown-text">Lecture 4: Linear models part 1: categorical predictor w/ 2 levels</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/05_t_test.qmd">
- <span class="dropdown-text">Lecture 5: Linear models part 1</span></a>
+    <a class="dropdown-item" href="../lectures/05_nhst.qmd">
+ <span class="dropdown-text">Lecture 5: Null hypothesis testing</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/06_nht.qmd">
- <span class="dropdown-text">Lecture 6: Null hypothesis testing</span></a>
+    <a class="dropdown-item" href="../lectures/06_assumptions.qmd">
+ <span class="dropdown-text">Lecture 6: Evaluation Assumptions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/07_power.qmd">
- <span class="dropdown-text">Lecture 7: Statistical power</span></a>
+    <a class="dropdown-item" href="../lectures/07_causal_inference.qmd">
+ <span class="dropdown-text">Lecture 7: Principles of causal inference</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/08_anova.qmd">
- <span class="dropdown-text">Lecture 8: ANOVA</span></a>
+    <a class="dropdown-item" href="../lectures/08_expdesign.qmd">
+ <span class="dropdown-text">Lecture 8: Principles of experimental design</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/09_mult_comp.qmd">
- <span class="dropdown-text">Lecture 9: Multiple Comparisons</span></a>
+    <a class="dropdown-item" href="../lectures/09_ANOVA.qmd">
+ <span class="dropdown-text">Lecture 9: Linear models part 2: categorical predictor w/ &gt; 2 levels</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/10_regression.qmd">
- <span class="dropdown-text">Lecture 10: Multiple Regression</span></a>
+    <a class="dropdown-item" href="../lectures/10_multcomp.qmd">
+ <span class="dropdown-text">Lecture 10: Multiple Comparisons</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/11_interactions.qmd">
- <span class="dropdown-text">Lecture 11: Interactions</span></a>
+    <a class="dropdown-item" href="../lectures/11_power.qmd">
+ <span class="dropdown-text">Lecture 11: Power</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/12_assumptions.qmd">
- <span class="dropdown-text">Lecture 12: Evaluating assumptions</span></a>
+    <a class="dropdown-item" href="../lectures/12_multreg.qmd">
+ <span class="dropdown-text">Lecture 12: Multiple Regression</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/13_model_selection.qmd">
- <span class="dropdown-text">Lecture 13: Model selection</span></a>
+    <a class="dropdown-item" href="../lectures/13_interactions.qmd">
+ <span class="dropdown-text">Lecture 13: Interactions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/14_random_effects.qmd">
- <span class="dropdown-text">Lecture 14: Random effects</span></a>
+    <a class="dropdown-item" href="../lectures/14_causal_inference_part2.qmd">
+ <span class="dropdown-text">Lecture 14:Causal Inference in Observational Studies</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/15_nested.qmd">
- <span class="dropdown-text">Lecture 15: Nested designs</span></a>
+    <a class="dropdown-item" href="../lectures/15_model_selection.qmd">
+ <span class="dropdown-text">Lecture 15: Model Selection</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/16_split_plot.qmd">
- <span class="dropdown-text">Lecture 16: Split-plot designs</span></a>
+    <a class="dropdown-item" href="../lectures/16_random_eff.qmd">
+ <span class="dropdown-text">Lecture 16: Random Effects</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/17_repeated_measures.qmd">
- <span class="dropdown-text">Lecture 17: Repeated measures</span></a>
+    <a class="dropdown-item" href="../lectures/17_nested.qmd">
+ <span class="dropdown-text">Lecture 17: Psuedoreplication Part 1: Nested Designs</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../lectures/18_glm.qmd">
- <span class="dropdown-text">Lecture 18: Generalized linear models</span></a>
+    <a class="dropdown-item" href="../lectures/18_repeated_measures.qmd">
+ <span class="dropdown-text">Lecture 18: Psuedoreplication Part 2: Repeated Measures</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../lectures/19_logistic_regression.qmd">
@@ -259,10 +265,6 @@ window.Quarto = {
         <li>
     <a class="dropdown-item" href="../lectures/20_poisson_regression.qmd">
  <span class="dropdown-text">Lecture 20: Poisson regression</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../lectures/21_zero_inflation.qmd">
- <span class="dropdown-text">Lecture 21: Zero-inflated regression</span></a>
   </li>  
     </ul>
   </li>
@@ -306,27 +308,27 @@ window.Quarto = {
  <span class="dropdown-text">Lab 8: Evaluating assumptions</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab09_model_selection.qmd">
+    <a class="dropdown-item" href="../labs/lab09_model_selection.html">
  <span class="dropdown-text">Lab 9: Model selection</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab10_nested.qmd">
+    <a class="dropdown-item" href="../labs/lab10_nested.html">
  <span class="dropdown-text">Lab 10: Nested designs</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab11_split_plot.qmd">
+    <a class="dropdown-item" href="../labs/lab11_split_plot.html">
  <span class="dropdown-text">Lab 11: Split-plot designs</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab13_glm_lr.qmd">
+    <a class="dropdown-item" href="../labs/lab13_glm_lr.html">
  <span class="dropdown-text">Lab 12: Logistic regression</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab14_glm_pr.qmd">
+    <a class="dropdown-item" href="../labs/lab14_glm_pr.html">
  <span class="dropdown-text">Lab 13: Poisson regression</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab12_repeated_measures.qmd">
+    <a class="dropdown-item" href="../labs/lab12_repeated_measures.html">
  <span class="dropdown-text">Bonus lab: Repeated measures</span></a>
   </li>  
     </ul>
@@ -474,7 +476,7 @@ window.Quarto = {
 <p>In this dataset, two continuous predictor variables (moon phase and percent cloud cover) are being used to predict the call rate of Chuck-will’s-widow. Although the researchers are interested in each of these variables alone, they are also interested in determining how the values of one predictor may alter the effects of the other.</p>
 <p>Load the <code>chuckdata</code> dataset and examine the data</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">'chuckdata'</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(chuckdata)</span>
@@ -485,25 +487,25 @@ window.Quarto = {
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ moon     : num  0.241 0.56 0.56 0.855 0.24 ...</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(chuckdata)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        X          call.rate         cloud             moon        </span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   : 1.0   Min.   :0.736   Min.   :0.0394   Min.   :0.00058  </span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:15.8   1st Qu.:2.840   1st Qu.:0.2242   1st Qu.:0.22001  </span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median :30.5   Median :3.441   Median :0.4965   Median :0.43986  </span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   :30.5   Mean   :3.361   Mean   :0.5171   Mean   :0.44644  </span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:45.2   3rd Qu.:3.840   3rd Qu.:0.8123   3rd Qu.:0.71315  </span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :60.0   Max.   :5.594   Max.   :0.9697   Max.   :0.99301</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        X          call.rate         cloud             moon       </span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   : 1.0   Min.   :0.736   Min.   :0.0394   Min.   :0.0006  </span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:15.8   1st Qu.:2.840   1st Qu.:0.2242   1st Qu.:0.2200  </span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median :30.5   Median :3.441   Median :0.4965   Median :0.4399  </span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   :30.5   Mean   :3.361   Mean   :0.5171   Mean   :0.4464  </span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:45.2   3rd Qu.:3.840   3rd Qu.:0.8123   3rd Qu.:0.7131  </span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :60.0   Max.   :5.594   Max.   :0.9697   Max.   :0.9930</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><br></p>
 <p>Notice that several of the variables in the dataset are recorded as percentages. This fact will affect the way that we interpret the model output. As they are defined now, our interpretation of a slope means that call rate will change some amount for <strong>each unit</strong> change in cloud cover or moon phase. Currently, one unit of these variables represents the difference between 0% and 100%. It would be more intuitive for us to talk about changes in call rate for each percent change in the predictors. To do this, we can simply modify our dataset.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>chuckdata<span class="sc">$</span>cloud <span class="ot">&lt;-</span> chuckdata<span class="sc">$</span>cloud<span class="sc">*</span><span class="dv">100</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>chuckdata<span class="sc">$</span>moon <span class="ot">&lt;-</span> chuckdata<span class="sc">$</span>moon<span class="sc">*</span><span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>chuckdata<span class="sc">$</span>cloud <span class="ot">&lt;-</span> chuckdata<span class="sc">$</span>cloud<span class="sc">*</span><span class="dv">100</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>chuckdata<span class="sc">$</span>moon <span class="ot">&lt;-</span> chuckdata<span class="sc">$</span>moon<span class="sc">*</span><span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now a one unit change in these predictors represents a one percent change.</p>
 <p><br> <br></p>
 <p>Next, it would be a good idea to plot the relationship between the response variable and each predictor.</p>
 <div class="cell" data-layout-align="left">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ```{r, fig.width=8, fig.height=4} R code chunk options for making this plot</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ```{r, fig.width=8, fig.height=4} R code chunk options for making this plot</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages('gridExtra') Check your package library to see if you already have this package</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gridExtra)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
@@ -512,7 +514,7 @@ window.Quarto = {
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(),</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">data=</span> chuckdata, <span class="fu">aes</span>(<span class="at">x=</span> moon, <span class="at">y=</span> call.rate)) <span class="sc">+</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(), <span class="at">ncol=</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_point</span>(), <span class="at">ncol=</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -533,7 +535,7 @@ y_i = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \beta_3x_{1i}x_{2i} + \epsilon_i
 <p><br> <br></p>
 <p>Now we are ready to specify our model in <code>R</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(call.rate<span class="sc">~</span> moon<span class="sc">*</span>cloud, <span class="at">data=</span> chuckdata)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(call.rate<span class="sc">~</span> moon<span class="sc">*</span>cloud, <span class="at">data=</span> chuckdata)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
@@ -554,12 +556,12 @@ y_i = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \beta_3x_{1i}x_{2i} + \epsilon_i
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.833 on 56 degrees of freedom</span></span>
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.281,  Adjusted R-squared:  0.243 </span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 7.31 on 3 and 56 DF,  p-value: 0.000322</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 7.31 on 3 and 56 DF,  p-value: 0.000322</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>How would you interpret these parameter estimates? Were the main effects significant? Was the interaction significant? Given the results you see here, would it be appropriate for the researcher to consider the main effects independently of each other?</strong></p>
 <p><br> <br></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nd1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">moon =</span> <span class="fu">seq</span>(<span class="fu">min</span>(chuckdata<span class="sc">$</span>moon), <span class="fu">max</span>(chuckdata<span class="sc">$</span>moon), <span class="at">length =</span> <span class="dv">100</span>),</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nd1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">moon =</span> <span class="fu">seq</span>(<span class="fu">min</span>(chuckdata<span class="sc">$</span>moon), <span class="fu">max</span>(chuckdata<span class="sc">$</span>moon), <span class="at">length =</span> <span class="dv">100</span>),</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">cloud =</span> <span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">100</span>))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>nd2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">moon =</span> <span class="fu">seq</span>(<span class="fu">min</span>(chuckdata<span class="sc">$</span>moon), <span class="fu">max</span>(chuckdata<span class="sc">$</span>moon), <span class="at">length =</span> <span class="dv">100</span>),</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">cloud =</span> <span class="fu">rep</span>(<span class="dv">100</span>,<span class="dv">100</span>))</span>
@@ -570,10 +572,10 @@ y_i = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \beta_3x_{1i}x_{2i} + \epsilon_i
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>E2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(mod1, <span class="at">newdata =</span> nd2, <span class="at">se.fit =</span> <span class="cn">TRUE</span>, <span class="at">interval=</span><span class="st">"confidence"</span>)</span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>predictionData2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(E2<span class="sc">$</span>fit, nd2)</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'0'</span> <span class="ot">=</span> <span class="st">'black'</span>, <span class="st">'100'</span> <span class="ot">=</span> <span class="st">'red'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">'0'</span> <span class="ot">=</span> <span class="st">'black'</span>, <span class="st">'100'</span> <span class="ot">=</span> <span class="st">'red'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-layout-align="left">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> chuckdata, <span class="fu">aes</span>(<span class="at">x =</span> moon, <span class="at">y =</span> call.rate)) <span class="sc">+</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> predictionData1, <span class="fu">aes</span>(<span class="at">x =</span> moon, <span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr),</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">linetype =</span> <span class="st">"longdash"</span>, <span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
@@ -582,7 +584,7 @@ y_i = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \beta_3x_{1i}x_{2i} + \epsilon_i
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>              <span class="at">color =</span> <span class="st">'red'</span>, <span class="at">linetype =</span> <span class="st">'longdash'</span>, <span class="at">fill =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> predictionData2, <span class="fu">aes</span>(<span class="at">x =</span> moon, <span class="at">y =</span> fit, <span class="at">color=</span> <span class="st">'100'</span>)) <span class="sc">+</span> </span>
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span> colors) <span class="sc">+</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color=</span> <span class="st">'Cloud cover'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">color=</span> <span class="st">'Cloud cover'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -606,20 +608,20 @@ y_i = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \beta_3x_{1i}x_{2i} + \epsilon_i
 </ol>
 <p>Load the <code>microtusdata</code> dataset and examine the data:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"microtusdata"</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(microtusdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(microtusdata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
-<th style="text-align: center;">voles</th>
-<th style="text-align: center;">food</th>
-<th style="text-align: center;">predators</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">voles</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">food</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">predators</th>
 </tr>
 </thead>
 <tbody>
@@ -658,39 +660,39 @@ y_i = \beta_0 + \beta_1x_{1i} + \beta_2x_{2i} + \beta_3x_{1i}x_{2i} + \epsilon_i
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(microtusdata)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(microtusdata)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 'data.frame':    24 obs. of  3 variables:</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ voles    : int  10 12 8 14 18 20 21 24 20 18 ...</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ food     : Factor w/ 3 levels "0","1","2": 1 1 1 1 2 2 2 2 3 3 ...</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ predators: chr  "Present" "Present" "Present" "Present" ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ predators: chr  "Present" "Present" "Present" "Present" ...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Before proceeding, we need to convert <code>food</code> and <code>predators</code> to factors:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>microtusdata<span class="sc">$</span>food <span class="ot">&lt;-</span> <span class="fu">factor</span>(microtusdata<span class="sc">$</span>food)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>microtusdata<span class="sc">$</span>food <span class="ot">&lt;-</span> <span class="fu">factor</span>(microtusdata<span class="sc">$</span>food)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>microtusdata<span class="sc">$</span>predators <span class="ot">&lt;-</span> <span class="fu">factor</span>(microtusdata<span class="sc">$</span>predators)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(microtusdata)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 'data.frame':    24 obs. of  3 variables:</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ voles    : int  10 12 8 14 18 20 21 24 20 18 ...</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ food     : Factor w/ 3 levels "0","1","2": 1 1 1 1 2 2 2 2 3 3 ...</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ predators: Factor w/ 2 levels "Absent","Present": 2 2 2 2 2 2 2 2 2 2 ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ predators: Factor w/ 2 levels "Absent","Present": 2 2 2 2 2 2 2 2 2 2 ...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>How many replicates do we have?</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(microtusdata[,<span class="fu">c</span>(<span class="st">"predators"</span>,<span class="st">"food"</span>)])</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(microtusdata[,<span class="fu">c</span>(<span class="st">"predators"</span>,<span class="st">"food"</span>)])</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          food</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; predators 0 1 2</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Absent  4 4 4</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Present 4 4 4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Present 4 4 4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="visualizing-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="visualizing-the-data">Visualizing the data</h2>
 <p>Visualizing multiple factors at once can sometimes be tricky. We’ll use the <code>fill</code> aestethic to make separate boxplots for each predation level, within each food treatment:</p>
 <div class="cell" data-layout-align="left">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(microtusdata, <span class="fu">aes</span>(<span class="at">x =</span> food, <span class="at">y =</span> voles, <span class="at">fill =</span> predators)) <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(microtusdata, <span class="fu">aes</span>(<span class="at">x =</span> food, <span class="at">y =</span> voles, <span class="at">fill =</span> predators)) <span class="sc">+</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="st">"Food treatment"</span>) <span class="sc">+</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Number of voles"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Number of voles"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -717,7 +719,7 @@ y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk} \ \ \ \ \
 <h2 class="anchored" data-anchor-id="factorial-design-using-aov">Factorial design using <code>aov()</code></h2>
 <p>We can analyze the <em>microtus</em> data using the <code>aov()</code> function that we’re already familiar with.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>aov1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(voles <span class="sc">~</span> food <span class="sc">*</span> predators, <span class="at">data =</span> microtusdata)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>aov1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(voles <span class="sc">~</span> food <span class="sc">*</span> predators, <span class="at">data =</span> microtusdata)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov1)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                Df Sum Sq Mean Sq F value  Pr(&gt;F)    </span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food            2   1337     669    40.6 2.1e-07 ***</span></span>
@@ -725,7 +727,7 @@ y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk} \ \ \ \ \
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food:predators  2    518     259    15.7 0.00011 ***</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals      18    297      16                    </span></span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 <p>On your own, fit the model without the interaction (<code>food + predators</code>). How do the results compare?</p>
@@ -735,29 +737,29 @@ y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk} \ \ \ \ \
 <h2 class="anchored" data-anchor-id="follow-ups">Follow ups</h2>
 <p>Often in your own analysis, you will not stop at a significant ANOVA result. For example, maybe you want to further explore the effects of one factor while holding the other factor constant. In this case, we can further test whether food supplements influence vole abundance <em>when predators are present</em> using the <code>subset</code> argument:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(voles <span class="sc">~</span> food, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(voles <span class="sc">~</span> food, </span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> microtusdata, </span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">subset =</span> predators <span class="sc">==</span> <span class="st">"Present"</span>))</span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Df Sum Sq Mean Sq F value Pr(&gt;F)   </span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food         2  193.5    96.8    14.8 0.0014 **</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals    9   58.8     6.5                  </span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food         2  193.5    96.7    14.8 0.0014 **</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals    9   58.7     6.5                  </span></span>
 <span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Or when predators are absent:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(voles <span class="sc">~</span> food, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(voles <span class="sc">~</span> food, </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> microtusdata, </span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">subset =</span> predators <span class="sc">==</span> <span class="st">"Absent"</span>))</span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Df Sum Sq Mean Sq F value  Pr(&gt;F)    </span></span>
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food         2   1662     831    31.4 8.7e-05 ***</span></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals    9    238      26                    </span></span>
 <span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Or maybe we want to test which levels are different using our old friend the Tukey HSD test, which for the factorial design will return both the “main” effect differences and the interaction<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(aov1)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(aov1)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Tukey multiple comparisons of means</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     95% family-wise confidence level</span></span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
@@ -789,7 +791,7 @@ y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk} \ \ \ \ \
 <span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2:Present-2:Absent  -25.00 -34.1244 -15.876 0.0000</span></span>
 <span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1:Present-0:Present   9.75   0.6256  18.874 0.0323</span></span>
 <span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2:Present-0:Present   6.00  -3.1244  15.124 0.3351</span></span>
-<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2:Present-1:Present  -3.75 -12.8744   5.374 0.7781</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2:Present-1:Present  -3.75 -12.8744   5.374 0.7781</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="visualizing-the-results" class="level2">
@@ -797,7 +799,7 @@ y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk} \ \ \ \ \
 <p>Another follow up that will often be important is visualizing the results of the ANOVA model. In the case of the factorial design, this will generally involve making a graph of the predicted response (and associated uncertainty!) for each combination of factors.</p>
 <p>To create the data that will form the basis of this visualization, we’ll first use the <code>model.tables()</code> function to compute the relevant means (i.e., predicted values) and standard errors:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(tab <span class="ot">&lt;-</span> <span class="fu">model.tables</span>(aov1, <span class="at">type=</span><span class="st">"means"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>(tab <span class="ot">&lt;-</span> <span class="fu">model.tables</span>(aov1, <span class="at">type=</span><span class="st">"means"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>))</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Tables of means</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Grand mean</span></span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       </span></span>
@@ -823,16 +825,16 @@ y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk} \ \ \ \ \
 <span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Standard errors for differences of means</span></span>
 <span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          food predators food:predators</span></span>
 <span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         2.030     1.658          2.871</span></span>
-<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; replic.     8        12              4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; replic.     8        12              4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Next, we’ll extract the group means</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>(ybar_ij. <span class="ot">&lt;-</span> tab<span class="sc">$</span>tables<span class="sc">$</span><span class="st">"food:predators"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>(ybar_ij. <span class="ot">&lt;-</span> tab<span class="sc">$</span>tables<span class="sc">$</span><span class="st">"food:predators"</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     predators</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food Absent Present</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    0 13.50  11.00  </span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    1 31.50  20.75  </span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    2 42.00  17.00</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    2 42.00  17.00</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>What about confidence intervals? Notice that <code>model.tables()</code> returns “Standard errors for differences of means”.</p>
 <p>Extending the formulas to the <span class="math inline">\(A \times B\)</span> factorial case, the confidence interval for the difference in two <span class="math inline">\(A \times B\)</span> means is:</p>
@@ -843,41 +845,41 @@ y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk} \ \ \ \ \
 <p>Where can we find MSE?</p>
 <p>Answer: in the output of <code>summary()</code> of our <code>aov1</code> object:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov1)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov1)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                Df Sum Sq Mean Sq F value  Pr(&gt;F)    </span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food            2   1337     669    40.6 2.1e-07 ***</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; predators       1    975     975    59.2 4.3e-07 ***</span></span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; food:predators  2    518     259    15.7 0.00011 ***</span></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals      18    297      16                    </span></span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Calculate the width of the confidence intervals:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>MSE <span class="ot">&lt;-</span> <span class="fu">summary</span>(aov1)[[<span class="dv">1</span>]]<span class="sc">$</span><span class="st">`</span><span class="at">Mean Sq</span><span class="st">`</span>[<span class="dv">4</span>] <span class="do">## 16.5</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>MSE <span class="ot">&lt;-</span> <span class="fu">summary</span>(aov1)[[<span class="dv">1</span>]]<span class="sc">$</span><span class="st">`</span><span class="at">Mean Sq</span><span class="st">`</span>[<span class="dv">4</span>] <span class="do">## 16.5</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>ybar_ij.SE <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(MSE<span class="sc">/</span><span class="dv">4</span>)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>CI.half <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="dv">18</span>) <span class="sc">*</span> ybar_ij.SE</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>(CI <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span>CI.half, CI.half))</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -4.265  4.265</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -4.265  4.265</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Now we can create a data frame and plot the group means and confidence intervals. Remember to always check how you have defined the order of your dataframe and make sure that it matches with the order that the group means have been displayed in the <code>model.tables()</code> function.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>predicted.voles <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Food =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dv">2</span>),</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>predicted.voles <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Food =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="dv">2</span>),</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                              <span class="at">Predators =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Absent"</span>, <span class="st">"Present"</span>), <span class="at">each =</span> <span class="dv">3</span>),</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">voles =</span> <span class="fu">c</span>(ybar_ij.))</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Add lower and upper confidence intervals</span></span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>predicted.voles <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(predicted.voles, </span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">LCI =</span> voles <span class="sc">+</span> CI[<span class="dv">1</span>],</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">UCI =</span> voles <span class="sc">+</span> CI[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">UCI =</span> voles <span class="sc">+</span> CI[<span class="dv">2</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell" data-layout-align="left">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(predicted.voles, <span class="fu">aes</span>(<span class="at">x =</span> Food, <span class="at">y =</span> voles, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(predicted.voles, <span class="fu">aes</span>(<span class="at">x =</span> Food, <span class="at">y =</span> voles, </span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">color =</span> Predators)) <span class="sc">+</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>(<span class="fu">aes</span>(<span class="at">linetype =</span> Predators)) <span class="sc">+</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> LCI, <span class="at">ymax =</span> UCI), <span class="at">width =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Predicted number of voles"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Predicted number of voles"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -893,7 +895,7 @@ y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk} \ \ \ \ \
 <h2 class="anchored" data-anchor-id="factorial-design-using-lm">Factorial Design using <code>lm()</code></h2>
 <p>Although we have already completed the analysis, lets also look at how we could have built this model using the <code>lm()</code> function.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(voles<span class="sc">~</span> food<span class="sc">*</span>predators, <span class="at">data=</span> microtusdata)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>lm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(voles<span class="sc">~</span> food<span class="sc">*</span>predators, <span class="at">data=</span> microtusdata)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm1)</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
@@ -916,7 +918,7 @@ y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk} \ \ \ \ \
 <span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 4.06 on 18 degrees of freedom</span></span>
 <span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.905,  Adjusted R-squared:  0.879 </span></span>
-<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 34.3 on 5 and 18 DF,  p-value: 1.34e-08</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 34.3 on 5 and 18 DF,  p-value: 1.34e-08</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>There is a lot going on here. Can you interpret each of the parameter estimates (especially the interaction term)? What do we conclude about the original set of hypotheses related to our model?</strong></p>
 <p><br> <br> <br></p>
@@ -928,8 +930,8 @@ y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk} \ \ \ \ \
 <p>A graduate student at UGA is conducting studies on Lake Sturgeon (<em>Acipenser fulvescens</em>), a large river dwelling fish which in Georgia is only found in the northwestern corner of the state. The student plans to use the calcified structures from these fish to better understand the population age-distribution. Before examining growth annuli, however, the student needs to cut the structures and mount them on microscope slides.</p>
 <p>In the dataset below, the student has processed 36 structures (some spines and some otoliths) using 3 different mounting methods (A, B, and C) and 3 different saw speeds (low, medium, and high). Once mounted, the time required (seconds) to accurately age each structure was recorded for each fish.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"agingdata"</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(agingdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"agingdata"</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(agingdata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Questions/tasks</strong></p>
 <ol type="1">
@@ -1023,13 +1025,14 @@ y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \epsilon_{ijk} \ \ \ \ \
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

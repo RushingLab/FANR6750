@@ -7775,5 +7775,82 @@
     "title": "Lab 5: Evaluating assumptions of Linear Models",
     "section": "",
     "text": "t-tests\n\n\nOne sample t-tests\nTwo sample t-tests\nSamples vs tails\nPaired t-tests"
+  },
+  {
+    "objectID": "labs/lab07_ANOVA.html",
+    "href": "labs/lab07_ANOVA.html",
+    "title": "Lab 5: Completely randomized ANOVA",
+    "section": "",
+    "text": "t-tests\n\n\nOne sample t-tests\nTwo sample t-tests\nSamples vs tails\nPaired t-tests"
+  },
+  {
+    "objectID": "labs/lab07_ANOVA.html#lab-6",
+    "href": "labs/lab07_ANOVA.html#lab-6",
+    "title": "Lab 5: Completely randomized ANOVA",
+    "section": "",
+    "text": "t-tests\n\n\nOne sample t-tests\nTwo sample t-tests\nSamples vs tails\nPaired t-tests"
+  },
+  {
+    "objectID": "labs/lab07_ANOVA.html#todays-topics",
+    "href": "labs/lab07_ANOVA.html#todays-topics",
+    "title": "Lab 5: Completely randomized ANOVA",
+    "section": "Today’s topics",
+    "text": "Today’s topics\n\nOne way ANOVA as a linear model\n\n\nUsing lm()\nUsing aov()\nPerforming an ANOVA by hand\n\n\nPlotting group means and CI’s\nMultiple comparisons"
+  },
+  {
+    "objectID": "labs/lab07_ANOVA.html#exercise-1",
+    "href": "labs/lab07_ANOVA.html#exercise-1",
+    "title": "Lab 5: Completely randomized ANOVA",
+    "section": "Exercise 1",
+    "text": "Exercise 1\nThe dataset below comes from a pilot study implemented by the US Forest Service. The service is interested in purchasing a number of chainsaws to use for various projects and fieldwork. Due to safety concerns, the service is hoping to select the chainsaw brand (A, B, C, or D) which has the lowest average kickback angle. Kickback, which refers to the sudden upward motion of the saw’s guide bar when the saw strikes a hard object, is one of the leading causes of injuries during chainsaw work. While the service would like to prioritize safety, their secondary objective is to find a reasonably priced brand. The brands range in price (D,B,A,C) with Brand D being the most expensive.\n\nLoad the sawdata dataset and examine the data\n\n\nlibrary(FANR6750)\ndata(\"sawdata\")\n\nhead(sawdata)\n#&gt;   Chainsaw  A  B  C  D\n#&gt; 1        1 42 38 52 29\n#&gt; 2        2 36 50 54 35\n#&gt; 3        3 33 44 48 31\n#&gt; 4        4 39 37 49 36\n#&gt; 5        5 43 47 54 32\n\nYou may notice that something seems different about this dataset than the previous ones we have looked at over the last few weeks. This is because the data are in what is called ‘wide format’. This means that each level of the grouping variable (in this case chainsaw brand) has gotten its own column in the dataframe. While wide format is often convenient for reports because it allows you to more easily see trends in a table, long format is more useful for succinctly storing data and for use in most analyses.\n\nConvert the dataframe from wide format to long format1\n\n\nlibrary(tidyr)\nsawdata &lt;- sawdata %&gt;%  pivot_longer(cols= c('A', 'B', 'C', 'D'),\n                         names_to= 'Brand',\n                         values_to= 'angle')\nsawdata$Brand &lt;- as.factor(sawdata$Brand)\n\n\nVisualize the data\n\n\nggplot(sawdata, aes(x = Brand, y = angle)) +\n  geom_boxplot() +\n  scale_y_continuous(\"Kickback angle\")"
+  },
+  {
+    "objectID": "labs/lab07_ANOVA.html#two-anova-functions-in-r-aov-and-lm",
+    "href": "labs/lab07_ANOVA.html#two-anova-functions-in-r-aov-and-lm",
+    "title": "Lab 5: Completely randomized ANOVA",
+    "section": "Two ANOVA functions: in R: aov() and lm()",
+    "text": "Two ANOVA functions: in R: aov() and lm()\n\nR has 2 common functions for doing ANOVA: aov() and lm()\nWe will use both in this class\n\n\nCrude characterization\n\n\n\n\n\n\n\naov()\nlm()\n\n\n\n\nEmphasis\nANOVA tables\nLinear models\n\n\nTypical use\nDesigned experiments\nRegression analysis\n\n\nMultiple error strata?\nYes\nNo"
+  },
+  {
+    "objectID": "labs/lab07_ANOVA.html#using-lm",
+    "href": "labs/lab07_ANOVA.html#using-lm",
+    "title": "Lab 5: Completely randomized ANOVA",
+    "section": "Using lm()",
+    "text": "Using lm()\n\nPerform the analysis using the lm() function\n\n\nmod1 &lt;- lm(angle~ Brand, data= sawdata)\n\nsummary(mod1)\n#&gt; \n#&gt; Call:\n#&gt; lm(formula = angle ~ Brand, data = sawdata)\n#&gt; \n#&gt; Residuals:\n#&gt;    Min     1Q Median     3Q    Max \n#&gt;   -6.2   -2.8    0.5    2.8    6.8 \n#&gt; \n#&gt; Coefficients:\n#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    \n#&gt; (Intercept)    38.60       1.80   21.39  3.4e-13 ***\n#&gt; BrandB          4.60       2.55    1.80  0.09027 .  \n#&gt; BrandC         12.80       2.55    5.02  0.00013 ***\n#&gt; BrandD         -6.00       2.55   -2.35  0.03184 *  \n#&gt; ---\n#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n#&gt; \n#&gt; Residual standard error: 4.03 on 16 degrees of freedom\n#&gt; Multiple R-squared:  0.784,  Adjusted R-squared:  0.743 \n#&gt; F-statistic: 19.3 on 3 and 16 DF,  p-value: 1.45e-05\n\nmodel.matrix(mod1)\n#&gt;    (Intercept) BrandB BrandC BrandD\n#&gt; 1            1      0      0      0\n#&gt; 2            1      1      0      0\n#&gt; 3            1      0      1      0\n#&gt; 4            1      0      0      1\n#&gt; 5            1      0      0      0\n#&gt; 6            1      1      0      0\n#&gt; 7            1      0      1      0\n#&gt; 8            1      0      0      1\n#&gt; 9            1      0      0      0\n#&gt; 10           1      1      0      0\n#&gt; 11           1      0      1      0\n#&gt; 12           1      0      0      1\n#&gt; 13           1      0      0      0\n#&gt; 14           1      1      0      0\n#&gt; 15           1      0      1      0\n#&gt; 16           1      0      0      1\n#&gt; 17           1      0      0      0\n#&gt; 18           1      1      0      0\n#&gt; 19           1      0      1      0\n#&gt; 20           1      0      0      1\n#&gt; attr(,\"assign\")\n#&gt; [1] 0 1 1 1\n#&gt; attr(,\"contrasts\")\n#&gt; attr(,\"contrasts\")$Brand\n#&gt; [1] \"contr.treatment\"\n\nCan you interpret each estimate? Why are only the last three brands shown (what happened to Brand A)? What does each p-value represent and what hypothesis are they testing?"
+  },
+  {
+    "objectID": "labs/lab07_ANOVA.html#using-aov",
+    "href": "labs/lab07_ANOVA.html#using-aov",
+    "title": "Lab 5: Completely randomized ANOVA",
+    "section": "Using aov()",
+    "text": "Using aov()\n\nPerform the analysis using the aov() function\n\n\naov1 &lt;- aov(angle ~ Brand, data = sawdata)\n\n\nView the ANOVA table\n\n\nsummary(aov1)\n#&gt;             Df Sum Sq Mean Sq F value  Pr(&gt;F)    \n#&gt; Brand        3    943   314.2    19.3 1.4e-05 ***\n#&gt; Residuals   16    260    16.3                    \n#&gt; ---\n#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nWhat can we conclude from this ANOVA table? Does there appear to be more or less information (or just different) provided here than when we used the lm() function?\nThe default output from summary is fine for viewing in the console but what if you want to include the ANOVA table in a report or paper? You could manually create a table and copy/paste the values, but that’s a pain. Luckily, there is a handy package called broom that turns the output from many model functions into cleaned-up data frames2:\n\nbroom::tidy(aov1)\n#&gt; # A tibble: 2 × 6\n#&gt;   term         df sumsq meansq statistic    p.value\n#&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;\n#&gt; 1 Brand         3  943.  314.       19.3  0.0000145\n#&gt; 2 Residuals    16  260.   16.3      NA   NA\n\nIn R Markdown, we can even include that data frame as a nicely formatted table directly in the knitted document:\n\naov_df &lt;- broom::tidy(aov1)\n\noptions(knitr.kable.NA = '') # don't print NA's in table\nknitr::kable(aov_df, \n      col.names = c(\"Source\", \"df\", \"SS\", \"MS\", \"F\", \"p\"),\n      align = 'c', format = \"html\") \n\n\n\n\nSource\ndf\nSS\nMS\nF\np\n\n\n\n\nBrand\n3\n942.5\n314.18\n19.3\n0\n\n\nResiduals\n16\n260.4\n16.27\n\n\n\n\n\n\n\n\nGetting estimates of group means ( \\(\\mu\\)’s) and SE’s\n\nmodel.tables(aov1, type = \"means\", se = TRUE)\n#&gt; Tables of means\n#&gt; Grand mean\n#&gt;       \n#&gt; 41.45 \n#&gt; \n#&gt;  Brand \n#&gt; Brand\n#&gt;    A    B    C    D \n#&gt; 38.6 43.2 51.4 32.6 \n#&gt; \n#&gt; Standard errors for differences of means\n#&gt;         Brand\n#&gt;         2.551\n#&gt; replic.     5\n\n\n\nGetting estimates of effect sizes ( \\(\\alpha\\)’s) and SE’s\n\nmodel.tables(aov1, type = \"effects\", se = TRUE)\n#&gt; Tables of effects\n#&gt; \n#&gt;  Brand \n#&gt; Brand\n#&gt;     A     B     C     D \n#&gt; -2.85  1.75  9.95 -8.85 \n#&gt; \n#&gt; Standard errors of effects\n#&gt;         Brand\n#&gt;         1.804\n#&gt; replic.     5"
+  },
+  {
+    "objectID": "labs/lab07_ANOVA.html#constructing-an-anova-table-by-hand",
+    "href": "labs/lab07_ANOVA.html#constructing-an-anova-table-by-hand",
+    "title": "Lab 5: Completely randomized ANOVA",
+    "section": "Constructing an ANOVA table by hand",
+    "text": "Constructing an ANOVA table by hand\nJust as we did in the last lab, we will see below how R is actually doing the ANOVA and we’ll get practice constructing an ANOVA table by hand.\n\nGrand mean\n\n(ybar. &lt;- mean(sawdata$angle))\n#&gt; [1] 41.45\n\n\n\nGroup means\nAs with most things in R, there are several ways to calculate the group means. First, find the group means, the hard way:\n\nA &lt;- sawdata$angle[sawdata$Brand == \"A\"]\nB &lt;- sawdata$angle[sawdata$Brand == \"B\"]\nC &lt;- sawdata$angle[sawdata$Brand == \"C\"]\nD &lt;- sawdata$angle[sawdata$Brand == \"D\"]\n\n(ybar.i &lt;- c(mean(A), mean(B), mean(C), mean(D)))\n#&gt; [1] 38.6 43.2 51.4 32.6\n\nBetter yet, use tapply to find the group means (the base R way):\n\n(ybar.i &lt;- tapply(sawdata$angle, INDEX = sawdata$Brand, FUN = mean))\n#&gt;    A    B    C    D \n#&gt; 38.6 43.2 51.4 32.6\n\nFinally, find the group means, the tidyverse way:\n\nlibrary(dplyr)\n(ybar.i &lt;- sawdata %&gt;% \n            group_by(Brand) %&gt;% \n             summarise(mu = mean(angle)))\n#&gt; # A tibble: 4 × 2\n#&gt;   Brand    mu\n#&gt;   &lt;fct&gt; &lt;dbl&gt;\n#&gt; 1 A      38.6\n#&gt; 2 B      43.2\n#&gt; 3 C      51.4\n#&gt; 4 D      32.6\n\n\nAlthough each of these methods does what we want - return the mean kickback angle for each group - note that they do not return the same type of object.\nUse the class() function to see what type of object each one returns.\nWhen might the output from each method be useful?\n\n\n\nSum of squares\nSums of squares among\n\n# Number of saw brands\na &lt;- length(unique(sawdata$Brand))\n\n# Number of measurements of each brand (note, this assumes balanced design)\nn &lt;- nrow(sawdata)/a\n\nSSa &lt;- n * sum((ybar.i$mu - ybar.)^2)\nSSa\n#&gt; [1] 942.5\n\nSums of squares within3\n\n# individual saw data\ny.ij &lt;- sawdata$angle\n\nSSw &lt;- sum((y.ij - rep(ybar.i$mu, times = n)) ^ 2)\nSSw\n#&gt; [1] 260.4\n\n\n\nMeans squares\nMean squares among\n\ndf1 &lt;- a - 1\n(MSa &lt;- SSa / df1)\n#&gt; [1] 314.2\n\nMean squares within\n\ndf2 &lt;- a * (n - 1)\n(MSw &lt;- SSw / df2)\n#&gt; [1] 16.27\n\n\n\nF-statistic\n\n(F.stat &lt;- MSa / MSw)\n#&gt; [1] 19.3\n\n\n\nCritical values and p-values\nRecall that in ANOVA, we only consider the upper tail of the F-distribution.\nCritical value:\n\nalpha &lt;- 0.05\n(F.crit &lt;- qf(1 - alpha, df1, df2))\n#&gt; [1] 3.239\n\np-value\n\n(p.value &lt;- 1 - pf(F.stat, df1, df2))\n#&gt; [1] 1.446e-05"
+  },
+  {
+    "objectID": "labs/lab07_ANOVA.html#plotting-group-means-and-confidence-intervals",
+    "href": "labs/lab07_ANOVA.html#plotting-group-means-and-confidence-intervals",
+    "title": "Lab 5: Completely randomized ANOVA",
+    "section": "Plotting group means and confidence intervals",
+    "text": "Plotting group means and confidence intervals\nAlthough we have performed the ANOVA in multiple ways and can conclude that there is at least one difference in means between the chainsaw brands, we still have a few tasks to perform. The first is to plot the data in a meaningful way. With this type of data there are at least two ways we could display the results. An example of one is below; we’ll practice the second one in the homework assignment.\nIn an ANOVA context, confidence intervals can be constructed using the equation:\n\\[\nCI = Point\\: estimate \\pm t_{\\alpha/2,a(n-1)}\\times SE\n\\]\n\n# Extract the SE\nmean.SE &lt;- 2.551 # hard coded from model.tables()\n\n# OR\n\ntable &lt;- model.tables(aov1, type = \"means\", se = TRUE)\nmean.SE &lt;- as.numeric(table$se) # more explicit\nmean.SE\n#&gt; [1] 2.551\n\n# Compute confidence intervals\ntc &lt;- qt(0.975, a*(n-1))\nlowerCI &lt;- ybar.i$mu - tc*mean.SE\nupperCI &lt;- ybar.i$mu + tc*mean.SE\n\n\nggplot(ybar.i, aes(x = Brand, y = mu, fill = Brand)) +\n  geom_col() +\n  geom_errorbar(aes(ymin = lowerCI, ymax = upperCI), width = 0) +\n  scale_y_continuous(\"Chainsaw kickback angle\")\n\n\n\n\nFigure 1: Mean kickback angle from four chainsaw brands with 95% CI"
+  },
+  {
+    "objectID": "labs/lab07_ANOVA.html#multiple-comparisons",
+    "href": "labs/lab07_ANOVA.html#multiple-comparisons",
+    "title": "Lab 5: Completely randomized ANOVA",
+    "section": "Multiple comparisons",
+    "text": "Multiple comparisons\n\nTukeyHSD(aov1)\n#&gt;   Tukey multiple comparisons of means\n#&gt;     95% family-wise confidence level\n#&gt; \n#&gt; Fit: aov(formula = angle ~ Brand, data = sawdata)\n#&gt; \n#&gt; $Brand\n#&gt;      diff      lwr   upr  p adj\n#&gt; B-A   4.6  -2.6998  11.9 0.3079\n#&gt; C-A  12.8   5.5002  20.1 0.0007\n#&gt; D-A  -6.0 -13.2998   1.3 0.1276\n#&gt; C-B   8.2   0.9002  15.5 0.0251\n#&gt; D-B -10.6 -17.8998  -3.3 0.0037\n#&gt; D-C -18.8 -26.0998 -11.5 0.0000\n\n\nplot(TukeyHSD(aov1))\n\n\n\n\n\n\n\n\nWhich brands were significantly different from one another? How would you answer the original question at the start of this exercise?"
+  },
+  {
+    "objectID": "labs/lab07_ANOVA.html#footnotes",
+    "href": "labs/lab07_ANOVA.html#footnotes",
+    "title": "Lab 5: Completely randomized ANOVA",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nIn this code chunk, we introduce the idea of pipes in R. A pipe (shown with %&gt;%) is a way of stacking multiple functions on top of each other in an easy to read way. Many packages (including tidyr) use pipes instead of having functions nested inside of each other. While pipes are generally considered to have multiple advantages related to their readability as well as modular structure, there are ways to perform any of these steps without their use.↩︎\nNotice the use of the double colon in the code chunk below. This is used in R to explicitly link a function to the package from where it came. Because there is an ever expanding list of available packages and many of them contain functions that have the same names but perform different tasks, it is necessary to tell R which particular function you are trying to use. If we did not specify the package using the double colon operator, R would use the function from whatever was the most recently loaded package in your library that contained that function name.↩︎\nNotice the use of the times= argument. How do we decide whether to use times= or each=? In this case, we need to look at the order of the data in the dataframe. Because of how the data is ordered, we are interested in taking the entire mu vector and repeating it 5 times. If the data were ordered such that all the Brand A observations were first etc. then we would have taken each element in the mu vector and repeated it each= 5.↩︎"
   }
 ]
