@@ -26,7 +26,7 @@ library(knitr)
 library(rmarkdown)
 library(FANR6750data)
 
-# Source Clark's palette
+# Source palette
 source(here::here("R/zzz.R"))
 ```
 

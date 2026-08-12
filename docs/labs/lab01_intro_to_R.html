@@ -252,19 +252,19 @@ window.Quarto = {
  <span class="dropdown-text">Lab 1: Introduction to R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab02_Intro_project_and_Rmd.qmd">
+    <a class="dropdown-item" href="../labs/lab02_Intro_project_and_Rmd.html">
  <span class="dropdown-text">Lab 2: Introduction to projects and RMarkdown</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab03_inference.qmd">
+    <a class="dropdown-item" href="../labs/lab03_inference.html">
  <span class="dropdown-text">Lab 3: Using R to explore sampling error</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab04_t_tests.qmd">
+    <a class="dropdown-item" href="../labs/lab04_t-tests.html">
  <span class="dropdown-text">Lab 4: t-tests</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab05_linear_model_assumptions.qmd">
+    <a class="dropdown-item" href="../labs/lab05_linear_model_assumptions.html">
  <span class="dropdown-text">Lab 5: Evaluating assumptions</span></a>
   </li>  
     </ul>
@@ -374,22 +374,21 @@ window.Quarto = {
 <h1>Additional resources and where to get help</h1>
 <p>We will go over the basics of using <code>R</code> during lab sessions but there are many good online resources for learning <code>R</code> and getting help. A few of my favorites (from which some of this material is developed) include:</p>
 <ul>
-<li><p>Tom Edward’s online <a href="http://learnr.usu.edu/">Learning R</a> course</p></li>
-<li><p>John Fieberg’s online <a href="https://fw8051statistics4ecologists.netlify.app/">Statistics for Ecologists</a> book</p></li>
-<li><p><a href="https://datacarpentry.org/R-ecology-lesson/">Data Analysis and Visualization in R for Ecologists</a></p></li>
+<li><p>John Fieberg’s online <a href="https://statistics4ecologists-v3.netlify.app/">Statistics for Ecologists</a> book</p></li>
+<li><p><a href="https://datacarpentry.github.io/R-ecology-lesson/introduction-r-rstudio.html">Data Analysis and Visualization in R for Ecologists</a></p></li>
 </ul>
 <p>Of course, if you encounter error messages you don’t understand or need help figuring out how to accomplish something in <code>R</code>, google is your best friend (even the most experienced <code>R</code> users use google on a daily basis). The key to finding answers on google is asking the right questions. Because we will not spend much time on this topic in lab, please refer to these links for advice on formulating <code>R</code>-related questions:</p>
 <ul>
-<li><p><a href="https://blog.revolutionanalytics.com/2014/01/how-to-ask-for-r-help.html">How to ask for R help</a></p></li>
-<li><p><a href="https://datacarpentry.org/R-ecology-lesson/00-before-we-start.html#seeking_help">Seeking help</a> from <em>Data Analysis and Visualization in R for Ecologists</em></p></li>
+<li><p><a href="https://rbook.flavioazevedo.com/asking-for-help">Asking for help in R</a></p></li>
+<li><p><a href="https://datacarpentry.github.io/R-ecology-lesson/aio.html#aside-getting-help">Seeking help</a> from <em>Data Analysis and Visualization in R for Ecologists</em></p></li>
 </ul>
 </section>
 <section id="using-r--the-very-basics" class="level1">
 <h1>Using <code>R</code>- the very basics</h1>
 <section id="the-rstudio-interface-and-panes" class="level2">
 <h2 class="anchored" data-anchor-id="the-rstudio-interface-and-panes">The RStudio interface and panes</h2>
-<p>Although users can work directly in <code>R</code>, most choose to use RStudio which is the IDE (Integrated Development Environment) for <code>R</code>. To use RStudio, you must first have <code>R</code> installed.</p>
-<p>After opening RStudio, you will see 3 panes<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>Although users can work directly in <code>R</code>, most choose to use RStudio which is the IDE (Integrated Development Environment) for <code>R</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. To use RStudio, you must first have <code>R</code> installed.</p>
+<p>After opening RStudio, you will see 3 panes<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <ol type="1">
 <li><p>Console: The console will appear on the left side of your screen. You can type code directly into the console (also known as the command line) and it will be executed immediately. The console is also where output will be shown from tasks that you have executed in <code>R</code>.</p></li>
 <li><p>Environment pane: The environment pane will appear in the top right of your screen. Here, you can see objects that you have created in <code>R</code> as well as the values of those objects and how <code>R</code> interprets them (more on this later). The environment pane also includes a few other tabs but we will not require their use in this class.</p></li>
@@ -413,7 +412,7 @@ window.Quarto = {
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The operator <code>&lt;-</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> is how we do assignments in <code>R</code>. Whatever is to the left of <code>&lt;-</code> is the object’s name and whatever is to the right is the value. As we will see later, objects can be much more complex than simply a number but for now, we’ll keep it simple.</p>
+<p>The operator <code>&lt;-</code><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> is how we do assignments in <code>R</code>. Whatever is to the left of <code>&lt;-</code> is the object’s name and whatever is to the right is the value. As we will see later, objects can be much more complex than simply a number but for now, we’ll keep it simple.</p>
 <p>You try it - change the code to create an object called <code>new.x</code>. Instead of assigning <code>new.x</code> a number, give it a calculation, for example <code>25/5</code>. What do you think the value of <code>new.x</code> is?</p>
 </section>
 <section id="naming-objects" class="level2">
@@ -422,7 +421,7 @@ window.Quarto = {
 </section>
 <section id="working-with-objects" class="level2">
 <h2 class="anchored" data-anchor-id="working-with-objects">Working with objects</h2>
-<p>In the exercise above, you may have noticed that after running the code, <code>R</code> did not print anything. That is because we simply told <code>R</code> to create the object (in the top right window, if you click on the <code>Environment</code> tab, you should see <code>x</code> and <code>new.x</code>). Now that it is stored in <code>R</code>’s memory, we can do a lot of things with it. For one, we can print it to see the value. To do that, we simply type the name of the object and run the code<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>:</p>
+<p>In the exercise above, you may have noticed that after running the code, <code>R</code> did not print anything. That is because we simply told <code>R</code> to create the object (in the top right window, if you click on the <code>Environment</code> tab, you should see <code>x</code> and <code>new.x</code>). Now that it is stored in <code>R</code>’s memory, we can do a lot of things with it. For one, we can print it to see the value. To do that, we simply type the name of the object and run the code<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>:</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>new.x <span class="ot">&lt;-</span> <span class="dv">25</span><span class="sc">/</span><span class="dv">5</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>new.x</span>
@@ -535,7 +534,7 @@ window.Quarto = {
 </section>
 <section id="factor-class" class="level3">
 <h3 class="anchored" data-anchor-id="factor-class">Factor class</h3>
-<p>Another class of vectors are referred to as factors. Factors are similar to character vectors in that <code>R</code> is interpreting them as text strings and you cannot perform math on them. The difference, however, is that <code>R</code> sees factors as grouping variables. Each category within the factor is referred to as a ‘level’<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>.</p>
+<p>Another class of vectors are referred to as factors. Factors are similar to character vectors in that <code>R</code> is interpreting them as text strings and you cannot perform math on them. The difference, however, is that <code>R</code> sees factors as grouping variables. Each category within the factor is referred to as a ‘level’<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>.</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Species <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>))</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Species</span>
@@ -775,7 +774,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="data-frames">Data frames</h2>
 <p>Although useful for many applications, vectors and matrices are limited in their ability to store multiple types of data (numeric and character).</p>
 <p>This is where data frames become useful. Perhaps the most common type of data object you will use in <code>R</code> is the data frame. Data frames are tabular objects (rows and columns) similar in structure to spreadsheets (think Excel or GoogleSheets). In effect, data frames store multiple vectors - each column of the data frame is a vector. The advantage they have over matrices is that each column can be a different class (numeric, character, etc.) but all values within a column must be the same class. Just as the first row of an Excel spreadsheet can be a list of column names, each column in a data frame has a name that (hopefully) provides information about what the values in that column represent.</p>
-<p>To see how data frames work, let’s load a data frame called <code>jayData</code> that comes with the <code>FANR6750</code> package.</p>
+<p>To see how data frames work, let’s load a data frame called <code>jayData</code> that comes with the <code>FANR6750data</code> package.</p>
 <section id="an-aside-about-packages" class="level3">
 <h3 class="anchored" data-anchor-id="an-aside-about-packages">An aside about packages</h3>
 <p>One of <code>R</code>’s primary strengths is the large number of <em>packages</em> available to users. Packages are units of shareable code and data that have been created by other <code>R</code> users. We have already seen the built-in functions that <code>R</code> comes with. Packages allow users to share lots and lots of other functions that serve specific purposes. Packages also allow users to share <a href="https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html">data sets</a>. There are packages for cleaning data, visualizing data, making maps, fitting specialized models, and basically anything else you can think of.</p>
@@ -784,14 +783,14 @@ window.Quarto = {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Note that the name of the package (in this case <code>devtools</code>) must be in quotation marks. Packages installed using <code>install.packages()</code> are stored in a centralized repository called CRAN (Comprehensive R Archive Network). Once <code>devtools</code> (or any package) is installed on your computer, you do not need to re-run the <code>install.packages()</code> function unless you re-install/update <code>R</code> or need to update the package to a newer version.</p>
-<p>Installing a package does not automatically make the functions from that package available in a given <code>R</code> session. To tell <code>R</code> where the functions come from, you must <em>load</em> the package using the <code>library()</code> function<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>:</p>
+<p>Installing a package does not automatically make the functions from that package available in a given <code>R</code> session. To tell <code>R</code> where the functions come from, you must <em>load</em> the package using the <code>library()</code> function<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>:</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(devtools)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Unlike <code>install.packages()</code>, <code>library()</code> must be re-run each time you open <code>R</code>. Most people include a few calls to <code>library()</code> at the beginning of each script so that all packages needed to run the code are loaded at the beginning of the script.</p>
 <p>Occasionally, some packages are stored in other places (e.g., github). These packages can be installed using different functions. For example, I created a package for this course that contains small data sets we will use in labs throughout the semester. The package is stored on github and can be installed by running:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install_github</span>(<span class="st">"RushingLab/FANR6750"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install_github</span>(<span class="st">"RushingLab/FANR6750data"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Note that the <code>install_github()</code> function is from the <code>devtools</code> package so you need to run <code>library(devtools)</code> before you install the package. Make sure you install the <code>FANR6750</code> package now so you have access to the data sets.</p>
 <hr>
@@ -807,7 +806,7 @@ window.Quarto = {
 <hr>
 <p>To get a quick idea of what information this data frame contains, we can use the <code>head()</code> and <code>tail()</code> functions, which will print the first and last 6 rows of the data frame:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750data)</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"jaydata"</span>) <span class="co"># the data() function loads data sets the come with packages</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(jaydata)</span>
@@ -887,7 +886,7 @@ window.Quarto = {
 <span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  [76] 37 33 44 38 35 45 41 35 38 37 45 33 42 34 45 40 42 40 44 40 33 36 44 33 40</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Notice that if you hit <code>tab</code> after you type the <code>$</code>, RStudio will bring up all of the columns and you can use the up or down buttons to find the one you want.</p>
-<p>Sometimes you may want to select more than one column. One way to do that is by indexing using the column names<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>:</p>
+<p>Sometimes you may want to select more than one column. One way to do that is by indexing using the column names<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>:</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(jaydata[, <span class="fu">c</span>(<span class="st">'x'</span>, <span class="st">'y'</span>, <span class="st">'jays'</span>)])</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        x       y jays</span></span>
@@ -980,13 +979,14 @@ window.Quarto = {
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>The location of these panes on the screen can be adjusted by clicking <code>View</code> –&gt; <code>Panes</code> –&gt; <code>Pane Layout</code><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>In most scenarios, the use of the <code>&lt;-</code> operator and <code>=</code> will produce equivalent results. However, there are some instances where <code>=</code> has a different meaning in <code>R</code> and this difference will not always be obvious to the user. To avoid issues with this, it is best to use the <code>&lt;-</code> operator when assigning values to objects.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Because <code>R</code> is an object based language, the assignment arrow is one of the most common operators that you will type. Although you can choose to literally type the less than sign and dash to create the assignment operator, some people find it more convenient to set up a keyboard shortcut. To do this, click <code>Tools</code> –&gt; <code>Modify keyboard shortcuts</code> and search in the <code>Filter</code> box for the assignment operator. Keyboard shortcuts can be used for a variety of tasks in <code>R</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>This method works well to see object values but it requires an additional line of code. Another method available that allows you to see the value of an object directly after creating it is to surround the assignment with parentheses. For example, the line of code <code>(x &lt;- 3)</code> will not only create the object <code>x</code> and assign it a value of 3, but it will also display the value without having to retype the object name.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p>Note the use of <code>as.factor()</code> to convert what looks like an integer vector into a factor. Functions such as <code>as.factor()</code>, <code>as.character()</code>, and <code>as.numeric()</code> are useful to coerce vectors into different object classes.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn6"><p>For the purposes of this class, using <code>library()</code> or using <code>require()</code> will produce equivalent results. These two functions, however, are designed for different purposes. While <code>library()</code> is designed to be a stand alone function which loads packages, <code>require()</code> is designed to be nested within a larger function statement. If the package you are attempting to load is not installed, <code>library()</code> will produce an error message immediately, while <code>require()</code> will not. As a result, using <code>library()</code> will make it easier for you to diagnose where in your script the error is coming from.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn7"><p>You may begin to notice that as we stack functions inside of eachother, it becomes difficult to keep track of matching parentheses and brackets. Newer versions of <code>R</code> have resolved this problem using a handy tool. Click <code>Code</code> –&gt; <code>Rainbow parentheses</code> to make color matched parentheses and brackets for easier code reading.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Note that you are still using <code>R</code> to do statistical analyses, visualizations, etc! So when writing a methods section, be sure to cite <code>R</code> (and any packages you use) rather than RStudio<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The location of these panes on the screen can be adjusted by clicking <code>View</code> –&gt; <code>Panes</code> –&gt; <code>Pane Layout</code><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>In most scenarios, the use of the <code>&lt;-</code> operator and <code>=</code> will produce equivalent results. However, there are some instances where <code>=</code> has a different meaning in <code>R</code> and this difference will not always be obvious to the user. To avoid issues with this, it is best to use the <code>&lt;-</code> operator when assigning values to objects.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Because <code>R</code> is an object based language, the assignment arrow is one of the most common operators that you will type. Although you can choose to literally type the less than sign and dash to create the assignment operator, some people find it more convenient to set up a keyboard shortcut. To do this, click <code>Tools</code> –&gt; <code>Modify keyboard shortcuts</code> and search in the <code>Filter</code> box for the assignment operator. Keyboard shortcuts can be used for a variety of tasks in <code>R</code>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>This method works well to see object values but it requires an additional line of code. Another method available that allows you to see the value of an object directly after creating it is to surround the assignment with parentheses. For example, the line of code <code>(x &lt;- 3)</code> will not only create the object <code>x</code> and assign it a value of 3, but it will also display the value without having to retype the object name.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Note the use of <code>as.factor()</code> to convert what looks like an integer vector into a factor. Functions such as <code>as.factor()</code>, <code>as.character()</code>, and <code>as.numeric()</code> are useful to coerce vectors into different object classes.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>For the purposes of this class, using <code>library()</code> or using <code>require()</code> will produce equivalent results. These two functions, however, are designed for different purposes. While <code>library()</code> is designed to be a stand alone function which loads packages, <code>require()</code> is designed to be nested within a larger function statement. If the package you are attempting to load is not installed, <code>library()</code> will produce an error message immediately, while <code>require()</code> will not. As a result, using <code>library()</code> will make it easier for you to diagnose where in your script the error is coming from.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>You may begin to notice that as we stack functions inside of each other, it becomes difficult to keep track of matching parentheses and brackets. Newer versions of <code>R</code> have resolved this problem using a handy tool. Click <code>Code</code> –&gt; <code>Rainbow parentheses</code> to make color matched parentheses and brackets for easier code reading.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

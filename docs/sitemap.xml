@@ -1,268 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://djklement.github.io/FANR6750/labs/lab01_intro_to_R.html</loc>
-    <lastmod>2026-05-03T13:30:18.122Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/syllabus.html</loc>
-    <lastmod>2026-08-11T13:19:12.092Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/FANR6750.html</loc>
-    <lastmod>2026-02-08T11:34:16.139Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/schedule.html</loc>
+    <loc>https://rushinglab.github.io/FANR6750/schedule.html</loc>
     <lastmod>2026-08-11T13:54:31.005Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/labs/lab02_Intro_project_and_Rmd.html</loc>
-    <lastmod>2026-02-08T16:00:10.666Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/labs/lab03_inference.html</loc>
-    <lastmod>2026-02-08T16:05:12.029Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/labs/lab04_t-tests.html</loc>
-    <lastmod>2026-02-08T17:39:07.822Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/labs/lab05_ANOVA.html</loc>
-    <lastmod>2026-02-08T17:50:55.833Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/index.html</loc>
-    <lastmod>2026-07-30T17:44:03.234Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/labs/lab06_multiple_regression.html</loc>
-    <lastmod>2026-02-08T17:56:57.621Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/labs/lab08_linear_model_assumptions.html</loc>
-    <lastmod>2026-02-08T18:16:41.863Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/references/RMarkdown.html</loc>
-    <lastmod>2026-05-03T13:30:18.168Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/references/homework.html</loc>
-    <lastmod>2026-05-03T13:30:18.168Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/labs/lab07_interactions.html</loc>
-    <lastmod>2026-02-08T18:18:51.304Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/references/graphics.html</loc>
-    <lastmod>2026-05-03T13:30:18.168Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/references/projects_and_directories.html</loc>
-    <lastmod>2026-05-03T13:30:18.168Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/labs/lab09_model_selection.html</loc>
-    <lastmod>2026-02-08T18:29:58.895Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/labs/lab10_nested.html</loc>
-    <lastmod>2026-02-08T18:32:41.052Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/docs/labs/lab10_nested.html</loc>
-    <lastmod>2026-02-08T18:32:41.052Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/labs/lab11_split_plot.html</loc>
-    <lastmod>2026-02-08T18:40:14.362Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/labs/lab12_glm_lr.html</loc>
-    <lastmod>2026-02-08T18:37:33.039Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/labs/lab13_glm_lr.html</loc>
-    <lastmod>2026-02-08T18:47:39.698Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/docs/labs/lab13_glm_lr.html</loc>
-    <lastmod>2026-02-08T18:39:37.439Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/labs/lab12_repeated_measures.html</loc>
-    <lastmod>2026-02-08T18:49:15.348Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/labs/lab14_glm_pr.html</loc>
-    <lastmod>2026-02-08T18:47:54.707Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/00_course_intro/00_course_intro.html</loc>
-    <lastmod>2026-08-10T19:26:31.888Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/00_course_intro/lecture0-course-overview.html</loc>
-    <lastmod>2026-03-10T20:34:42.019Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/00_course_intro/lecture0-course-overview(3).html</loc>
-    <lastmod>2026-03-10T21:00:34.354Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/00_course_intro/lecture0-course-overview4.html</loc>
-    <lastmod>2026-03-10T21:17:41.860Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/01_intro_to_stats/lecture1-intro-statistics.html</loc>
-    <lastmod>2026-03-22T17:38:35.769Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/01_intro_to_stats/lecture1-intro-statistics(2).html</loc>
-    <lastmod>2026-03-22T17:34:54.733Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/02_intro_to_lm/lecture2-linear-models.html</loc>
-    <lastmod>2026-03-22T18:00:12.434Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/01_intro_to_stats/01_intro_to_stats.html</loc>
-    <lastmod>2026-05-11T10:53:27.297Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/02_intro_to_lm/LECTURE2-linear-models1.html</loc>
-    <lastmod>2026-03-23T10:07:01.009Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/02_intro_to_lm/LECTURE2-linear-models(1).html</loc>
-    <lastmod>2026-03-23T10:41:15.945Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/02_intro_to_lm/02_intro_to_lm.html</loc>
-    <lastmod>2026-06-13T12:38:26.679Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/03_inference/03_inference.html</loc>
-    <lastmod>2026-06-10T17:11:38.043Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/04_expdesign/04_expdesign.html</loc>
-    <lastmod>2026-05-28T13:11:14.784Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/causal_inference/causal_inference.html</loc>
-    <lastmod>2026-06-07T18:17:38.572Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/04_causal_inference/04_causal_inference.html</loc>
-    <lastmod>2026-06-10T12:10:40.720Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/04_ttest/04_ttest.html</loc>
-    <lastmod>2026-06-21T11:13:41.410Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/05_nhst/05_nhst.html</loc>
-    <lastmod>2026-07-30T17:35:16.086Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/06_causal_inference/06_causal_inference.html</loc>
-    <lastmod>2026-06-13T14:08:20.303Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/07_expdesign/07_expdesign.html</loc>
-    <lastmod>2026-06-18T12:38:38.830Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/08_ANOVA/08_ANOVA.html</loc>
-    <lastmod>2026-06-21T10:57:47.174Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/09_multcomp/09_multcomp.html</loc>
-    <lastmod>2026-06-22T13:19:04.341Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/10_power/10_power.html</loc>
-    <lastmod>2026-06-22T14:03:17.235Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/11_multreg/11_multreg.html</loc>
-    <lastmod>2026-07-07T12:18:59.637Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/12_interactions/12_interactions.html</loc>
-    <lastmod>2026-07-10T12:50:38.118Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/06_assumptions/06_assumptions.html</loc>
-    <lastmod>2026-07-30T17:39:56.623Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/08_expdesign/08_expdesign.html</loc>
-    <lastmod>2026-08-06T20:00:13.694Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/11_power/11_power.html</loc>
-    <lastmod>2026-07-30T17:41:09.677Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/12_multreg/12_multreg.html</loc>
-    <lastmod>2026-07-30T17:41:22.218Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/09_ANOVA/09_ANOVA.html</loc>
-    <lastmod>2026-07-30T17:40:41.119Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/14_causal_inference_part2/14_causal_inference_part2.html</loc>
-    <lastmod>2026-08-10T19:13:38.437Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/10_multcomp/10_multcomp.html</loc>
-    <lastmod>2026-07-30T17:40:56.498Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/07_causal_inference/07_causal_inference.html</loc>
-    <lastmod>2026-08-06T19:52:49.909Z</lastmod>
-  </url>
-  <url>
-    <loc>https://djklement.github.io/FANR6750/lectures/13_interactions/13_interactions.html</loc>
-    <lastmod>2026-07-30T17:41:37.680Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rushinglab.github.io/FANR6750/syllabus.html</loc>
-    <lastmod>2026-08-12T15:27:26.867Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/00_course_intro/00_course_intro.html</loc>
-    <lastmod>2026-08-12T15:28:16.563Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/01_intro_to_stats/01_intro_to_stats.html</loc>
-    <lastmod>2026-08-11T15:57:05.172Z</lastmod>
   </url>
   <url>
     <loc>https://rushinglab.github.io/FANR6750/lectures/02_intro_to_lm/02_intro_to_lm.html</loc>
     <lastmod>2026-08-11T17:30:01.545Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab01_intro_to_R.html</loc>
-    <lastmod>2026-08-11T19:30:17.252Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/04_ttest/04_ttest.html</loc>
+    <lastmod>2026-08-12T14:23:06.895Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab03_inference.html</loc>
-    <lastmod>2026-08-12T14:19:43.402Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/08_expdesign/08_expdesign.html</loc>
+    <lastmod>2026-08-06T20:00:13.694Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/schedule.html</loc>
-    <lastmod>2026-08-11T13:54:31.005Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/11_power/11_power.html</loc>
+    <lastmod>2026-08-12T14:25:09.561Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab05_linear_model_assumptions.html</loc>
-    <lastmod>2026-08-12T14:20:12.946Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/10_multcomp/10_multcomp.html</loc>
+    <lastmod>2026-08-12T14:24:50.843Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/03_inference/03_inference.html</loc>
+    <lastmod>2026-06-10T17:11:38.043Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/06_assumptions/06_assumptions.html</loc>
+    <lastmod>2026-08-12T14:23:34.860Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/syllabus.html</loc>
+    <lastmod>2026-08-12T15:27:26.867Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/FANR6750.html</loc>
+    <lastmod>2026-05-03T13:30:18.001Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/references/homework.html</loc>
+    <lastmod>2026-05-03T13:30:18.168Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/references/graphics.html</loc>
+    <lastmod>2026-05-03T13:30:18.168Z</lastmod>
   </url>
   <url>
     <loc>https://rushinglab.github.io/FANR6750/labs/lab07_ANOVA.html</loc>
@@ -273,43 +57,87 @@
     <lastmod>2026-08-12T14:20:01.015Z</lastmod>
   </url>
   <url>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab09_multiple_regression.html</loc>
+    <lastmod>2026-08-12T14:20:37.659Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab6_expdesign.html</loc>
+    <lastmod>2026-08-12T14:18:44.227Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab10_interactions.html</loc>
+    <lastmod>2026-08-12T14:20:59.525Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab13_nested.html</loc>
+    <lastmod>2026-08-12T14:21:29.895Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab14_glm.html</loc>
+    <lastmod>2026-08-12T14:21:51.223Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab12_model_selection.html</loc>
+    <lastmod>2026-08-12T14:21:14.593Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab01_intro_to_R.html</loc>
+    <lastmod>2026-08-11T19:30:17.252Z</lastmod>
+  </url>
+  <url>
     <loc>https://rushinglab.github.io/FANR6750/labs/lab02_Intro_project_and_Rmd.html</loc>
-    <lastmod>2026-08-12T14:19:05.592Z</lastmod>
+    <lastmod>2026-08-12T15:34:57.461Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/04_ttest/04_ttest.html</loc>
-    <lastmod>2026-08-12T14:23:06.895Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab05_linear_model_assumptions.html</loc>
+    <lastmod>2026-08-12T14:20:12.946Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/05_nhst/05_nhst.html</loc>
-    <lastmod>2026-08-12T14:23:20.415Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab03_inference.html</loc>
+    <lastmod>2026-08-12T14:19:43.402Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/06_assumptions/06_assumptions.html</loc>
-    <lastmod>2026-08-12T14:23:34.860Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/references/RMarkdown.html</loc>
+    <lastmod>2026-05-03T13:30:18.168Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/references/projects_and_directories.html</loc>
+    <lastmod>2026-05-03T13:30:18.168Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/index.html</loc>
+    <lastmod>2026-07-30T17:44:03.234Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/14_causal_inference_part2/14_causal_inference_part2.html</loc>
+    <lastmod>2026-08-12T14:26:18.847Z</lastmod>
   </url>
   <url>
     <loc>https://rushinglab.github.io/FANR6750/lectures/09_ANOVA/09_ANOVA.html</loc>
     <lastmod>2026-08-12T14:24:32.106Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/10_multcomp/10_multcomp.html</loc>
-    <lastmod>2026-08-12T14:24:50.843Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/11_power/11_power.html</loc>
-    <lastmod>2026-08-12T14:25:09.561Z</lastmod>
-  </url>
-  <url>
     <loc>https://rushinglab.github.io/FANR6750/lectures/12_multreg/12_multreg.html</loc>
     <lastmod>2026-08-12T14:25:29.491Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/13_interactions/13_interactions.html</loc>
-    <lastmod>2026-08-12T14:25:51.792Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/00_course_intro/00_course_intro.html</loc>
+    <lastmod>2026-08-12T16:21:07.795Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/14_causal_inference_part2/14_causal_inference_part2.html</loc>
-    <lastmod>2026-08-12T14:26:18.847Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/07_causal_inference/07_causal_inference.html</loc>
+    <lastmod>2026-08-06T19:52:49.909Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/01_intro_to_stats/01_intro_to_stats.html</loc>
+    <lastmod>2026-08-11T15:57:05.172Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/05_nhst/05_nhst.html</loc>
+    <lastmod>2026-08-12T14:23:20.415Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/13_interactions/13_interactions.html</loc>
+    <lastmod>2026-08-12T14:25:51.792Z</lastmod>
   </url>
 </urlset>

@@ -189,9 +189,7 @@ Later in the semester, we will have a class discussion on the role of AI in rese
 
 In preparation for that discussion, I highly recommend reading [Bull\$&!t Machines](https://thebullshitmachines.com/table-of-contents/index.html), a short, self-paced course on the LLM
 
-```{r, echo = FALSE, eval = FALSE}
-knitr::include_graphics("fig/bs_machines.png")
-```
+![](fig/bs_machines.png){height="300" fig-align="center"}
 
 ## Remote students {.smaller}
 
