@@ -1,5 +1,5 @@
 ---
-title: "Lab 5: Completely randomized ANOVA"
+title: "Lab 7: Completely randomized ANOVA"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research<br><small>Fall 2026</small>"
 format:
   html:
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 library(dplyr)
 library(knitr)
 library(rmarkdown)
-library(FANR6750)
+library(FANR6750data)
 library(kableExtra)
 
 # Source Clark's palette
@@ -105,7 +105,7 @@ The dataset below comes from a pilot study implemented by the US Forest Service.
 1) Load the sawdata dataset and examine the data
 
 ```{r}
-library(FANR6750)
+library(FANR6750data)
 data("sawdata")
 
 head(sawdata)
@@ -174,7 +174,7 @@ model.matrix(mod1)
 
 ## Using `aov()`
 
-5) Perform the analysis using the aov() function
+5) Perform the analysis using the `aov()` function
 
 ```{r echo = TRUE}
 aov1 <- aov(angle ~ Brand, data = sawdata)
@@ -185,6 +185,7 @@ aov1 <- aov(angle ~ Brand, data = sawdata)
 ```{r echo = TRUE}
 summary(aov1)
 ```
+
 **What can we conclude from this ANOVA table? Does there appear to be more or less information (or just different) provided here than when we used the lm() function?**
 
 The default output from `summary` is fine for viewing in the console but what if you want to include the ANOVA table in a report or paper? You could manually create a table and copy/paste the values, but that's a pain. Luckily, there is a handy package called `broom` that turns the output from many model functions into cleaned-up data frames^[Notice the use of the double colon in the code chunk below. This is used in `R` to explicitly link a function to the package from where it came. Because there is an ever expanding list of available packages and many of them contain functions that have the same names but perform different tasks, it is necessary to tell `R` which particular function you are trying to use. If we did not specify the package using the double colon operator, `R` would use the function from whatever was the most recently loaded package in your library that contained that function name.]:
@@ -377,6 +378,7 @@ TukeyHSD(aov1)
 ```{r fig.align="center", fig.width=5, fig.height=4.5}
 plot(TukeyHSD(aov1))
 ```
+
 **Which brands were significantly different from one another? How would you answer the original question at the start of this exercise?**
 
 
@@ -384,7 +386,7 @@ plot(TukeyHSD(aov1))
 
 <br>
 
-# Optional exercise (not graded)
+# Assignment
 
 A biologist wants to compare the growth of four different tree species she is considering for use in reforestation efforts. Thirty two seedlings of each species are planted at the same time in a large plot. Heights in meters are recorded after several years. 
 
@@ -412,6 +414,15 @@ data("treedata")
     + create a barplot showing the effect sizes and 95% confidence intervals around them
 
 6) Create a header called "Which means are different?". Use Tukey’s HSD test to determine which pairs of means differ at the $\alpha = 0.05$ level. Include a few sentences indicating which pairs are different. If there is an inconsistency between the initial ANOVA results and the post-hoc comparisons, explain why that might be the case 
+
+7) Create a new header called "Reflection". Under this header, answer the following questions: 
+
+- On a 1-10 scale, how would you rate your confidence in the topics covered in this lab? 
+
+- What lingering questions/confusion about these topics do you still have?
+
+- If you used AI for any part of this assignment, do you think it helped? Did it save time? If you did not use AI, do you think it would have helped?
+
 
 A few things to remember when finishing the exercise:
 

@@ -19,7 +19,7 @@ options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning = FALSE,
                       message = FALSE, fig.retina = 2)
 source(here::here("R/zzz.R"))
-library(FANR6750)
+library(FANR6750data)
 library(dplyr)
 library(kableExtra)
 library(ggdag)

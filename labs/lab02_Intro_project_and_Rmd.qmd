@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 library(dplyr)
 library(knitr)
 library(rmarkdown)
-library(FANR6750)
+library(FANR6750data)
 
 # Source Clark's palette
 source(here::here("R/zzz.R"))

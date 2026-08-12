@@ -104,7 +104,7 @@ website:
             href: labs/lab03_inference.qmd
 
           - text: "Lab 4: t-tests"
-            href: labs/lab04_t_tests.qmd
+            href: labs/lab04_t-tests.qmd
 
           - text: "Lab 5: Evaluating assumptions"
             href: labs/lab05_linear_model_assumptions.qmd

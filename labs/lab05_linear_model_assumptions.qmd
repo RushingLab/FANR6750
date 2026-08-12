@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 # Load all libraries
 library(dplyr)
 library(knitr)
-library(FANR6750)
+library(FANR6750data)
 library(ggplot2)
 library(tidyr)
 library(faux)
@@ -531,6 +531,14 @@ For the purposes of this analysis, remove the outlier and rerun the model.
   c. QQ plot of residuals
   
   d. Correlation plot of continuous predictors
+
+7. Create a new header called "Reflection". Under this header, answer the following questions: 
+
+- On a 1-10 scale, how would you rate your confidence in the topics covered in this lab? 
+
+- What lingering questions/confusion about these topics do you still have?
+
+- If you used AI for any part of this assignment, do you think it helped? Did it save time? If you did not use AI, do you think it would have helped?
 
 <br>
 

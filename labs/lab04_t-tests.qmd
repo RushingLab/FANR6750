@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 library(dplyr)
 library(knitr)
 library(rmarkdown)
-library(FANR6750)
+library(FANR6750data)
 library(ggplot2)
 
 # Source Clark's palette
@@ -178,10 +178,10 @@ par(op)
 
 2) Create a new `R` script and save it to the directory where you store you lab activities. Name it something like `lab04-t_tests.R`
 
-3) Load the `FANR6750` package and the `studentsdata` object
+3) Load the `FANR6750data` package and the `studentsdata` object
 
 ```
-library(FANR6750)
+library(FANR6750data)
 data("studentsdata")
 ```
 
@@ -221,6 +221,7 @@ We know from lecture that the formula to get a test statistic for a one sample t
 $$
 t = \frac{\bar{y} - \mu_0}{SEM} \ \ \ \ \ \text{where} \ \ \ \ \ SEM = \frac{s}{\sqrt{n}} = \frac{\sqrt{\frac{1}{n-1}\sum^n_{i=1}(y_i - \bar{y})^2}}{\sqrt{n}}
 $$
+
 While this looks like a lot, we can break it into pieces as lines of code in R.
 
 6) Create an object which is the sample mean.
@@ -353,10 +354,10 @@ $$
 
 ### Formulation as a linear model
 
-1) Load the `FANR6750` package and the `thrushdata` object. Lets look at the structure and summary of the dataset as well
+1) Load the `FANR6750data` package and the `thrushdata` object. Lets look at the structure and summary of the dataset as well
 
 ```
-library(FANR6750)
+library(FANR6750data)
 data("thrushdata")
 ```
 
@@ -382,6 +383,7 @@ thrushdata$wind <- as.factor(thrushdata$wind)
 mod2 <- lm(calls~ wind, data= thrushdata)
 summary(mod2)
 ```
+
 **How would you interpret these results? Is there a difference in call frequency as a function of wind conditions? Which of these numbers represent $\beta_0$ and $\beta_1$ in our linear model above?**
 
 ### Formulation as a t-test by hand
@@ -543,7 +545,7 @@ tunadata$status <- as.factor(tunadata$status)
 ```
 
 ```{r eval = FALSE}
-library(FANR6750)
+library(FANR6750data)
 data("tunadata")
 ```
 

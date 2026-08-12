@@ -1,0 +1,32 @@
+---
+title: "Lab 6: Completely randomized ANOVA"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research<br><small>Fall 2026</small>"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false # change to true if you want numbered lists
+jupyter: false
+---
+
+```{r setup, include=FALSE}
+# Global setup chunk
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  fig.align = 'center',
+  fig.retina = 2,
+  collapse = TRUE,
+  comment = "#>"
+)
+
+# Load libraries
+library(dplyr)
+library(knitr)
+library(rmarkdown)
+library(FANR6750data)
+library(kableExtra)
+
+# Source Clark's palette
+source(here::here("R/zzz.R"))
+```
