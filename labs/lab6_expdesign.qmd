@@ -11,19 +11,19 @@ jupyter: false
 
 ```{r setup, include=FALSE}
 # Global setup chunk
-knitr::opts_chunk$set(
-  warning = FALSE,
-  message = FALSE,
-  fig.align = 'center',
-  fig.retina = 2,
-  collapse = TRUE,
-  comment = "#>"
-)
+# knitr::opts_chunk$set(
+#   warning = FALSE,
+#   message = FALSE,
+#   fig.align = 'center',
+#   fig.retina = 2,
+#   collapse = TRUE,
+#   comment = "#>"
+# )
 
 # Load libraries
 library(dplyr)
-library(knitr)
-library(rmarkdown)
+# library(knitr)
+# library(rmarkdown)
 library(FANR6750data)
 library(kableExtra)
 

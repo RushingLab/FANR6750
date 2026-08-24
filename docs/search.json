@@ -3995,5 +3995,26 @@
     "title": "FANR6750",
     "section": "Looking ahead",
     "text": "Looking ahead\n\nNext time: Causal inference, part II\n\nReading: Fieberg chp. 7.2-7.3"
+  },
+  {
+    "objectID": "labs/lab6_expdesign.html",
+    "href": "labs/lab6_expdesign.html",
+    "title": "Lab 6: Experimental design (and causal inference)",
+    "section": "",
+    "text": "Linear Model Assumptions\n\nLinearity\nNormality\nHomoscedasticity\nIndependence"
+  },
+  {
+    "objectID": "labs/lab6_expdesign.html#lab-5",
+    "href": "labs/lab6_expdesign.html#lab-5",
+    "title": "Lab 6: Experimental design (and causal inference)",
+    "section": "",
+    "text": "Linear Model Assumptions\n\nLinearity\nNormality\nHomoscedasticity\nIndependence"
+  },
+  {
+    "objectID": "labs/lab6_expdesign.html#todays-topics",
+    "href": "labs/lab6_expdesign.html#todays-topics",
+    "title": "Lab 6: Experimental design (and causal inference)",
+    "section": "Today’s topics",
+    "text": "Today’s topics\n\nConfounding\nPlotting group means and CI’s\nMultiple comparisons\n\nConcept: Data set w/ confounders that prevent causal inference (include mediators and colliders too for causal lab?)\n\nNeed randomization (maybe stratified) to create exchangable groups\nNeed controls\nWork in positivity and consistency\nHaven’t seen ANOVA yet so binary treatment/control\n\nObservational Data: - Observational response to “treatment” - “Treatment” column - One confounder - One competing exposure (don’t need for this lab but will use for causal inference lab)\nExperimental Data: - Randomized treatment\n\nUse Causal Inference in R code to explore exchangability visually\nUse experimental data to get “true” effect, then think about why observational data didn’t get same result\nUse causal methods to “sample” observational data to get true effect - use to highlight what randomization does (and mention that this is one method used for causal inference)\nIn causal inference lab, use same observational data set but w/ mulitple regression to obtain the same results and explore confounder vs competing exposure (and mediator)\n\n“In this case, we know (because the data is made up) that there is only a single confounder so once we have randomized our sample with regard to Z, we end up with exchangable groups. In reality, it is impossible to ever know if we have met this assumption. But this is where randomization is our best bet”"
   }
 ]

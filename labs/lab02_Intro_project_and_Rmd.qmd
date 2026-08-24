@@ -32,15 +32,15 @@ source(here::here("R/zzz.R"))
 
 # Introduction to R Markdown
 
-Click [here](https://rushinglab.github.io/FANR6750/articles/RMarkdown.html)
+Click [here](https://rushinglab.github.io/FANR6750/references/RMarkdown.html)
 
 # Projects and directories
 
-Click [here](https://rushinglab.github.io/FANR6750/articles/projects_and_directories.html)
+Click [here](https://rushinglab.github.io/FANR6750/references/projects_and_directories.html)
 
 # Homeworks
 
-Click [here](https://rushinglab.github.io/FANR6750/articles/homework.html)
+Click [here](https://rushinglab.github.io/FANR6750/references/homework.html)
 
 
 # Assignment (not for a grade)
