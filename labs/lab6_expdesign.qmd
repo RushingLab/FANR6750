@@ -1,5 +1,5 @@
 ---
-title: "Lab 6: Completely randomized ANOVA"
+title: "Lab 6: Experimental design (and causal inference)"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research<br><small>Fall 2026</small>"
 format:
   html:
@@ -27,6 +27,61 @@ library(rmarkdown)
 library(FANR6750data)
 library(kableExtra)
 
-# Source Clark's palette
+# Source palette
 source(here::here("R/zzz.R"))
 ```
+
+## Lab 5
+
+Linear Model Assumptions
+
+  + Linearity
+  
+  + Normality
+  
+  + Homoscedasticity
+  
+  + Independence
+  
+
+## Today's topics
+
+1) Confounding
+
+2) Plotting group means and CI's
+
+3) Multiple comparisons  
+
+
+Concept: Data set w/ confounders that prevent causal inference (include mediators and colliders too for causal lab?)
+
+- Need randomization (maybe stratified) to create exchangable groups
+- Need controls 
+- Work in positivity and consistency
+
+- Haven't seen ANOVA yet so binary treatment/control 
+
+Observational Data: 
+  - Observational response to "treatment"
+  - "Treatment" column
+  - One confounder 
+  - One competing exposure (don't need for this lab but will use for causal inference lab)
+
+Experimental Data:
+  - Randomized treatment
+  
+- Use Causal Inference in R code to explore exchangability visually 
+
+- Use experimental data to get "true" effect, then think about why observational data didn't get same result
+
+- Use causal methods to "sample" observational data to get true effect - use to highlight what randomization does (and mention that this is one method used for causal inference)
+
+- In causal inference lab, use same observational data set but w/ mulitple regression to obtain the same results and explore confounder vs competing exposure (and mediator)
+
+"In this case, we know (because the data is made up) that there is only a single confounder so once we have randomized our sample with regard to Z, we end up with exchangable groups. In reality, it is impossible to ever know if we have met this assumption. But this is where randomization is our best bet" 
+
+
+
+
+
+

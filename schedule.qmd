@@ -20,8 +20,9 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-# Source Clark's MWF script
+# Source MWF script
 source(here::here("R/MWF.R"))
+library(dplyr)
 ```
 
 ```{r schedule, echo = FALSE}
@@ -49,18 +50,18 @@ schedule <- data.frame(WK = c("1", "", "", "",
                                    "Introduction to linear models", "Principles of statistical inference", "Principles of statistical inference", "",#2
                                    "Linear models for simple categorical predictors (aka t-test)", "Linear models for simple categorical predictors (aka t-test)", "Troubleshooting R workshop", "", #3
                                    "Labor Day", "Null hypothesis testing", "Null hypothesis testing", "", #4
-                                   "Evaluating assumptions", "Buffer/exam review", "**Exam 1**",  "", #5
+                                   "Evaluating assumptions", "Buffer/exam review", "Exam 1",  "", #5
                                    "Principles of causal inference", "Principles of causal inference", "Principles of experimental design", "", #6
                                    "Principles of experimental design", "Linear models for simple categorical predictors (aka t-test)", "Linear models for simple categorical predictors (aka t-test)", "", # 7
                                    "Multiple comparisons", "Power", "Special topic: p-hacking","", #8
                                    "Multiple regression", "Multiple regression", "Interactions", "", #9
-                                   "Interactions", "Buffer/exam review", "**Exam 2**", "", #10
+                                   "Interactions", "Buffer/exam review", "Exam 2", "", #10
                                    "Causal Inference for Observational Studies", "Causal Inference for Observational Studies", "Fall Break", "", #11
                                    "Model Selection", "Psuedoreplication Part 1: Random effects", "Psuedoreplication Part 1: Random effects", "", #12
                                    "Psuedoreplication Part 2: Nested designs", "Psuedoreplication Part 3: Repeated Measures", "Special topic: AI", "", #13
                                    "Generalized linear models", "GLM: Logistic regression", "GLM: Poisson regression", "", #14
                                    "Thanksgiving break", "Thanksgiving break", "Thanksgiving break", "", #15
-                                   "**Exam 3**"), #16
+                                   "Exam 3"), #16
                        Lab = c("Introduction to R", "", "", "",#1
                                "Introduction to RMarkdown", "", "", "",#2
                                "Sampling error*", "", "", "",#3
@@ -79,6 +80,8 @@ schedule <- data.frame(WK = c("1", "", "", "",
                                "No lab"))#16
 
 schedule %>%
+  mutate(Lecture = cell_spec(Lecture, "html", 
+                    bold = grepl("Exam", Lecture))) %>%
   kable(format = "html", escape = FALSE, col.names = c("Week", "", "Date", "Lecture topic", "Lab Topic"), align = 'c') %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"), full_width = TRUE)
 
