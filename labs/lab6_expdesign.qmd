@@ -26,6 +26,8 @@ library(dplyr)
 # library(rmarkdown)
 library(FANR6750data)
 library(kableExtra)
+library(ggdag)
+library(ggplot2)
 
 # Source palette
 source(here::here("R/zzz.R"))
@@ -52,6 +54,126 @@ Linear Model Assumptions
 
 3) Multiple comparisons  
 
+## Estimating treatment effects
+
+In this lab, we will explore experimental design through the lens of trying to estimate *treatment effects*. Broadly defined, treatment effects are the magnitude and direction of changes in a variable $y$ in response to changes in another variable $x$. So far this semester, we have explored treatment effects using linear models, where we interpret slope coefficients as the change in $y$ for one unit change in $x$. But it turns out that is just one type of treatment effect and just one approach to measuring treatment effects. In this lab, we will use a slightly different (and in some ways simpler) way of estimating the average treatment effect. 
+
+![Hawksbill sea turtle. NOAA, Public domain, via Wikimedia Commons](https://upload.wikimedia.org/wikipedia/commons/e/eb/Hawksbill_sea_turtle_-_NOAA.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original){fig-align="center"}
+
+The data set we will use for this lab consists of 500 (fake) measurements of Hawksbill turtle (*Eretomochelys imbricata*) egg mass. Each observation is the mass of single egg sampled at random from each nest. Nests were monitored at two different study sites and in addition to egg mass, researchers measured the mass (in kilograms) of the mother of each nest and took a blood sample that they used to determine the presence of blood flukes (*Spirorchiidae*), an trematode parasite known to cause health issues in sea turtles. The data can be loaded and viewed using the following code:
+
+```{r}
+library(FANR6750data)
+data("eggdata")
+str(eggdata)
+```
+
+The researchers who collected this data were interested in determining whether infection by the parasite influences egg mass, which could in turn influence egg and hatchling survival. Because this is a relatively simple data set, we might estimate the effect of infection as the difference in egg mass between infected and uninfected individuals:
+
+```{r}
+infected <- filter(eggdata, Infected == 1)
+control <- filter(eggdata, Infected == 0)
+
+# Treatment effect
+mean(infected$EggMass) - mean(control$EggMass)
+```
+
+Based on this result, it appears that infection has a very small effect on egg mass. But is this treatment effect correct? 
+
+***
+
+Of course, we can calculate standard errors and p-values by formulating the treatment effect as a linear model:
+
+```{r}
+summary(lm(EggMass ~ Infected, data = eggdata))
+```
+
+and see that we get the same estimated treatment effect. 
+
+***
+
+## Confounding
+
+There are many reasons the treatment effect we measure might not correspond to the treatment effect we are interested in, but one of the main reasons in the presence of *confounders.* As we discussed in lecture, confounders are shared causes of both $x$ and $y$
+
+```{r echo = F}
+confounder_dag <- dagify(
+  y ~ z + x,
+  x ~ z,
+  exposure = "x",
+  outcome = "y",
+  coords = list(x = c(x = 1, z = 2, y = 3),
+                y = c(x = 2, z = 3, y = 2))
+)
+
+
+tidy_dag <- tidy_dagitty(confounder_dag)
+
+ggplot(tidy_dag, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges(aes(edge_linetype = (name == "x" & to == "y")), show.legend = F) +
+  geom_dag_node() +
+  geom_dag_text(col = "white") +
+  scale_linetype_manual(
+    aesthetics = "edge_linetype", 
+    values = c("TRUE" = "dashed", "FALSE" = "solid")
+  ) +
+  theme_dag()
+```
+
+Notice in the graph above that the arrows from $z$ point *towards* both $x$ *and* $y$. This means that when $z$ changes, both $x$ and $y$ will also change **even if $x$ does not have any causal effect on $y$.** This is the basis of the old adage "correlation is not causation." A confounder might lead to a strong association where no causal relationship exists, it might lead us to overestimate a true causal effect (if the effect of $z$ and $x$ are in the same direction), or it might underestimate a true causal effect (if the effect of $z$ and $x$ are in the opposite directions). In short, the presence of confounders makes it much harder to determine whether the observed association between $x$ and $y$ (the observed treatment effect) is truly the causal effect of $x$. 
+
+In the context of our example data set, we might feel more confident in concluding that infection does not influence egg mass if we could rule out whether the observed effect might be influenced by confounders. 
+
+Notice that the samples come from two populations. Based on previous experience in this system, let's assume we suspect that disease prevalence differs between the two populations. We can quantify this suspicion using our data:
+
+```{r}
+pop1 <- filter(eggdata, Population == "1")
+pop2 <- filter(eggdata, Population == "2")
+
+# Infection rates
+mean(pop1$Infected) 
+mean(pop2$Infected)
+```
+
+Sure enough, individuals in population 2 are almost 4x as likely to be infected as individuals in population 1. 
+
+Why does this matter? Because if egg mass also differs between populations (for example, due to environmental differences between the two areas, genetic differences among populations, etc.), then population is acting as a confounder. 
+
+
+```{r echo = F}
+egg_dag <- dagify(
+  y ~ x + z,
+  x ~ z,
+  exposure = "x",
+  outcome = "y",
+  labels = c(y = "EggMass", x = "Infected",
+             z = "Population"),
+  coords = list(x = c(x = 1, z = 2, y = 3),
+                y = c(x = 2, z = 3, y = 2))
+)
+
+ggdag(egg_dag,
+      use_labels = "label",
+      text = FALSE) +
+  guides(fill = "none", color = "none") + 
+  theme_dag()
+```
+
+****
+
+It is important to note that we arrived at a very specific hypothesis regarding the relationships between infection, egg mass, and population. Specifically, we assume that population *causes* differences in both infection rate and egg mass. But that is not the only possible reason for the associations we observed! What if infection causes individuals to move to a different location? In other words, infection causes population. Or what if having smaller eggs caused individuals to be more susceptible to infection? 
+
+If you are having trouble coming up with mechanisms that could change the direction of causality, that's good! You're thinking like a scientist. But the point is that the arrows we drew above were not based on the statistical associations, but on our understanding of what likely causes what. 
+
+****
+
+## Addressing confounding through experimental design
+
+One of the reasons that manipulative experiments are considered the gold standard of causal inference is that we can address confounding through the design of our experiments, which gives the researcher a lot of control to the remove the effects of confounders before any data is collected. 
+
+## Addressing confounding through matching
+
+## Assignment
 
 Concept: Data set w/ confounders that prevent causal inference (include mediators and colliders too for causal lab?)
 

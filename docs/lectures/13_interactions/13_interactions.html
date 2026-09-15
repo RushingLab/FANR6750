@@ -6,8 +6,8 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-234273d1456647dabc34a594ac50e507.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.32">
 
   <title>FANR6750 – interactions</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,16 +16,10 @@
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
+    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: 1.5em;}
-    div.column{flex: auto;}
-    @media screen {
-    div.columns{gap: min(4vw, 1.5em);}
-    div.column{overflow-x: auto;}
-    }
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -100,7 +94,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-fc859e93a8aea861b048bf3194d4829c.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-ac5e08e4b4b6c659cd557f100be53ee4.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -293,9 +287,9 @@ Fall 2026</p>
 <section id="redstart-example-1" class="slide level2 smaller">
 <h2>Redstart example</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">data</span>(<span class="st">"departuredata"</span>)</span>
-<span id="cb1-2"><a aria-label="2"></a>fm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Departure <span class="sc">~</span> Sex <span class="sc">*</span> Quality, <span class="at">data =</span> departuredata)</span>
-<span id="cb1-3"><a aria-label="3"></a><span class="fu">summary</span>(fm1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">data</span>(<span class="st">"departuredata"</span>)</span>
+<span id="cb1-2"><a></a>fm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Departure <span class="sc">~</span> Sex <span class="sc">*</span> Quality, <span class="at">data =</span> departuredata)</span>
+<span id="cb1-3"><a></a><span class="fu">summary</span>(fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -340,7 +334,7 @@ F-statistic:  599 on 3 and 56 DF,  p-value: &lt;2e-16</code></pre>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="fu">model.matrix</span>(fm1)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">31</span>,<span class="dv">32</span>),]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">model.matrix</span>(fm1)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">31</span>,<span class="dv">32</span>),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   (Intercept) SexM Quality SexM:Quality
 1            1    1   43.68        43.68
@@ -424,9 +418,9 @@ F-statistic:  599 on 3 and 56 DF,  p-value: &lt;2e-16</code></pre>
 <section id="microtus-example-1" class="slide level2 smaller">
 <h2><em>Microtus</em> example</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="fu">data</span>(<span class="st">"microtusdata"</span>)</span>
-<span id="cb6-2"><a aria-label="2"></a>fm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(voles <span class="sc">~</span> food <span class="sc">*</span> predators, <span class="at">data =</span> microtusdata)</span>
-<span id="cb6-3"><a aria-label="3"></a><span class="fu">summary</span>(fm2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">data</span>(<span class="st">"microtusdata"</span>)</span>
+<span id="cb6-2"><a></a>fm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(voles <span class="sc">~</span> food <span class="sc">*</span> predators, <span class="at">data =</span> microtusdata)</span>
+<span id="cb6-3"><a></a><span class="fu">summary</span>(fm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -534,9 +528,9 @@ F-statistic: 34.3 on 5 and 18 DF,  p-value: 1.34e-08</code></pre>
 <section id="chuck-example" class="slide level2 smaller">
 <h2>Chuck example</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="fu">data</span>(<span class="st">"chuckdata"</span>)</span>
-<span id="cb8-2"><a aria-label="2"></a>fm4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(call.rate <span class="sc">~</span> moon <span class="sc">*</span> cloud, <span class="at">data =</span> chuckdata)</span>
-<span id="cb8-3"><a aria-label="3"></a><span class="fu">summary</span>(fm4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">data</span>(<span class="st">"chuckdata"</span>)</span>
+<span id="cb8-2"><a></a>fm4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(call.rate <span class="sc">~</span> moon <span class="sc">*</span> cloud, <span class="at">data =</span> chuckdata)</span>
+<span id="cb8-3"><a></a><span class="fu">summary</span>(fm4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -814,7 +808,7 @@ F-statistic: 7.31 on 3 and 56 DF,  p-value: 0.000322</code></pre>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -926,14 +920,13 @@ F-statistic: 7.31 on 3 and 56 DF,  p-value: 0.000322</code></pre>
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-          const outerScaffold = trigger.parentElement.cloneNode(true);
-          const codeEl = outerScaffold.querySelector('code');
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
             }
-          }
-          return codeEl.innerText;
+            return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

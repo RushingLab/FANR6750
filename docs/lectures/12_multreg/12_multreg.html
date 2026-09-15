@@ -6,8 +6,8 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-234273d1456647dabc34a594ac50e507.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.32">
 
   <title>FANR6750 – multreg</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,16 +16,10 @@
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
+    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: 1.5em;}
-    div.column{flex: auto;}
-    @media screen {
-    div.columns{gap: min(4vw, 1.5em);}
-    div.column{overflow-x: auto;}
-    }
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -100,7 +94,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-fc859e93a8aea861b048bf3194d4829c.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-ac5e08e4b4b6c659cd557f100be53ee4.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -294,8 +288,8 @@ Fall 2026</p>
 <p>Let’s start by fitting a model we’ve already learned about<a href="#/footnotes" class="footnote-ref" id="fnref3" role="doc-noteref" data-footnote-href="#/fn3" onclick=""><sup>3</sup></a>:</p>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> diet, <span class="at">data =</span> dietdata)</span>
-<span id="cb1-2"><a aria-label="2"></a><span class="fu">summary</span>(fit.lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> diet, <span class="at">data =</span> dietdata)</span>
+<span id="cb1-2"><a></a><span class="fu">summary</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -329,8 +323,8 @@ F-statistic: 2.05 on 3 and 56 DF,  p-value: 0.117</code></pre>
 <p>Now let’s fit a slightly different model<a href="#/footnotes" class="footnote-ref" id="fnref4" role="doc-noteref" data-footnote-href="#/fn4" onclick=""><sup>4</sup></a>:</p>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>fit.lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> diet <span class="sc">+</span> length, <span class="at">data =</span> dietdata)</span>
-<span id="cb3-2"><a aria-label="2"></a><span class="fu">summary</span>(fit.lm2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>fit.lm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> diet <span class="sc">+</span> length, <span class="at">data =</span> dietdata)</span>
+<span id="cb3-2"><a></a><span class="fu">summary</span>(fit.lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -373,7 +367,7 @@ F-statistic: 25.9 on 4 and 55 DF,  p-value: 4.14e-12</code></pre>
 <section id="anova-tables" class="slide level2 smaller">
 <h2>Anova tables</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">anova</span>(fit.lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">anova</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -384,7 +378,7 @@ Residuals 56  49734     888               </code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="fu">anova</span>(fit.lm2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">anova</span>(fit.lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -426,7 +420,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="sums-of-squares-1" class="slide level2 smaller theme-inverse">
 <h2>Sums of squares</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="fu">anova</span>(fit.lm2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">anova</span>(fit.lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -440,8 +434,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>fit.lm3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> length <span class="sc">+</span> diet, <span class="at">data =</span> dietdata)</span>
-<span id="cb11-2"><a aria-label="2"></a><span class="fu">anova</span>(fit.lm3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>fit.lm3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> length <span class="sc">+</span> diet, <span class="at">data =</span> dietdata)</span>
+<span id="cb11-2"><a></a><span class="fu">anova</span>(fit.lm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -480,7 +474,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>We will use a made-up data set from this real experiment, with the goal of understanding whether understory plant richness (measured as the number of understory vascular plant species recorded on each plot) differs among burn treatments.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<table class="table table-condensed caption-top" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
+<table class="table table-condensed caption-top" data-quarto-postprocess="true" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
 <colgroup>
 <col style="width: 16%">
 <col style="width: 16%">
@@ -543,9 +537,9 @@ Fire frequency
 <h2>Another example</h2>
 <p>Fit the model with treatment only:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="fu">data</span>(<span class="st">"firedata"</span>)</span>
-<span id="cb13-2"><a aria-label="2"></a>fm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(species <span class="sc">~</span> interval, <span class="at">data =</span> firedata)</span>
-<span id="cb13-3"><a aria-label="3"></a><span class="fu">anova</span>(fm1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">data</span>(<span class="st">"firedata"</span>)</span>
+<span id="cb13-2"><a></a>fm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(species <span class="sc">~</span> interval, <span class="at">data =</span> firedata)</span>
+<span id="cb13-3"><a></a><span class="fu">anova</span>(fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -564,9 +558,9 @@ Residuals  8    419    52.4               </code></pre>
 <p>Because the soil types differ in a variety of ways that may influence plant communities, we probably want to control for this variability in our analysis</p>
 <p>We do that by adding it to the model:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a><span class="fu">data</span>(firedata)</span>
-<span id="cb15-2"><a aria-label="2"></a>fm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(species <span class="sc">~</span> interval <span class="sc">+</span> soil, <span class="at">data =</span> firedata)</span>
-<span id="cb15-3"><a aria-label="3"></a><span class="fu">anova</span>(fm2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">data</span>(firedata)</span>
+<span id="cb15-2"><a></a>fm2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(species <span class="sc">~</span> interval <span class="sc">+</span> soil, <span class="at">data =</span> firedata)</span>
+<span id="cb15-3"><a></a><span class="fu">anova</span>(fm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -641,7 +635,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="interpreting-the-ancova-model" class="slide level2 smaller">
 <h2>Interpreting the ancova model</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit.lm2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit.lm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 5
   term        estimate std.error statistic  p.value
@@ -674,7 +668,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="interpreting-the-rcbd-model" class="slide level2 smaller">
 <h2>Interpreting the rcbd model</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a><span class="fu">summary</span>(fm2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">summary</span>(fm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -707,7 +701,7 @@ F-statistic: 26.3 on 5 and 6 DF,  p-value: 0.000518</code></pre>
 <section id="interpreting-the-rcbd-model-1" class="slide level2 smaller">
 <h2>Interpreting the rcbd model</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="fu">model.matrix</span>(fm2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">model.matrix</span>(fm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   (Intercept) interval1 interval2 interval3 soilsandy loam soilupland
 1            1         0         0         0              1          0
@@ -753,8 +747,8 @@ attr(,"contrasts")$soil
 <div class="fragment">
 <p>The <code>biomassdata</code> object contains (made up) biomass measurements (kg) as a function of rainfall (mm) and elevation (km)</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a><span class="fu">data</span>(<span class="st">"biomassdata"</span>)</span>
-<span id="cb23-2"><a aria-label="2"></a><span class="fu">head</span>(biomassdata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">data</span>(<span class="st">"biomassdata"</span>)</span>
+<span id="cb23-2"><a></a><span class="fu">head</span>(biomassdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  biomass rainfall elevation
 1   96.12    166.0    4.4397
@@ -770,8 +764,8 @@ attr(,"contrasts")$soil
 <section id="multiple-regression-model" class="slide level2 smaller">
 <h2>Multiple regression model</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-label="1"></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(biomass <span class="sc">~</span> rainfall <span class="sc">+</span> elevation, <span class="at">data =</span> biomassdata)</span>
-<span id="cb25-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit.lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(biomass <span class="sc">~</span> rainfall <span class="sc">+</span> elevation, <span class="at">data =</span> biomassdata)</span>
+<span id="cb25-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   term        estimate std.error statistic  p.value
@@ -793,8 +787,8 @@ attr(,"contrasts")$soil
 <div class="fragment">
 <p>Centering is done by subtracting the mean</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a>biomassdata<span class="sc">$</span>elevation.c <span class="ot">&lt;-</span> biomassdata<span class="sc">$</span>elevation <span class="sc">-</span> <span class="fu">mean</span>(biomassdata<span class="sc">$</span>elevation)</span>
-<span id="cb27-2"><a aria-label="2"></a>biomassdata<span class="sc">$</span>rainfall.c <span class="ot">&lt;-</span> biomassdata<span class="sc">$</span>rainfall <span class="sc">-</span> <span class="fu">mean</span>(biomassdata<span class="sc">$</span>rainfall)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>biomassdata<span class="sc">$</span>elevation.c <span class="ot">&lt;-</span> biomassdata<span class="sc">$</span>elevation <span class="sc">-</span> <span class="fu">mean</span>(biomassdata<span class="sc">$</span>elevation)</span>
+<span id="cb27-2"><a></a>biomassdata<span class="sc">$</span>rainfall.c <span class="ot">&lt;-</span> biomassdata<span class="sc">$</span>rainfall <span class="sc">-</span> <span class="fu">mean</span>(biomassdata<span class="sc">$</span>rainfall)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="fragment">
@@ -809,8 +803,8 @@ attr(,"contrasts")$soil
 <section id="multiple-regression-model-1" class="slide level2 smaller">
 <h2>Multiple regression model</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-label="1"></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(biomass <span class="sc">~</span> rainfall.c <span class="sc">+</span> elevation.c, <span class="at">data =</span> biomassdata)</span>
-<span id="cb28-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit.lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(biomass <span class="sc">~</span> rainfall.c <span class="sc">+</span> elevation.c, <span class="at">data =</span> biomassdata)</span>
+<span id="cb28-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   term        estimate std.error statistic  p.value
@@ -1037,7 +1031,7 @@ attr(,"contrasts")$soil
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1149,14 +1143,13 @@ attr(,"contrasts")$soil
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-          const outerScaffold = trigger.parentElement.cloneNode(true);
-          const codeEl = outerScaffold.querySelector('code');
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
             }
-          }
-          return codeEl.innerText;
+            return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

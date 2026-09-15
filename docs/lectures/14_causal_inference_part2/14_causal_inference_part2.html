@@ -6,8 +6,8 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-234273d1456647dabc34a594ac50e507.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.32">
 
   <title>FANR6750 – causal_inference_part2</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,16 +16,10 @@
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
+    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: 1.5em;}
-    div.column{flex: auto;}
-    @media screen {
-    div.columns{gap: min(4vw, 1.5em);}
-    div.column{overflow-x: auto;}
-    }
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -100,7 +94,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-fc859e93a8aea861b048bf3194d4829c.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-ac5e08e4b4b6c659cd557f100be53ee4.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -295,8 +289,8 @@ Fall 2026</p>
 </div><div class="column" style="width:50%;">
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Sex, <span class="at">data =</span> GroundFinchData, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb1-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>fit1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Sex, <span class="at">data =</span> GroundFinchData, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb1-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic  p.value
@@ -307,8 +301,8 @@ Fall 2026</p>
 </div>
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Cover, <span class="at">data =</span> GroundFinchData, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb3-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>fit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Cover, <span class="at">data =</span> GroundFinchData, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb3-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic     p.value
@@ -334,8 +328,8 @@ Fall 2026</p>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Sex <span class="sc">+</span> Cover, <span class="at">data =</span> GroundFinchData, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb5-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>fit3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Sex <span class="sc">+</span> Cover, <span class="at">data =</span> GroundFinchData, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb5-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   term        estimate std.error statistic  p.value
@@ -387,8 +381,8 @@ Fall 2026</p>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast, <span class="at">data =</span> TrilliumData)</span>
-<span id="cb7-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast, <span class="at">data =</span> TrilliumData)</span>
+<span id="cb7-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic       p.value
@@ -415,8 +409,8 @@ Fall 2026</p>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast <span class="sc">+</span> initN, <span class="at">data =</span> TrilliumData)</span>
-<span id="cb9-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast <span class="sc">+</span> initN, <span class="at">data =</span> TrilliumData)</span>
+<span id="cb9-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   term        estimate std.error statistic    p.value
@@ -427,8 +421,8 @@ Fall 2026</p>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast <span class="sc">+</span> initN <span class="sc">+</span> deer, <span class="at">data =</span> TrilliumData)</span>
-<span id="cb11-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast <span class="sc">+</span> initN <span class="sc">+</span> deer, <span class="at">data =</span> TrilliumData)</span>
+<span id="cb11-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
   term        estimate std.error statistic     p.value
@@ -965,7 +959,7 @@ Fall 2026</p>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1077,14 +1071,13 @@ Fall 2026</p>
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-          const outerScaffold = trigger.parentElement.cloneNode(true);
-          const codeEl = outerScaffold.querySelector('code');
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
             }
-          }
-          return codeEl.innerText;
+            return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

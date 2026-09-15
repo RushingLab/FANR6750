@@ -6,8 +6,8 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-234273d1456647dabc34a594ac50e507.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.32">
 
   <title>FANR6750 – nhst</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,16 +16,10 @@
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
+    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: 1.5em;}
-    div.column{flex: auto;}
-    @media screen {
-    div.columns{gap: min(4vw, 1.5em);}
-    div.column{overflow-x: auto;}
-    }
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -100,7 +94,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-61e5fffbd620063b2af8052924718043.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-0e95219105fc7712652eb6206d1f3a8d.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -230,11 +224,11 @@ Fall 2026</p>
 <section id="fitting-the-model-in-r" class="slide level2 smaller">
 <h2>Fitting the model in <code>R</code></h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">data</span>(frogdata)</span>
-<span id="cb1-2"><a aria-label="2"></a></span>
-<span id="cb1-3"><a aria-label="3"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Frogs <span class="sc">~</span> Development, <span class="at">data =</span> frogdata)</span>
-<span id="cb1-4"><a aria-label="4"></a></span>
-<span id="cb1-5"><a aria-label="5"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">data</span>(frogdata)</span>
+<span id="cb1-2"><a></a></span>
+<span id="cb1-3"><a></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Frogs <span class="sc">~</span> Development, <span class="at">data =</span> frogdata)</span>
+<span id="cb1-4"><a></a></span>
+<span id="cb1-5"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term            estimate std.error statistic       p.value
@@ -312,10 +306,10 @@ Fall 2026</p>
 <li>For the frog data:</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>mu_high <span class="ot">&lt;-</span> <span class="fu">mean</span>(frogdata<span class="sc">$</span>Frogs[frogdata<span class="sc">$</span>Development <span class="sc">==</span> <span class="st">"High"</span>])</span>
-<span id="cb3-2"><a aria-label="2"></a>mu_low <span class="ot">&lt;-</span> <span class="fu">mean</span>(frogdata<span class="sc">$</span>Frogs[frogdata<span class="sc">$</span>Development <span class="sc">==</span> <span class="st">"Low"</span>])</span>
-<span id="cb3-3"><a aria-label="3"></a></span>
-<span id="cb3-4"><a aria-label="4"></a>(beta_1.hat <span class="ot">&lt;-</span> mu_high <span class="sc">-</span> mu_low)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>mu_high <span class="ot">&lt;-</span> <span class="fu">mean</span>(frogdata<span class="sc">$</span>Frogs[frogdata<span class="sc">$</span>Development <span class="sc">==</span> <span class="st">"High"</span>])</span>
+<span id="cb3-2"><a></a>mu_low <span class="ot">&lt;-</span> <span class="fu">mean</span>(frogdata<span class="sc">$</span>Frogs[frogdata<span class="sc">$</span>Development <span class="sc">==</span> <span class="st">"Low"</span>])</span>
+<span id="cb3-3"><a></a></span>
+<span id="cb3-4"><a></a>(beta_1.hat <span class="ot">&lt;-</span> mu_high <span class="sc">-</span> mu_low)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -13.1</code></pre>
 </div>
@@ -372,11 +366,11 @@ Fall 2026</p>
 <li>We can simulate a “sample” in <code>R</code> using the <code>rnorm()</code> function</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb5-2"><a aria-label="2"></a></span>
-<span id="cb5-3"><a aria-label="3"></a><span class="fu">mean</span>(y) <span class="sc">-</span> <span class="dv">0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb5-2"><a></a></span>
+<span id="cb5-3"><a></a><span class="fu">mean</span>(y) <span class="sc">-</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.2247</code></pre>
+<pre><code>[1] -0.01074</code></pre>
 </div>
 </div>
 </div>
@@ -388,10 +382,10 @@ Fall 2026</p>
 <h2>Simulating data under <span class="math inline">\(\small H_0\)</span></h2>
 <p>Instead of just taking the difference <span class="math inline">\(\bar{y} - 0\)</span>, we can standardize the differences by dividing by the standard error:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>se.y <span class="ot">&lt;-</span> <span class="fu">sd</span>(y)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>)</span>
-<span id="cb7-2"><a aria-label="2"></a>(<span class="fu">mean</span>(y) <span class="sc">-</span> <span class="dv">0</span>)<span class="sc">/</span>se.y</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>se.y <span class="ot">&lt;-</span> <span class="fu">sd</span>(y)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>)</span>
+<span id="cb7-2"><a></a>(<span class="fu">mean</span>(y) <span class="sc">-</span> <span class="dv">0</span>)<span class="sc">/</span>se.y</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.6964</code></pre>
+<pre><code>[1] -0.02605</code></pre>
 </div>
 </div>
 <div class="fragment">
@@ -406,12 +400,12 @@ Fall 2026</p>
 <h2>Simulating data under <span class="math inline">\(\small H_0\)</span></h2>
 <p>Generate and plot 1000 sample means:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>t <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="at">length =</span> <span class="dv">1000</span>)</span>
-<span id="cb9-2"><a aria-label="2"></a></span>
-<span id="cb9-3"><a aria-label="3"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>){</span>
-<span id="cb9-4"><a aria-label="4"></a>  y <span class="ot">&lt;-</span>  <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
-<span id="cb9-5"><a aria-label="5"></a>  t[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)<span class="sc">/</span>(<span class="fu">sd</span>(y)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>))</span>
-<span id="cb9-6"><a aria-label="6"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>t <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="at">length =</span> <span class="dv">1000</span>)</span>
+<span id="cb9-2"><a></a></span>
+<span id="cb9-3"><a></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>){</span>
+<span id="cb9-4"><a></a>  y <span class="ot">&lt;-</span>  <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb9-5"><a></a>  t[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(y)<span class="sc">/</span>(<span class="fu">sd</span>(y)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>))</span>
+<span id="cb9-6"><a></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 <img data-src="05_nhst_files/figure-revealjs/unnamed-chunk-6-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"></section>
@@ -477,17 +471,17 @@ Fall 2026</p>
 <h2>Null hypothesis testing</h2>
 <p>Measurement error example</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.062</span>, <span class="sc">-</span><span class="fl">0.38</span>, <span class="fl">0.85</span>, <span class="sc">-</span><span class="fl">0.58</span>,  <span class="fl">0.53</span>,  <span class="fl">0.09</span>,  <span class="fl">0.31</span>,  <span class="fl">0.77</span>,  <span class="fl">0.59</span>,  <span class="sc">-</span><span class="fl">0.17</span>)</span>
-<span id="cb10-2"><a aria-label="2"></a></span>
-<span id="cb10-3"><a aria-label="3"></a>(mean.y <span class="ot">&lt;-</span> <span class="fu">mean</span>(y))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.062</span>, <span class="sc">-</span><span class="fl">0.38</span>, <span class="fl">0.85</span>, <span class="sc">-</span><span class="fl">0.58</span>,  <span class="fl">0.53</span>,  <span class="fl">0.09</span>,  <span class="fl">0.31</span>,  <span class="fl">0.77</span>,  <span class="fl">0.59</span>,  <span class="sc">-</span><span class="fl">0.17</span>)</span>
+<span id="cb10-2"><a></a></span>
+<span id="cb10-3"><a></a>(mean.y <span class="ot">&lt;-</span> <span class="fu">mean</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1948</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a>(se.y <span class="ot">&lt;-</span> <span class="fu">sd</span>(y)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>(se.y <span class="ot">&lt;-</span> <span class="fu">sd</span>(y)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1557</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a>(t.stat <span class="ot">&lt;-</span> mean.y <span class="sc">/</span> se.y)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a>(t.stat <span class="ot">&lt;-</span> mean.y <span class="sc">/</span> se.y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.251</code></pre>
 </div>
@@ -565,11 +559,11 @@ Fall 2026</p>
 <h2>Frog example</h2>
 <p>Back to the frog example</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a><span class="fu">data</span>(frogdata)</span>
-<span id="cb16-2"><a aria-label="2"></a></span>
-<span id="cb16-3"><a aria-label="3"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Frogs <span class="sc">~</span> Development, <span class="at">data =</span> frogdata)</span>
-<span id="cb16-4"><a aria-label="4"></a></span>
-<span id="cb16-5"><a aria-label="5"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="fu">data</span>(frogdata)</span>
+<span id="cb16-2"><a></a></span>
+<span id="cb16-3"><a></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Frogs <span class="sc">~</span> Development, <span class="at">data =</span> frogdata)</span>
+<span id="cb16-4"><a></a></span>
+<span id="cb16-5"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term            estimate std.error statistic       p.value
@@ -590,8 +584,8 @@ Fall 2026</p>
 <div class="fragment">
 <p>For the frog example:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-label="1"></a>beta1.hat <span class="ot">&lt;-</span> mu_high <span class="sc">-</span> mu_low</span>
-<span id="cb18-2"><a aria-label="2"></a>(t <span class="ot">&lt;-</span> (beta1.hat <span class="sc">-</span> <span class="dv">0</span>)<span class="sc">/</span><span class="fl">2.64</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>beta1.hat <span class="ot">&lt;-</span> mu_high <span class="sc">-</span> mu_low</span>
+<span id="cb18-2"><a></a>(t <span class="ot">&lt;-</span> (beta1.hat <span class="sc">-</span> <span class="dv">0</span>)<span class="sc">/</span><span class="fl">2.64</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -4.962</code></pre>
 </div>
@@ -601,7 +595,7 @@ Fall 2026</p>
 <section id="nht-for-regression-parameters-1" class="slide level2 smaller">
 <h2>Nht for regression parameters</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-label="1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term            estimate std.error statistic       p.value
@@ -620,7 +614,7 @@ Fall 2026</p>
 <h2>Nst for t-tests</h2>
 <p>As we saw before, the frog model can be fit as a two-sample <em>t</em>-test</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-label="1"></a><span class="fu">t.test</span>(Frogs <span class="sc">~</span> Development, <span class="at">data =</span> frogdata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">t.test</span>(Frogs <span class="sc">~</span> Development, <span class="at">data =</span> frogdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -835,7 +829,7 @@ sample estimates:
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -947,14 +941,13 @@ sample estimates:
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-          const outerScaffold = trigger.parentElement.cloneNode(true);
-          const codeEl = outerScaffold.querySelector('code');
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
             }
-          }
-          return codeEl.innerText;
+            return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
