@@ -11,14 +11,14 @@ jupyter: false
 
 ```{r setup, include=FALSE}
 # Global setup chunk
-# knitr::opts_chunk$set(
-#   warning = FALSE,
-#   message = FALSE,
-#   fig.align = 'center',
-#   fig.retina = 2,
-#   collapse = TRUE,
-#   comment = "#>"
-# )
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  fig.align = 'center',
+  fig.retina = 2,
+  collapse = TRUE,
+  comment = "#>"
+)
 
 # Load libraries
 library(dplyr)
@@ -48,10 +48,27 @@ Linear Model Assumptions
 
 1) Confounding
 
-2) Plotting group means and CI's
+2) 
 
-3) Multiple comparisons  
+## 
 
+```{r}
+library(FANR6750data)
+data(eggdata)
+
+str(eggdata)
+```
+
+```{r}
+fitm <- lm(EggMass ~ Infected, data = eggdata)
+summary(fitm)
+```
+
+```{r}
+eggdata$MotherMass_c <- eggdata$MotherMass - mean(eggdata$MotherMass)
+fitm <- lm(EggMass ~ Infected + Population + MotherMass_c, data = eggdata)
+summary(fitm)
+```
 
 Concept: Data set w/ confounders that prevent causal inference (include mediators and colliders too for causal lab?)
 
@@ -81,6 +98,55 @@ Experimental Data:
 "In this case, we know (because the data is made up) that there is only a single confounder so once we have randomized our sample with regard to Z, we end up with exchangable groups. In reality, it is impossible to ever know if we have met this assumption. But this is where randomization is our best bet" 
 
 
+# Assignment
+
+A biologist wants to compare the growth of four different tree species she is considering for use in reforestation efforts. Thirty two seedlings of each species are planted at the same time in a large plot. Heights in meters are recorded after several years. 
+
+Within a RMarkdown document, do the following:
+
+1) Create an `R` chunk to load the data using:
+
+```{r eval = FALSE}
+library(FANR6750)
+data("treedata")
+```
+
+2) Create a header called "Hypotheses" and under this header, indicate, in plain English, what the null and alternative hypotheses are. Also use R Markdown's equation features to write these hypotheses using mathematical notation
+
+3) Create a header called "ANOVA by hand". Under this header, perform an ANOVA analysis (degrees of freedom, sums-of-squares, mean-squares, and *F*-value) without using `aov()`. Compute either the critical value of *F*, or the *p*-value. Be sure to **annotate your code** 
+
+4) Create a header called "ANOVA in R". Under this header, perform an ANOVA analysis on the data using the `lm()` function and then again using the `aov()` function
+
+5) Under a subheader called "ANOVA results"
+
+    + indicate whether or not the null hypothesis can be rejected at the $\alpha = 0.05$ level  
+
+    + include a well-formatted ANOVA table using the `broom::tidy()` function  
+
+    + create a barplot showing the effect sizes and 95% confidence intervals around them
+
+6) Create a header called "Which means are different?". Use Tukey’s HSD test to determine which pairs of means differ at the $\alpha = 0.05$ level. Include a few sentences indicating which pairs are different. If there is an inconsistency between the initial ANOVA results and the post-hoc comparisons, explain why that might be the case 
+
+7) Create a new header called "Reflection". Under this header, answer the following questions: 
+
+- On a 1-10 scale, how would you rate your confidence in the topics covered in this lab? 
+
+- What lingering questions/confusion about these topics do you still have?
+
+- If you used AI for any part of this assignment, do you think it helped? Did it save time? If you did not use AI, do you think it would have helped?
+
+
+A few things to remember when finishing the exercise:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Be sure to include your name in the `author` field of the header
+
+- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
+
+- See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+
+- If you use AI on any part of your assignment, you must include the full prompt(s) you used and it's full answer(s) in a **separate section** titled "AI assistance" at the end of this document.
 
 
 
