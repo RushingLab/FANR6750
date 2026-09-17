@@ -171,8 +171,17 @@ If you are having trouble coming up with mechanisms that could change the direct
 
 One of the reasons that manipulative experiments are considered the gold standard of causal inference is that we can address confounding through the design of our experiments, which gives the researcher a lot of control to the remove the effects of confounders before any data is collected. 
 
+For the purposes of this lab, we will use the `eggdata` observations as the basis for exploring the principles of experimental design and how they can improve inferences about cause and effect. In effect, we'll try to mimic the properties of a true, randomized experiment using the `eggdata` observations.
+
+Remember that in a randomized experiment, we remove the effects of a confounder by randomizing our treatment (in this case infection status) across levels of the confounder (in this case, population). In this case, we might do that by holding population constant (i.e., by sampling from only one population) or by sampling eggs from both populations 
+
+```{r}
+fmPop1 <- lm(EggMass ~ Infected, data = pop1)
+fmPop2 <- lm(EggMass ~ Infected, data = pop2)
+```
 ## Addressing confounding through matching
 
+Balancing observations to address confounding is a common approach to improving causal inference and there are many methods developed to achieve this task. Although we won't cover all of those methods here, we will look at one common approach known as *matching*. Essentially, matching i
 ## Assignment
 
 Concept: Data set w/ confounders that prevent causal inference (include mediators and colliders too for causal lab?)
