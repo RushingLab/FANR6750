@@ -50,17 +50,19 @@ Linear Model Assumptions
 
 1) Confounding
 
-2) Plotting group means and CI's
+2) Randomization
 
-3) Multiple comparisons  
+3) Matching
+
+4) Causal assumptions
 
 ## Estimating treatment effects
 
-In this lab, we will explore experimental design through the lens of trying to estimate *treatment effects*. Broadly defined, treatment effects are the magnitude and direction of changes in a variable $y$ in response to changes in another variable $x$. So far this semester, we have explored treatment effects using linear models, where we interpret slope coefficients as the change in $y$ for one unit change in $x$. But it turns out that is just one type of treatment effect and just one approach to measuring treatment effects. In this lab, we will use a slightly different (and in some ways simpler) way of estimating the average treatment effect. 
+In this lab, we will explore experimental design through the lens of trying to estimate *treatment effects*. Broadly defined, treatment effects are the magnitude and direction of changes in a variable $y$ in response to changes in another variable $x$. So far this semester, we have explored treatment effects using linear models, where we interpret slope coefficients as the change in $y$ for one unit change in $x$. But it turns out that is just one type of treatment effect and just one approach to measuring treatment effects. In this lab, we will focus on a specific treatment effect, known as the *average treatment effect*. 
 
 ![Hawksbill sea turtle. NOAA, Public domain, via Wikimedia Commons](https://upload.wikimedia.org/wikipedia/commons/e/eb/Hawksbill_sea_turtle_-_NOAA.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original){fig-align="center"}
 
-The data set we will use for this lab consists of 500 (fake) measurements of Hawksbill turtle (*Eretomochelys imbricata*) egg mass. Each observation is the mass of single egg sampled at random from each nest. Nests were monitored at two different study sites and in addition to egg mass, researchers measured the mass (in kilograms) of the mother of each nest and took a blood sample that they used to determine the presence of blood flukes (*Spirorchiidae*), an trematode parasite known to cause health issues in sea turtles. The data can be loaded and viewed using the following code:
+The data set we will use for this lab consists of 500 (fake) measurements of Hawksbill turtle (*Eretomochelys imbricata*) egg mass. Each observation is the mass of single egg sampled at random from each nest. Nests were monitored at two different study sites and in addition to egg mass, researchers measured the mass (in kilograms) of the mother of each nest and took a blood sample that they used to determine the presence of blood flukes (*Spirorchiidae*), a trematode parasite known to cause health issues in sea turtles. The data can be loaded and viewed using the following code:
 
 ```{r}
 library(FANR6750data)
@@ -68,7 +70,7 @@ data("eggdata")
 str(eggdata)
 ```
 
-The researchers who collected this data were interested in determining whether infection by the parasite influences egg mass, which could in turn influence egg and hatchling survival. Because this is a relatively simple data set, we might estimate the effect of infection as the difference in egg mass between infected and uninfected individuals:
+The researchers who collected these data were interested in determining whether infection by the parasite influences egg mass, which could in turn influence egg and hatchling survival. Because this is a relatively simple data set, we might estimate the effect of infection as the difference in egg mass between infected and uninfected individuals:
 
 ```{r}
 infected <- filter(eggdata, Infected == 1)
@@ -80,9 +82,9 @@ mean(infected$EggMass) - mean(control$EggMass)
 
 Based on this result, it appears that infection has a very small effect on egg mass. But is this treatment effect correct? 
 
-***
+****
 
-Of course, we can calculate standard errors and p-values by formulating the treatment effect as a linear model:
+The code above is an attempt to calculate the average treatment effect (ATE). The ATE is often the treatment effect we are most interested in because it is an estimate of the potential outcomes of the treatment, using each treatment group as the counterfactual for the other group. Of course, the simple calculation above is just the point estimate of the ATE based on this sample and because we know sampling error is always present, we generally also want to quantify uncertainty. We can calculate standard errors and p-values associated with the ATE by formulating the treatment effect as a linear model:
 
 ```{r}
 summary(lm(EggMass ~ Infected, data = eggdata))
@@ -90,7 +92,9 @@ summary(lm(EggMass ~ Infected, data = eggdata))
 
 and see that we get the same estimated treatment effect. 
 
-***
+We won't cover other types of treatment effects in this class but it is worth knowing they exist because sometimes we might want to estimate them. Common treatment effects include conditional treatment effects, average treatment effect on the treated, and average treatment effect on the untreated. You can read more about those treatment effects [here](https://theeffectbook.net/ch-TreatmentEffects.htmlca) or [here](https://www.r-causal.org/chapters/10-estimands.html#estimating-treatment-effects-with-specific-targets-in-mind).
+
+****
 
 ## Confounding
 
@@ -120,7 +124,7 @@ ggplot(tidy_dag, aes(x = x, y = y, xend = xend, yend = yend)) +
   theme_dag()
 ```
 
-Notice in the graph above that the arrows from $z$ point *towards* both $x$ *and* $y$. This means that when $z$ changes, both $x$ and $y$ will also change **even if $x$ does not have any causal effect on $y$.** This is the basis of the old adage "correlation is not causation." A confounder might lead to a strong association where no causal relationship exists, it might lead us to overestimate a true causal effect (if the effect of $z$ and $x$ are in the same direction), or it might underestimate a true causal effect (if the effect of $z$ and $x$ are in the opposite directions). In short, the presence of confounders makes it much harder to determine whether the observed association between $x$ and $y$ (the observed treatment effect) is truly the causal effect of $x$. 
+Notice in the graph above that the arrows from $z$ point *towards* both $x$ *and* $y$. This means that when $z$ changes, both $x$ and $y$ will also change **even if $x$ does not have any causal effect on $y$.** This is the basis of the old adage "correlation is not causation." A confounder might lead to a strong association where no causal relationship exists, it might lead us to overestimate a true causal effect (if the effect of $z$ and $x$ are in the same direction), or it might underestimate a true causal effect (if the effect of $z$ and $x$ are in the opposite directions). In short, the presence of confounders masks whether the observed association between $x$ and $y$ (the observed treatment effect) is truly the causal effect of $x$. In other words, the treatment effect we measured above might not actually be the ATE. 
 
 In the context of our example data set, we might feel more confident in concluding that infection does not influence egg mass if we could rule out whether the observed effect might be influenced by confounders. 
 
@@ -161,7 +165,7 @@ ggdag(egg_dag,
 
 ****
 
-It is important to note that we arrived at a very specific hypothesis regarding the relationships between infection, egg mass, and population. Specifically, we assume that population *causes* differences in both infection rate and egg mass. But that is not the only possible reason for the associations we observed! What if infection causes individuals to move to a different location? In other words, infection causes population. Or what if having smaller eggs caused individuals to be more susceptible to infection? 
+It is important to note that our conclusions about population acting as a confounder are based on a very specific hypothesis regarding the relationships between infection, egg mass, and population. Specifically, we assume that population *causes* differences in both infection rate and egg mass. But that is not the only possible reason for the associations we observed! What if infection causes individuals to move to a different location? In other words, infection causes population. Or what if having smaller eggs caused individuals to be more susceptible to infection? 
 
 If you are having trouble coming up with mechanisms that could change the direction of causality, that's good! You're thinking like a scientist. But the point is that the arrows we drew above were not based on the statistical associations, but on our understanding of what likely causes what. 
 
@@ -173,45 +177,189 @@ One of the reasons that manipulative experiments are considered the gold standar
 
 For the purposes of this lab, we will use the `eggdata` observations as the basis for exploring the principles of experimental design and how they can improve inferences about cause and effect. In effect, we'll try to mimic the properties of a true, randomized experiment using the `eggdata` observations.
 
-Remember that in a randomized experiment, we remove the effects of a confounder by randomizing our treatment (in this case infection status) across levels of the confounder (in this case, population). In this case, we might do that by holding population constant (i.e., by sampling from only one population) or by sampling eggs from both populations 
+Remember that in a randomized experiment, we remove the effects of a confounder by randomizing our treatment (in this case infection status) across levels of the confounder (in this case, population). In a true experiment, we might accomplish that objective by holding population constant (i.e., by sampling from only one population). In this scenario, population is the same for every observation so cannot confound the effects of infection. We can pretend to do this using our data by simply fitting the linear model to data from one population or the other:
 
 ```{r}
 fmPop1 <- lm(EggMass ~ Infected, data = pop1)
 fmPop2 <- lm(EggMass ~ Infected, data = pop2)
+
+summary(fmPop1)
+summary(fmPop2)
 ```
+
+What do you notice about these results? First, we see a large negative effect of infection in both populations, which is not what we saw when the data were combined. The results are also relatively similar between the populations^[though not exactly the same. Why might that be?]. These results suggest that population was causing confounding and removing it's effect got us closer to the causal effect of infection^[but that's only true if our assumptions about the causal relationship between variables is true and there are no other confounding variables we are missing].
+
+****
+As an example of how we can address confounding by holding things constant, the approach we used above is hopefully useful. But if this were a real research project, this is probably not how we would proceed. Why not? Things to think about: 
+
+- Why might we not want to simply subset of observational data?
+
+- If this were a real study, why might we not want to limit our data collection to one population or the other? 
+
+****
+
+Another way to deal with confounding is randomization. Before we do anything with the `eggdata` observations, let's think about what data from a truly randomized experiment would look like. 
+
+In observational studies, treatment variable $x$ and confounder $z$ are, by definition, correlated. The goal of manipulative experiments is remove that correlation by assigning treatments in a way that breaks the "link" between $x$ and $z$. As it turns out, the easiest and most reliable way to do that is by randomly assigning treatments. On average, randomized treatment groups will be the same with regard to confounding variables. In this example, that means we want the same *proportion*^[Not necessarily the same number!] of individuals from each population in each infection group. 
+
+In the original data, we can easily see that this is not the case:
+
+```{r}
+table(eggdata$Infected, eggdata$Population)
+```
+
+The `table()` function is a quick way to tally the number of observations within groups and we can see the extreme imbalance of populations within each infection group (this is a different way to assess confounding, but essentially tells us the same thing we learned above).
+
+Again, in a real manipulative we would need to have some method of selecting turtles from both populations and then randomly assign infection status (which may not be possible or ethical). We'll achieve the same goal instead by randomly selecting observations from our original data in a way that produces balanced treatment groups. 
+
+First, we need to determine our sample size, which is constrained by the minimum number of observations we have in each population (because we can't have more observations than that after we subset our data). In the table above, we can see that in the non-infected group, we only have 31 observations from population 2 so in our subset data, that puts an upper limit on how many observations we can have. In the infected group, we have 75 observations from population 1. That means, in total, our treatment groups (infected vs non-infected) can't have more than 106 observations (31 + 75) and our goal is to balance those 106 observations so that we have similar proportions of each population in each treatment (this will make more sense below).
+
+We start by creating perfectly balanced groups (equal sample sizes). Since we can't have more than 31 non-infected individuals from population 2, that places a maximum on our sample sizes. To randomly select observations (which again, is meant to mimic randomizing treatments), we'll use the `slice_sample()` function from `dplyr`:
+
+```{r}
+library(dplyr)
+EggSamp <- eggdata %>%
+  group_by(Population, Infected) %>%
+  slice_sample(n = 25) %>%
+  ungroup()
+```
+****
+This is fairly complicated code. We start with our `eggdata` data frame and then group observations based on population and infected status using another `dplyr` function called `group_by()`. After grouping, all subsequent functions are performed separately on each group. The `slice_sample()` function then randomly samples `n` observations from each group, which in this case we set to 25 (slightly smaller than our maximum possible sample size of 31). Finally, we ungroup the data so that `R` will treat it as a normal data frame.
+
+****
+
+Let's look at the "new" data:
+
+```{r}
+table(EggSamp$Infected, EggSamp$Population)
+```
+
+Notice now that the proportion of population 1 vs population 2 in each treatment group is exacly the same, which means population is no longer confounding. Let's see what our results look like:
+
+```{r}
+fitSamp <- lm(EggMass ~ Infected, data = EggSamp)
+summary(fitSamp)
+```
+
+Very close to what we estimated from each population! 
+
+****
+
+Before moving on, play with the sample size `n` and see how it influences your results. Do the parameter estimates change? What about the standard error and p-values? If you run the sampling code several times, how much variability do you see in your estimates as sample size gets smaller?
+
+****
+
+Perfectly balanced groups is not actually necessary to remove confounding. Instead, we just need the *proportions* to be the same in each group. In the example above, we had to leave out a lot of population 1 data since our sample size was determined by the smallest observed group (31 non-infected individuals from population 2). Instead of removing all that data, we could have larger sample sizes for population 1 (up to 75) than for population 2:
+
+```{r}
+EggSamp <- eggdata %>%
+  group_by(Population, Infected) %>%
+  slice(sample(n(), ifelse(Population[1] == "1", 50, 25))) %>%
+  ungroup()
+
+table(EggSamp$Infected, EggSamp$Population)
+
+```
+
+This code is pretty complicated by just note that we are now sampling 50 observations of population 1 (for each treatment group) and 25 for population 2. 
+
+What about the estimated ATE:
+
+```{r}
+fitSamp <- lm(EggMass ~ Infected, data = EggSamp)
+summary(fitSamp)
+```
+
+Admittedly, we did this a bit backwards compared to a true manipulative experiment, where we would have sampled from each population (with sample sizes likely determined by financial or logistical constraints) and then randomly applied our treatment across all observations. However, with this simple example, hopefully you gain some intuition for what confounders are and how we can remove their effects through randomization. 
+
 ## Addressing confounding through matching
 
-Balancing observations to address confounding is a common approach to improving causal inference and there are many methods developed to achieve this task. Although we won't cover all of those methods here, we will look at one common approach known as *matching*. Essentially, matching i
-## Assignment
+Even though this lab is about experimental design, not analysis of observational data, it is worth mentioning that balancing observations to address confounding is a common approach to improving causal inference and there are many methods developed to achieve this task. Although we won't cover all of those methods here, we will look at one common approach known as *matching*. Essentially, matching is a set of methods to achieve what we did above; this is, produce treatment groups that are "balanced" with regard to confounders. 
 
-Concept: Data set w/ confounders that prevent causal inference (include mediators and colliders too for causal lab?)
+There are many ways to do matching. Above, we did a version of exact matching, where you pair observations in each treatment group (infected vs non-infected) that have the exact same value of the confounder. What you end up with is a data set that is balanced with regard to the confounder. The `R` package `MatchIt` can do this for us:
 
-- Need randomization (maybe stratified) to create exchangable groups
-- Need controls 
-- Work in positivity and consistency
+```{r}
+library(MatchIt)
+# Matching function (formula specifies treatment ~ confounders)
+exact_match <- matchit(Infected ~ Population,
+                  data = eggdata,
+                  method = "exact")
 
-- Haven't seen ANOVA yet so binary treatment/control 
+# Extract matched data
+matched_data <- match_data(exact_match)
 
-Observational Data: 
-  - Observational response to "treatment"
-  - "Treatment" column
-  - One confounder 
-  - One competing exposure (don't need for this lab but will use for causal inference lab)
+# Fit model to matched data
+fmExactMatch <- lm(EggMass ~ Infected, data = matched_data)
+summary(fmExactMatch)
+```
 
-Experimental Data:
-  - Randomized treatment
-  
-- Use Causal Inference in R code to explore exchangability visually 
+Notice that we get an estimate much closer to the expected ATE than when we fit this to the raw data.
 
-- Use experimental data to get "true" effect, then think about why observational data didn't get same result
+Exact matching does not work as well when there are more than one confounder or confounders are continuous, because finding observations that exactly match in all confounders will become rare and your sample size will end up being very small. In these cases, matching can be done based on "distances" between values, which essentially tries to find observations that have very close values of confounders. We'll explore those options more in a later lab.
 
-- Use causal methods to "sample" observational data to get true effect - use to highlight what randomization does (and mention that this is one method used for causal inference)
+## Assignment (not for grade)
 
-- In causal inference lab, use same observational data set but w/ mulitple regression to obtain the same results and explore confounder vs competing exposure (and mediator)
+You may have noticed that we ignored the other column in the data set, `MotherMass`. 
 
-"In this case, we know (because the data is made up) that there is only a single confounder so once we have randomized our sample with regard to Z, we end up with exchangable groups. In reality, it is impossible to ever know if we have met this assumption. But this is where randomization is our best bet" 
+Create an R Markdown file to do the following:
+
+1) Create an `R` chunk to load the tuna data using:
+
+```{r include= F}
+data("tunadata")
+tunadata$status <- as.factor(tunadata$status)
+```
+
+```{r eval = FALSE}
+library(FANR6750data)
+data("tunadata")
+```
+
+2) Make a figure to show the weights of both infected and healthy tuna. You should spend some time considering what type of figure would best display this data
+
+3) Create a header called "Hypotheses" and under this header, in plain English indicate what the null and alternative hypotheses are for the t-test. Also use R Markdown's equation features to write these hypotheses using mathematical notation. In order to do this, you will need to consider what type of test would be appropriate for this data and how many tails the test will have
+
+4) Create a header called "t-test by hand". Under this header, add a R chunk that includes the following code. Change the `?` inside the `set.seed()` function to any number of your choosing, then run the code. you should get either a 0 or a 1
+
+```{r eval = F}
+set.seed(?)
+rbinom(1, 1, 0.5)
+```
+
+- If the code above returned 0, do the following:  
+
+ > Do a t-test on the tuna data without using the `t.test()` function. Use only the functions `mean`, `sd`, and possibly `length`. Be sure to annotate your code (either within the `R` chunk using `#` or as plain text within the R Markdown file) and state the decision (reject or fail to reject the null) based on your results  
+
+- If the code above returned 1, do the following:  
+
+> Ask AI to perform a t-test without using the `t.test()` function. The code may only use the functions `mean`, `sd`, and possibly `length`. The final code must be annotated and must state the decision of the test. Provide all prompts and output you used to get a final, working version of the code that meets the criteria above.
+
+- Regardless of which option you completed, **keep track of how long it took you to complete the question and include the time taken at the end of your answer**.
+
+5) Create a header called "t-test in R". Under this header, do the t-test again, but this time using the `t.test` function (assume variances are equal). Did you get the same answer as the previous question. Explain why you think the t-test failed to reject the null hypothesis even though the sample means were ~60 pounds different (almost a 20% difference in weight). What about the data may have caused this result? 
 
 
+6) Create a new header called "Reflection". Under this header, answer the following questions: 
+
+- On a 1-10 scale, how would you rate your confidence in the topics covered in this lab? 
+
+- What lingering questions/confusion about these topics do you still have?
+
+- If you used AI to answer question 4, do you think it helped? Did it save time? If you did not use AI, do you think it would have helped?
+
+A few things to remember when creating the document:
+
+- Be sure to include your name in the `author` field of the header
+
+- Be sure the output type is set to: `output: html_document`
+
+- Be sure to set `echo = TRUE` in all `R` chunks so that all code and output is visible in the knitted document
+
+- Regularly knit the document as you work to check for errors
+
+- See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+
+- If you use AI on any part of your assignment, you must include the full prompt(s) you used and it's full answer(s) in a **separate section** titled "AI assistance" at the end of this document.
 
 
 
