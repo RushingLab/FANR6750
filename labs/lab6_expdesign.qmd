@@ -270,6 +270,12 @@ fitSamp <- lm(EggMass ~ Infected, data = EggSamp)
 summary(fitSamp)
 ```
 
+As before, change the sample sizes for each group ($\leq 75$ for population 1 and $\leq 31$ for population 2) and see what happens to your estimates and standard errors. 
+
+****
+**Question**: In experimental settings, sample sizes are often balanced among treatment groups. However, balanced samples are not necessary for removing confounding. Why is that? In other words, why do we not require equal sample sizes from each population to achieve exchangeable groups? If balanced data is not necessary to remove confounding, why might we still aim for balanced groups when designing an experiment? 
+****
+
 Admittedly, we did this a bit backwards compared to a true manipulative experiment, where we would have sampled from each population (with sample sizes likely determined by financial or logistical constraints) and then randomly applied our treatment across all observations. However, with this simple example, hopefully you gain some intuition for what confounders are and how we can remove their effects through randomization. 
 
 ## Addressing confounding through matching
@@ -349,20 +355,7 @@ ggdag(egg_dag,
     
 4) If MotherMass is not a confounder, what does that imply about the ATE we estimated above (after accounting for the effect of Population)? If it is a confounder, how might you remove it's effect to better estimate the ATE in this data set?^[This question is meant to move a little beyond what we covered in this lab so just think through different ways you might address this variable using the tools we have learned about so far]
 
-5) Suppose researchers did actually do a manipulative experiment to test the effect of infection. To do this, 
-
-```{r include = F}
-data("eggsperimentdata")
-head(eggsperimentdata)
-```
-
-```{r eval = F}
-data("eggsperimentdata")
-```
-
-Fit a linear model to estimate the ATE based on these data. How similar is it to the ATE we estimated above? Assuming the ATE we estimated above is correct, why might the effect measured by the experiment be different? What causal assumptions may have been violated in this experiment?
-
-6) Create a new header called "Reflection". Under this header, answer the following questions: 
+5) Create a new header called "Reflection". Under this header, answer the following questions: 
 
 - On a 1-10 scale, how would you rate your confidence in the topics covered in this lab? 
 
