@@ -62,7 +62,7 @@ Experiments are often treated as the *only* way to infer cause and effect
 -   Although not technically true[^1], certain types of experiments can strengthen causal inference
 :::
 
-[^1]: Causal inference from observational studies will be the focus of lecture?
+[^1]: Causal inference from observational studies will be the focus of lecture 14
 
 ::: fragment
 In this lecture, we will discuss why experiments can improve causal inference and the elements of experimental design that must be considered for this objective. Specifically, we will discuss:
@@ -228,7 +228,7 @@ There are two elements to randomization:
 
 1)  Random selection of sampling units from the population
 
--   Helps to ensure[^But does not guarantee!] that the sample is representative of population
+-   Helps to ensure^[But does not guarantee!] that the sample is representative of population
 
 -   Critical for all types of experiments
 
@@ -236,7 +236,7 @@ There are two elements to randomization:
 ::: fragment
 2)  Random allocation of treatments to experimental units
 
--   Helps to ensure[^But does not guarantee!] that treatment effects are not confounded with other sources of variability
+-   Helps to ensure^[But does not guarantee!] that treatment effects are not confounded with other sources of variability
 
 -   Not possible in quasi-experiments or observational studies. What is the consequence?
 :::
@@ -504,7 +504,7 @@ Randomization helps meet both the exchangeability and positivity assumptions
 
 -   Randomizing treatments breaks confounding
 
--   Because the probability of receiving a treatment is determined through the design, researchers can ensure all units have \>0% chance of receiving each treatment[^Though in studies with small samples sizes, stochastic violations of positivity can still happen]
+-   Because the probability of receiving a treatment is determined through the design, researchers can ensure all units have \>0% chance of receiving each treatment^[Though in studies with small samples sizes, stochastic violations of positivity can still happen]
 
 ## Controls {.smaller}
 
@@ -519,7 +519,7 @@ If our goal is to determine whether a change in $x$ causes a corresponding chang
 ::: fragment
 This is the *counterfactual* we discussed in the previous lecture
 
--   Well-designed treatments and controls allow us to estimate *both* potential outcomes of our treatment[^When combined with adequate replication and randomization]
+-   Well-designed treatments and controls allow us to estimate *both* potential outcomes of our treatment^[When combined with adequate replication and randomization]
 
 -   True controls are generally hard to accomplish in observational studies. Why?
 :::
@@ -586,7 +586,7 @@ Are the following examples adequate controls?
 ::: incremental
 -   To test the effects of an experimental drug, researchers capture individuals and inject the drug via a syringe. Control individuals are not captured or given the drug. Survival of both groups is monitored
 
--   Researchers are trying to establish a new population of an endangered species via translocation to restored habitat. To test reproductive success is lower in the restored habitat, researchers monitor nests of translocated and non-translocated individuals
+-   Researchers are trying to establish a new population of an endangered species via translocation to restored habitat. To test whether reproductive success is lower in the restored habitat, researchers monitor nests of translocated and non-translocated individuals
 
 -   Researchers test the effectiveness of a new pesticide by spraying randomly selected plants and not spraying others. Insect damage is quantified on both groups
 :::
@@ -659,12 +659,6 @@ Well-designed experiments are essential to test hypotheses
 -   No amount of fancy statistical methodology can compensate for a poorly designed experiment!
 
 -   Other considerations (sample sizes, independence, logistical constraints, appropriate response variables) are also important
-
-## For thought {.smaller}
-
--   Do manipulative experiments guarantee estimates of causal effects?
-
--   
 
 ## Looking ahead
 
