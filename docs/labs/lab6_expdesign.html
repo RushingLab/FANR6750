@@ -265,6 +265,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../labs/lab6_expdesign.html">
  <span class="dropdown-text">Lab 6: Experimental Design</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab07_anova.qmd">
+ <span class="dropdown-text">Lab 7: ANOVA</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -310,11 +314,17 @@ window.Quarto = {
   <ul class="collapse">
   <li><a href="#lab-5" id="toc-lab-5" class="nav-link active" data-scroll-target="#lab-5">Lab 5</a></li>
   <li><a href="#todays-topics" id="toc-todays-topics" class="nav-link" data-scroll-target="#todays-topics">Today’s topics</a></li>
-  <li><a href="#estimating-treatment-effects" id="toc-estimating-treatment-effects" class="nav-link" data-scroll-target="#estimating-treatment-effects">Estimating treatment effects</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">##</a>
+  <ul class="collapse">
   <li><a href="#confounding" id="toc-confounding" class="nav-link" data-scroll-target="#confounding">Confounding</a></li>
   <li><a href="#addressing-confounding-through-experimental-design" id="toc-addressing-confounding-through-experimental-design" class="nav-link" data-scroll-target="#addressing-confounding-through-experimental-design">Addressing confounding through experimental design</a></li>
   <li><a href="#addressing-confounding-through-matching" id="toc-addressing-confounding-through-matching" class="nav-link" data-scroll-target="#addressing-confounding-through-matching">Addressing confounding through matching</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a></li>
+  </ul></li>
+  <li><a href="#e9eb87a7713001c6759933df30c885220ac4f14" id="toc-e9eb87a7713001c6759933df30c885220ac4f14" class="nav-link" data-scroll-target="#e9eb87a7713001c6759933df30c885220ac4f14">&gt;&gt;&gt;&gt;&gt;&gt;&gt; 2e9eb87a7713001c6759933df30c885220ac4f14</a>
+  <ul class="collapse">
   <li><a href="#assignment-not-for-grade" id="toc-assignment-not-for-grade" class="nav-link" data-scroll-target="#assignment-not-for-grade">Assignment (not for grade)</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -354,14 +364,79 @@ window.Quarto = {
 <section id="todays-topics" class="level2">
 <h2 class="anchored" data-anchor-id="todays-topics">Today’s topics</h2>
 <ol type="1">
-<li><p>Confounding</p></li>
+<li>Confounding</li>
+</ol>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD 2)</p>
+</section>
+<section id="section" class="level1">
+<h1>##</h1>
+<ol start="2" type="1">
 <li><p>Randomization</p></li>
 <li><p>Matching</p></li>
-<li><p>Causal assumptions</p></li>
+<li><p>Causal assumptions &gt;&gt;&gt;&gt;&gt;&gt;&gt; 9b7657f73b13c6ed640b9c6eec905e74c02a147b</p></li>
 </ol>
-</section>
-<section id="estimating-treatment-effects" class="level2">
-<h2 class="anchored" data-anchor-id="estimating-treatment-effects">Estimating treatment effects</h2>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750data)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(eggdata)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(eggdata)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 'data.frame':    500 obs. of  5 variables:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ id        : int  1 2 3 4 5 6 7 8 9 10 ...</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ EggMass   : num  21.9 20.4 20.2 17.7 21.4 ...</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Infected  : int  1 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Population: Factor w/ 2 levels "1","2": 2 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ MotherMass: num  50.9 50.2 50 48.4 50.3 ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fitm <span class="ot">&lt;-</span> <span class="fu">lm</span>(EggMass <span class="sc">~</span> Infected, <span class="at">data =</span> eggdata)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fitm)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = EggMass ~ Infected, data = eggdata)</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -10.462  -1.543  -0.058   1.470   6.932 </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)  20.2239     0.1498  134.99   &lt;2e-16 ***</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Infected      0.0721     0.2224    0.32     0.75    </span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 2.48 on 498 degrees of freedom</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.000211,   Adjusted R-squared:  -0.0018 </span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 0.105 on 1 and 498 DF,  p-value: 0.746</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>eggdata<span class="sc">$</span>MotherMass_c <span class="ot">&lt;-</span> eggdata<span class="sc">$</span>MotherMass <span class="sc">-</span> <span class="fu">mean</span>(eggdata<span class="sc">$</span>MotherMass)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fitm <span class="ot">&lt;-</span> <span class="fu">lm</span>(EggMass <span class="sc">~</span> Infected <span class="sc">+</span> Population <span class="sc">+</span> MotherMass_c, <span class="at">data =</span> eggdata)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fitm)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = EggMass ~ Infected + Population + MotherMass_c, </span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     data = eggdata)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -2.4866 -0.6631 -0.0463  0.6931  2.7581 </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)   20.0542     0.0596   336.2   &lt;2e-16 ***</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Infected      -1.5319     0.1057   -14.5   &lt;2e-16 ***</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Population2    2.4534     0.1094    22.4   &lt;2e-16 ***</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; MotherMass_c   0.9846     0.0212    46.4   &lt;2e-16 ***</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 0.963 on 496 degrees of freedom</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.849,  Adjusted R-squared:  0.849 </span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic:  933 on 3 and 496 DF,  p-value: &lt;2e-16</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>======= ## Estimating treatment effects</p>
 <p>In this lab, we will explore experimental design through the lens of trying to estimate <em>treatment effects</em>. Broadly defined, treatment effects are the magnitude and direction of changes in a variable <span class="math inline">\(y\)</span> in response to changes in another variable <span class="math inline">\(x\)</span>. So far this semester, we have explored treatment effects using linear models, where we interpret slope coefficients as the change in <span class="math inline">\(y\)</span> for one unit change in <span class="math inline">\(x\)</span>. But it turns out that is just one type of treatment effect and just one approach to measuring treatment effects. In this lab, we will focus on a specific treatment effect, known as the <em>average treatment effect</em>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -370,68 +445,61 @@ window.Quarto = {
 </figure>
 </div>
 <p>The data set we will use for this lab consists of 500 (fake) measurements of Hawksbill turtle (<em>Eretomochelys imbricata</em>) egg mass. Each observation is the mass of single egg sampled at random from each nest. Nests were monitored at two different study sites and in addition to egg mass, researchers measured the mass (in kilograms) of the mother of each nest and took a blood sample that they used to determine the presence of blood flukes (<em>Spirorchiidae</em>), a trematode parasite known to cause health issues in sea turtles. The data can be loaded and viewed using the following code:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750data)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"eggdata"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(eggdata)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>'data.frame':   500 obs. of  5 variables:
- $ id        : int  1 2 3 4 5 6 7 8 9 10 ...
- $ EggMass   : num  21.9 20.4 20.2 17.7 21.4 ...
- $ Infected  : int  1 0 0 0 0 0 0 0 0 0 ...
- $ Population: Factor w/ 2 levels "1","2": 2 1 1 1 1 1 1 1 1 1 ...
- $ MotherMass: num  50.9 50.2 50 48.4 50.3 ...</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750data)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"eggdata"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(eggdata)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 'data.frame':    500 obs. of  5 variables:</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ id        : int  1 2 3 4 5 6 7 8 9 10 ...</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ EggMass   : num  21.9 20.4 20.2 17.7 21.4 ...</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Infected  : int  1 0 0 0 0 0 0 0 0 0 ...</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Population: Factor w/ 2 levels "1","2": 2 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ MotherMass: num  50.9 50.2 50 48.4 50.3 ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The researchers who collected these data were interested in determining whether infection by the parasite influences egg mass, which could in turn influence egg and hatchling survival. Because this is a relatively simple data set, we might estimate the effect of infection as the difference in egg mass between infected and uninfected individuals:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>infected <span class="ot">&lt;-</span> <span class="fu">filter</span>(eggdata, Infected <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>control <span class="ot">&lt;-</span> <span class="fu">filter</span>(eggdata, Infected <span class="sc">==</span> <span class="dv">0</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Treatment effect</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(infected<span class="sc">$</span>EggMass) <span class="sc">-</span> <span class="fu">mean</span>(control<span class="sc">$</span>EggMass)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.07214</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>infected <span class="ot">&lt;-</span> <span class="fu">filter</span>(eggdata, Infected <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>control <span class="ot">&lt;-</span> <span class="fu">filter</span>(eggdata, Infected <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Treatment effect</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(infected<span class="sc">$</span>EggMass) <span class="sc">-</span> <span class="fu">mean</span>(control<span class="sc">$</span>EggMass)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.07214</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Based on this result, it appears that infection has a very small effect on egg mass. But is this treatment effect correct?</p>
 <hr>
 <p>The code above is an attempt to calculate the average treatment effect (ATE). The ATE is often the treatment effect we are most interested in because it is an estimate of the potential outcomes of the treatment, using each treatment group as the counterfactual for the other group. Of course, the simple calculation above is just the point estimate of the ATE based on this sample and because we know sampling error is always present, we generally also want to quantify uncertainty. We can calculate standard errors and p-values associated with the ATE by formulating the treatment effect as a linear model:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(EggMass <span class="sc">~</span> Infected, <span class="at">data =</span> eggdata))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = EggMass ~ Infected, data = eggdata)
-
-Residuals:
-    Min      1Q  Median      3Q     Max 
--10.462  -1.543  -0.058   1.470   6.932 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)  20.2239     0.1498  134.99   &lt;2e-16 ***
-Infected      0.0721     0.2224    0.32     0.75    
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 2.48 on 498 degrees of freedom
-Multiple R-squared:  0.000211,  Adjusted R-squared:  -0.0018 
-F-statistic: 0.105 on 1 and 498 DF,  p-value: 0.746</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">lm</span>(EggMass <span class="sc">~</span> Infected, <span class="at">data =</span> eggdata))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = EggMass ~ Infected, data = eggdata)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Min      1Q  Median      3Q     Max </span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -10.462  -1.543  -0.058   1.470   6.932 </span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)  20.2239     0.1498  134.99   &lt;2e-16 ***</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Infected      0.0721     0.2224    0.32     0.75    </span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 2.48 on 498 degrees of freedom</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.000211,   Adjusted R-squared:  -0.0018 </span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 0.105 on 1 and 498 DF,  p-value: 0.746</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>and see that we get the same estimated treatment effect.</p>
 <p>We won’t cover other types of treatment effects in this class but it is worth knowing they exist because sometimes we might want to estimate them. Common treatment effects include conditional treatment effects, average treatment effect on the treated, and average treatment effect on the untreated. You can read more about those treatment effects <a href="https://theeffectbook.net/ch-TreatmentEffects.htmlca">here</a> or <a href="https://www.r-causal.org/chapters/10-estimands.html#estimating-treatment-effects-with-specific-targets-in-mind">here</a>.</p>
 <hr>
-</section>
 <section id="confounding" class="level2">
 <h2 class="anchored" data-anchor-id="confounding">Confounding</h2>
 <p>There are many reasons the treatment effect we measure might not correspond to the treatment effect we are interested in, but one of the main reasons in the presence of <em>confounders.</em> As we discussed in lecture, confounders are shared causes of both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span></p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="lab6_expdesign_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="lab6_expdesign_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -439,27 +507,23 @@ F-statistic: 0.105 on 1 and 498 DF,  p-value: 0.746</code></pre>
 <p>Notice in the graph above that the arrows from <span class="math inline">\(z\)</span> point <em>towards</em> both <span class="math inline">\(x\)</span> <em>and</em> <span class="math inline">\(y\)</span>. This means that when <span class="math inline">\(z\)</span> changes, both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> will also change <strong>even if <span class="math inline">\(x\)</span> does not have any causal effect on <span class="math inline">\(y\)</span>.</strong> This is the basis of the old adage “correlation is not causation.” A confounder might lead to a strong association where no causal relationship exists, it might lead us to overestimate a true causal effect (if the effect of <span class="math inline">\(z\)</span> and <span class="math inline">\(x\)</span> are in the same direction), or it might underestimate a true causal effect (if the effect of <span class="math inline">\(z\)</span> and <span class="math inline">\(x\)</span> are in the opposite directions). In short, the presence of confounders masks whether the observed association between <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> (the observed treatment effect) is truly the causal effect of <span class="math inline">\(x\)</span>. In other words, the treatment effect we measured above might not actually be the ATE.</p>
 <p>In the context of our example data set, we might feel more confident in concluding that infection does not influence egg mass if we could rule out whether the observed effect might be influenced by confounders.</p>
 <p>Notice that the samples come from two populations. Based on previous experience in this system, let’s assume we suspect that disease prevalence differs between the two populations. We can quantify this suspicion using our data:</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pop1 <span class="ot">&lt;-</span> <span class="fu">filter</span>(eggdata, Population <span class="sc">==</span> <span class="st">"1"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>pop2 <span class="ot">&lt;-</span> <span class="fu">filter</span>(eggdata, Population <span class="sc">==</span> <span class="st">"2"</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Infection rates</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(pop1<span class="sc">$</span>Infected) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.2366</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(pop2<span class="sc">$</span>Infected)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.8306</code></pre>
-</div>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(pop1<span class="sc">$</span>Infected) </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.2366</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(pop2<span class="sc">$</span>Infected)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 0.8306</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Sure enough, individuals in population 2 are almost 4x as likely to be infected as individuals in population 1.</p>
 <p>Why does this matter? Because if egg mass also differs between populations (for example, due to environmental differences between the two areas, genetic differences among populations, etc.), then population is acting as a confounder.</p>
-<div class="cell">
+<div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="lab6_expdesign_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="lab6_expdesign_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -474,52 +538,48 @@ F-statistic: 0.105 on 1 and 498 DF,  p-value: 0.746</code></pre>
 <p>One of the reasons that manipulative experiments are considered the gold standard of causal inference is that we can address confounding through the design of our experiments, which gives the researcher a lot of control to the remove the effects of confounders before any data is collected.</p>
 <p>For the purposes of this lab, we will use the <code>eggdata</code> observations as the basis for exploring the principles of experimental design and how they can improve inferences about cause and effect. In effect, we’ll try to mimic the properties of a true, randomized experiment using the <code>eggdata</code> observations.</p>
 <p>Remember that in a randomized experiment, we remove the effects of a confounder by randomizing our treatment (in this case infection status) across levels of the confounder (in this case, population). In a true experiment, we might accomplish that objective by holding population constant (i.e., by sampling from only one population). In this scenario, population is the same for every observation so cannot confound the effects of infection. We can pretend to do this using our data by simply fitting the linear model to data from one population or the other:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fmPop1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(EggMass <span class="sc">~</span> Infected, <span class="at">data =</span> pop1)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>fmPop2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(EggMass <span class="sc">~</span> Infected, <span class="at">data =</span> pop2)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fmPop1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = EggMass ~ Infected, data = pop1)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--8.690 -1.372  0.105  1.350  7.199 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   19.885      0.144  138.45  &lt; 2e-16 ***
-Infected      -1.361      0.295   -4.61  5.9e-06 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 2.23 on 315 degrees of freedom
-Multiple R-squared:  0.0632,    Adjusted R-squared:  0.0602 
-F-statistic: 21.2 on 1 and 315 DF,  p-value: 5.9e-06</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fmPop2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = EggMass ~ Infected, data = pop2)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--6.624 -1.488 -0.213  1.503  6.058 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   22.867      0.397    57.6  &lt; 2e-16 ***
-Infected      -1.697      0.435    -3.9  0.00014 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 2.21 on 181 degrees of freedom
-Multiple R-squared:  0.0775,    Adjusted R-squared:  0.0724 
-F-statistic: 15.2 on 1 and 181 DF,  p-value: 0.000136</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fmPop1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(EggMass <span class="sc">~</span> Infected, <span class="at">data =</span> pop1)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>fmPop2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(EggMass <span class="sc">~</span> Infected, <span class="at">data =</span> pop2)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fmPop1)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = EggMass ~ Infected, data = pop1)</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -8.690 -1.372  0.105  1.350  7.199 </span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)   19.885      0.144  138.45  &lt; 2e-16 ***</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Infected      -1.361      0.295   -4.61  5.9e-06 ***</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 2.23 on 315 degrees of freedom</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.0632, Adjusted R-squared:  0.0602 </span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 21.2 on 1 and 315 DF,  p-value: 5.9e-06</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fmPop2)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = EggMass ~ Infected, data = pop2)</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -6.624 -1.488 -0.213  1.503  6.058 </span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)   22.867      0.397    57.6  &lt; 2e-16 ***</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Infected      -1.697      0.435    -3.9  0.00014 ***</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 2.21 on 181 degrees of freedom</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.0775, Adjusted R-squared:  0.0724 </span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 15.2 on 1 and 181 DF,  p-value: 0.000136</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>What do you notice about these results? First, we see a large negative effect of infection in both populations, which is not what we saw when the data were combined. The results are also relatively similar between the populations<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. These results suggest that population was causing confounding and removing it’s effect got us closer to the causal effect of infection<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>.</p>
 <hr>
@@ -532,108 +592,98 @@ F-statistic: 15.2 on 1 and 181 DF,  p-value: 0.000136</code></pre>
 <p>Another way to deal with confounding is randomization. Before we do anything with the <code>eggdata</code> observations, let’s think about what data from a truly randomized experiment would look like.</p>
 <p>In observational studies, treatment variable <span class="math inline">\(x\)</span> and confounder <span class="math inline">\(z\)</span> are, by definition, correlated. The goal of manipulative experiments is remove that correlation by assigning treatments in a way that breaks the “link” between <span class="math inline">\(x\)</span> and <span class="math inline">\(z\)</span>. As it turns out, the easiest and most reliable way to do that is by randomly assigning treatments. On average, randomized treatment groups will be the same with regard to confounding variables. In this example, that means we want the same <em>proportion</em><a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> of individuals from each population in each infection group.</p>
 <p>In the original data, we can easily see that this is not the case:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(eggdata<span class="sc">$</span>Infected, eggdata<span class="sc">$</span>Population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   
-      1   2
-  0 242  31
-  1  75 152</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(eggdata<span class="sc">$</span>Infected, eggdata<span class="sc">$</span>Population)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    </span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       1   2</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   0 242  31</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1  75 152</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The <code>table()</code> function is a quick way to tally the number of observations within groups and we can see the extreme imbalance of populations within each infection group (this is a different way to assess confounding, but essentially tells us the same thing we learned above).</p>
 <p>Again, in a real manipulative we would need to have some method of selecting turtles from both populations and then randomly assign infection status (which may not be possible or ethical). We’ll achieve the same goal instead by randomly selecting observations from our original data in a way that produces balanced treatment groups.</p>
 <p>First, we need to determine our sample size, which is constrained by the minimum number of observations we have in each population (because we can’t have more observations than that after we subset our data). In the table above, we can see that in the non-infected group, we only have 31 observations from population 2 so in our subset data, that puts an upper limit on how many observations we can have. In the infected group, we have 75 observations from population 1. That means, in total, our treatment groups (infected vs non-infected) can’t have more than 106 observations (31 + 75) and our goal is to balance those 106 observations so that we have similar proportions of each population in each treatment (this will make more sense below).</p>
 <p>We start by creating perfectly balanced groups (equal sample sizes). Since we can’t have more than 31 non-infected individuals from population 2, that places a maximum on our sample sizes. To randomly select observations (which again, is meant to mimic randomizing treatments), we’ll use the <code>slice_sample()</code> function from <code>dplyr</code>:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>EggSamp <span class="ot">&lt;-</span> eggdata <span class="sc">%&gt;%</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Population, Infected) <span class="sc">%&gt;%</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">25</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>EggSamp <span class="ot">&lt;-</span> eggdata <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Population, Infected) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">25</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
 <p>This is fairly complicated code. We start with our <code>eggdata</code> data frame and then group observations based on population and infected status using another <code>dplyr</code> function called <code>group_by()</code>. After grouping, all subsequent functions are performed separately on each group. The <code>slice_sample()</code> function then randomly samples <code>n</code> observations from each group, which in this case we set to 25 (slightly smaller than our maximum possible sample size of 31). Finally, we ungroup the data so that <code>R</code> will treat it as a normal data frame.</p>
 <hr>
 <p>Let’s look at the “new” data:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(EggSamp<span class="sc">$</span>Infected, EggSamp<span class="sc">$</span>Population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   
-     1  2
-  0 25 25
-  1 25 25</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(EggSamp<span class="sc">$</span>Infected, EggSamp<span class="sc">$</span>Population)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    </span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      1  2</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   0 25 25</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1 25 25</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Notice now that the proportion of population 1 vs population 2 in each treatment group is exacly the same, which means population is no longer confounding. Let’s see what our results look like:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fitSamp <span class="ot">&lt;-</span> <span class="fu">lm</span>(EggMass <span class="sc">~</span> Infected, <span class="at">data =</span> EggSamp)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fitSamp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = EggMass ~ Infected, data = EggSamp)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--5.890 -1.883  0.084  1.832  6.411 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   21.212      0.371   57.24  &lt; 2e-16 ***
-Infected      -1.831      0.524   -3.49  0.00072 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 2.62 on 98 degrees of freedom
-Multiple R-squared:  0.111, Adjusted R-squared:  0.102 
-F-statistic: 12.2 on 1 and 98 DF,  p-value: 0.000716</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fitSamp <span class="ot">&lt;-</span> <span class="fu">lm</span>(EggMass <span class="sc">~</span> Infected, <span class="at">data =</span> EggSamp)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fitSamp)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = EggMass ~ Infected, data = EggSamp)</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -5.790 -1.356 -0.002  1.324  7.368 </span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)   21.393      0.337   63.54  &lt; 2e-16 ***</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Infected      -1.624      0.476   -3.41  0.00094 ***</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 2.38 on 98 degrees of freedom</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.106,  Adjusted R-squared:  0.097 </span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 11.6 on 1 and 98 DF,  p-value: 0.000941</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Very close to what we estimated from each population!</p>
 <hr>
 <p>Before moving on, play with the sample size <code>n</code> and see how it influences your results. Do the parameter estimates change? What about the standard error and p-values? If you run the sampling code several times, how much variability do you see in your estimates as sample size gets smaller?</p>
 <hr>
 <p>Perfectly balanced groups is not actually necessary to remove confounding. Instead, we just need the <em>proportions</em> to be the same in each group. In the example above, we had to leave out a lot of population 1 data since our sample size was determined by the smallest observed group (31 non-infected individuals from population 2). Instead of removing all that data, we could have larger sample sizes for population 1 (up to 75) than for population 2:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>EggSamp <span class="ot">&lt;-</span> eggdata <span class="sc">%&gt;%</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Population, Infected) <span class="sc">%&gt;%</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">sample</span>(<span class="fu">n</span>(), <span class="fu">ifelse</span>(Population[<span class="dv">1</span>] <span class="sc">==</span> <span class="st">"1"</span>, <span class="dv">50</span>, <span class="dv">25</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(EggSamp<span class="sc">$</span>Infected, EggSamp<span class="sc">$</span>Population)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   
-     1  2
-  0 50 25
-  1 50 25</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>EggSamp <span class="ot">&lt;-</span> eggdata <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Population, Infected) <span class="sc">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">sample</span>(<span class="fu">n</span>(), <span class="fu">ifelse</span>(Population[<span class="dv">1</span>] <span class="sc">==</span> <span class="st">"1"</span>, <span class="dv">50</span>, <span class="dv">25</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(EggSamp<span class="sc">$</span>Infected, EggSamp<span class="sc">$</span>Population)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    </span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      1  2</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   0 50 25</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   1 50 25</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This code is pretty complicated by just note that we are now sampling 50 observations of population 1 (for each treatment group) and 25 for population 2.</p>
 <p>What about the estimated ATE:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>fitSamp <span class="ot">&lt;-</span> <span class="fu">lm</span>(EggMass <span class="sc">~</span> Infected, <span class="at">data =</span> EggSamp)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fitSamp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = EggMass ~ Infected, data = EggSamp)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--9.278 -1.586  0.002  1.369  6.611 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   21.327      0.279   76.47  &lt; 2e-16 ***
-Infected      -2.215      0.394   -5.62  9.4e-08 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 2.42 on 148 degrees of freedom
-Multiple R-squared:  0.176, Adjusted R-squared:  0.17 
-F-statistic: 31.5 on 1 and 148 DF,  p-value: 9.37e-08</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fitSamp <span class="ot">&lt;-</span> <span class="fu">lm</span>(EggMass <span class="sc">~</span> Infected, <span class="at">data =</span> EggSamp)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fitSamp)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = EggMass ~ Infected, data = EggSamp)</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  -6.15  -1.71  -0.01   1.74   7.84 </span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)   20.848      0.320   65.20   &lt;2e-16 ***</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Infected      -1.458      0.452   -3.22   0.0016 ** </span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 2.77 on 148 degrees of freedom</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.0656, Adjusted R-squared:  0.0593 </span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 10.4 on 1 and 148 DF,  p-value: 0.00156</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>As before, change the sample sizes for each group (<span class="math inline">\(\leq 75\)</span> for population 1 and <span class="math inline">\(\leq 31\)</span> for population 2) and see what happens to your estimates and standard errors.</p>
 <hr>
@@ -642,102 +692,128 @@ F-statistic: 31.5 on 1 and 148 DF,  p-value: 9.37e-08</code></pre>
 </section>
 <section id="addressing-confounding-through-matching" class="level2">
 <h2 class="anchored" data-anchor-id="addressing-confounding-through-matching">Addressing confounding through matching</h2>
-<p>Even though this lab is about experimental design, not analysis of observational data, it is worth mentioning that balancing observations to address confounding is a common approach to improving causal inference and there are many methods developed to achieve this task. Although we won’t cover all of those methods here, we will look at one common approach known as <em>matching</em>. Essentially, matching is a set of methods to achieve what we did above; this is, produce treatment groups that are “balanced” with regard to confounders.</p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD Balancing observations to address confounding is a common approach to improving causal inference and there are many methods developed to achieve this task. Although we won’t cover all of those methods here, we will look at one common approach known as <em>matching</em>. Essentially, matching pairs observations from one treatment group (e.g.&nbsp;infected) with an observation from the other treatment group (non-infected) based on similarity in the confounding variable. The goal of matching is the produce “balanced” data sets, similar to what we did above.</p>
+<p>We’ll briefly look at how to use these methods to meet the exchangeability assumption using “exact matching”, which requires each pair of observations to have the same value of the confounder. This often results in a lot of data being removed (because some observations do not have an exact match) and is difficult when confounding variables are continous (so many or all observations will not have an exact match) or complex cases with multiple confounding variables. In those cases, more advanced methods use distances or weighting to match observations.</p>
+</section>
+<section id="assignment" class="level2">
+<h2 class="anchored" data-anchor-id="assignment">Assignment</h2>
+</section>
+</section>
+<section id="e9eb87a7713001c6759933df30c885220ac4f14" class="level1">
+<h1>&gt;&gt;&gt;&gt;&gt;&gt;&gt; 2e9eb87a7713001c6759933df30c885220ac4f14</h1>
+<p>Even though this lab is about experimental design, not analysis of observational data, it is worth mentioning that balancing observations to address confounding is a common approach to improving causal inference and there are many methods developed to achieve this task. Although we won’t cover all of those methods here, we will look at one common approach known as <em>matching</em>. Essentially, matching is a set of methods to achieve what we did above; this is, produce treatment groups that are “balanced” with regard to confounders. &gt;&gt;&gt;&gt;&gt;&gt;&gt; 9b7657f73b13c6ed640b9c6eec905e74c02a147b</p>
 <p>There are many ways to do matching. Above, we did a version of exact matching, where you pair observations in each treatment group (infected vs non-infected) that have the exact same value of the confounder. What you end up with is a data set that is balanced with regard to the confounder. The <code>R</code> package <code>MatchIt</code> can do this for us:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MatchIt)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Matching function (formula specifies treatment ~ covariates)</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that we include MotherMass here to also take it into account when creating matched groups</span></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>exact_match <span class="ot">&lt;-</span> <span class="fu">matchit</span>(Infected <span class="sc">~</span> Population <span class="sc">+</span> MotherMass,</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> eggdata,</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">"exact"</span>,</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">estimand =</span> <span class="st">"ATE"</span>)</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="co"># View matching objects</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>exact_match</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>A `matchit` object
- - method: Exact matching
- - number of obs.: 500 (original), 43 (matched)
- - target estimand: ATE
- - covariates: Population, MotherMass</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(exact_match)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-matchit(formula = Infected ~ Population + MotherMass, data = eggdata, 
-    method = "exact", estimand = "ATE")
-
-Summary of Balance for All Data:
-            Means Treated Means Control Std. Mean Diff. Var. Ratio eCDF Mean
-Population1          0.33         0.886          -1.386          .     0.556
-Population2          0.67         0.114           1.386          .     0.556
-MotherMass          50.03        49.785           0.119      1.385     0.041
-            eCDF Max
-Population1    0.556
-Population2    0.556
-MotherMass     0.118
-
-Summary of Balance for Matched Data:
-            Means Treated Means Control Std. Mean Diff. Var. Ratio eCDF Mean
-Population1         0.605         0.605           0.000          .     0.000
-Population2         0.395         0.395           0.000          .     0.000
-MotherMass         49.195        49.194           0.001      0.998     0.002
-            eCDF Max Std. Pair Dist.
-Population1     0.00           0.000
-Population2     0.00           0.000
-MotherMass      0.07           0.001
-
-Sample Sizes:
-              Control Treated
-All            273.    227.  
-Matched (ESS)   20.78   21.88
-Matched         21.     22.  
-Unmatched      252.    205.  
-Discarded        0.      0.  </code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract matched data</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> <span class="fu">match_data</span>(exact_match)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model to matched data</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>fmExactMatch <span class="ot">&lt;-</span> <span class="fu">lm</span>(EggMass <span class="sc">~</span> Infected, <span class="at">data =</span> matched_data)</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fmExactMatch)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = EggMass ~ Infected, data = matched_data)
-
-Residuals:
-   Min     1Q Median     3Q    Max 
--5.205 -1.101  0.016  1.138  3.447 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   20.390      0.401   50.84   &lt;2e-16 ***
-Infected      -1.694      0.561   -3.02   0.0043 ** 
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 1.84 on 41 degrees of freedom
-Multiple R-squared:  0.182, Adjusted R-squared:  0.162 
-F-statistic: 9.12 on 1 and 41 DF,  p-value: 0.00433</code></pre>
-</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MatchIt)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Matching function (formula specifies treatment ~ covariates)</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Note that we include MotherMass here to also take it into account when creating matched groups</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>exact_match <span class="ot">&lt;-</span> <span class="fu">matchit</span>(Infected <span class="sc">~</span> Population <span class="sc">+</span> MotherMass,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>                       <span class="at">data =</span> eggdata,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">method =</span> <span class="st">"exact"</span>,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">estimand =</span> <span class="st">"ATE"</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># View matching objects</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>exact_match</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; A `matchit` object</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  - method: Exact matching</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  - number of obs.: 500 (original), 43 (matched)</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  - target estimand: ATE</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  - covariates: Population, MotherMass</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(exact_match)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; matchit(formula = Infected ~ Population + MotherMass, data = eggdata, </span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     method = "exact", estimand = "ATE")</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Summary of Balance for All Data:</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Means Treated Means Control Std. Mean Diff. Var. Ratio eCDF Mean</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Population1          0.33         0.886          -1.386          .     0.556</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Population2          0.67         0.114           1.386          .     0.556</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; MotherMass          50.03        49.785           0.119      1.385     0.041</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             eCDF Max</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Population1    0.556</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Population2    0.556</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; MotherMass     0.118</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Summary of Balance for Matched Data:</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Means Treated Means Control Std. Mean Diff. Var. Ratio eCDF Mean</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Population1         0.605         0.605           0.000          .     0.000</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Population2         0.395         0.395           0.000          .     0.000</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; MotherMass         49.195        49.194           0.001      0.998     0.002</span></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             eCDF Max Std. Pair Dist.</span></span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Population1     0.00           0.000</span></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Population2     0.00           0.000</span></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; MotherMass      0.07           0.001</span></span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Sample Sizes:</span></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               Control Treated</span></span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; All            273.    227.  </span></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Matched (ESS)   20.78   21.88</span></span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Matched         21.     22.  </span></span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Unmatched      252.    205.  </span></span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Discarded        0.      0.</span></span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract matched data</span></span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a>matched_data <span class="ot">&lt;-</span> <span class="fu">match_data</span>(exact_match)</span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit model to matched data</span></span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>fmExactMatch <span class="ot">&lt;-</span> <span class="fu">lm</span>(EggMass <span class="sc">~</span> Infected, <span class="at">data =</span> matched_data)</span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fmExactMatch)</span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Call:</span></span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; lm(formula = EggMass ~ Infected, data = matched_data)</span></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals:</span></span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Min     1Q Median     3Q    Max </span></span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; -5.205 -1.101  0.016  1.138  3.447 </span></span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Coefficients:</span></span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Intercept)   20.390      0.401   50.84   &lt;2e-16 ***</span></span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Infected      -1.694      0.561   -3.02   0.0043 ** </span></span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual standard error: 1.84 on 41 degrees of freedom</span></span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple R-squared:  0.182,  Adjusted R-squared:  0.162 </span></span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-statistic: 9.12 on 1 and 41 DF,  p-value: 0.00433</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Notice that we get an estimate much closer to the expected ATE than when we fit this to the raw data.</p>
 <p>Exact matching does not work as well when there are more than one confounder or confounders are continuous, because finding observations that exactly match in all confounders will become rare and your sample size will end up being very small (which you can see in this example). In these cases, matching can be done based on “distances” between values, which essentially tries to find observations that have very close values of confounders. We’ll explore those options more in a later lab.</p>
-</section>
 <section id="assignment-not-for-grade" class="level2">
 <h2 class="anchored" data-anchor-id="assignment-not-for-grade">Assignment (not for grade)</h2>
-<p>You may have noticed that we mostly ignored the other column in the data set, <code>MotherMass</code>. If that is confounding then the effects we measured after accounting for <code>Population</code> may still be biased with regard to the average treatment effect.</p>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD # Assignment</p>
+<p>A biologist wants to compare the growth of four different tree species she is considering for use in reforestation efforts. Thirty two seedlings of each species are planted at the same time in a large plot. Heights in meters are recorded after several years.</p>
+<p>Within a RMarkdown document, do the following:</p>
+<ol type="1">
+<li>Create an <code>R</code> chunk to load the data using:</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"treedata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li><p>Create a header called “Hypotheses” and under this header, indicate, in plain English, what the null and alternative hypotheses are. Also use R Markdown’s equation features to write these hypotheses using mathematical notation</p></li>
+<li><p>Create a header called “ANOVA by hand”. Under this header, perform an ANOVA analysis (degrees of freedom, sums-of-squares, mean-squares, and <em>F</em>-value) without using <code>aov()</code>. Compute either the critical value of <em>F</em>, or the <em>p</em>-value. Be sure to <strong>annotate your code</strong></p></li>
+<li><p>Create a header called “ANOVA in R”. Under this header, perform an ANOVA analysis on the data using the <code>lm()</code> function and then again using the <code>aov()</code> function</p></li>
+<li><p>Under a subheader called “ANOVA results”</p>
+<ul>
+<li><p>indicate whether or not the null hypothesis can be rejected at the <span class="math inline">\(\alpha = 0.05\)</span> level</p></li>
+<li><p>include a well-formatted ANOVA table using the <code>broom::tidy()</code> function</p></li>
+<li><p>create a barplot showing the effect sizes and 95% confidence intervals around them</p></li>
+</ul></li>
+<li><p>Create a header called “Which means are different?”. Use Tukey’s HSD test to determine which pairs of means differ at the <span class="math inline">\(\alpha = 0.05\)</span> level. Include a few sentences indicating which pairs are different. If there is an inconsistency between the initial ANOVA results and the post-hoc comparisons, explain why that might be the case</p></li>
+<li><h1 id="create-a-new-header-called-reflection.-under-this-header-answer-the-following-questions">Create a new header called “Reflection”. Under this header, answer the following questions:</h1>
+<p>You may have noticed that we mostly ignored the other column in the data set, <code>MotherMass</code>. If that is confounding then the effects we measured after accounting for <code>Population</code> may still be biased with regard to the average treatment effect.</p></li>
+</ol>
 <p>Create an R Markdown file to do the following:</p>
 <ol type="1">
 <li>Create an <code>R</code> chunk to load the eggdata using:</li>
 </ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750data)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"eggdata"</span>)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>eggdata<span class="sc">$</span>Infected <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(eggdata<span class="sc">$</span>Infected)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750data)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"eggdata"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>eggdata<span class="sc">$</span>Infected <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(eggdata<span class="sc">$</span>Infected)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="2" type="1">
 <li><p>Make a figure to show the masses of both infected and non-infected mothers. You should spend some time considering what type of figure would best display this data and it should clearly show both the raw observations as well as useful summaries of each group. At this point in the semester, your figures should be starting to look “presentation” quality, with informative axis labels, etc.</p></li>
@@ -745,23 +821,31 @@ F-statistic: 9.12 on 1 and 41 DF,  p-value: 0.00433</code></pre>
 </ol>
 <ol start="4" type="1">
 <li><p>If MotherMass is not a confounder, what does that imply about the ATE we estimated above (after accounting for the effect of Population)? If it is a confounder, how might you remove it’s effect to better estimate the ATE in this data set?<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p></li>
-<li><p>Create a new header called “Reflection”. Under this header, answer the following questions:</p></li>
+<li><p>Create a new header called “Reflection”. Under this header, answer the following questions: &gt;&gt;&gt;&gt;&gt;&gt;&gt; 9b7657f73b13c6ed640b9c6eec905e74c02a147b</p></li>
 </ol>
 <ul>
 <li><p>On a 1-10 scale, how would you rate your confidence in the topics covered in this lab?</p></li>
 <li><p>What lingering questions/confusion about these topics do you still have?</p></li>
+</ul>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD - If you used AI for any part of this assignment, do you think it helped? Did it save time? If you did not use AI, do you think it would have helped?</p>
+<p>A few things to remember when finishing the exercise:</p>
+<ul>
+<li><p>Be sure the output type is set to: <code>output: html_document</code></p></li>
+<li><p>Be sure to include your name in the <code>author</code> field of the header</p></li>
+<li><h1 id="be-sure-to-set-echo-true-in-all-r-chunks-so-we-can-see-both-your-code-and-the-output">Be sure to set <code>echo = TRUE</code> in all <code>R</code> chunks so we can see both your code and the output</h1></li>
 </ul>
 <p>A few things to remember when creating the document:</p>
 <ul>
 <li><p>Be sure to include your name in the <code>author</code> field of the header</p></li>
 <li><p>Be sure the output type is set to: <code>output: html_document</code></p></li>
 <li><p>Be sure to set <code>echo = TRUE</code> in all <code>R</code> chunks so that all code and output is visible in the knitted document</p></li>
-<li><p>Regularly knit the document as you work to check for errors</p></li>
+<li><p>Regularly knit the document as you work to check for errors &gt;&gt;&gt;&gt;&gt;&gt;&gt; 9b7657f73b13c6ed640b9c6eec905e74c02a147b</p></li>
 <li><p>See the R Markdown reference sheet for help with creating <code>R</code> chunks, equations, tables, etc.</p></li>
 <li><p>If you use AI on any part of your assignment, you must include the full prompt(s) you used and it’s full answer(s) in a <strong>separate section</strong> titled “AI assistance” at the end of this document.</p></li>
 </ul>
 
 
+</section>
 </section>
 
 
@@ -772,23 +856,23 @@ F-statistic: 9.12 on 1 and 41 DF,  p-value: 0.00433</code></pre>
 <li id="fn2"><p>but that’s only true if our assumptions about the causal relationship between variables is true and there are no other confounding variables we are missing<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Not necessarily the same number!<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>Note - the <code>ggdag</code> package can be used to create diagrams like the one at the beginning of this lab to show hypothesized relationship between variable. For example, here’s the code used to create the figure above</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>egg_dag <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> x <span class="sc">+</span> z,</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">~</span> z,</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"x"</span>,</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome =</span> <span class="st">"y"</span>,</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="at">y =</span> <span class="st">"EggMass"</span>, <span class="at">x =</span> <span class="st">"Infected"</span>,</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">z =</span> <span class="st">"Population"</span>),</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">z =</span> <span class="dv">2</span>, <span class="at">y =</span> <span class="dv">3</span>),</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> <span class="fu">c</span>(<span class="at">x =</span> <span class="dv">2</span>, <span class="at">z =</span> <span class="dv">3</span>, <span class="at">y =</span> <span class="dv">2</span>))</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(egg_dag,</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">use_labels =</span> <span class="st">"label"</span>,</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">text =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>, <span class="at">color =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dag</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>egg_dag <span class="ot">&lt;-</span> <span class="fu">dagify</span>(</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  y <span class="sc">~</span> x <span class="sc">+</span> z,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  x <span class="sc">~</span> z,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">exposure =</span> <span class="st">"x"</span>,</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">outcome =</span> <span class="st">"y"</span>,</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">c</span>(<span class="at">y =</span> <span class="st">"EggMass"</span>, <span class="at">x =</span> <span class="st">"Infected"</span>,</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">z =</span> <span class="st">"Population"</span>),</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">coords =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="at">x =</span> <span class="dv">1</span>, <span class="at">z =</span> <span class="dv">2</span>, <span class="at">y =</span> <span class="dv">3</span>),</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> <span class="fu">c</span>(<span class="at">x =</span> <span class="dv">2</span>, <span class="at">z =</span> <span class="dv">3</span>, <span class="at">y =</span> <span class="dv">2</span>))</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggdag</span>(egg_dag,</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">use_labels =</span> <span class="st">"label"</span>,</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">text =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>, <span class="at">color =</span> <span class="st">"none"</span>) <span class="sc">+</span> </span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_dag</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></li>
 <li id="fn5"><p>This question is meant to move a little beyond what we covered in this lab so just think through different ways you might address this variable using the tools we have learned about so far<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>

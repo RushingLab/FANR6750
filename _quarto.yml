@@ -111,10 +111,10 @@ website:
 
           - text: "Lab 6: Experimental Design"
             href: labs/lab6_expdesign.qmd
-          #
-          # - text: "Lab 7: ANOVA"
-          #   href: labs/lab07_anova.qmd
-          #
+
+          - text: "Lab 7: ANOVA"
+            href: labs/lab07_ANOVA.qmd
+
           # - text: "Lab 8: Multiple Comparisons"
           #   href: labs/lab08_multcomp.qmd
 

@@ -34,15 +34,13 @@ source(here::here("R/zzz.R"))
 
 ## Lab 6
 
-1) t-tests
+1) Experimental design
 
-  + One sample t-tests
+  + Confounding
   
-  + Two sample t-tests
+  + Randomization
   
-  + Samples vs tails
-  
-  + Paired t-tests
+  + Matching
   
 
 ## Today's topics
@@ -57,8 +55,6 @@ source(here::here("R/zzz.R"))
 
 2) Plotting group means and CI's
 
-4) Multiple comparisons  
-
 
 # One-way ANOVA as a linear model
 
@@ -71,8 +67,6 @@ source(here::here("R/zzz.R"))
 #### Questions
 
 - Do the means differ and by how much (what are the effect sizes?)  
-
-- Which means differ from each other?  
 
 #### Null hypothesis
 
@@ -90,7 +84,7 @@ OR
 
 #### Formulation as a linear model
 
-Just as we have seen in the last lab, many of the analyses that we will perform this semester can be thought of in multiple ways. A one-way ANOVA can be formulated as a linear model:
+Just as we have seen in the t-test lab, many of the analyses that we will perform this semester can be thought of in multiple ways. A one-way ANOVA can be formulated as a linear model:
 
 $$
 y_{ij} = \mu + \alpha_i + \epsilon_{ij} \ \ \ \ \ \text{where} \ \ \ \ \ \epsilon_{ij} \sim \text{N}(0,\sigma)
@@ -118,7 +112,7 @@ data("sawdata")
 
 You may notice that something seems different about this dataset than the previous ones we have looked at over the last few weeks. This is because the data are in what is called 'wide format'. This means that each level of the grouping variable (in this case chainsaw brand) has gotten its own column in the dataframe. While wide format is often convenient for reports because it allows you to more easily see trends in a table, long format is more useful for succinctly storing data and for use in most analyses.
 
-2) Convert the dataframe from wide format to long format^[In this code chunk, we introduce the idea of pipes in R. A pipe (shown with %>%) is a way of stacking multiple functions on top of each other in an easy to read way. Many packages (including tidyr) use pipes instead of having functions nested inside of each other. While pipes are generally considered to have multiple advantages related to their readability as well as modular structure, there are ways to perform any of these steps without their use.]
+2) Convert the dataframe from wide format to long format^[In this code chunk, we are again using pipes. A pipe (shown with %>%) is a way of stacking multiple functions on top of each other in an easy to read way. Many packages (including tidyr) use pipes instead of having functions nested inside of each other. While pipes are generally considered to have multiple advantages related to their readability as well as modular structure, there are ways to perform any of these steps without their use.]
 
 ```{r}
 library(tidyr)
@@ -221,7 +215,7 @@ model.tables(aov1, type = "effects", se = TRUE)
 
 ## Constructing an ANOVA table by hand
 
-Just as we did in the last lab, we will see below how `R` is actually doing the ANOVA and we'll get practice constructing an ANOVA table by hand.
+Just as we did in the t-test lab, we will see below how `R` is actually doing the ANOVA and we'll get practice constructing an ANOVA table by hand.
 
 
 #### Grand mean
@@ -283,7 +277,7 @@ SSa <- n * sum((ybar.i$mu - ybar.)^2)
 SSa
 ```
 
-Sums of squares within^[Notice the use of the `times=` argument. How do we decide whether to use `times=` or `each=`? In this case, we need to look at the order of the data in the dataframe. Because of how the data is ordered, we are interested in taking the entire mu vector and repeating it 5 times. If the data were ordered such that all the Brand A observations were first etc. then we would have taken each element in the mu vector and repeated it `each= 5`.]
+Sums of squares within^[Notice the use of the `times=` argument. How do we decide whether to use `times=` or `each=`? In this case, we need to look at the order of the data in the dataframe. Because of how the data is ordered, we are interested in taking the entire `mu` vector and repeating it 5 times. If the data were ordered such that all the Brand A observations were first etc. then we would have taken each element in the mu vector and repeated it `each= 5`.]
 
 ```{r}
 # individual saw data
@@ -368,23 +362,7 @@ ggplot(ybar.i, aes(x = Brand, y = mu, fill = Brand)) +
   scale_y_continuous("Chainsaw kickback angle")
 ```
 
-## Multiple comparisons
-
-```{r}
-TukeyHSD(aov1)
-```
-
-
-```{r fig.align="center", fig.width=5, fig.height=4.5}
-plot(TukeyHSD(aov1))
-```
-
-**Which brands were significantly different from one another? How would you answer the original question at the start of this exercise?**
-
-
-<br>
-
-<br>
+The second task, which we will explore in the next lab, is figuring out which group means differ from the others. 
 
 # Assignment
 
@@ -413,9 +391,8 @@ data("treedata")
 
     + create a barplot showing the effect sizes and 95% confidence intervals around them
 
-6) Create a header called "Which means are different?". Use Tukey’s HSD test to determine which pairs of means differ at the $\alpha = 0.05$ level. Include a few sentences indicating which pairs are different. If there is an inconsistency between the initial ANOVA results and the post-hoc comparisons, explain why that might be the case 
 
-7) Create a new header called "Reflection". Under this header, answer the following questions: 
+6) Create a new header called "Reflection". Under this header, answer the following questions: 
 
 - On a 1-10 scale, how would you rate your confidence in the topics covered in this lab? 
 

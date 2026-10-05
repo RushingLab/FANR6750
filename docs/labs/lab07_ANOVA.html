@@ -263,6 +263,14 @@ window.Quarto = {
     <a class="dropdown-item" href="../labs/lab05_linear_model_assumptions.html">
  <span class="dropdown-text">Lab 5: Evaluating assumptions</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab6_expdesign.html">
+ <span class="dropdown-text">Lab 6: Experimental Design</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab07_ANOVA.html">
+ <span class="dropdown-text">Lab 7: ANOVA</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -316,7 +324,6 @@ window.Quarto = {
   <li><a href="#using-aov" id="toc-using-aov" class="nav-link" data-scroll-target="#using-aov">Using <code>aov()</code></a></li>
   <li><a href="#constructing-an-anova-table-by-hand" id="toc-constructing-an-anova-table-by-hand" class="nav-link" data-scroll-target="#constructing-an-anova-table-by-hand">Constructing an ANOVA table by hand</a></li>
   <li><a href="#plotting-group-means-and-confidence-intervals" id="toc-plotting-group-means-and-confidence-intervals" class="nav-link" data-scroll-target="#plotting-group-means-and-confidence-intervals">Plotting group means and confidence intervals</a></li>
-  <li><a href="#multiple-comparisons" id="toc-multiple-comparisons" class="nav-link" data-scroll-target="#multiple-comparisons">Multiple comparisons</a></li>
   </ul></li>
   <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a></li>
   </ul>
@@ -348,13 +355,12 @@ window.Quarto = {
 <section id="lab-6" class="level2">
 <h2 class="anchored" data-anchor-id="lab-6">Lab 6</h2>
 <ol type="1">
-<li>t-tests</li>
+<li>Experimental design</li>
 </ol>
 <ul>
-<li><p>One sample t-tests</p></li>
-<li><p>Two sample t-tests</p></li>
-<li><p>Samples vs tails</p></li>
-<li><p>Paired t-tests</p></li>
+<li><p>Confounding</p></li>
+<li><p>Randomization</p></li>
+<li><p>Matching</p></li>
 </ul>
 </section>
 <section id="todays-topics" class="level2">
@@ -368,8 +374,7 @@ window.Quarto = {
 <li><p>Performing an ANOVA by hand</p></li>
 </ul>
 <ol start="2" type="1">
-<li><p>Plotting group means and CI’s</p></li>
-<li><p>Multiple comparisons</p></li>
+<li>Plotting group means and CI’s</li>
 </ol>
 </section>
 <section id="one-way-anova-as-a-linear-model" class="level1">
@@ -384,8 +389,7 @@ window.Quarto = {
 <section id="questions" class="level4">
 <h4 class="anchored" data-anchor-id="questions">Questions</h4>
 <ul>
-<li><p>Do the means differ and by how much (what are the effect sizes?)</p></li>
-<li><p>Which means differ from each other?</p></li>
+<li>Do the means differ and by how much (what are the effect sizes?)</li>
 </ul>
 </section>
 <section id="null-hypothesis" class="level4">
@@ -406,7 +410,7 @@ window.Quarto = {
 </section>
 <section id="formulation-as-a-linear-model" class="level4">
 <h4 class="anchored" data-anchor-id="formulation-as-a-linear-model">Formulation as a linear model</h4>
-<p>Just as we have seen in the last lab, many of the analyses that we will perform this semester can be thought of in multiple ways. A one-way ANOVA can be formulated as a linear model:</p>
+<p>Just as we have seen in the t-test lab, many of the analyses that we will perform this semester can be thought of in multiple ways. A one-way ANOVA can be formulated as a linear model:</p>
 <p><span class="math display">\[
 y_{ij} = \mu + \alpha_i + \epsilon_{ij} \ \ \ \ \ \text{where} \ \ \ \ \ \epsilon_{ij} \sim \text{N}(0,\sigma)
 \]</span></p>
@@ -669,7 +673,7 @@ y_{ij} = \mu + \alpha_i + \epsilon_{ij} \ \ \ \ \ \text{where} \ \ \ \ \ \epsilo
 </section>
 <section id="constructing-an-anova-table-by-hand" class="level2">
 <h2 class="anchored" data-anchor-id="constructing-an-anova-table-by-hand">Constructing an ANOVA table by hand</h2>
-<p>Just as we did in the last lab, we will see below how <code>R</code> is actually doing the ANOVA and we’ll get practice constructing an ANOVA table by hand.</p>
+<p>Just as we did in the t-test lab, we will see below how <code>R</code> is actually doing the ANOVA and we’ll get practice constructing an ANOVA table by hand.</p>
 <section id="grand-mean" class="level4">
 <h4 class="anchored" data-anchor-id="grand-mean">Grand mean</h4>
 <div class="cell" data-layout-align="center">
@@ -814,38 +818,7 @@ CI = Point\: estimate \pm t_{\alpha/2,a(n-1)}\times SE
 </div>
 </div>
 </div>
-</section>
-<section id="multiple-comparisons" class="level2">
-<h2 class="anchored" data-anchor-id="multiple-comparisons">Multiple comparisons</h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(aov1)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Tukey multiple comparisons of means</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     95% family-wise confidence level</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Fit: aov(formula = angle ~ Brand, data = sawdata)</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Brand</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      diff      lwr   upr  p adj</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; B-A   4.6  -2.6998  11.9 0.3079</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; C-A  12.8   5.5002  20.1 0.0007</span></span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D-A  -6.0 -13.2998   1.3 0.1276</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; C-B   8.2   0.9002  15.5 0.0251</span></span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D-B -10.6 -17.8998  -3.3 0.0037</span></span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D-C -18.8 -26.0998 -11.5 0.0000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">TukeyHSD</span>(aov1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="lab07_ANOVA_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>Which brands were significantly different from one another? How would you answer the original question at the start of this exercise?</strong></p>
-<p><br></p>
-<p><br></p>
+<p>The second task, which we will explore in the next lab, is figuring out which group means differ from the others.</p>
 </section>
 </section>
 <section id="assignment" class="level1">
@@ -856,8 +829,8 @@ CI = Point\: estimate \pm t_{\alpha/2,a(n-1)}\times SE
 <li>Create an <code>R</code> chunk to load the data using:</li>
 </ol>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"treedata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"treedata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="2" type="1">
 <li><p>Create a header called “Hypotheses” and under this header, indicate, in plain English, what the null and alternative hypotheses are. Also use R Markdown’s equation features to write these hypotheses using mathematical notation</p></li>
@@ -869,7 +842,6 @@ CI = Point\: estimate \pm t_{\alpha/2,a(n-1)}\times SE
 <li><p>include a well-formatted ANOVA table using the <code>broom::tidy()</code> function</p></li>
 <li><p>create a barplot showing the effect sizes and 95% confidence intervals around them</p></li>
 </ul></li>
-<li><p>Create a header called “Which means are different?”. Use Tukey’s HSD test to determine which pairs of means differ at the <span class="math inline">\(\alpha = 0.05\)</span> level. Include a few sentences indicating which pairs are different. If there is an inconsistency between the initial ANOVA results and the post-hoc comparisons, explain why that might be the case</p></li>
 <li><p>Create a new header called “Reflection”. Under this header, answer the following questions:</p></li>
 </ol>
 <ul>
@@ -893,9 +865,9 @@ CI = Point\: estimate \pm t_{\alpha/2,a(n-1)}\times SE
 <div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1"><p>In this code chunk, we introduce the idea of pipes in R. A pipe (shown with %&gt;%) is a way of stacking multiple functions on top of each other in an easy to read way. Many packages (including tidyr) use pipes instead of having functions nested inside of each other. While pipes are generally considered to have multiple advantages related to their readability as well as modular structure, there are ways to perform any of these steps without their use.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>In this code chunk, we are again using pipes. A pipe (shown with %&gt;%) is a way of stacking multiple functions on top of each other in an easy to read way. Many packages (including tidyr) use pipes instead of having functions nested inside of each other. While pipes are generally considered to have multiple advantages related to their readability as well as modular structure, there are ways to perform any of these steps without their use.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Notice the use of the double colon in the code chunk below. This is used in <code>R</code> to explicitly link a function to the package from where it came. Because there is an ever expanding list of available packages and many of them contain functions that have the same names but perform different tasks, it is necessary to tell <code>R</code> which particular function you are trying to use. If we did not specify the package using the double colon operator, <code>R</code> would use the function from whatever was the most recently loaded package in your library that contained that function name.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Notice the use of the <code>times=</code> argument. How do we decide whether to use <code>times=</code> or <code>each=</code>? In this case, we need to look at the order of the data in the dataframe. Because of how the data is ordered, we are interested in taking the entire mu vector and repeating it 5 times. If the data were ordered such that all the Brand A observations were first etc. then we would have taken each element in the mu vector and repeated it <code>each= 5</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Notice the use of the <code>times=</code> argument. How do we decide whether to use <code>times=</code> or <code>each=</code>? In this case, we need to look at the order of the data in the dataframe. Because of how the data is ordered, we are interested in taking the entire <code>mu</code> vector and repeating it 5 times. If the data were ordered such that all the Brand A observations were first etc. then we would have taken each element in the mu vector and repeated it <code>each= 5</code>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

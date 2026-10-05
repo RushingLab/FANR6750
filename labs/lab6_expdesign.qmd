@@ -11,14 +11,14 @@ jupyter: false
 
 ```{r setup, include=FALSE}
 # Global setup chunk
-# knitr::opts_chunk$set(
-#   warning = FALSE,
-#   message = FALSE,
-#   fig.align = 'center',
-#   fig.retina = 2,
-#   collapse = TRUE,
-#   comment = "#>"
-# )
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  fig.align = 'center',
+  fig.retina = 2,
+  collapse = TRUE,
+  comment = "#>"
+)
 
 # Load libraries
 library(dplyr)
@@ -50,12 +50,37 @@ Linear Model Assumptions
 
 1) Confounding
 
+<<<<<<< HEAD
+2) 
+
+## 
+=======
 2) Randomization
 
 3) Matching
 
 4) Causal assumptions
+>>>>>>> 9b7657f73b13c6ed640b9c6eec905e74c02a147b
 
+<<<<<<< HEAD
+```{r}
+library(FANR6750data)
+data(eggdata)
+
+str(eggdata)
+```
+
+```{r}
+fitm <- lm(EggMass ~ Infected, data = eggdata)
+summary(fitm)
+```
+
+```{r}
+eggdata$MotherMass_c <- eggdata$MotherMass - mean(eggdata$MotherMass)
+fitm <- lm(EggMass ~ Infected + Population + MotherMass_c, data = eggdata)
+summary(fitm)
+```
+=======
 ## Estimating treatment effects
 
 In this lab, we will explore experimental design through the lens of trying to estimate *treatment effects*. Broadly defined, treatment effects are the magnitude and direction of changes in a variable $y$ in response to changes in another variable $x$. So far this semester, we have explored treatment effects using linear models, where we interpret slope coefficients as the change in $y$ for one unit change in $x$. But it turns out that is just one type of treatment effect and just one approach to measuring treatment effects. In this lab, we will focus on a specific treatment effect, known as the *average treatment effect*. 
@@ -280,7 +305,17 @@ Admittedly, we did this a bit backwards compared to a true manipulative experime
 
 ## Addressing confounding through matching
 
+<<<<<<< HEAD
+Balancing observations to address confounding is a common approach to improving causal inference and there are many methods developed to achieve this task. Although we won't cover all of those methods here, we will look at one common approach known as *matching*. Essentially, matching pairs observations from one treatment group (e.g. infected) with an observation from the other treatment group (non-infected) based on similarity in the confounding variable. The goal of matching is the produce "balanced" data sets, similar to what we did above. 
+
+We'll briefly look at how to use these methods to meet the exchangeability assumption using "exact matching", which requires each pair of observations to have the same value of the confounder. This often results in a lot of data being removed (because some observations do not have an exact match) and is difficult when confounding variables are continous (so many or all observations will not have an exact match) or complex cases with multiple confounding variables. In those cases, more advanced methods use distances or weighting to match observations. 
+
+
+## Assignment
+>>>>>>> 2e9eb87a7713001c6759933df30c885220ac4f14
+=======
 Even though this lab is about experimental design, not analysis of observational data, it is worth mentioning that balancing observations to address confounding is a common approach to improving causal inference and there are many methods developed to achieve this task. Although we won't cover all of those methods here, we will look at one common approach known as *matching*. Essentially, matching is a set of methods to achieve what we did above; this is, produce treatment groups that are "balanced" with regard to confounders. 
+>>>>>>> 9b7657f73b13c6ed640b9c6eec905e74c02a147b
 
 There are many ways to do matching. Above, we did a version of exact matching, where you pair observations in each treatment group (infected vs non-infected) that have the exact same value of the confounder. What you end up with is a data set that is balanced with regard to the confounder. The `R` package `MatchIt` can do this for us:
 
@@ -311,6 +346,38 @@ Exact matching does not work as well when there are more than one confounder or 
 
 ## Assignment (not for grade)
 
+<<<<<<< HEAD
+# Assignment
+
+A biologist wants to compare the growth of four different tree species she is considering for use in reforestation efforts. Thirty two seedlings of each species are planted at the same time in a large plot. Heights in meters are recorded after several years. 
+
+Within a RMarkdown document, do the following:
+
+1) Create an `R` chunk to load the data using:
+
+```{r eval = FALSE}
+library(FANR6750)
+data("treedata")
+```
+
+2) Create a header called "Hypotheses" and under this header, indicate, in plain English, what the null and alternative hypotheses are. Also use R Markdown's equation features to write these hypotheses using mathematical notation
+
+3) Create a header called "ANOVA by hand". Under this header, perform an ANOVA analysis (degrees of freedom, sums-of-squares, mean-squares, and *F*-value) without using `aov()`. Compute either the critical value of *F*, or the *p*-value. Be sure to **annotate your code** 
+
+4) Create a header called "ANOVA in R". Under this header, perform an ANOVA analysis on the data using the `lm()` function and then again using the `aov()` function
+
+5) Under a subheader called "ANOVA results"
+
+    + indicate whether or not the null hypothesis can be rejected at the $\alpha = 0.05$ level  
+
+    + include a well-formatted ANOVA table using the `broom::tidy()` function  
+
+    + create a barplot showing the effect sizes and 95% confidence intervals around them
+
+6) Create a header called "Which means are different?". Use Tukey’s HSD test to determine which pairs of means differ at the $\alpha = 0.05$ level. Include a few sentences indicating which pairs are different. If there is an inconsistency between the initial ANOVA results and the post-hoc comparisons, explain why that might be the case 
+
+7) Create a new header called "Reflection". Under this header, answer the following questions: 
+=======
 You may have noticed that we mostly ignored the other column in the data set, `MotherMass`. If that is confounding then the effects we measured after accounting for `Population` may still be biased with regard to the average treatment effect. 
 
 Create an R Markdown file to do the following:
@@ -356,11 +423,24 @@ ggdag(egg_dag,
 4) If MotherMass is not a confounder, what does that imply about the ATE we estimated above (after accounting for the effect of Population)? If it is a confounder, how might you remove it's effect to better estimate the ATE in this data set?^[This question is meant to move a little beyond what we covered in this lab so just think through different ways you might address this variable using the tools we have learned about so far]
 
 5) Create a new header called "Reflection". Under this header, answer the following questions: 
+>>>>>>> 9b7657f73b13c6ed640b9c6eec905e74c02a147b
 
 - On a 1-10 scale, how would you rate your confidence in the topics covered in this lab? 
 
 - What lingering questions/confusion about these topics do you still have?
 
+<<<<<<< HEAD
+- If you used AI for any part of this assignment, do you think it helped? Did it save time? If you did not use AI, do you think it would have helped?
+
+
+A few things to remember when finishing the exercise:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Be sure to include your name in the `author` field of the header
+
+- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
+=======
 
 A few things to remember when creating the document:
 
@@ -371,6 +451,7 @@ A few things to remember when creating the document:
 - Be sure to set `echo = TRUE` in all `R` chunks so that all code and output is visible in the knitted document
 
 - Regularly knit the document as you work to check for errors
+>>>>>>> 9b7657f73b13c6ed640b9c6eec905e74c02a147b
 
 - See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
 
