@@ -109,12 +109,12 @@ website:
           - text: "Lab 5: Evaluating assumptions"
             href: labs/lab05_linear_model_assumptions.qmd
 
-          # - text: "Lab 6: Experimental Design"
-          #   href: labs/lab06_expdesign.qmd
-          #
-          # - text: "Lab 7: ANOVA"
-          #   href: labs/lab07_anova.qmd
-          #
+          - text: "Lab 6: Experimental Design"
+            href: labs/lab6_expdesign.qmd
+
+          - text: "Lab 7: ANOVA"
+            href: labs/lab07_anova.qmd
+
           # - text: "Lab 8: Multiple Comparisons"
           #   href: labs/lab08_multcomp.qmd
 

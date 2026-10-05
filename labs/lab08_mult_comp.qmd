@@ -1,0 +1,486 @@
+---
+title: "Lab 7: Completely randomized ANOVA"
+subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research<br><small>Fall 2026</small>"
+format:
+  html:
+    toc: true
+    toc-depth: 2
+    number-sections: false # change to true if you want numbered lists
+jupyter: false
+---
+
+```{r setup, include=FALSE}
+# Global setup chunk
+knitr::opts_chunk$set(
+  warning = FALSE,
+  message = FALSE,
+  fig.align = 'center',
+  fig.retina = 2,
+  collapse = TRUE,
+  comment = "#>"
+)
+
+# Load libraries
+library(dplyr)
+library(knitr)
+library(rmarkdown)
+library(FANR6750data)
+library(kableExtra)
+
+# Source Clark's palette
+source(here::here("R/zzz.R"))
+```
+
+
+## Lab 7
+
+1) One way ANOVA as a linear model 
+
+  + Using lm()
+  
+  + Using aov()
+
+  + Performing an ANOVA by hand
+
+2) Plotting group means and CI's
+  
+
+## Today's topics
+
+1) Post-hoc multiple comparison tests
+
+2) *A priori* multiple comparison tests using contrasts
+
+## Post-hoc comparison tests
+
+Last week, we fit an ANOVA model using the saw data:
+
+```{r}
+data("sawdata")
+
+library(tidyr)
+sawdata <- sawdata %>%  pivot_longer(cols= c('A', 'B', 'C', 'D'),
+                         names_to= 'Brand',
+                         values_to= 'angle')
+sawdata$Brand <- as.factor(sawdata$Brand)
+aov1 <- aov(angle ~ Brand, data = sawdata)
+
+summary(aov1)
+```
+
+Given the significant F-test, our next question might be which brands differ from each other. In lecture, we saw a few ways to do that:
+
+```{r}
+pairwise.t.test(sawdata$angle, sawdata$Brand, p.adjust.method = "bonferroni")
+TukeyHSD(aov1)
+```
+
+****
+Based on these two tests, which brands are different? Use the `?p.adjust` help page to find and test other adjustment methods. 
+
+- How do they compare to each other? 
+
+- Which method is the strictest (i.e., results in the largest p-values)? Which is the least strict (smallest p-values)? 
+
+- Do you conclusions about which brands differ depend on which method you use? How might you go about deciding which method to base your conclusions on?
+
+****
+
+We can also plot the Tukey HSD differences (with confidence intervals):
+
+```{r fig.align="center", fig.width=5, fig.height=4.5}
+plot(TukeyHSD(aov1))
+```
+
+
+# *a priori* contrasts
+
+## Mussel data
+
+Using the mussel data we saw in lecture, let's explore *a priori* contrasts in more detail. 
+
+```{r, eval = TRUE}
+data("musseldata")
+head(musseldata)
+
+# By default, R will order watershed in alphabetical order
+# We will change it to a factor and explicitly set the order to match the order from lecture
+musseldata$Watershed <- factor(musseldata$Watershed, 
+                               levels = c("Twelvemile", "Chattooga","Keowee", "Coneross"))
+```
+
+```{r echo = FALSE}
+knitr::kable(head(musseldata), format = 'html')
+```
+
+## Questions
+
+Suppose we want to make 3 *a priori* comparisons:  
+
+1) Agricultural (Twelvemile & Coneross) vs. Forested (Chattooga & Keowee)  
+
+2) Within agricultural (Twelvemile vs Coneross) 
+
+3) Within forested (Chattooga vs Keowee)  
+
+```{r echo = FALSE}
+contrasts <- data.frame(col1 =c("1", "2", "3"),
+                        Comparison = c("Ag. vs Forested", "Twelvemile vs Coneross", "Chattooga vs Keowee"),
+                        H0 <- c('\\(\\frac{\\mu_T + \\mu_{Co}}{2} - \\frac{\\mu_{Ch} + \\mu_{K}}{2} = 0\\)',
+                                '\\(\\mu_T - \\mu_{Co} = 0\\)',
+                                '\\(\\mu_{Ch} - \\mu_{K} = 0\\)'))
+
+contrasts %>%
+  kable(align = c("c", "l", "c"), 
+        col.names = c("", "Comparison", "Null hypothesis"),
+          booktabs = TRUE, escape = FALSE, format = "html") %>%
+    kable_styling(bootstrap_options = c("condensed"), 
+                full_width = FALSE, font_size = 16) 
+```
+
+## Constructing contrasts in R
+
+### Coefficients
+
+```{r}
+AgvF <- c(1/2, -1/2, -1/2, 1/2) # Note that we could multiply by 2 to get integers without changing the conclusions
+TvCo <- c(1, 0, 0, -1)
+ChvK <- c(0, 1, -1, 0)
+```
+
+### Are they orthogonal?
+
+**Step 1**: sum of coefficients is 0, for each contrast.
+
+```{r}
+all(sum(AgvF) == 0, sum(TvCo) == 0, sum(ChvK) == 0)
+```
+
+***
+
+`all()` tests whether all its arguments evaluate to TRUE  
+
+***
+
+**Step 2**: pairwise dot products are all equal to 0.
+
+```{r}
+all(sum(AgvF * TvCo) == 0,
+    sum(AgvF * ChvK) == 0,
+    sum(TvCo * ChvK) == 0)
+```
+
+**Step 2 (alternate method)**: pairwise dot products are all equal to 0.
+
+Try the %*% operator:
+
+```{r}
+AgvF %*% TvCo
+```
+
+***
+When the operands are vectors, `%*%` does the dot product  
+
+***
+
+### Put the contrasts into a matrix
+
+To use contrasts in `R`, each set of coefficients must be formatted as a column in a matrix.  
+
+We can use `cbind()` for this:
+
+```{r}
+(contrast.mat <- cbind(AgvF, TvCo, ChvK))
+```
+
+## Fit the model with contrasts
+
+It turns out, if we have specified a contrast matrix as we did here, we can include that in the `aov` function to automatically include the test statistics and p-values associated with each one in the ANOVA table.
+
+First, fit the model:
+```{r}
+aov.out <- aov(Length ~ Watershed, data=musseldata,
+               contrasts=list(Watershed=contrast.mat))
+```
+
+Next, partition the sum-of-squares with `split=` argument:
+
+```{r}
+summary(aov.out, 
+        split = list(Watershed = c("AgvF" = 1, 
+                               "TvCo" = 2, 
+                               "ChvK" = 3)))
+```
+
+## ANOVA without contrasts
+
+#### $\large F_{3, 16}$
+
+```{r echo = FALSE, fig.align="c", fig.width=7, fig.height=5}
+x <- seq(from = 0, to = 4, length.out = 400)
+
+f <- data.frame(F = x,
+                pdf = df(x = x, df1 = 3, df2 = 16))
+
+p <- qf(0.95, 3, 16)
+
+ggplot(f, aes(x = F, y = pdf)) +
+  geom_path() +
+  scale_y_continuous("Probability density", limits = c(0, 0.8)) +
+  geom_vline(xintercept = p, color = "#D47500") +
+  geom_vline(xintercept = 3.56, linetype = "longdash",
+             color = "#446E9B") +
+  annotate("text", label = "p = 0.95", hjust = 1,
+           x = p - 0.1, y = 0.79, size = 6,
+           color = "#D47500") +
+  annotate("text", label = "Watershed", x = 3.66, y = 0.79, size = 3, hjust = 0,
+           color = "#446E9B") 
+```
+
+## ANOVA with contrasts
+
+#### $\large F_{1, 16}$
+
+```{r echo = FALSE, fig.align="c", fig.width=7, fig.height=5}
+x <- seq(from = 0, to = 10, length.out = 400)
+
+f <- data.frame(F = x,
+                pdf = df(x = x, df1 = 1, df2 = 16))
+
+p <- qf(0.95, 1, 16)
+
+ggplot(f, aes(x = F, y = pdf)) +
+  geom_path() +
+  scale_y_continuous("Probability density", limits = c(0, 1.25)) +
+  geom_vline(xintercept = p, color = "#D47500") +
+  geom_vline(xintercept = 9.68, linetype = "longdash",
+             color = "#446E9B") +
+  geom_vline(xintercept = 0.1, linetype = "longdash",
+             color = "#446E9B") +
+  geom_vline(xintercept = 0.89, linetype = "longdash",
+             color = "#446E9B") +
+  annotate("text", label = "p = 0.95", hjust = 1,
+           x = p - 0.1, y = 1.24, size = 6,
+           color = "#D47500") +
+  annotate("text", label = "TvCo", x = 0.2, y = 1.24, size = 3.75, hjust = 0,
+           color = "#446E9B") +
+    annotate("text", label = "ChvK", x = 0.99, y = 1.24, size = 3.75, hjust = 0,
+           color = "#446E9B") +
+      annotate("text", label = "AgvF", x = 9.58, y = 1.24, size = 3.75, hjust = 1,
+           color = "#446E9B") 
+```
+
+## Difference in means for each contrast
+
+#### Group means
+
+```{r}
+library(dplyr)
+(group.means <- musseldata %>% 
+                group_by(Watershed) %>%
+                 summarise(mu = mean(Length)))
+```
+
+#### Difference in means for Twelvemile vs Coneross
+
+```{r}
+group.means$mu[1] - group.means$mu[4]
+```
+
+#### Difference in means for Chattooga vs Keowee
+
+```{r}
+group.means$mu[2] - group.means$mu[3]
+```
+
+#### Difference in means for Ag. vs Forested
+
+```{r}
+mean(group.means$mu[c(1,4)]) - mean(group.means$mu[2:3])
+```
+
+## Standard errors for each contrast
+
+#### SE for Twelvemile vs Coneross
+
+```{r}
+se.contrast(aov.out, 
+            contrast.obj = list(Watershed == "Twelvemile", Watershed == "Coneross"), 
+            data = musseldata)
+```
+
+#### SE for Chattooga vs Keowee
+
+```{r}
+se.contrast(aov.out, 
+            contrast.obj = list(Watershed == "Chattooga", Watershed == "Keowee"), 
+            data = musseldata)
+```
+
+#### SE for Ag. vs Forested
+
+```{r}
+se.contrast(aov.out,
+            contrast.obj = list(Watershed %in% c("Twelvemile","Coneross"),
+                                Watershed %in% c("Chattooga","Keowee")), 
+            data = musseldata)
+```
+
+***
+
+The `%in%` function returns `TRUE` for any elements of the first vector that match an element in the second vector and `FALSE` otherwise   
+
+***
+
+# Estimation
+
+## Estimating confidence intervals
+
+In an ANOVA context, confidence intervals can be constructed using the equation:
+
+$$CI = Point\; estimate \pm t_{\alpha/2,a(n−1)}\times SE$$
+
+As usual, the hard part is computing the SE
+
+## Confidence intervals from one-way ANOVA
+
+#### SE’s for the effect sizes ($\alpha$’s)
+
+```{r}
+(effects.SE <- model.tables(aov.out, type="effects", se=TRUE))
+```
+
+#### Extract the $\alpha$’s and the SEs
+
+```{r}
+# str(effects.SE)
+alpha.i <- as.numeric(effects.SE$tables$Watershed)
+SE <- as.numeric(effects.SE$se)
+```
+
+#### Compute confidence intervals
+
+```{r}
+tc <- qt(0.975, 4 * (5 - 1))
+lowerCI <- alpha.i - tc * SE
+upperCI <- alpha.i + tc * SE
+```
+
+## Plot effects and CIs
+
+#### Put results into a data frame
+
+```{r}
+CI <- data.frame(Watershed = factor(c("Twelvemile", "Chattooga",  "Keowee", "Coneross"),
+                            levels = c("Twelvemile", "Chattooga","Keowee", "Coneross")),
+                 effect.size = alpha.i, 
+                 SE, 
+                 lowerCI, 
+                 upperCI)
+head(CI)
+```
+
+#### And plot:
+
+```{r fig.align="c", fig.width=7, fig.height=5}
+ggplot(CI, aes(x = Watershed, y = effect.size)) +
+  geom_hline(yintercept = 0, linetype = "longdash", color = "grey50") +
+  geom_errorbar(aes(ymin = lowerCI, ymax = upperCI), width = 0) +
+  geom_point() +
+  scale_y_continuous("Effect size")
+
+```
+
+# Power analysis
+
+## Statistical Power
+
+#### Errors:
+
+- Type I: the null hypothesis is true, but you reject it  
+
+- Type II: the null hypothesis is false, but you fail to reject it  
+
+- $\alpha = Pr(Type\;I\;error)$  
+
+- $\beta = Pr(Type\;II\;error)$  
+
+> Power = Pr(rejecting a false null) = $1 − \beta$  
+
+In `R` functions `power.t.test()` and `power.anova.test()`, you provide all but one of the "ingredients" for the hypothesis test and determination of power. Then the missing ingredient is estimated.
+
+## Power analysis for a 2-sample t-test
+
+```{r}
+power.t.test(n = NULL, 
+             delta = 3, 
+             sd = 2, 
+             sig.level = 0.05, 
+             power = 0.8)
+```
+
+## Power analysis for one-way ANOVA
+
+```{r}
+power.anova.test(groups = 4, 
+                 n = 5, 
+                 between.var = 360.0,
+                 within.var = 101.2, 
+                 power = NULL)
+```
+
+# Assignment (not for a grade)
+
+Researchers wish to know if food supplementation affects the growth of nestling Canada warblers. The treatment groups are: (A) No supplementation control, (B) low, (C) medium, (D) high, and (E) very high. The response variable is the weight of a ten-day-old nestling.
+
+Create an R Markdown file to do the following:
+
+1) Create an `R` chunk to load the data using:
+
+```{r eval = FALSE}
+library(FANR6750)
+data("warblerWeight")
+```
+
+2) The researchers are interested in the following contrasts. Create a header called "Contrasts" and determine whether these contrasts are orthogonal. **Show your work!**
+
+    + Groups A,B vs C,D,E  
+
+    + Groups A vs B  
+
+    + Groups C vs D,E  
+
+    + Groups D vs E  
+
+3) Create a header called "ANOVA analysis". Under this header, use the `warblerWeight` data to test the null hypothesis of each contrast. This section should include a well-formatted ANOVA table showing the results of the analysis. Use the `caption` argument in the `kable()` function to **include a brief caption** for the ANOVA table and the `round` argument to **print an appropriate number of digits**. 
+
+4) In addition to the ANOVA table, compute and report, in a second table (with caption), the following for each contrast:
+
+    + The difference in the means  
+
+    + The SE of the difference in means  
+
+    + The 95% CI for the difference in means  
+
+5) Suppose you wanted to replicate the study with a smaller sample size of $n = 2$ per treatment group. In a new section called "Power analysis", calculate and report your power for this new experiment. This section should include both the `R` code you used to conduct the power analysis, and a brief (1-3 sentence) description of the result **and interpretation**. 
+
+6) Create a new header called "Reflection". Under this header, answer the following questions: 
+
+- On a 1-10 scale, how would you rate your confidence in the topics covered in this lab? 
+
+- What lingering questions/confusion about these topics do you still have?
+
+- If you used AI for any part of this assignment, do you think it helped? Did it save time? If you did not use AI, do you think it would have helped?
+
+
+A few things to remember when finishing the exercise:
+
+- Be sure the output type is set to: `output: html_document`
+
+- Be sure to include your name in the `author` field of the header
+
+- Be sure to set `echo = TRUE` in all `R` chunks so we can see both your code and the output
+
+- See the R Markdown reference sheet for help with creating `R` chunks, equations, tables, etc.
+
+- If you use AI on any part of your assignment, you must include the full prompt(s) you used and it's full answer(s) in a **separate section** titled "AI assistance" at the end of this document.

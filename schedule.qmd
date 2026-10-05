@@ -52,7 +52,7 @@ schedule <- data.frame(WK = c("1", "", "", "",
                                    "Labor Day", "Null hypothesis testing", "Null hypothesis testing", "", #4
                                    "Evaluating assumptions", "Buffer/exam review", "Exam 1",  "", #5
                                    "Principles of causal inference", "Principles of causal inference", "Principles of experimental design", "", #6
-                                   "Principles of experimental design", "Linear models for simple categorical predictors (aka t-test)", "Linear models for simple categorical predictors (aka t-test)", "", # 7
+                                   "Principles of experimental design", "Linear models part 2: categorical predictor w/ > 2 levels (aka ANOVA)", "Linear models part 2: categorical predictor w/ > 2 levels (aka ANOVA)", "", # 7
                                    "Multiple comparisons", "Power", "Special topic: p-hacking","", #8
                                    "Multiple regression", "Multiple regression", "Interactions", "", #9
                                    "Interactions", "Buffer/exam review", "Exam 2", "", #10

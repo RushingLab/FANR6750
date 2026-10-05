@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 7: Completely randomized ANOVA – FANR6750</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-37142c45f769db7649b307dbfb96c11d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">FANR6750</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> <i class="bi bi-house" role="img">
+</i> 
+<span class="menu-text">FANR6750</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../syllabus.html"> <i class="bi bi-book" role="img">
+</i> 
+<span class="menu-text">Syllabus</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../schedule.html"> <i class="bi bi-calendar" role="img">
+</i> 
+<span class="menu-text">Schedule</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-lectures" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-file-pdf" role="img">
+</i> 
+ <span class="menu-text">Lectures</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-lectures">    
+        <li>
+    <a class="dropdown-item" href="../lectures/00_course_intro/00_course_intro.html">
+ <span class="dropdown-text">Lecture 0: Course introduction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/01_intro_to_stats/01_intro_to_stats.html">
+ <span class="dropdown-text">Lecture 1: Introduction to statistics</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/02_intro_to_lm/02_intro_to_lm.html">
+ <span class="dropdown-text">Lecture 2: Introduction to linear models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/03_inference/03_inference.html">
+ <span class="dropdown-text">Lecture 3: Principles of statistical inference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/04_ttest/04_ttest.html">
+ <span class="dropdown-text">Lecture 4: Linear models part 1: categorical predictor w/ 2 levels</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/05_nhst/05_nhst.html">
+ <span class="dropdown-text">Lecture 5: Null hypothesis testing</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/06_assumptions/06_assumptions.html">
+ <span class="dropdown-text">Lecture 6: Evaluation Assumptions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/07_causal_inference/07_causal_inference.html">
+ <span class="dropdown-text">Lecture 7: Principles of causal inference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/08_expdesign/08_expdesign.html">
+ <span class="dropdown-text">Lecture 8: Principles of experimental design</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/09_ANOVA/09_ANOVA.html">
+ <span class="dropdown-text">Lecture 9: Linear models part 2: categorical predictor w/ &gt; 2 levels</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/10_multcomp/10_multcomp.html">
+ <span class="dropdown-text">Lecture 10: Multiple Comparisons</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/11_power/11_power.html">
+ <span class="dropdown-text">Lecture 11: Power</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/12_multreg/12_multreg.html">
+ <span class="dropdown-text">Lecture 12: Multiple Regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/13_interactions/13_interactions.html">
+ <span class="dropdown-text">Lecture 13: Interactions</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-labs" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-display" role="img">
+</i> 
+ <span class="menu-text">Labs</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-labs">    
+        <li>
+    <a class="dropdown-item" href="../labs/lab01_intro_to_R.html">
+ <span class="dropdown-text">Lab 1: Introduction to R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab02_Intro_project_and_Rmd.html">
+ <span class="dropdown-text">Lab 2: Introduction to projects and RMarkdown</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab03_inference.html">
+ <span class="dropdown-text">Lab 3: Using R to explore sampling error</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab04_t-tests.html">
+ <span class="dropdown-text">Lab 4: t-tests</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab05_linear_model_assumptions.html">
+ <span class="dropdown-text">Lab 5: Evaluating assumptions</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-references" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-pencil-square" role="img">
+</i> 
+ <span class="menu-text">References</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-references">    
+        <li>
+    <a class="dropdown-item" href="../references/homework.html">
+ <span class="dropdown-text">Assignment instructions</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/projects_and_directories.html">
+ <span class="dropdown-text">Projects and directories</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/RMarkdown.html">
+ <span class="dropdown-text">R Markdown reference</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../references/graphics.html">
+ <span class="dropdown-text">Creating publication-quality graphics</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#lab-7" id="toc-lab-7" class="nav-link active" data-scroll-target="#lab-7">Lab 7</a></li>
+  <li><a href="#todays-topics" id="toc-todays-topics" class="nav-link" data-scroll-target="#todays-topics">Today’s topics</a></li>
+  <li><a href="#post-hoc-comparison-tests" id="toc-post-hoc-comparison-tests" class="nav-link" data-scroll-target="#post-hoc-comparison-tests">Post-hoc comparison tests</a></li>
+  <li><a href="#a-priori-contrasts" id="toc-a-priori-contrasts" class="nav-link" data-scroll-target="#a-priori-contrasts"><em>a priori</em> contrasts</a>
+  <ul class="collapse">
+  <li><a href="#mussel-data" id="toc-mussel-data" class="nav-link" data-scroll-target="#mussel-data">Mussel data</a></li>
+  <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
+  <li><a href="#constructing-contrasts-in-r" id="toc-constructing-contrasts-in-r" class="nav-link" data-scroll-target="#constructing-contrasts-in-r">Constructing contrasts in R</a></li>
+  <li><a href="#fit-the-model-with-contrasts" id="toc-fit-the-model-with-contrasts" class="nav-link" data-scroll-target="#fit-the-model-with-contrasts">Fit the model with contrasts</a></li>
+  <li><a href="#anova-without-contrasts" id="toc-anova-without-contrasts" class="nav-link" data-scroll-target="#anova-without-contrasts">ANOVA without contrasts</a></li>
+  <li><a href="#anova-with-contrasts" id="toc-anova-with-contrasts" class="nav-link" data-scroll-target="#anova-with-contrasts">ANOVA with contrasts</a></li>
+  <li><a href="#difference-in-means-for-each-contrast" id="toc-difference-in-means-for-each-contrast" class="nav-link" data-scroll-target="#difference-in-means-for-each-contrast">Difference in means for each contrast</a></li>
+  <li><a href="#standard-errors-for-each-contrast" id="toc-standard-errors-for-each-contrast" class="nav-link" data-scroll-target="#standard-errors-for-each-contrast">Standard errors for each contrast</a></li>
+  </ul></li>
+  <li><a href="#estimation" id="toc-estimation" class="nav-link" data-scroll-target="#estimation">Estimation</a>
+  <ul class="collapse">
+  <li><a href="#estimating-confidence-intervals" id="toc-estimating-confidence-intervals" class="nav-link" data-scroll-target="#estimating-confidence-intervals">Estimating confidence intervals</a></li>
+  <li><a href="#confidence-intervals-from-one-way-anova" id="toc-confidence-intervals-from-one-way-anova" class="nav-link" data-scroll-target="#confidence-intervals-from-one-way-anova">Confidence intervals from one-way ANOVA</a></li>
+  <li><a href="#plot-effects-and-cis" id="toc-plot-effects-and-cis" class="nav-link" data-scroll-target="#plot-effects-and-cis">Plot effects and CIs</a></li>
+  </ul></li>
+  <li><a href="#power-analysis" id="toc-power-analysis" class="nav-link" data-scroll-target="#power-analysis">Power analysis</a>
+  <ul class="collapse">
+  <li><a href="#statistical-power" id="toc-statistical-power" class="nav-link" data-scroll-target="#statistical-power">Statistical Power</a></li>
+  <li><a href="#power-analysis-for-a-2-sample-t-test" id="toc-power-analysis-for-a-2-sample-t-test" class="nav-link" data-scroll-target="#power-analysis-for-a-2-sample-t-test">Power analysis for a 2-sample t-test</a></li>
+  <li><a href="#power-analysis-for-one-way-anova" id="toc-power-analysis-for-one-way-anova" class="nav-link" data-scroll-target="#power-analysis-for-one-way-anova">Power analysis for one-way ANOVA</a></li>
+  </ul></li>
+  <li><a href="#assignment-not-for-a-grade" id="toc-assignment-not-for-a-grade" class="nav-link" data-scroll-target="#assignment-not-for-a-grade">Assignment (not for a grade)</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 7: Completely randomized ANOVA</h1>
+<p class="subtitle lead">FANR 6750: Experimental Methods in Forestry and Natural Resources Research<br><small>Fall 2026</small></p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="lab-7" class="level2">
+<h2 class="anchored" data-anchor-id="lab-7">Lab 7</h2>
+<ol type="1">
+<li>One way ANOVA as a linear model</li>
+</ol>
+<ul>
+<li><p>Using lm()</p></li>
+<li><p>Using aov()</p></li>
+<li><p>Performing an ANOVA by hand</p></li>
+</ul>
+<ol start="2" type="1">
+<li>Plotting group means and CI’s</li>
+</ol>
+</section>
+<section id="todays-topics" class="level2">
+<h2 class="anchored" data-anchor-id="todays-topics">Today’s topics</h2>
+<ol type="1">
+<li><p>Post-hoc multiple comparison tests</p></li>
+<li><p><em>A priori</em> multiple comparison tests using contrasts</p></li>
+</ol>
+</section>
+<section id="post-hoc-comparison-tests" class="level2">
+<h2 class="anchored" data-anchor-id="post-hoc-comparison-tests">Post-hoc comparison tests</h2>
+<p>Last week, we fit an ANOVA model using the saw data:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"sawdata"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sawdata <span class="ot">&lt;-</span> sawdata <span class="sc">%&gt;%</span>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span> <span class="fu">c</span>(<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>, <span class="st">'D'</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">names_to=</span> <span class="st">'Brand'</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">values_to=</span> <span class="st">'angle'</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>sawdata<span class="sc">$</span>Brand <span class="ot">&lt;-</span> <span class="fu">as.factor</span>(sawdata<span class="sc">$</span>Brand)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>aov1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(angle <span class="sc">~</span> Brand, <span class="at">data =</span> sawdata)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov1)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             Df Sum Sq Mean Sq F value  Pr(&gt;F)    </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Brand        3    943   314.2    19.3 1.4e-05 ***</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals   16    260    16.3                    </span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Given the significant F-test, our next question might be which brands differ from each other. In lecture, we saw a few ways to do that:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pairwise.t.test</span>(sawdata<span class="sc">$</span>angle, sawdata<span class="sc">$</span>Brand, <span class="at">p.adjust.method =</span> <span class="st">"bonferroni"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Pairwise comparisons using t tests with pooled SD </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; data:  sawdata$angle and sawdata$Brand </span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   A     B     C    </span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; B 0.542 -     -    </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; C 8e-04 0.033 -    </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D 0.191 0.004 1e-05</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; P value adjustment method: bonferroni</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">TukeyHSD</span>(aov1)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Tukey multiple comparisons of means</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     95% family-wise confidence level</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Fit: aov(formula = angle ~ Brand, data = sawdata)</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; $Brand</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      diff      lwr   upr  p adj</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; B-A   4.6  -2.6998  11.9 0.3079</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; C-A  12.8   5.5002  20.1 0.0007</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D-A  -6.0 -13.2998   1.3 0.1276</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; C-B   8.2   0.9002  15.5 0.0251</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D-B -10.6 -17.8998  -3.3 0.0037</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; D-C -18.8 -26.0998 -11.5 0.0000</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<p>Based on these two tests, which brands are different? Use the <code>?p.adjust</code> help page to find and test other adjustment methods.</p>
+<ul>
+<li><p>How do they compare to each other?</p></li>
+<li><p>Which method is the strictest (i.e., results in the largest p-values)? Which is the least strict (smallest p-values)?</p></li>
+<li><p>Do you conclusions about which brands differ depend on which method you use? How might you go about deciding which method to base your conclusions on?</p></li>
+</ul>
+<hr>
+<p>We can also plot the Tukey HSD differences (with confidence intervals):</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">TukeyHSD</span>(aov1))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab08_mult_comp_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="a-priori-contrasts" class="level1">
+<h1><em>a priori</em> contrasts</h1>
+<section id="mussel-data" class="level2">
+<h2 class="anchored" data-anchor-id="mussel-data">Mussel data</h2>
+<p>Using the mussel data we saw in lecture, let’s explore <em>a priori</em> contrasts in more detail.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"musseldata"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(musseldata)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Watershed Length</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Twelvemile     16</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Twelvemile      8</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Twelvemile     12</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 Twelvemile     17</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 Twelvemile     13</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  Chattooga     18</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># By default, R will order watershed in alphabetical order</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># We will change it to a factor and explicitly set the order to match the order from lecture</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>musseldata<span class="sc">$</span>Watershed <span class="ot">&lt;-</span> <span class="fu">factor</span>(musseldata<span class="sc">$</span>Watershed, </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Twelvemile"</span>, <span class="st">"Chattooga"</span>,<span class="st">"Keowee"</span>, <span class="st">"Coneross"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Watershed</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Length</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Twelvemile</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Twelvemile</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Twelvemile</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Twelvemile</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Twelvemile</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chattooga</td>
+<td style="text-align: right;">18</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="questions" class="level2">
+<h2 class="anchored" data-anchor-id="questions">Questions</h2>
+<p>Suppose we want to make 3 <em>a priori</em> comparisons:</p>
+<ol type="1">
+<li><p>Agricultural (Twelvemile &amp; Coneross) vs.&nbsp;Forested (Chattooga &amp; Keowee)</p></li>
+<li><p>Within agricultural (Twelvemile vs Coneross)</p></li>
+<li><p>Within forested (Chattooga vs Keowee)</p></li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-condensed caption-top table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th"></th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Comparison</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Null hypothesis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: left;">Ag. vs Forested</td>
+<td style="text-align: center;">\(\frac{\mu_T + \mu_{Co}}{2} - \frac{\mu_{Ch} + \mu_{K}}{2} = 0\)</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Twelvemile vs Coneross</td>
+<td style="text-align: center;">\(\mu_T - \mu_{Co} = 0\)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">Chattooga vs Keowee</td>
+<td style="text-align: center;">\(\mu_{Ch} - \mu_{K} = 0\)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="constructing-contrasts-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="constructing-contrasts-in-r">Constructing contrasts in R</h2>
+<section id="coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="coefficients">Coefficients</h3>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>AgvF <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) <span class="co"># Note that we could multiply by 2 to get integers without changing the conclusions</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>TvCo <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ChvK <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="are-they-orthogonal" class="level3">
+<h3 class="anchored" data-anchor-id="are-they-orthogonal">Are they orthogonal?</h3>
+<p><strong>Step 1</strong>: sum of coefficients is 0, for each contrast.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">sum</span>(AgvF) <span class="sc">==</span> <span class="dv">0</span>, <span class="fu">sum</span>(TvCo) <span class="sc">==</span> <span class="dv">0</span>, <span class="fu">sum</span>(ChvK) <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<p><code>all()</code> tests whether all its arguments evaluate to TRUE</p>
+<hr>
+<p><strong>Step 2</strong>: pairwise dot products are all equal to 0.</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">sum</span>(AgvF <span class="sc">*</span> TvCo) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(AgvF <span class="sc">*</span> ChvK) <span class="sc">==</span> <span class="dv">0</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(TvCo <span class="sc">*</span> ChvK) <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Step 2 (alternate method)</strong>: pairwise dot products are all equal to 0.</p>
+<p>Try the %*% operator:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>AgvF <span class="sc">%*%</span> TvCo</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1]</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]    0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<p>When the operands are vectors, <code>%*%</code> does the dot product</p>
+<hr>
+</section>
+<section id="put-the-contrasts-into-a-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="put-the-contrasts-into-a-matrix">Put the contrasts into a matrix</h3>
+<p>To use contrasts in <code>R</code>, each set of coefficients must be formatted as a column in a matrix.</p>
+<p>We can use <code>cbind()</code> for this:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>(contrast.mat <span class="ot">&lt;-</span> <span class="fu">cbind</span>(AgvF, TvCo, ChvK))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      AgvF TvCo ChvK</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]  0.5    1    0</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2,] -0.5    0    1</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3,] -0.5    0   -1</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [4,]  0.5   -1    0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="fit-the-model-with-contrasts" class="level2">
+<h2 class="anchored" data-anchor-id="fit-the-model-with-contrasts">Fit the model with contrasts</h2>
+<p>It turns out, if we have specified a contrast matrix as we did here, we can include that in the <code>aov</code> function to automatically include the test statistics and p-values associated with each one in the ANOVA table.</p>
+<p>First, fit the model:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>aov.out <span class="ot">&lt;-</span> <span class="fu">aov</span>(Length <span class="sc">~</span> Watershed, <span class="at">data=</span>musseldata,</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>               <span class="at">contrasts=</span><span class="fu">list</span>(<span class="at">Watershed=</span>contrast.mat))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Next, partition the sum-of-squares with <code>split=</code> argument:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aov.out, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">split =</span> <span class="fu">list</span>(<span class="at">Watershed =</span> <span class="fu">c</span>(<span class="st">"AgvF"</span> <span class="ot">=</span> <span class="dv">1</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"TvCo"</span> <span class="ot">=</span> <span class="dv">2</span>, </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"ChvK"</span> <span class="ot">=</span> <span class="dv">3</span>)))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                   Df Sum Sq Mean Sq F value  Pr(&gt;F)    </span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Watershed          3    393     131    9.70 0.00069 ***</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Watershed: AgvF  1    361     361   26.76 9.2e-05 ***</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Watershed: TvCo  1     12      12    0.90 0.35786    </span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Watershed: ChvK  1     20      20    1.45 0.24575    </span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals         16    216      13                    </span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="anova-without-contrasts" class="level2">
+<h2 class="anchored" data-anchor-id="anova-without-contrasts">ANOVA without contrasts</h2>
+<section id="large-f_3-16" class="level4">
+<h4 class="anchored" data-anchor-id="large-f_3-16"><span class="math inline">\(\large F_{3, 16}\)</span></h4>
+<div class="cell" data-layout-align="c">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-c">
+<figure class="figure">
+<p><img src="lab08_mult_comp_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid quarto-figure quarto-figure-c figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="anova-with-contrasts" class="level2">
+<h2 class="anchored" data-anchor-id="anova-with-contrasts">ANOVA with contrasts</h2>
+<section id="large-f_1-16" class="level4">
+<h4 class="anchored" data-anchor-id="large-f_1-16"><span class="math inline">\(\large F_{1, 16}\)</span></h4>
+<div class="cell" data-layout-align="c">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-c">
+<figure class="figure">
+<p><img src="lab08_mult_comp_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid quarto-figure quarto-figure-c figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="difference-in-means-for-each-contrast" class="level2">
+<h2 class="anchored" data-anchor-id="difference-in-means-for-each-contrast">Difference in means for each contrast</h2>
+<section id="group-means" class="level4">
+<h4 class="anchored" data-anchor-id="group-means">Group means</h4>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>(group.means <span class="ot">&lt;-</span> musseldata <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">group_by</span>(Watershed) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                 <span class="fu">summarise</span>(<span class="at">mu =</span> <span class="fu">mean</span>(Length)))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 4 × 2</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Watershed     mu</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;fct&gt;      &lt;dbl&gt;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Twelvemile  13.2</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Chattooga   21.4</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Keowee      24.2</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 Coneross    15.4</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="difference-in-means-for-twelvemile-vs-coneross" class="level4">
+<h4 class="anchored" data-anchor-id="difference-in-means-for-twelvemile-vs-coneross">Difference in means for Twelvemile vs Coneross</h4>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>group.means<span class="sc">$</span>mu[<span class="dv">1</span>] <span class="sc">-</span> group.means<span class="sc">$</span>mu[<span class="dv">4</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -2.2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="difference-in-means-for-chattooga-vs-keowee" class="level4">
+<h4 class="anchored" data-anchor-id="difference-in-means-for-chattooga-vs-keowee">Difference in means for Chattooga vs Keowee</h4>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>group.means<span class="sc">$</span>mu[<span class="dv">2</span>] <span class="sc">-</span> group.means<span class="sc">$</span>mu[<span class="dv">3</span>]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -2.8</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="difference-in-means-for-ag.-vs-forested" class="level4">
+<h4 class="anchored" data-anchor-id="difference-in-means-for-ag.-vs-forested">Difference in means for Ag. vs Forested</h4>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(group.means<span class="sc">$</span>mu[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>)]) <span class="sc">-</span> <span class="fu">mean</span>(group.means<span class="sc">$</span>mu[<span class="dv">2</span><span class="sc">:</span><span class="dv">3</span>])</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] -8.5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="standard-errors-for-each-contrast" class="level2">
+<h2 class="anchored" data-anchor-id="standard-errors-for-each-contrast">Standard errors for each contrast</h2>
+<section id="se-for-twelvemile-vs-coneross" class="level4">
+<h4 class="anchored" data-anchor-id="se-for-twelvemile-vs-coneross">SE for Twelvemile vs Coneross</h4>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">se.contrast</span>(aov.out, </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">contrast.obj =</span> <span class="fu">list</span>(Watershed <span class="sc">==</span> <span class="st">"Twelvemile"</span>, Watershed <span class="sc">==</span> <span class="st">"Coneross"</span>), </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> musseldata)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2.324</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="se-for-chattooga-vs-keowee" class="level4">
+<h4 class="anchored" data-anchor-id="se-for-chattooga-vs-keowee">SE for Chattooga vs Keowee</h4>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">se.contrast</span>(aov.out, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">contrast.obj =</span> <span class="fu">list</span>(Watershed <span class="sc">==</span> <span class="st">"Chattooga"</span>, Watershed <span class="sc">==</span> <span class="st">"Keowee"</span>), </span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> musseldata)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 2.324</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="se-for-ag.-vs-forested" class="level4">
+<h4 class="anchored" data-anchor-id="se-for-ag.-vs-forested">SE for Ag. vs Forested</h4>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">se.contrast</span>(aov.out,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">contrast.obj =</span> <span class="fu">list</span>(Watershed <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Twelvemile"</span>,<span class="st">"Coneross"</span>),</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                                Watershed <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Chattooga"</span>,<span class="st">"Keowee"</span>)), </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> musseldata)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 1.643</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+<p>The <code>%in%</code> function returns <code>TRUE</code> for any elements of the first vector that match an element in the second vector and <code>FALSE</code> otherwise</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="estimation" class="level1">
+<h1>Estimation</h1>
+<section id="estimating-confidence-intervals" class="level2">
+<h2 class="anchored" data-anchor-id="estimating-confidence-intervals">Estimating confidence intervals</h2>
+<p>In an ANOVA context, confidence intervals can be constructed using the equation:</p>
+<p><span class="math display">\[CI = Point\; estimate \pm t_{\alpha/2,a(n−1)}\times SE\]</span></p>
+<p>As usual, the hard part is computing the SE</p>
+</section>
+<section id="confidence-intervals-from-one-way-anova" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-intervals-from-one-way-anova">Confidence intervals from one-way ANOVA</h2>
+<section id="ses-for-the-effect-sizes-alphas" class="level4">
+<h4 class="anchored" data-anchor-id="ses-for-the-effect-sizes-alphas">SE’s for the effect sizes (<span class="math inline">\(\alpha\)</span>’s)</h4>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>(effects.SE <span class="ot">&lt;-</span> <span class="fu">model.tables</span>(aov.out, <span class="at">type=</span><span class="st">"effects"</span>, <span class="at">se=</span><span class="cn">TRUE</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Tables of effects</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Watershed </span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Watershed</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Twelvemile  Chattooga     Keowee   Coneross </span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      -5.35       2.85       5.65      -3.15 </span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Standard errors of effects</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;         Watershed</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;             1.643</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; replic.         5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="extract-the-alphas-and-the-ses" class="level4">
+<h4 class="anchored" data-anchor-id="extract-the-alphas-and-the-ses">Extract the <span class="math inline">\(\alpha\)</span>’s and the SEs</h4>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># str(effects.SE)</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>alpha.i <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(effects.SE<span class="sc">$</span>tables<span class="sc">$</span>Watershed)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>SE <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(effects.SE<span class="sc">$</span>se)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="compute-confidence-intervals" class="level4">
+<h4 class="anchored" data-anchor-id="compute-confidence-intervals">Compute confidence intervals</h4>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>tc <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="dv">4</span> <span class="sc">*</span> (<span class="dv">5</span> <span class="sc">-</span> <span class="dv">1</span>))</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>lowerCI <span class="ot">&lt;-</span> alpha.i <span class="sc">-</span> tc <span class="sc">*</span> SE</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>upperCI <span class="ot">&lt;-</span> alpha.i <span class="sc">+</span> tc <span class="sc">*</span> SE</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="plot-effects-and-cis" class="level2">
+<h2 class="anchored" data-anchor-id="plot-effects-and-cis">Plot effects and CIs</h2>
+<section id="put-results-into-a-data-frame" class="level4">
+<h4 class="anchored" data-anchor-id="put-results-into-a-data-frame">Put results into a data frame</h4>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>CI <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Watershed =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Twelvemile"</span>, <span class="st">"Chattooga"</span>,  <span class="st">"Keowee"</span>, <span class="st">"Coneross"</span>),</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Twelvemile"</span>, <span class="st">"Chattooga"</span>,<span class="st">"Keowee"</span>, <span class="st">"Coneross"</span>)),</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">effect.size =</span> alpha.i, </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                 SE, </span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                 lowerCI, </span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>                 upperCI)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(CI)</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Watershed effect.size    SE lowerCI upperCI</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Twelvemile       -5.35 1.643 -8.8334 -1.8666</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  Chattooga        2.85 1.643 -0.6334  6.3334</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     Keowee        5.65 1.643  2.1666  9.1334</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4   Coneross       -3.15 1.643 -6.6334  0.3334</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="and-plot" class="level4">
+<h4 class="anchored" data-anchor-id="and-plot">And plot:</h4>
+<div class="cell" data-layout-align="c">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(CI, <span class="fu">aes</span>(<span class="at">x =</span> Watershed, <span class="at">y =</span> effect.size)) <span class="sc">+</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span> <span class="st">"longdash"</span>, <span class="at">color =</span> <span class="st">"grey50"</span>) <span class="sc">+</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lowerCI, <span class="at">ymax =</span> upperCI), <span class="at">width =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Effect size"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-c">
+<figure class="figure">
+<p><img src="lab08_mult_comp_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid quarto-figure quarto-figure-c figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="power-analysis" class="level1">
+<h1>Power analysis</h1>
+<section id="statistical-power" class="level2">
+<h2 class="anchored" data-anchor-id="statistical-power">Statistical Power</h2>
+<section id="errors" class="level4">
+<h4 class="anchored" data-anchor-id="errors">Errors:</h4>
+<ul>
+<li><p>Type I: the null hypothesis is true, but you reject it</p></li>
+<li><p>Type II: the null hypothesis is false, but you fail to reject it</p></li>
+<li><p><span class="math inline">\(\alpha = Pr(Type\;I\;error)\)</span></p></li>
+<li><p><span class="math inline">\(\beta = Pr(Type\;II\;error)\)</span></p></li>
+</ul>
+<blockquote class="blockquote">
+<p>Power = Pr(rejecting a false null) = <span class="math inline">\(1 − \beta\)</span></p>
+</blockquote>
+<p>In <code>R</code> functions <code>power.t.test()</code> and <code>power.anova.test()</code>, you provide all but one of the “ingredients” for the hypothesis test and determination of power. Then the missing ingredient is estimated.</p>
+</section>
+</section>
+<section id="power-analysis-for-a-2-sample-t-test" class="level2">
+<h2 class="anchored" data-anchor-id="power-analysis-for-a-2-sample-t-test">Power analysis for a 2-sample t-test</h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">n =</span> <span class="cn">NULL</span>, </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">delta =</span> <span class="dv">3</span>, </span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> <span class="dv">2</span>, </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">sig.level =</span> <span class="fl">0.05</span>, </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">power =</span> <span class="fl">0.8</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      Two-sample t test power calculation </span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               n = 8.06</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           delta = 3</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              sd = 2</span></span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       sig.level = 0.05</span></span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           power = 0.8</span></span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     alternative = two.sided</span></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: n is number in *each* group</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="power-analysis-for-one-way-anova" class="level2">
+<h2 class="anchored" data-anchor-id="power-analysis-for-one-way-anova">Power analysis for one-way ANOVA</h2>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.anova.test</span>(<span class="at">groups =</span> <span class="dv">4</span>, </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">n =</span> <span class="dv">5</span>, </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">between.var =</span> <span class="fl">360.0</span>,</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">within.var =</span> <span class="fl">101.2</span>, </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">power =</span> <span class="cn">NULL</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      Balanced one-way analysis of variance power calculation </span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;          groups = 4</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;               n = 5</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     between.var = 360</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      within.var = 101.2</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;       sig.level = 0.05</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;           power = 0.9999</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span><span class="al">NOTE</span><span class="co">: n is number in each group</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="assignment-not-for-a-grade" class="level1">
+<h1>Assignment (not for a grade)</h1>
+<p>Researchers wish to know if food supplementation affects the growth of nestling Canada warblers. The treatment groups are: (A) No supplementation control, (B) low, (C) medium, (D) high, and (E) very high. The response variable is the weight of a ten-day-old nestling.</p>
+<p>Create an R Markdown file to do the following:</p>
+<ol type="1">
+<li>Create an <code>R</code> chunk to load the data using:</li>
+</ol>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"warblerWeight"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol start="2" type="1">
+<li><p>The researchers are interested in the following contrasts. Create a header called “Contrasts” and determine whether these contrasts are orthogonal. <strong>Show your work!</strong></p>
+<ul>
+<li><p>Groups A,B vs C,D,E</p></li>
+<li><p>Groups A vs B</p></li>
+<li><p>Groups C vs D,E</p></li>
+<li><p>Groups D vs E</p></li>
+</ul></li>
+<li><p>Create a header called “ANOVA analysis”. Under this header, use the <code>warblerWeight</code> data to test the null hypothesis of each contrast. This section should include a well-formatted ANOVA table showing the results of the analysis. Use the <code>caption</code> argument in the <code>kable()</code> function to <strong>include a brief caption</strong> for the ANOVA table and the <code>round</code> argument to <strong>print an appropriate number of digits</strong>.</p></li>
+<li><p>In addition to the ANOVA table, compute and report, in a second table (with caption), the following for each contrast:</p>
+<ul>
+<li><p>The difference in the means</p></li>
+<li><p>The SE of the difference in means</p></li>
+<li><p>The 95% CI for the difference in means</p></li>
+</ul></li>
+<li><p>Suppose you wanted to replicate the study with a smaller sample size of <span class="math inline">\(n = 2\)</span> per treatment group. In a new section called “Power analysis”, calculate and report your power for this new experiment. This section should include both the <code>R</code> code you used to conduct the power analysis, and a brief (1-3 sentence) description of the result <strong>and interpretation</strong>.</p></li>
+<li><p>Create a new header called “Reflection”. Under this header, answer the following questions:</p></li>
+</ol>
+<ul>
+<li><p>On a 1-10 scale, how would you rate your confidence in the topics covered in this lab?</p></li>
+<li><p>What lingering questions/confusion about these topics do you still have?</p></li>
+<li><p>If you used AI for any part of this assignment, do you think it helped? Did it save time? If you did not use AI, do you think it would have helped?</p></li>
+</ul>
+<p>A few things to remember when finishing the exercise:</p>
+<ul>
+<li><p>Be sure the output type is set to: <code>output: html_document</code></p></li>
+<li><p>Be sure to include your name in the <code>author</code> field of the header</p></li>
+<li><p>Be sure to set <code>echo = TRUE</code> in all <code>R</code> chunks so we can see both your code and the output</p></li>
+<li><p>See the R Markdown reference sheet for help with creating <code>R</code> chunks, equations, tables, etc.</p></li>
+<li><p>If you use AI on any part of your assignment, you must include the full prompt(s) you used and it’s full answer(s) in a <strong>separate section</strong> titled “AI assistance” at the end of this document.</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/rushinglab\.github\.io\/FANR6750\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

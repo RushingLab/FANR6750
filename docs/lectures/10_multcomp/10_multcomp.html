@@ -6,8 +6,8 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-234273d1456647dabc34a594ac50e507.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.32">
 
   <title>FANR6750 – multcomp</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,16 +16,10 @@
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
+    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: 1.5em;}
-    div.column{flex: auto;}
-    @media screen {
-    div.columns{gap: min(4vw, 1.5em);}
-    div.column{overflow-x: auto;}
-    }
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -100,7 +94,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-fc859e93a8aea861b048bf3194d4829c.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-ac5e08e4b4b6c659cd557f100be53ee4.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -262,18 +256,18 @@ Fall 2026</p>
 <p>Aphids are a major crop pest and farmers are interested which brands of pesticide have the biggest influence on crop yield</p>
 <p>The data:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">data</span>(<span class="st">"pesticidedata"</span>)</span>
-<span id="cb1-2"><a aria-label="2"></a></span>
-<span id="cb1-3"><a aria-label="3"></a><span class="fu">ggplot</span>(pesticidedata, <span class="fu">aes</span>(<span class="at">x =</span> Brand, <span class="at">y =</span> Yield)) <span class="sc">+</span> </span>
-<span id="cb1-4"><a aria-label="4"></a>  <span class="fu">geom_boxplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">data</span>(<span class="st">"pesticidedata"</span>)</span>
+<span id="cb1-2"><a></a></span>
+<span id="cb1-3"><a></a><span class="fu">ggplot</span>(pesticidedata, <span class="fu">aes</span>(<span class="at">x =</span> Brand, <span class="at">y =</span> Yield)) <span class="sc">+</span> </span>
+<span id="cb1-4"><a></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="10_multcomp_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"></section>
 <section id="example-1" class="slide level2 smaller">
 <h2>Example</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yield <span class="sc">~</span> Brand, <span class="at">data =</span> pesticidedata)</span>
-<span id="cb2-2"><a aria-label="2"></a><span class="fu">summary</span>(fit.lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Yield <span class="sc">~</span> Brand, <span class="at">data =</span> pesticidedata)</span>
+<span id="cb2-2"><a></a><span class="fu">summary</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -307,7 +301,7 @@ F-statistic: 22.7 on 3 and 96 DF,  p-value: 3.29e-11</code></pre>
 <p>One can always fall back on pairwise, two-sample <em>t</em>-tests (or linear models)</p>
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="fu">pairwise.t.test</span>(pesticidedata<span class="sc">$</span>Yield, pesticidedata<span class="sc">$</span>Brand, <span class="at">p.adjust.method =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a><span class="fu">pairwise.t.test</span>(pesticidedata<span class="sc">$</span>Yield, pesticidedata<span class="sc">$</span>Brand, <span class="at">p.adjust.method =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pairwise comparisons using t tests with pooled SD 
@@ -354,7 +348,7 @@ P value adjustment method: none </code></pre>
 </ul>
 <div class="fragment">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="fu">pairwise.t.test</span>(pesticidedata<span class="sc">$</span>Yield, pesticidedata<span class="sc">$</span>Brand, <span class="at">p.adjust.method =</span> <span class="st">"bonferroni"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">pairwise.t.test</span>(pesticidedata<span class="sc">$</span>Yield, pesticidedata<span class="sc">$</span>Brand, <span class="at">p.adjust.method =</span> <span class="st">"bonferroni"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pairwise comparisons using t tests with pooled SD 
@@ -415,8 +409,8 @@ P value adjustment method: bonferroni </code></pre>
 <h2>Example</h2>
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a>fit.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(Yield <span class="sc">~</span> Brand, <span class="at">data =</span> pesticidedata)</span>
-<span id="cb8-2"><a aria-label="2"></a><span class="fu">TukeyHSD</span>(fit.aov)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>fit.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(Yield <span class="sc">~</span> Brand, <span class="at">data =</span> pesticidedata)</span>
+<span id="cb8-2"><a></a><span class="fu">TukeyHSD</span>(fit.aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -451,7 +445,7 @@ C-B       1.6756 -0.1495 3.501 0.0838</code></pre>
 <h2>Mussel size</h2>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<table class="table table-striped table-hover table-condensed caption-top" style="margin-left: auto; margin-right: auto;">
+<table class="table table-striped table-hover table-condensed caption-top" data-quarto-postprocess="true" style="margin-left: auto; margin-right: auto;">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 25%">
@@ -516,8 +510,8 @@ Watershed
 <section id="anova-results" class="slide level2 smaller">
 <h2>Anova results</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a>fit.mussel <span class="ot">&lt;-</span> <span class="fu">lm</span>(Length <span class="sc">~</span> Watershed, <span class="at">data =</span> musseldata)</span>
-<span id="cb10-2"><a aria-label="2"></a><span class="fu">summary</span>(fit.mussel)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>fit.mussel <span class="ot">&lt;-</span> <span class="fu">lm</span>(Length <span class="sc">~</span> Watershed, <span class="at">data =</span> musseldata)</span>
+<span id="cb10-2"><a></a><span class="fu">summary</span>(fit.mussel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -545,7 +539,7 @@ F-statistic:  9.7 on 3 and 16 DF,  p-value: 0.000692</code></pre>
 <section id="pairwise-comparisons" class="slide level2 smaller">
 <h2>Pairwise comparisons</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a><span class="fu">pairwise.t.test</span>(musseldata<span class="sc">$</span>Length, musseldata<span class="sc">$</span>Watershed, <span class="at">p.adjust.method =</span> <span class="st">"bonferroni"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">pairwise.t.test</span>(musseldata<span class="sc">$</span>Length, musseldata<span class="sc">$</span>Watershed, <span class="at">p.adjust.method =</span> <span class="st">"bonferroni"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pairwise comparisons using t tests with pooled SD 
@@ -583,7 +577,7 @@ P value adjustment method: bonferroni </code></pre>
 <p><span class="highlight">Hypotheses</span></p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<table class="table table-condensed caption-top" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
+<table class="table table-condensed caption-top" data-quarto-postprocess="true" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th"></th>
@@ -615,7 +609,7 @@ P value adjustment method: bonferroni </code></pre>
 <p><span class="highlight">Linear combinations</span></p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<table class="table table-condensed caption-top" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
+<table class="table table-condensed caption-top" data-quarto-postprocess="true" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
 <tbody>
 <tr class="odd">
 <td style="text-align: center;">1</td>
@@ -702,7 +696,7 @@ P value adjustment method: bonferroni </code></pre>
 <p>For each contrast, each SS is divided by 1 d.f., and then divided by MSW</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<table class="table table-condensed caption-top" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
+<table class="table table-condensed caption-top" data-quarto-postprocess="true" style="font-size: 16px; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr class="header">
 <th style="text-align: right;" data-quarto-table-cell-role="th">Source</th>
@@ -980,7 +974,7 @@ P value adjustment method: bonferroni </code></pre>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1092,14 +1086,13 @@ P value adjustment method: bonferroni </code></pre>
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-          const outerScaffold = trigger.parentElement.cloneNode(true);
-          const codeEl = outerScaffold.querySelector('code');
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
             }
-          }
-          return codeEl.innerText;
+            return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

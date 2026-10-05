@@ -6,8 +6,8 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-234273d1456647dabc34a594ac50e507.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.32">
 
   <title>FANR6750 – anova</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,16 +16,10 @@
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
+    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: 1.5em;}
-    div.column{flex: auto;}
-    @media screen {
-    div.columns{gap: min(4vw, 1.5em);}
-    div.column{overflow-x: auto;}
-    }
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -100,7 +94,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-fc859e93a8aea861b048bf3194d4829c.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-ac5e08e4b4b6c659cd557f100be53ee4.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -250,7 +244,7 @@ Fall 2026</p>
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<table class="table table-condensed caption-top" style="font-size: 18px; width: auto !important; margin-left: auto; margin-right: auto;">
+<table class="table table-condensed caption-top" data-quarto-postprocess="true" style="font-size: 18px; width: auto !important; margin-left: auto; margin-right: auto;">
 <colgroup>
 <col style="width: 20%">
 <col style="width: 20%">
@@ -389,8 +383,8 @@ Treatment
 <h2>Dummy variable coding</h2>
 <p>View a subset (rows 1, 4, 7, &amp; 10) of the data:</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a><span class="fu">data</span>(loblollydata)</span>
-<span id="cb1-2"><a aria-label="2"></a>loblollydata[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">10</span>),]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">data</span>(loblollydata)</span>
+<span id="cb1-2"><a></a>loblollydata[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">10</span>),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Treatment Replicate Height
 1          A         1     11
@@ -402,9 +396,9 @@ Treatment
 <div class="fragment">
 <p>View the corresponding rows of the <em>model matrix</em><a href="#/footnotes" class="footnote-ref" id="fnref2" role="doc-noteref" data-footnote-href="#/fn2" onclick=""><sup>2</sup></a></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> Treatment, <span class="at">data =</span> loblollydata)</span>
-<span id="cb3-2"><a aria-label="2"></a></span>
-<span id="cb3-3"><a aria-label="3"></a><span class="fu">model.matrix</span>(fit1)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">10</span>),]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Height <span class="sc">~</span> Treatment, <span class="at">data =</span> loblollydata)</span>
+<span id="cb3-2"><a></a></span>
+<span id="cb3-3"><a></a><span class="fu">model.matrix</span>(fit1)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">10</span>),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   (Intercept) TreatmentB TreatmentC TreatmentD
 1            1          0          0          0
@@ -418,7 +412,7 @@ Treatment
 <section id="dummy-variable-coding-1" class="slide level2 smaller">
 <h2>Dummy variable coding</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">model.matrix</span>(fit1)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">10</span>),]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">model.matrix</span>(fit1)[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">7</span>,<span class="dv">10</span>),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   (Intercept) TreatmentB TreatmentC TreatmentD
 1            1          0          0          0
@@ -445,7 +439,7 @@ Treatment
 <section id="motivating-example-4" class="slide level2 smaller">
 <h2>Motivating example</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
   term        estimate std.error statistic     p.value
@@ -453,7 +447,7 @@ Treatment
 1 (Intercept)    10.0      0.577     17.3  0.000000126
 2 TreatmentB     -2.00     0.816     -2.45 0.0400     
 3 TreatmentC     -4.00     0.816     -4.90 0.00120    
-4 TreatmentD     -6.00     0.816     -7.35 0.0000801  </code></pre>
+4 TreatmentD     -6        0.816     -7.35 0.0000801  </code></pre>
 </div>
 </div>
 <ul>
@@ -465,7 +459,7 @@ Treatment
 <section id="regression-f-statistic" class="slide level2 smaller">
 <h2>Regression f-statistic</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="fu">summary</span>(fit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a><span class="fu">summary</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -739,7 +733,7 @@ F-statistic:   20 on 3 and 8 DF,  p-value: 0.000449</code></pre>
 </div><div class="fragment column" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<table class="table table-condensed caption-top" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
+<table class="table table-condensed caption-top" data-quarto-postprocess="true" style="font-size: 14px; width: auto !important; margin-left: auto; margin-right: auto;">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 25%">
@@ -794,11 +788,11 @@ Elevation
 <section id="worked-example-1" class="slide level2 smaller">
 <h2>Worked example</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="fu">data</span>(warblerdata)</span>
-<span id="cb11-2"><a aria-label="2"></a></span>
-<span id="cb11-3"><a aria-label="3"></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Count <span class="sc">~</span> Elevation, <span class="at">data =</span> warblerdata)</span>
-<span id="cb11-4"><a aria-label="4"></a></span>
-<span id="cb11-5"><a aria-label="5"></a><span class="fu">summary</span>(fit.lm)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">data</span>(warblerdata)</span>
+<span id="cb11-2"><a></a></span>
+<span id="cb11-3"><a></a>fit.lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(Count <span class="sc">~</span> Elevation, <span class="at">data =</span> warblerdata)</span>
+<span id="cb11-4"><a></a></span>
+<span id="cb11-5"><a></a><span class="fu">summary</span>(fit.lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -825,11 +819,11 @@ F-statistic: 7.66 on 2 and 9 DF,  p-value: 0.0114</code></pre>
 <section id="worked-example-2" class="slide level2 smaller">
 <h2>Worked example</h2>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="fu">data</span>(warblerdata)</span>
-<span id="cb13-2"><a aria-label="2"></a></span>
-<span id="cb13-3"><a aria-label="3"></a>fit.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(Count <span class="sc">~</span> Elevation, <span class="at">data =</span> warblerdata)</span>
-<span id="cb13-4"><a aria-label="4"></a></span>
-<span id="cb13-5"><a aria-label="5"></a><span class="fu">summary</span>(fit.aov)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">data</span>(warblerdata)</span>
+<span id="cb13-2"><a></a></span>
+<span id="cb13-3"><a></a>fit.aov <span class="ot">&lt;-</span> <span class="fu">aov</span>(Count <span class="sc">~</span> Elevation, <span class="at">data =</span> warblerdata)</span>
+<span id="cb13-4"><a></a></span>
+<span id="cb13-5"><a></a><span class="fu">summary</span>(fit.aov)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)  
 Elevation    2   31.5   15.75    7.66  0.011 *
@@ -852,7 +846,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><code>lm()</code> function also returns residuals (e.g., <span class="math inline">\(y_i - E[y_i]\)</span>)</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a>fit.lm<span class="sc">$</span>residual</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>fit.lm<span class="sc">$</span>residual</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    1     2     3     4     5     6     7     8     9    10    11    12 
 -0.50  1.50 -1.50  0.50 -0.25 -2.25  1.75  0.75 -1.25  1.75 -0.25 -0.25 </code></pre>
@@ -862,7 +856,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Residual sum of squares</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a><span class="fu">sum</span>(fit.lm<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">sum</span>(fit.lm<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 18.5</code></pre>
 </div>
@@ -871,7 +865,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Residual mean square</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a><span class="fu">sum</span>(fit.lm<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">9</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">sum</span>(fit.lm<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">9</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.056</code></pre>
 </div>
@@ -882,7 +876,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>In case you want more detail about the relationship between <code>lm</code> and <code>aov</code> output:</p>
 <p>What about among group variation?</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a>fit.lm<span class="sc">$</span>fitted.values</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>fit.lm<span class="sc">$</span>fitted.values</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   1    2    3    4    5    6    7    8    9   10   11   12 
 1.50 1.50 1.50 1.50 2.25 2.25 2.25 2.25 5.25 5.25 5.25 5.25 </code></pre>
@@ -892,7 +886,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Treatment sum of squares</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a><span class="fu">sum</span>((fit.lm<span class="sc">$</span>fitted.values <span class="sc">-</span> <span class="fu">mean</span>(fit.lm<span class="sc">$</span>fitted.values))<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">sum</span>((fit.lm<span class="sc">$</span>fitted.values <span class="sc">-</span> <span class="fu">mean</span>(fit.lm<span class="sc">$</span>fitted.values))<span class="sc">^</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 31.5</code></pre>
 </div>
@@ -901,7 +895,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Treatment mean square</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-label="1"></a><span class="fu">sum</span>((fit.lm<span class="sc">$</span>fitted.values <span class="sc">-</span> <span class="fu">mean</span>(fit.lm<span class="sc">$</span>fitted.values))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">sum</span>((fit.lm<span class="sc">$</span>fitted.values <span class="sc">-</span> <span class="fu">mean</span>(fit.lm<span class="sc">$</span>fitted.values))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 15.75</code></pre>
 </div>
@@ -912,14 +906,14 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>In case you want more detail about the relationship between <code>lm</code> and <code>aov</code> output:</p>
 <p><em>F</em>-statistic and <em>p</em>-value<a href="#/footnotes" class="footnote-ref" id="fnref9" role="doc-noteref" data-footnote-href="#/fn9" onclick=""><sup>9</sup></a></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a>MSa <span class="ot">&lt;-</span> <span class="fu">sum</span>((fit.lm<span class="sc">$</span>fitted.values <span class="sc">-</span> <span class="fu">mean</span>(fit.lm<span class="sc">$</span>fitted.values))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb27-2"><a aria-label="2"></a>MSe <span class="ot">&lt;-</span> <span class="fu">sum</span>(fit.lm<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">9</span></span>
-<span id="cb27-3"><a aria-label="3"></a></span>
-<span id="cb27-4"><a aria-label="4"></a>(F <span class="ot">&lt;-</span> MSa<span class="sc">/</span>MSe)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>MSa <span class="ot">&lt;-</span> <span class="fu">sum</span>((fit.lm<span class="sc">$</span>fitted.values <span class="sc">-</span> <span class="fu">mean</span>(fit.lm<span class="sc">$</span>fitted.values))<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb27-2"><a></a>MSe <span class="ot">&lt;-</span> <span class="fu">sum</span>(fit.lm<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)<span class="sc">/</span><span class="dv">9</span></span>
+<span id="cb27-3"><a></a></span>
+<span id="cb27-4"><a></a>(F <span class="ot">&lt;-</span> MSa<span class="sc">/</span>MSe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7.662</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-label="1"></a>(p <span class="ot">&lt;-</span> <span class="fu">pf</span>(F, <span class="dv">2</span>, <span class="dv">9</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>(p <span class="ot">&lt;-</span> <span class="fu">pf</span>(F, <span class="dv">2</span>, <span class="dv">9</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.0114</code></pre>
 </div>
@@ -1149,7 +1143,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1261,14 +1255,13 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-          const outerScaffold = trigger.parentElement.cloneNode(true);
-          const codeEl = outerScaffold.querySelector('code');
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
             }
-          }
-          return codeEl.innerText;
+            return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

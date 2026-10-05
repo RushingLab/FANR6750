@@ -30,33 +30,27 @@ Fall 2026
 
 ## Outline {.theme-inverse}
 
-<br/>
 
-### 1) Motivating examples
+1) Motivating examples
 
-<br/>  
 
 ::: {.fragment}
-### 2) Correlation vs Causation
+2) Correlation vs Causation
 
-<br/> 
 :::
 ::: {.fragment}
-### 3) Confounding
+3) Confounding
 
-<br/> 
 :::
 
 ::: {.fragment}
-### 4) Randomization
+4) Causal assumptions
 
-<br/> 
 :::
 
 ::: {.fragment}
-### 5) Replication
+5) Science Before Statistics
 
-<br/> 
 :::
 
 ## Statistical associations {.smaller}
