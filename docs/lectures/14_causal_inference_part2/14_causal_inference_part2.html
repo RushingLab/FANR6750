@@ -94,7 +94,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-ac5e08e4b4b6c659cd557f100be53ee4.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-de2f321f334c519abfca5296ca2f67de.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -223,10 +223,7 @@ Fall 2026</p>
 </section>
 <section id="motivation-1" class="slide level2 smaller">
 <h2>Motivation</h2>
-<p>In the last two lectures, we learned about fitting and interpreting multiple regression models</p>
-<div class="fragment">
 <p>The flexibility of multiple regression models makes them powerful statistical tools but also raises an important question:</p>
-</div>
 <div class="fragment">
 <blockquote>
 <p><em>How do you know what predictors to include in your model?</em></p>
@@ -237,10 +234,11 @@ Fall 2026</p>
 <ul>
 <li class="fragment"><p>All treatments are included as predictors in the model</p></li>
 <li class="fragment"><p>Interactions are included based on <em>a priori</em> hypotheses<a href="#/footnotes" class="footnote-ref" id="fnref1" role="doc-noteref" data-footnote-href="#/fn1" onclick=""><sup>1</sup></a></p></li>
+<li class="fragment"><p>Known sources of extraneous variation can be included to increase power</p></li>
 </ul></li>
 <li class="fragment"><p>In observational studies, it is is often less clear which combination(s) of predictors should be included in a model</p>
 <ul>
-<li class="fragment"><p>It is increasingly common to have dozens (or more) predictors associated with each reponse</p></li>
+<li class="fragment"><p>It is increasingly common to have many predictors associated with each reponse</p></li>
 <li class="fragment"><p>As the number of predictors grows, the number of potential combinations grows even faster</p></li>
 </ul></li>
 </ul>
@@ -315,7 +313,8 @@ Fall 2026</p>
 <aside></aside></section>
 <section id="example-1-2" class="slide level2 smaller">
 <h2>Example 1</h2>
-<p>Next, they fit a model with both covariates: ::::{.columns}</p>
+<p>Next, they fit a model with both covariates:</p>
+<div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -339,7 +338,7 @@ Fall 2026</p>
 3 Cover          0.744     0.287      2.59 0.00958 </code></pre>
 </div>
 </div>
-</div><p>::::</p>
+</div></div>
 <div class="fragment">
 <p><span class="highlight">Questions:</span></p>
 <ul>
@@ -395,7 +394,7 @@ Fall 2026</p>
 </section>
 <section id="example-2-2" class="slide level2 smaller">
 <h2>Example 2</h2>
-<p>Nervous that his analysis was insufficient, the student decided to fit additional models to test whether other predictors may also influence Trillium abundance.</p>
+<p>Nervous that his analysis was insufficient, the student decided to fit additional models to test whether other predictors may also influence Trillium abundance:</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -437,7 +436,7 @@ Fall 2026</p>
 <div class="fragment">
 <p><span class="highlight">Questions:</span></p>
 <ul>
-<li>Why did the effect of acorn mast change when deer abundance was added to the model?</li>
+<li>Why did the effect of mast change when deer abundance was added to the model?</li>
 <li>Is it reasonable to conclude that acorn mast affects Trillium abundance?</li>
 </ul>
 </div>
@@ -448,7 +447,7 @@ Fall 2026</p>
 <div class="column" style="width:50%;">
 <ul>
 <li class="fragment"><p>Researchers are studying the traits that influence “boldness” in fictitious Fruitcake Lizards</p></li>
-<li class="fragment"><p>The researchers searched for and captured lizards that they encounter, then used a well-established method to quantify the boldness of each individual</p></li>
+<li class="fragment"><p>The researchers searched for and captured lizards that they encountered, then used a well-established method to quantify the boldness of each individual</p></li>
 <li class="fragment"><p>The researchers used a linear model to quantify the relationship between body mass and boldness and found a strong negative association</p></li>
 <li class="fragment"><p>This result conflicts with previous studies of captive-reared Fruitcake Lizards that found no relationship between body size and boldness</p></li>
 </ul>
@@ -480,23 +479,19 @@ Fall 2026</p>
 </section>
 <section id="causal-inference" class="slide level2 smaller">
 <h2>Causal inference</h2>
-<p>From lecture 7, we learned that: <span class="highlight">Correlation = Causation + Confounding + Noise</span></p>
+<p>In lecture 7, we learned that: <span class="highlight">Correlation = Causation + Confounding + Noise</span></p>
 <div class="fragment">
-<p>The goal of manipulative experiments is to remove the effects of confounding by randomizing treatments or holding confounding sources of variation constant<a href="#/footnotes" class="footnote-ref" id="fnref4" role="doc-noteref" data-footnote-href="#/fn4" onclick=""><sup>4</sup></a></p>
+<p>Manipulative experiments remove the effects of confounding by randomizing treatments or holding confounding sources of variation constant</p>
 </div>
 <div class="fragment">
 <p>In observational studies, we can’t randomize our “treatment” variables, which often results in non-exchangeable groups</p>
-</div>
-<aside></aside></section>
-<section id="confounding-in-observational-studies" class="slide level2 smaller">
-<h2>Confounding in observational studies</h2>
-<p><span class="highlight">Example:</span> A common question in life history studies is whether there is a trade off (i.e., negative relationship) between reproduction and survival. Researchers monitor the annual reproductive effort and subsequent survival of wild coyotes and find that, in contrast to their predictions, individuals that raised more offspring had higher survival than individuals that raised fewer offspring</p>
-<div class="fragment">
-<p>We can’t conclude that higher reproductive effort causes higher survival because coyotes with different reproductive success are unlikely to be <em>exchangeable</em>. Why?</p>
 <ul>
-<li><p>Individuals with high reproductive success likely differ in many ways from individuals with low reproductive success. If these other sources of variation influence survival, they could be the cause of the differences observed by the researchers</p></li>
-<li><p>What are some variables that might influence both reproductive success and survival?</p></li>
+<li>So does that mean we can’t remove the effects of confounders? Not necessarily</li>
 </ul>
+</div>
+<div class="fragment">
+<p><span class="highlight">Another example:</span> A common question in life history studies is whether there is a trade off (i.e., negative relationship) between reproduction and survival. Researchers monitor the annual reproductive effort and subsequent survival of wild coyotes and find that, in contrast to their predictions, individuals that raised more offspring had higher survival than individuals that raised fewer offspring</p>
+<p>We can’t conclude that higher reproductive effort causes higher survival because coyotes with different reproductive success are unlikely to be <em>exchangeable</em>. Why?</p>
 </div>
 </section>
 <section id="visualizing-your-hypotheses" class="slide level2 smaller">
@@ -506,20 +501,25 @@ Fall 2026</p>
 <li>Simple graphical models with nodes (variables) and edges (arrows pointing from cause to effect) are often useful for this goal</li>
 </ul>
 <div class="fragment">
-<p>In our example, we might hypothesize the following:</p>
+<p>In the coyote example, we might hypothesize the following:</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-12-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-<div class="fragment">
-<p>This type of graphical model is referred to as a <em>directed acyclical graph</em> (DAG), and they are central to many causal inference methods</p>
-</div>
+</section>
+<section id="visualizing-your-hypotheses-1" class="slide level2 smaller">
+<h2>Visualizing your hypotheses</h2>
+
+<img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"><ul>
+<li><p>This type of graphical model is referred to as a <em>directed acyclical graph</em> (DAG)</p></li>
+<li><p>DAGs are central to many causal inference methods</p></li>
+</ul>
 </section>
 <section id="building-dags" class="slide level2 smaller">
 <h2>Building DAGs</h2>
@@ -531,7 +531,7 @@ Fall 2026</p>
 <p>All DAGs must be:</p>
 <ul>
 <li><p>Directed: <span class="math inline">\(X \longleftrightarrow Y\)</span> is not possible</p></li>
-<li><p>Acyclic: <span class="math inline">\(X \longrightarrow Y \longrightarrow Z \longrightarrow X\)</span> is not possible</p></li>
+<li><p>Acyclic: <span class="math inline">\(X \longrightarrow Y \longrightarrow Z \longrightarrow X\)</span> is not possible<a href="#/footnotes" class="footnote-ref" id="fnref4" role="doc-noteref" data-footnote-href="#/fn4" onclick=""><sup>4</sup></a></p></li>
 </ul>
 </div>
 <div class="fragment">
@@ -548,13 +548,13 @@ Fall 2026</p>
 <ul>
 <li class="fragment"><p>As we’ve already seen, one type of variable DAGs help us identify are confounders</p></li>
 <li class="fragment"><p>Confounders open <em>backdoor paths</em> that can create statistical associations between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, even when no causal effect exists<a href="#/footnotes" class="footnote-ref" id="fnref6" role="doc-noteref" data-footnote-href="#/fn6" onclick=""><sup>6</sup></a></p></li>
-<li class="fragment"><p>In manipulative experiments, randomization removes the association between <span class="math inline">\(Z\)</span> and <span class="math inline">\(X\)</span> (i.e., closing the backdoor path)<a href="#/footnotes" class="footnote-ref" id="fnref7" role="doc-noteref" data-footnote-href="#/fn7" onclick=""><sup>7</sup></a></p></li>
+<li class="fragment"><p>In manipulative experiments, randomization removes the association between <span class="math inline">\(Z\)</span> and <span class="math inline">\(X\)</span> (i.e., <em>closes</em> the backdoor path)<a href="#/footnotes" class="footnote-ref" id="fnref7" role="doc-noteref" data-footnote-href="#/fn7" onclick=""><sup>7</sup></a></p></li>
 <li class="fragment"><p>What about observational studies?</p></li>
 </ul>
 <aside></aside></section>
-<section id="confounding-in-observational-studies-1" class="slide level2 smaller">
-<h2>Confounding in observational studies</h2>
-<p>The goal of observational studies often to infer causal relationships. But how do we remove the effect of confounders in observational studies?</p>
+<section id="using-a-dag-for-causal-inference-1" class="slide level2 smaller">
+<h2>Using a DAG for causal inference</h2>
+<p>How do we remove the effect of confounders in observational studies?</p>
 <div class="fragment">
 <p>Multiple regression!<a href="#/footnotes" class="footnote-ref" id="fnref8" role="doc-noteref" data-footnote-href="#/fn8" onclick=""><sup>8</sup></a></p>
 </div>
@@ -566,11 +566,12 @@ Fall 2026</p>
 <h2>Using multiple regression to remove confounding</h2>
 <p>Remember from lecture 12 how to interpret the slope parameters from multiple regression models:</p>
 <blockquote>
-<p>The effect of <span class="math inline">\(x\)</span> while holding all other variables constant</p>
+<p>The effect of <span class="math inline">\(X\)</span> while holding all other variables constant</p>
 </blockquote>
 <div class="fragment">
-<p>Sound familiar? Multiple regression estimates the effect of a treatment <span class="math inline">\(x\)</span> after controlling for the effect of confounder <span class="math inline">\(z\)</span><a href="#/footnotes" class="footnote-ref" id="fnref9" role="doc-noteref" data-footnote-href="#/fn9" onclick=""><sup>9</sup></a></p>
-<p><span class="highlight">Note</span>: We do not have to condition on every confounder. Instead, we generally try to find the <em>minimal adjustment set</em> that blocks confounding paths</p>
+<p>Sound familiar?</p>
+<p>If <span class="math inline">\(Z\)</span> is a confounder, multiple regression “removes” the effect of <span class="math inline">\(Z\)</span> when measuring the effect of a treatment <span class="math inline">\(X\)</span><a href="#/footnotes" class="footnote-ref" id="fnref9" role="doc-noteref" data-footnote-href="#/fn9" onclick=""><sup>9</sup></a></p>
+<p>So a DAG tells us which variables act as confounders and therefore which variables need to be included in our model</p>
 </div>
 <aside></aside></section>
 <section id="example-1-3" class="slide level2 smaller">
@@ -581,14 +582,14 @@ Fall 2026</p>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-13-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
 <ul>
-<li class="fragment"><p>From this DAG, it is clear that sex is a <span class="highlight">confounder</span> of both cover <em>and</em> predation.</p></li>
+<li class="fragment"><p>From this DAG, it is clear that sex is a <span class="highlight">confounder</span> of both cover <em>and</em> survival.</p></li>
 <li class="fragment"><p>Because it is a confounder, we have to control for it to quantify the causal effect of cover on survival<a href="#/footnotes" class="footnote-ref" id="fnref10" role="doc-noteref" data-footnote-href="#/fn10" onclick=""><sup>10</sup></a></p></li>
 <li class="fragment"><p>We can also conclude that the model that only includes cover is the <em>wrong model</em> for our question. No model selection necessary!</p></li>
 </ul>
@@ -607,40 +608,66 @@ Fall 2026</p>
 <ul>
 <li class="fragment"><p>Including correlated predictors does not violate any assumptions of linear models</p></li>
 <li class="fragment"><p>The <em>purpose</em> of multiple regression is to measure the effect of one predictor while holding others constant</p></li>
-<li class="fragment"><p>As we have seen, confounding variables <em>need to</em> be included <em>because</em> they are correlated</p></li>
+<li class="fragment"><p>Often, <em>omitting</em> correlated variables is a bigger problem than including them</p></li>
+<li class="fragment"><p>As we have seen, confounding variables will almost always be correlated with <span class="math inline">\(X\)</span> but <em>should</em> be included to control for their influence</p></li>
 </ul>
 </div>
 <aside></aside></section>
-<section id="multicolinearity-does-not-violate-assumptions" class="slide level2 smaller">
-<h2>Multicolinearity does not violate assumptions</h2>
+<section id="examples-1" class="slide level2 smaller">
+<h2>Examples</h2>
+<p>Pairwise correlations <em>may</em> indicate you need to include a predictor:<a href="#/footnotes" class="footnote-ref" id="fnref12" role="doc-noteref" data-footnote-href="#/fn12" onclick=""><sup>12</sup></a></p>
+<ul>
+<li class="fragment"><p>Researchers are interested in the effects of traffic on coyote movement. Exploratory analysis reveals that GPS-collared coyotes are more active during times of high traffic. Can we conclude that traffic increases movement? What might be confounding traffic?</p></li>
+<li class="fragment"><p>Time of day! Coyotes are crepuscular so they tend to move more in the morning and evening, when traffic is also highest</p></li>
+<li class="fragment"><p>So in this case, we expect traffic and time of day to be highly correlated because <span class="math inline">\(Z\)</span> <em>causes</em> <span class="math inline">\(X\)</span></p></li>
+<li class="fragment"><p>Does this mean we can’t include time of day in the model? No! We <em>need to</em> include it if we want to isolate the effect of traffic</p></li>
+</ul>
+<section id="so-whats-the-problem-with-multicolinearity" class="slide level2 smaller">
+<h2>So what’s the problem with multicolinearity?</h2>
+<p>The previous examples hopefully clarify that including or removing predictors based on pairwise correlations is generally bad advice</p>
+<p>But including highly correlated predictors is not without problems:</p>
+<ul>
+<li class="fragment"><p>When variables are highly correlated, they contain little unique information about their individual effects</p></li>
+<li class="fragment"><p>Parameter estimates will have higher uncertainty (indicated by large standard errors)</p></li>
+<li class="fragment"><p>The higher the correlation, the larger sample size needed to maintain statistical power</p></li>
+</ul>
 </section>
-<section id="multicolinearity-may-indicate-you-need-to-include-a-predictor" class="slide level2 smaller">
-<h2>Multicolinearity may indicate you need to <em>include</em> a predictor</h2>
-<p>Remember from the causal inference lecture:</p>
-<p>So in this case, we expect <span class="math inline">\(Z\)</span> and <span class="math inline">\(X\)</span> to be correlated because <span class="math inline">\(Z\)</span> <em>causes</em> <span class="math inline">\(X\)</span><a href="#/footnotes" class="footnote-ref" id="fnref12" role="doc-noteref" data-footnote-href="#/fn12" onclick=""><sup>12</sup></a></p>
+<section id="problematic-multicolinearity" class="slide level2 smaller">
+<h2>Problematic multicolinearity</h2>
+<p>One instance that highlights when multicolinearity can be problematic<a href="#/footnotes" class="footnote-ref" id="fnref13" role="doc-noteref" data-footnote-href="#/fn13" onclick=""><sup>13</sup></a> is when covariates represent percentages that must sum to 1</p>
+<ul>
+<li class="fragment"><p>Land use (% forest, % developed, % agriculture, etc.)</p></li>
+<li class="fragment"><p>Diet (% fruit, % insects, % seeds)</p></li>
+<li class="fragment"><p>Behavior (% of time foraging, % resting, % moving)</p></li>
+</ul>
+<div class="fragment">
+<p>These covariates are structurally colinear - if you know the values of all but one category, you know the value of the last category</p>
+<ul>
+<li class="fragment">Another way to think about the issue - if you change the value of one category, at least one of the other categories <span class="highlight">must</span> also change</li>
+</ul>
+</div>
+<div class="fragment">
+<p>If you try to include every category as a predictor, many models with fail (error message or infinite standard errors)</p>
+<p>Removing one (or more) categories may be necessary to fit the model</p>
+</div>
 <aside></aside></section>
 <section id="multicolinearity---practical-advice" class="slide level2 smaller">
 <h2>Multicolinearity - practical advice</h2>
-<p>If covariates are correlated because of confounding, you need to include the confounder</p>
-<p>If covariates are correlated because they essentially measure the same thing, you should remove all but one</p>
-<p>If covariates have a structural correlation (e.g., sum to 1), …</p>
-<p>Be prepared for larger SE (but that’s what is supposed to happen)</p>
-</section>
-<section id="identifying-confounders-using-dags" class="slide level2 smaller">
-<h2>Identifying confounders using DAGs</h2>
-<p>So far, we’ve used very simple graphs to show confounding caused by a single variable <span class="math inline">\(Z\)</span>.</p>
-<div class="fragment">
-<p>However, confounding can often show up in more complex DAGs in ways that are not always quite so obvious.</p>
-<p>Do you see any confounders in the following graphs?</p>
-</div>
+<ul>
+<li class="fragment"><p>If covariates are correlated because of confounding, you need to include the confounder (if your goal is causal inference)</p></li>
+<li class="fragment"><p>If covariates are correlated because they essentially measure the same thing, you should remove all but one</p></li>
+<li class="fragment"><p>If covariates have a structural correlation (e.g., sum to 1), generally best to drop one predictor</p></li>
+<li class="fragment"><p>When you include correlated predictor variables, be prepared for larger standard errors (because that’s what is supposed to happen!)</p></li>
+<li class="fragment"><p>If standard errors are so big that they essentially render parameter estimates useless, you may need to simplify the model by removing covariates (but be sure you understand how that changes your interpretation!)</p></li>
+</ul>
 </section>
 <section id="other-types-of-associations" class="slide level2 smaller">
-<h2>Other types of associations</h2>
+<h2>other types of associations</h2>
 <p>Confounders are only one type of causal relationship. Several others are important to know about:</p>
 <ul>
-<li><p>Mediators</p></li>
-<li><p>Colliders</p></li>
-<li><p>Competing exposures</p></li>
+<li class="fragment"><p>Mediators</p></li>
+<li class="fragment"><p>Colliders</p></li>
+<li class="fragment"><p>Competing exposures</p></li>
 </ul>
 <div class="fragment">
 <p>As with confounders, DAGs are a critical tool for understanding and identifying each of these types of relationships</p>
@@ -649,8 +676,19 @@ Fall 2026</p>
 <section id="mediators" class="slide level2 smaller">
 <h2>Mediators</h2>
 <p>Mediators are variables that exist along a path <em>between</em> <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></p>
-
-<img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
 <li class="fragment"><p>Often, mediators are the mechanism that causes <span class="math inline">\(X\)</span> to influence <span class="math inline">\(Y\)</span></p></li>
 <li class="fragment"><p>In a DAG, mediators have arrows pointing <em>from</em> <span class="math inline">\(X\)</span> and <em>to</em> <span class="math inline">\(Y\)</span></p></li>
 <li class="fragment"><p>If <span class="math inline">\(Z\)</span> is a mediator, including it in the model “blocks” the effect of <span class="math inline">\(X\)</span></p>
@@ -660,21 +698,45 @@ Fall 2026</p>
 <li class="fragment"><p>Mediators can sometimes be included in models to test whether <span class="math inline">\(Z\)</span> might be the mechanism</p></li>
 <li class="fragment"><p>Including a mediator also allows you to measure the effect of <span class="math inline">\(X\)</span> that is not due to <span class="math inline">\(Z\)</span></p></li>
 </ul>
+</div></div>
 </section>
 <section id="colliders" class="slide level2 smaller">
 <h2>Colliders</h2>
 <p>Confounders are common <em>causes of</em> <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Colliders are common <em>effects of</em> <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></p>
-
-<img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
 <li class="fragment"><p>In a DAG, colliders have arrows pointing <em>towards</em> them from both <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></p></li>
-<li class="fragment"><p>Including colliders in models can cause</p></li>
+<li class="fragment"><p>Including colliders in models can cause associations between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> when none actually exists</p></li>
 </ul>
+</div></div>
 </section>
 <section id="competing-exposures" class="slide level2 smaller">
 <h2>Competing exposures</h2>
 <p>Competing exposures are variables that effect the response variable <span class="math inline">\(Y\)</span> but are independent of the cause <span class="math inline">\(X\)</span></p>
-
-<img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-16-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<ul>
 <li class="fragment"><p>In a DAG, competing exposures have arrows pointing towards <span class="math inline">\(Y\)</span> but not <span class="math inline">\(X\)</span></p></li>
 <li class="fragment"><p>Including competing exposures in models does not directly influence inference about the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span></p></li>
 <li class="fragment"><p>Because competing exposures don’t influence causal inference about <span class="math inline">\(X\)</span>, choices about whether to include them in the model should be based on other considerations</p>
@@ -684,21 +746,19 @@ Fall 2026</p>
 <li class="fragment"><p>Does including them reduce precision of other model parameters?</p></li>
 </ul></li>
 </ul>
+</div></div>
 </section>
-<section id="examples-1" class="slide level2 smaller">
+<section id="examples-2" class="slide level2 smaller">
 <h2>Examples</h2>
-<p>Let’s return to the three examples from the beginning of lecture</p>
-</section>
-<section id="example-2-3" class="slide level2 smaller">
-<h2>Example 2</h2>
-<p>Why did the effect of mast change when deer abundance was included in the model?</p>
-<div class="fragment">
-<p>Because deer is a <span class="highlight">mediator</span>, including it in the model removes the effect of mast. But that does not mean mast is not a cause of Trillium abundance!</p>
-</div>
-<p>What is the role of initial abundance?</p>
-<div class="fragment">
-<p>Because initial abundance is not a confounder or a mediator, including it in the model does not bias estimates of deer or mast. But there are reasons to include it in the model!</p>
-</div>
+<p>Let’s return to the second and third examples from the beginning of lecture</p>
+<ul>
+<li class="fragment"><p>Why did the effect of mast change when deer abundance was included in the model? What is the relationship between mast, deer, and trillium?</p></li>
+<li class="fragment"><p><span class="math inline">\(mast \longrightarrow deer \longrightarrow trillium\)</span></p></li>
+<li class="fragment"><p>Because deer is a <span class="highlight">mediator</span>, including it in the model removes the effect of mast. But that does not mean mast is not a cause of Trillium abundance!</p></li>
+<li class="fragment"><p>What is the role of initial abundance?</p></li>
+<li class="fragment"><p><span class="math inline">\(mast \longrightarrow deer \longrightarrow trillium \longleftarrow abundance_{init}\)</span></p></li>
+<li class="fragment"><p>Because initial abundance is not a confounder or a mediator, including it in the model does not bias estimates of deer or mast. Why might you inlude it in the model?</p></li>
+</ul>
 </section>
 <section id="example-3-1" class="slide level2 smaller">
 <h2>Example 3</h2>
@@ -709,7 +769,7 @@ Fall 2026</p>
 <li class="fragment"><p>Lizards only end up in the data set <em>if they are captured</em></p></li>
 <li class="fragment"><p>Who gets captured? Lizards that are big <em>or</em> <span class="highlight">bold</span></p></li>
 <li class="fragment"><p>Who doesn’t get captured? Lizards that are small <em>and</em> shy</p></li>
-<li class="fragment"><p>In the observed sample, small lizards are almost guaranteed to be bolder than average<a href="#/footnotes" class="footnote-ref" id="fnref13" role="doc-noteref" data-footnote-href="#/fn13" onclick=""><sup>13</sup></a></p></li>
+<li class="fragment"><p>In the observed sample, small lizards are almost guaranteed to be bolder than average<a href="#/footnotes" class="footnote-ref" id="fnref14" role="doc-noteref" data-footnote-href="#/fn14" onclick=""><sup>14</sup></a></p></li>
 </ul>
 </div><div class="column fragment" style="width:50%;">
 <p>In the population, there is no link between boldness and body size</p>
@@ -717,7 +777,7 @@ Fall 2026</p>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -727,20 +787,147 @@ Fall 2026</p>
 <p>Capture acted as a <em>collider</em>, which created a relationship where none actually existed.</p>
 </div>
 <aside></aside></section>
+<section id="using-dags" class="slide level2 smaller">
+<h2>Using DAGs</h2>
+<p>So far, we’ve used very simple graphs to show confounding caused by a single variable <span class="math inline">\(Z\)</span>.</p>
+<div class="fragment">
+<p>However, confounding can often show up in more complex DAGs in ways that are not always quite so obvious.</p>
+<p>Do you see any confounders in the following graph?</p>
+</div>
+</section>
+<section id="using-dags-1" class="slide level2 smaller">
+<h2>Using DAGs</h2>
+<p>Do you see any confounders in the following graph?</p>
+
+<img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="using-dags-2" class="slide level2 smaller">
+<h2>Using DAGs</h2>
+<p>Do you see any confounders in the following graph?</p>
+
+<img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="using-dags-3" class="slide level2 smaller">
+<h2>Using DAGs</h2>
+<p>Do you see any confounders in the following graph?</p>
+
+<img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="minimal-adjustment-set" class="slide level2 smaller">
+<h2>Minimal adjustment set</h2>
+<p>Conditioning on every confounder is not necessary</p>
+<p>Instead, we generally try to find the <em>minimal adjustment set</em> that blocks each confounding path</p>
+<div class="fragment">
+<p>For example, in the following DAG we can condition on <span class="math inline">\(A\)</span> <em>or</em> <span class="math inline">\(B\)</span>. We do not need to condition on both</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="minimal-adjustment-set-1" class="slide level2 smaller">
+<h2>minimal adjustment set</h2>
+<p>What variables do we need to adjust in this example?</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-23-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-24-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="minimal-adjustment-set-2" class="slide level2 smaller">
+<h2>Minimal adjustment set</h2>
+<p>What variables do we need to adjust in this example?</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="minimal-adjustment-set-3" class="slide level2 smaller">
+<h2>Minimal adjustment set</h2>
+<p>What variables do we need to adjust in this example?</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-27-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-28-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
+</section>
 <section id="more-on-dags" class="slide level2 smaller">
 <h2>More on DAGs</h2>
 <p>Building DAGs can be overwhelming due to the complexity of ecological systems</p>
-<p>Start with the response variable and think about variables that are likely to have meaningful effects</p>
-<p>If you were to do conduct an experiment, which variables would you try to hold constant? What variables would you try to randomize?</p>
+<ul>
+<li class="fragment"><p>Start with the response variable and think about variables that are likely to have meaningful effects</p></li>
+<li class="fragment"><p>Move to the main treatment variable(s) of interest. What variables likely influence it? How are those variables related to the response?</p></li>
+<li class="fragment"><p>If you were to conduct an experiment, which variables would you try to hold constant? What variables would you try to randomize over?</p></li>
+<li class="fragment"><p>Share your DAG with colleagues and explain your reasoning. Use feedback to revise the DAG until you are satisfied it captures the main variables influencing your system</p></li>
+<li class="fragment"><p>Remember that you should include variable <span class="bold">whether you have data to measure them or not!</span></p></li>
+</ul>
 </section>
 <section id="more-on-colliders" class="slide level2 smaller">
 <h2>More on colliders</h2>
 <p>Colliders are challenging to understand and identify in part because they are often not variables we measure</p>
 <ul>
-<li>There is not a column in the data set called “captured”</li>
+<li class="fragment">There is not a column in the lizard data set called “captured”</li>
 </ul>
+<div class="fragment">
 <p>When colliders are measured, they <span class="highlight">should not</span> be included in the model</p>
+</div>
+<div class="fragment">
 <p>When colliders are not measured, they are essentially in the model by default</p>
+</div>
 </section>
 <section id="summary" class="slide level2 smaller">
 <h2>Summary</h2>
@@ -748,7 +935,7 @@ Fall 2026</p>
 <p>Using multiple regression to disentangle the effects of different covariates requires</p>
 <p>DAGs are graphical models that represent hypothesized relationships between variables that influence (or are influenced by) <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></p>
 <p>DAGs are useful for identifying confounders, mediators, and colliders</p>
-<p>If your goal is to estimate causal effects of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>, your regression model <em>must</em> include known confounders<a href="#/footnotes" class="footnote-ref" id="fnref14" role="doc-noteref" data-footnote-href="#/fn14" onclick=""><sup>14</sup></a></p>
+<p>If your goal is to estimate causal effects of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>, your regression model <em>must</em> include known confounders<a href="#/footnotes" class="footnote-ref" id="fnref15" role="doc-noteref" data-footnote-href="#/fn15" onclick=""><sup>15</sup></a></p>
 <pre><code>+ Note that this does not depend on pairwise correlations, AIC scores, etc. Statistical control is equivalent to randomization in manipulative experiments</code></pre>
 <p>You should treat mediators with caution. Including mediators blocks paths between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, which will change results</p>
 <p>Beware of colliders, they are often lurking behind the scenes</p>
@@ -771,23 +958,25 @@ Fall 2026</p>
 
 
 </section>
+<aside></aside></section>
 <section id="footnotes" class="footnotes footnotes-end-of-document smaller scrollable" role="doc-endnotes"><h2>Footnotes</h2>
 
 <ol>
 <li id="fn1"><p>Assuming adequate replication of all treatment combinations</p></li>
 <li id="fn2"><p>including in previous versions of this course</p></li>
 <li id="fn3"><p>specifically, they fit logistic regression models, which used for binary response data. We will learn more about logistic regression later in the semester but conclusions about the direction/significance of slope coefficients are the same as for linear regression</p></li>
-<li id="fn4"><p>Experimental design helps with confounding but how do we deal with noise?</p></li>
+<li id="fn4"><p>One common question when building DAGs in ecological settings is feedback loops. Don’t those create cyclic graphs? Often the answer is no, but only once we account for time. For example, density dependence may at first appear to be cyclic: <span class="math inline">\(N \longrightarrow \phi \longrightarrow N\)</span>, where <span class="math inline">\(N\)</span> is population size and <span class="math inline">\(\phi\)</span> is survival. But in reality, the graph is <span class="math inline">\(N_{t-1} \longrightarrow \phi_{t - 1} \longrightarrow N_t\)</span>, where <span class="math inline">\(t\)</span> indexes year</p></li>
 <li id="fn5"><p><em>Important</em> is a vague term but generally a DAG should include any variables that could be biologically-relevant sources of variation</p></li>
 <li id="fn6"><p>A common metaphor for DAGs is the flow of electricity. We want to know if electricity flows from <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span>. Backdoor paths are those that allow electricity to flow into both <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> from other variables</p></li>
 <li id="fn7"><p>Closing the door is equivalent to blocking the flow of electricity</p></li>
-<li id="fn8"><p>Multiple regression is not the only method to address confounding, but it is the only one we will cover in this class. For an overview of other methods, see…</p></li>
+<li id="fn8"><p>Multiple regression is not the only method to address confounding, but it is the only one we will cover in this class</p></li>
 <li id="fn9"><p>This is what is meant by “conditioning on” or “controlling for” a variable</p></li>
 <li id="fn10"><p>Assuming there are no other confounders</p></li>
 <li id="fn11"><p>Though this is not quite the actual meaning</p></li>
-<li id="fn12"><p>There are other reasons they may be correlated, including a shared confounder of <span class="math inline">\(X\)</span> and <span class="math inline">\(Z\)</span>. Also, <span class="math inline">\(Z\)</span> may not be the only cause of <span class="math inline">\(X\)</span>. Regardless, the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span> is still confounded by <span class="math inline">\(Z\)</span></p></li>
-<li id="fn13"><p>Otherwise they wouldn’t be captured</p></li>
-<li id="fn14"><p>Technically, not all confounders need to be included. Only the <em>minimal adjustment set</em> need to block all open paths between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> need to be included</p></li>
+<li id="fn12"><p>As we have discussed, variables can be correlated for many reasons. <em>If</em> the correlation is caused by confounding, then the confounder should be included in the model. But correlation does not automatically mean confounding, so again, identifying confounders depends on your scientific judgement</p></li>
+<li id="fn13"><p>And helps explain what multicolinearity is</p></li>
+<li id="fn14"><p>Otherwise they wouldn’t be captured</p></li>
+<li id="fn15"><p>Technically, not all confounders need to be included. Only the <em>minimal adjustment set</em> need to block all open paths between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> need to be included</p></li>
 </ol>
 </section>
     </div>

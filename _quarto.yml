@@ -115,8 +115,8 @@ website:
           - text: "Lab 7: ANOVA"
             href: labs/lab07_ANOVA.qmd
 
-          # - text: "Lab 8: Multiple Comparisons"
-          #   href: labs/lab08_multcomp.qmd
+          - text: "Lab 8: Multiple Comparisons"
+            href: labs/lab08_mult_comp.qmd
 
           # - text: "Lab 9: Multiple regression"
           #   href: labs/lab09_multreg.qmd

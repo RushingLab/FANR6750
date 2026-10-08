@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lab 7: Completely randomized ANOVA – FANR6750</title>
+<title>Lab 8: Multiple comparisons and power analysis – FANR6750</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -268,8 +268,12 @@ window.Quarto = {
  <span class="dropdown-text">Lab 6: Experimental Design</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../labs/lab07_anova.qmd">
+    <a class="dropdown-item" href="../labs/lab07_ANOVA.html">
  <span class="dropdown-text">Lab 7: ANOVA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab08_mult_comp.html">
+ <span class="dropdown-text">Lab 8: Multiple Comparisons</span></a>
   </li>  
     </ul>
   </li>
@@ -323,13 +327,10 @@ window.Quarto = {
   <li><a href="#questions" id="toc-questions" class="nav-link" data-scroll-target="#questions">Questions</a></li>
   <li><a href="#constructing-contrasts-in-r" id="toc-constructing-contrasts-in-r" class="nav-link" data-scroll-target="#constructing-contrasts-in-r">Constructing contrasts in R</a></li>
   <li><a href="#fit-the-model-with-contrasts" id="toc-fit-the-model-with-contrasts" class="nav-link" data-scroll-target="#fit-the-model-with-contrasts">Fit the model with contrasts</a></li>
-  <li><a href="#anova-without-contrasts" id="toc-anova-without-contrasts" class="nav-link" data-scroll-target="#anova-without-contrasts">ANOVA without contrasts</a></li>
-  <li><a href="#anova-with-contrasts" id="toc-anova-with-contrasts" class="nav-link" data-scroll-target="#anova-with-contrasts">ANOVA with contrasts</a></li>
+  <li><a href="#visualizing-the-overall-treatment-effect" id="toc-visualizing-the-overall-treatment-effect" class="nav-link" data-scroll-target="#visualizing-the-overall-treatment-effect">Visualizing the overall treatment effect</a></li>
+  <li><a href="#visualizing-the-constrasts-results" id="toc-visualizing-the-constrasts-results" class="nav-link" data-scroll-target="#visualizing-the-constrasts-results">Visualizing the constrasts results</a></li>
   <li><a href="#difference-in-means-for-each-contrast" id="toc-difference-in-means-for-each-contrast" class="nav-link" data-scroll-target="#difference-in-means-for-each-contrast">Difference in means for each contrast</a></li>
   <li><a href="#standard-errors-for-each-contrast" id="toc-standard-errors-for-each-contrast" class="nav-link" data-scroll-target="#standard-errors-for-each-contrast">Standard errors for each contrast</a></li>
-  </ul></li>
-  <li><a href="#estimation" id="toc-estimation" class="nav-link" data-scroll-target="#estimation">Estimation</a>
-  <ul class="collapse">
   <li><a href="#estimating-confidence-intervals" id="toc-estimating-confidence-intervals" class="nav-link" data-scroll-target="#estimating-confidence-intervals">Estimating confidence intervals</a></li>
   <li><a href="#confidence-intervals-from-one-way-anova" id="toc-confidence-intervals-from-one-way-anova" class="nav-link" data-scroll-target="#confidence-intervals-from-one-way-anova">Confidence intervals from one-way ANOVA</a></li>
   <li><a href="#plot-effects-and-cis" id="toc-plot-effects-and-cis" class="nav-link" data-scroll-target="#plot-effects-and-cis">Plot effects and CIs</a></li>
@@ -340,7 +341,7 @@ window.Quarto = {
   <li><a href="#power-analysis-for-a-2-sample-t-test" id="toc-power-analysis-for-a-2-sample-t-test" class="nav-link" data-scroll-target="#power-analysis-for-a-2-sample-t-test">Power analysis for a 2-sample t-test</a></li>
   <li><a href="#power-analysis-for-one-way-anova" id="toc-power-analysis-for-one-way-anova" class="nav-link" data-scroll-target="#power-analysis-for-one-way-anova">Power analysis for one-way ANOVA</a></li>
   </ul></li>
-  <li><a href="#assignment-not-for-a-grade" id="toc-assignment-not-for-a-grade" class="nav-link" data-scroll-target="#assignment-not-for-a-grade">Assignment (not for a grade)</a></li>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a></li>
   </ul>
 </nav>
     </div>
@@ -349,7 +350,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lab 7: Completely randomized ANOVA</h1>
+<h1 class="title">Lab 8: Multiple comparisons and power analysis</h1>
 <p class="subtitle lead">FANR 6750: Experimental Methods in Forestry and Natural Resources Research<br><small>Fall 2026</small></p>
 </div>
 
@@ -442,7 +443,7 @@ window.Quarto = {
 <ul>
 <li><p>How do they compare to each other?</p></li>
 <li><p>Which method is the strictest (i.e., results in the largest p-values)? Which is the least strict (smallest p-values)?</p></li>
-<li><p>Do you conclusions about which brands differ depend on which method you use? How might you go about deciding which method to base your conclusions on?</p></li>
+<li><p>Do your conclusions about which brands differ depend on which method you use? How might you go about deciding which method to base your conclusions on?</p></li>
 </ul>
 <hr>
 <p>We can also plot the Tukey HSD differences (with confidence intervals):</p>
@@ -456,6 +457,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<p>That’s all we’ll say about post-hoc multiple comparisons for now because ideally, you would choose to use…</p>
 </section>
 <section id="a-priori-contrasts" class="level1">
 <h1><em>a priori</em> contrasts</h1>
@@ -465,18 +467,11 @@ window.Quarto = {
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"musseldata"</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(musseldata)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Watershed Length</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1 Twelvemile     16</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 Twelvemile      8</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3 Twelvemile     12</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4 Twelvemile     17</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5 Twelvemile     13</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6  Chattooga     18</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># By default, R will order watershed in alphabetical order</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># We will change it to a factor and explicitly set the order to match the order from lecture</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>musseldata<span class="sc">$</span>Watershed <span class="ot">&lt;-</span> <span class="fu">factor</span>(musseldata<span class="sc">$</span>Watershed, </span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Twelvemile"</span>, <span class="st">"Chattooga"</span>,<span class="st">"Keowee"</span>, <span class="st">"Coneross"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># By default, R will order watershed in alphabetical order</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># We will change it to a factor and explicitly set the order to match the order from lecture</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>musseldata<span class="sc">$</span>Watershed <span class="ot">&lt;-</span> <span class="fu">factor</span>(musseldata<span class="sc">$</span>Watershed, </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                               <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Twelvemile"</span>, <span class="st">"Chattooga"</span>,<span class="st">"Keowee"</span>, <span class="st">"Coneross"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -519,7 +514,7 @@ window.Quarto = {
 </section>
 <section id="questions" class="level2">
 <h2 class="anchored" data-anchor-id="questions">Questions</h2>
-<p>Suppose we want to make 3 <em>a priori</em> comparisons:</p>
+<p>Suppose we want to test the 3 <em>a priori</em> comparisons from lecture:</p>
 <ol type="1">
 <li><p>Agricultural (Twelvemile &amp; Coneross) vs.&nbsp;Forested (Chattooga &amp; Keowee)</p></li>
 <li><p>Within agricultural (Twelvemile vs Coneross)</p></li>
@@ -560,35 +555,37 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="constructing-contrasts-in-r">Constructing contrasts in R</h2>
 <section id="coefficients" class="level3">
 <h3 class="anchored" data-anchor-id="coefficients">Coefficients</h3>
+<p>First, we create coefficients for each watershed. Remember, these coefficients are meant to express the hypotheses described above in mathematical terms:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>AgvF <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>) <span class="co"># Note that we could multiply by 2 to get integers without changing the conclusions</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>TvCo <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">1</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>ChvK <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>In the first contrast, the agricultural watersheds are multiplied by 1/2 (which gives us the mean response of those two watersheds) and the forested watersheds are multiplied by -1/2 (which gives us the mean of those two watersheds). If the null hypothesis is true, the difference in those means will be 0 (which is why we multiplied one group by negative coefficients).</p>
+<p>For the other two contrasts, we simply multiply the watersheds of interests by 1 (or -1) to keep them in the contrast and the others by 0 to remove them.</p>
 </section>
 <section id="are-they-orthogonal" class="level3">
 <h3 class="anchored" data-anchor-id="are-they-orthogonal">Are they orthogonal?</h3>
-<p><strong>Step 1</strong>: sum of coefficients is 0, for each contrast.</p>
+<p>Next, we need to test whether the constrasts are orthogonal.</p>
+<p><strong>Step 1</strong>: sum of each contrast’s coefficients is 0:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">sum</span>(AgvF) <span class="sc">==</span> <span class="dv">0</span>, <span class="fu">sum</span>(TvCo) <span class="sc">==</span> <span class="dv">0</span>, <span class="fu">sum</span>(ChvK) <span class="sc">==</span> <span class="dv">0</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
-<p><code>all()</code> tests whether all its arguments evaluate to TRUE</p>
+<p><code>all()</code> tests whether all its arguments evaluate to TRUE. If it returned FALSE, we would need to check which sum(s) did not equal 0.</p>
 <hr>
-<p><strong>Step 2</strong>: pairwise dot products are all equal to 0.</p>
+<p><strong>Step 2</strong>: pairwise dot products are all equal to 0:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(<span class="fu">sum</span>(AgvF <span class="sc">*</span> TvCo) <span class="sc">==</span> <span class="dv">0</span>,</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(AgvF <span class="sc">*</span> ChvK) <span class="sc">==</span> <span class="dv">0</span>,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sum</span>(TvCo <span class="sc">*</span> ChvK) <span class="sc">==</span> <span class="dv">0</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><strong>Step 2 (alternate method)</strong>: pairwise dot products are all equal to 0.</p>
-<p>Try the %*% operator:</p>
+<p><strong>Step 2 (alternate method)</strong>: pairwise dot products are all equal to 0 using the %*% operator:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>AgvF <span class="sc">%*%</span> TvCo</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      [,1]</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1,]    0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(AgvF <span class="sc">%*%</span> TvCo <span class="sc">==</span> <span class="dv">0</span>, AgvF <span class="sc">%*%</span> ChvK <span class="sc">==</span> <span class="dv">0</span>, TvCo <span class="sc">%*%</span> ChvK <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <hr>
 <p>When the operands are vectors, <code>%*%</code> does the dot product</p>
@@ -631,9 +628,10 @@ window.Quarto = {
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Notice that the contrast sums of squares sum to the treatment sum of squares. We have successfully partitioned the variation among watersheds into variation between agricultural vs forested watersheds, variation within agricultural watersheds, and variation within forested watersheds.</p>
 </section>
-<section id="anova-without-contrasts" class="level2">
-<h2 class="anchored" data-anchor-id="anova-without-contrasts">ANOVA without contrasts</h2>
+<section id="visualizing-the-overall-treatment-effect" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-the-overall-treatment-effect">Visualizing the overall treatment effect</h2>
 <section id="large-f_3-16" class="level4">
 <h4 class="anchored" data-anchor-id="large-f_3-16"><span class="math inline">\(\large F_{3, 16}\)</span></h4>
 <div class="cell" data-layout-align="c">
@@ -647,8 +645,8 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="anova-with-contrasts" class="level2">
-<h2 class="anchored" data-anchor-id="anova-with-contrasts">ANOVA with contrasts</h2>
+<section id="visualizing-the-constrasts-results" class="level2">
+<h2 class="anchored" data-anchor-id="visualizing-the-constrasts-results">Visualizing the constrasts results</h2>
 <section id="large-f_1-16" class="level4">
 <h4 class="anchored" data-anchor-id="large-f_1-16"><span class="math inline">\(\large F_{1, 16}\)</span></h4>
 <div class="cell" data-layout-align="c">
@@ -660,10 +658,12 @@ window.Quarto = {
 </div>
 </div>
 </div>
+<p>From these results, it is clear that most of the variation among watersheds is due to the difference between agricultural and forested watersheds.</p>
 </section>
 </section>
 <section id="difference-in-means-for-each-contrast" class="level2">
 <h2 class="anchored" data-anchor-id="difference-in-means-for-each-contrast">Difference in means for each contrast</h2>
+<p>We can also calculate differences in the group means (and associated confidence intervals) associated with each contrast:</p>
 <section id="group-means" class="level4">
 <h4 class="anchored" data-anchor-id="group-means">Group means</h4>
 <div class="cell" data-layout-align="center">
@@ -736,9 +736,6 @@ window.Quarto = {
 <hr>
 </section>
 </section>
-</section>
-<section id="estimation" class="level1">
-<h1>Estimation</h1>
 <section id="estimating-confidence-intervals" class="level2">
 <h2 class="anchored" data-anchor-id="estimating-confidence-intervals">Estimating confidence intervals</h2>
 <p>In an ANOVA context, confidence intervals can be constructed using the equation:</p>
@@ -880,9 +877,9 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="assignment-not-for-a-grade" class="level1">
-<h1>Assignment (not for a grade)</h1>
-<p>Researchers wish to know if food supplementation affects the growth of nestling Canada warblers. The treatment groups are: (A) No supplementation control, (B) low, (C) medium, (D) high, and (E) very high. The response variable is the weight of a ten-day-old nestling.</p>
+<section id="assignment" class="level1">
+<h1>Assignment</h1>
+<p>Researchers wish to know if food supplementation affects the growth of nestling Canada warblers. The treatment groups are: (A) No supplementation (i.e., control), (B) low, (C) medium, (D) high, and (E) very high. The response variable is the weight of a ten-day-old nestling.</p>
 <p>Create an R Markdown file to do the following:</p>
 <ol type="1">
 <li>Create an <code>R</code> chunk to load the data using:</li>

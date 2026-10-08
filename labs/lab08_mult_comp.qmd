@@ -1,5 +1,5 @@
 ---
-title: "Lab 7: Completely randomized ANOVA"
+title: "Lab 8: Multiple comparisons and power analysis"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research<br><small>Fall 2026</small>"
 format:
   html:
@@ -44,7 +44,6 @@ source(here::here("R/zzz.R"))
 
 2) Plotting group means and CI's
   
-
 ## Today's topics
 
 1) Post-hoc multiple comparison tests
@@ -82,7 +81,7 @@ Based on these two tests, which brands are different? Use the `?p.adjust` help p
 
 - Which method is the strictest (i.e., results in the largest p-values)? Which is the least strict (smallest p-values)? 
 
-- Do you conclusions about which brands differ depend on which method you use? How might you go about deciding which method to base your conclusions on?
+- Do your conclusions about which brands differ depend on which method you use? How might you go about deciding which method to base your conclusions on?
 
 ****
 
@@ -92,6 +91,7 @@ We can also plot the Tukey HSD differences (with confidence intervals):
 plot(TukeyHSD(aov1))
 ```
 
+That's all we'll say about post-hoc multiple comparisons for now because ideally, you would choose to use...
 
 # *a priori* contrasts
 
@@ -99,7 +99,7 @@ plot(TukeyHSD(aov1))
 
 Using the mussel data we saw in lecture, let's explore *a priori* contrasts in more detail. 
 
-```{r, eval = TRUE}
+```{r, eval = FALSE}
 data("musseldata")
 head(musseldata)
 
@@ -110,12 +110,15 @@ musseldata$Watershed <- factor(musseldata$Watershed,
 ```
 
 ```{r echo = FALSE}
+data("musseldata")
+musseldata$Watershed <- factor(musseldata$Watershed, 
+                               levels = c("Twelvemile", "Chattooga","Keowee", "Coneross"))
 knitr::kable(head(musseldata), format = 'html')
 ```
 
 ## Questions
 
-Suppose we want to make 3 *a priori* comparisons:  
+Suppose we want to test the 3 *a priori* comparisons from lecture:  
 
 1) Agricultural (Twelvemile & Coneross) vs. Forested (Chattooga & Keowee)  
 
@@ -142,15 +145,23 @@ contrasts %>%
 
 ### Coefficients
 
+First, we create coefficients for each watershed. Remember, these coefficients are meant to express the hypotheses described above in mathematical terms:
+
 ```{r}
 AgvF <- c(1/2, -1/2, -1/2, 1/2) # Note that we could multiply by 2 to get integers without changing the conclusions
 TvCo <- c(1, 0, 0, -1)
 ChvK <- c(0, 1, -1, 0)
 ```
 
+In the first contrast, the agricultural watersheds are multiplied by 1/2 (which gives us the mean response of those two watersheds) and the forested watersheds are multiplied by -1/2 (which gives us the mean of those two watersheds). If the null hypothesis is true, the difference in those means will be 0 (which is why we multiplied one group by negative coefficients). 
+
+For the other two contrasts, we simply multiply the watersheds of interests by 1 (or -1) to keep them in the contrast and the others by 0 to remove them.
+
 ### Are they orthogonal?
 
-**Step 1**: sum of coefficients is 0, for each contrast.
+Next, we need to test whether the constrasts are orthogonal. 
+
+**Step 1**: sum of each contrast's coefficients is 0:
 
 ```{r}
 all(sum(AgvF) == 0, sum(TvCo) == 0, sum(ChvK) == 0)
@@ -158,11 +169,11 @@ all(sum(AgvF) == 0, sum(TvCo) == 0, sum(ChvK) == 0)
 
 ***
 
-`all()` tests whether all its arguments evaluate to TRUE  
+`all()` tests whether all its arguments evaluate to TRUE. If it returned FALSE, we would need to check which sum(s) did not equal 0. 
 
 ***
 
-**Step 2**: pairwise dot products are all equal to 0.
+**Step 2**: pairwise dot products are all equal to 0:
 
 ```{r}
 all(sum(AgvF * TvCo) == 0,
@@ -170,12 +181,10 @@ all(sum(AgvF * TvCo) == 0,
     sum(TvCo * ChvK) == 0)
 ```
 
-**Step 2 (alternate method)**: pairwise dot products are all equal to 0.
-
-Try the %*% operator:
+**Step 2 (alternate method)**: pairwise dot products are all equal to 0 using the %*% operator:
 
 ```{r}
-AgvF %*% TvCo
+all(AgvF %*% TvCo == 0, AgvF %*% ChvK == 0, TvCo %*% ChvK == 0)
 ```
 
 ***
@@ -212,7 +221,9 @@ summary(aov.out,
                                "ChvK" = 3)))
 ```
 
-## ANOVA without contrasts
+Notice that the contrast sums of squares sum to the treatment sum of squares. We have successfully partitioned the variation among watersheds into variation between agricultural vs forested watersheds, variation within agricultural watersheds, and variation within forested watersheds.
+
+## Visualizing the overall treatment effect
 
 #### $\large F_{3, 16}$
 
@@ -228,7 +239,7 @@ ggplot(f, aes(x = F, y = pdf)) +
   geom_path() +
   scale_y_continuous("Probability density", limits = c(0, 0.8)) +
   geom_vline(xintercept = p, color = "#D47500") +
-  geom_vline(xintercept = 3.56, linetype = "longdash",
+  geom_vline(xintercept = 9.70, linetype = "longdash",
              color = "#446E9B") +
   annotate("text", label = "p = 0.95", hjust = 1,
            x = p - 0.1, y = 0.79, size = 6,
@@ -237,7 +248,7 @@ ggplot(f, aes(x = F, y = pdf)) +
            color = "#446E9B") 
 ```
 
-## ANOVA with contrasts
+## Visualizing the constrasts results
 
 #### $\large F_{1, 16}$
 
@@ -253,11 +264,11 @@ ggplot(f, aes(x = F, y = pdf)) +
   geom_path() +
   scale_y_continuous("Probability density", limits = c(0, 1.25)) +
   geom_vline(xintercept = p, color = "#D47500") +
-  geom_vline(xintercept = 9.68, linetype = "longdash",
+  geom_vline(xintercept = 26.76, linetype = "longdash",
              color = "#446E9B") +
-  geom_vline(xintercept = 0.1, linetype = "longdash",
+  geom_vline(xintercept = 0.9, linetype = "longdash",
              color = "#446E9B") +
-  geom_vline(xintercept = 0.89, linetype = "longdash",
+  geom_vline(xintercept = 1.45, linetype = "longdash",
              color = "#446E9B") +
   annotate("text", label = "p = 0.95", hjust = 1,
            x = p - 0.1, y = 1.24, size = 6,
@@ -270,7 +281,11 @@ ggplot(f, aes(x = F, y = pdf)) +
            color = "#446E9B") 
 ```
 
+From these results, it is clear that most of the variation among watersheds is due to the difference between agricultural and forested watersheds.
+
 ## Difference in means for each contrast
+
+We can also calculate differences in the group means (and associated confidence intervals) associated with each contrast: 
 
 #### Group means
 
@@ -331,8 +346,6 @@ se.contrast(aov.out,
 The `%in%` function returns `TRUE` for any elements of the first vector that match an element in the second vector and `FALSE` otherwise   
 
 ***
-
-# Estimation
 
 ## Estimating confidence intervals
 
@@ -429,9 +442,9 @@ power.anova.test(groups = 4,
                  power = NULL)
 ```
 
-# Assignment (not for a grade)
+# Assignment
 
-Researchers wish to know if food supplementation affects the growth of nestling Canada warblers. The treatment groups are: (A) No supplementation control, (B) low, (C) medium, (D) high, and (E) very high. The response variable is the weight of a ten-day-old nestling.
+Researchers wish to know if food supplementation affects the growth of nestling Canada warblers. The treatment groups are: (A) No supplementation (i.e., control), (B) low, (C) medium, (D) high, and (E) very high. The response variable is the weight of a ten-day-old nestling.
 
 Create an R Markdown file to do the following:
 

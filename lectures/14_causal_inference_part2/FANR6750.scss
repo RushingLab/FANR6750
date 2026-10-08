@@ -40,15 +40,16 @@ $green: #859900;
 
 // Override theme settings (see ../template/settings.scss)
 $body-color: darken($base0, 25%) !default;
-$font-size-base: 16px;
+$font-size-base: 12px;
 $presentation-heading-color: $base02 !default;
 $presentation-heading-text-shadow: none !default;
 $body-bg: $base03 !default;
 $link-color: $orange !default;
 $selection-bg: $magenta !default;
 $presentation-heading-font-weight: 300;
-$presentation-heading-text-transform: smallcaps !default; // from settings.scss
+$presentation-heading-text-transform: small-caps !default; // from settings.scss
 $presentation-heading-font: "Lato", sans-serif !default; // from settings.scss
+$presentation-h2-font-size: 1.5em; /* Adjust regular slide title size */
 
 // Change text colors against light slide backgrounds
 $light-bg-text-color: #222 !default;
@@ -114,7 +115,7 @@ $code-block-border-color: #073642;
 
   h2 {
     color:#eee8d5;
-    font-size: 1.6em;
+    font-size: 1.4em;
     font-variant: small-caps;
     font-weight: normal;
     text-shadow: none;

@@ -67,13 +67,8 @@ Fall 2026
 
 ## Motivation {.smaller}
 
-In the last two lectures, we learned about fitting and interpreting multiple regression models
-
-:::{.fragment}
 
 The flexibility of multiple regression models makes them powerful statistical tools but also raises an important question: 
-
-:::
 
 :::{.fragment}
 
@@ -88,9 +83,11 @@ The flexibility of multiple regression models makes them powerful statistical to
     
     + Interactions are included based on *a priori* hypotheses^[Assuming adequate replication of all treatment combinations]
     
+    + Known sources of extraneous variation can be included to increase power
+    
 - In observational studies, it is is often less clear which combination(s) of predictors should be included in a model 
 
-    + It is increasingly common to have dozens (or more) predictors associated with each reponse
+    + It is increasingly common to have many predictors associated with each reponse
     
     + As the number of predictors grows, the number of potential combinations grows even faster
 :::
@@ -181,6 +178,7 @@ broom::tidy(fit2)
 ## Example 1 {.smaller}
 
 Next, they fit a model with both covariates:
+
 ::::{.columns}
 
 ::: {.column width="50%"}
@@ -251,7 +249,9 @@ data("trilliumdata")
 
 ggplot(trilliumdata, aes(x = mast, y = finalN)) +
   geom_point() +
-  stat_smooth(method = "glm", method.args = list(family = "poisson"))
+  stat_smooth(method = "glm", method.args = list(family = "poisson")) + 
+  theme(plot.background = element_rect(fill = "#eeeeee"), 
+        panel.background = element_rect(fill = "#eeeeee"))
 ```
 
 :::
@@ -270,7 +270,7 @@ broom::tidy(fit1)
 
 ## Example 2 {.smaller}
 
-Nervous that his analysis was insufficient, the student decided to fit additional models to test whether other predictors may also influence Trillium abundance. 
+Nervous that his analysis was insufficient, the student decided to fit additional models to test whether other predictors may also influence Trillium abundance: 
 
 ::::{.columns}
 
@@ -279,7 +279,9 @@ Nervous that his analysis was insufficient, the student decided to fit additiona
 ```{r}
 ggplot(trilliumdata, aes(x = deer, y = finalN)) +
   geom_point() +
-  stat_smooth(method = "glm", method.args = list(family = "poisson"))
+  stat_smooth(method = "glm", method.args = list(family = "poisson")) +
+  theme(plot.background = element_rect(fill = "#eeeeee"), 
+        panel.background = element_rect(fill = "#eeeeee"))
 ```
 
 :::
@@ -305,7 +307,7 @@ broom::tidy(fit3)
 
 [Questions:]{.highlight} 
 
-- Why did the effect of acorn mast change when deer abundance was added to the model? 
+- Why did the effect of mast change when deer abundance was added to the model? 
 - Is it reasonable to conclude that acorn mast affects Trillium abundance?
 
 :::
@@ -321,8 +323,8 @@ broom::tidy(fit3)
 
 - Researchers are studying the traits that influence “boldness” in fictitious Fruitcake Lizards
 
-- The researchers searched for and captured lizards that they encounter, then used a well-established method to quantify the boldness of each individual 
-
+- The researchers searched for and captured lizards that they encountered, then used a well-established method to quantify the boldness of each individual 
+ 
 - The researchers used a linear model to quantify the relationship between body mass and boldness and found a strong negative association
 
 - This result conflicts with previous studies of captive-reared Fruitcake Lizards that found no relationship between body size and boldness
@@ -339,7 +341,9 @@ data("boldnessdata")
 ggplot(boldnessdata[boldnessdata$Captured == TRUE,], aes(x = Size, y = Boldness)) +
   geom_point() +
   scale_color_manual(values = c("grey", "red")) +
-  stat_smooth(method = "lm")
+  stat_smooth(method = "lm") +
+  theme(plot.background = element_rect(fill = "#eeeeee"), 
+        panel.background = element_rect(fill = "#eeeeee"))
 ```
 
 :::{.fragment}
@@ -370,11 +374,11 @@ Conventional approaches to selecting among models are based on associations amon
 
 ## Causal inference {.smaller}
 
-From lecture 7, we learned that: [Correlation = Causation + Confounding + Noise]{.highlight}
+In lecture 7, we learned that: [Correlation = Causation + Confounding + Noise]{.highlight}
 
 :::{.fragment}
 
-The goal of manipulative experiments is to remove the effects of confounding by randomizing treatments or holding confounding sources of variation constant^[Experimental design helps with confounding but how do we deal with noise?]
+Manipulative experiments remove the effects of confounding by randomizing treatments or holding confounding sources of variation constant
 
 :::
 
@@ -382,19 +386,15 @@ The goal of manipulative experiments is to remove the effects of confounding by 
 
 In observational studies, we can't randomize our "treatment" variables, which often results in non-exchangeable groups
 
+- So does that mean we can't remove the effects of confounders? Not necessarily
+
 :::
 
-
-## Confounding in observational studies {.smaller}
-
-[Example:]{.highlight} A common question in life history studies is whether there is a trade off (i.e., negative relationship) between reproduction and survival. Researchers monitor the annual reproductive effort and subsequent survival of wild coyotes and find that, in contrast to their predictions, individuals that raised more offspring had higher survival than individuals that raised fewer offspring
-
 :::{.fragment}
+
+[Another example:]{.highlight} A common question in life history studies is whether there is a trade off (i.e., negative relationship) between reproduction and survival. Researchers monitor the annual reproductive effort and subsequent survival of wild coyotes and find that, in contrast to their predictions, individuals that raised more offspring had higher survival than individuals that raised fewer offspring
+
 We can't conclude that higher reproductive effort causes higher survival because coyotes with different reproductive success are unlikely to be *exchangeable*. Why? 
-
-- Individuals with high reproductive success likely differ in many ways from individuals with low reproductive success. If these other sources of variation influence survival, they could be the cause of the differences observed by the researchers
-
-- What are some variables that might influence both reproductive success and survival?
 
 :::
 
@@ -405,9 +405,11 @@ When thinking about sources of variation, it can be helpful to visualize hypothe
 - Simple graphical models with nodes (variables) and edges (arrows pointing from cause to effect) are often useful for this goal
 
 :::{.fragment}
-In our example, we might hypothesize the following:
+In the coyote example, we might hypothesize the following:
 
 ```{r}
+#| fig-width: 6
+#| fig-height: 3
 library(ggdag)
 confounder_dag <- dagify(
   y ~ x + z,
@@ -424,15 +426,32 @@ ggdag(confounder_dag,
       use_labels = "label",
       text = FALSE) +
   guides(fill = "none", color = "none") + 
-  theme_dag()
+  theme_dag() +
+  theme(plot.background = element_rect(fill = "#eeeeee"), 
+        panel.background = element_rect(fill = "#eeeeee", color = NA))
 ```
 
-
 :::
 
-:::{.fragment}
-This type of graphical model is referred to as a *directed acyclical graph* (DAG), and they are central to many causal inference methods
-:::
+## Visualizing your hypotheses {.smaller}
+
+```{r}
+#| fig-width: 6
+#| fig-height: 3
+
+ggdag(confounder_dag,
+      use_labels = "label",
+      text = FALSE) +
+  guides(fill = "none", color = "none") + 
+  theme_dag() +
+  theme(plot.background = element_rect(fill = "#eeeeee"), 
+        panel.background = element_rect(fill = "#eeeeee", color = NA))
+```
+
+- This type of graphical model is referred to as a *directed acyclical graph* (DAG)
+
+- DAGs are central to many causal inference methods
+
 
 ## Building DAGs {.smaller}
 
@@ -448,7 +467,7 @@ All DAGs must be:
 
 - Directed: $X \longleftrightarrow Y$ is not possible
 
-- Acyclic: $X \longrightarrow Y \longrightarrow Z \longrightarrow X$ is not possible
+- Acyclic: $X \longrightarrow Y \longrightarrow Z \longrightarrow X$ is not possible^[One common question when building DAGs in ecological settings is feedback loops. Don't those create cyclic graphs? Often the answer is no, but only once we account for time. For example, density dependence may at first appear to be cyclic: $N \longrightarrow \phi \longrightarrow N$, where $N$ is population size and $\phi$ is survival. But in reality, the graph is $N_{t-1} \longrightarrow \phi_{t - 1} \longrightarrow N_t$, where $t$ indexes year]
 
 :::
 
@@ -466,24 +485,23 @@ DAGs:
 
 The benefit of DAGs is that they allow us to identify variables that could prevent conclusions about whether $X$ causes $Y$
 
-
 :::{.incremental}
 - As we've already seen, one type of variable DAGs help us identify are confounders
 
 - Confounders open *backdoor paths* that can create statistical associations between $X$ and $Y$, even when no causal effect exists^[A common metaphor for DAGs is the flow of electricity. We want to know if electricity flows from $X$ to $Y$. Backdoor paths are those that allow electricity to flow into both $X$ and $Y$ from other variables]
 
-- In manipulative experiments, randomization removes the association between $Z$ and $X$ (i.e., closing the backdoor path)^[Closing the door is equivalent to blocking the flow of electricity]
+- In manipulative experiments, randomization removes the association between $Z$ and $X$ (i.e., *closes* the backdoor path)^[Closing the door is equivalent to blocking the flow of electricity]
 
 - What about observational studies?
 :::
 
 
-## Confounding in observational studies {.smaller}
+## Using a DAG for causal inference {.smaller}
 
-The goal of observational studies often to infer causal relationships. But how do we remove the effect of confounders in observational studies? 
+How do we remove the effect of confounders in observational studies? 
 
 :::{.fragment}
-Multiple regression!^[Multiple regression is not the only method to address confounding, but it is the only one we will cover in this class. For an overview of other methods, see...]
+Multiple regression!^[Multiple regression is not the only method to address confounding, but it is the only one we will cover in this class]
 :::
 
 :::{.fragment}
@@ -494,14 +512,15 @@ In observational studies, we can use multiple regression to accomplish *statisti
 
 Remember from lecture 12 how to interpret the slope parameters from multiple regression models:
 
-> The effect of $x$ while holding all other variables constant
+> The effect of $X$ while holding all other variables constant
 
 :::{.fragment}
 
-Sound familiar? Multiple regression estimates the effect of a treatment $x$ after controlling for the effect of confounder $z$^[This is what is meant by "conditioning on" or "controlling for" a variable] 
+Sound familiar? 
 
-[Note]{.highlight}: We do not have to condition on every confounder. Instead, we generally try to find the *minimal adjustment set* that blocks confounding paths
+If $Z$ is a confounder, multiple regression "removes" the effect of $Z$ when measuring the effect of a treatment $X$^[This is what is meant by "conditioning on" or "controlling for" a variable] 
 
+So a DAG tells us which variables act as confounders and therefore which variables need to be included in our model 
 :::
 
 ## Example 1 {.smaller}
@@ -532,7 +551,7 @@ ggdag(finch_dag,
 :::
 
 :::{.incremental}
-- From this DAG, it is clear that sex is a [confounder]{.highlight} of both cover *and* predation.
+- From this DAG, it is clear that sex is a [confounder]{.highlight} of both cover *and* survival.
 
 - Because it is a confounder, we have to control for it to quantify the causal effect of cover on survival^[Assuming there are no other confounders] 
 
@@ -552,48 +571,91 @@ Typical advice is to remove covariates that have strong, pairwise correlations (
 :::
 
 :::{.fragment}
+
 But this is [NOT]{.highlight} good advice:
 
 :::{.incremental}
+
 - Including correlated predictors does not violate any assumptions of linear models
 
 - The *purpose* of multiple regression is to measure the effect of one predictor while holding others constant
 
-- As we have seen, confounding variables *need to* be included *because* they are correlated
+- Often, *omitting* correlated variables is a bigger problem than including them
+
+- As we have seen, confounding variables will almost always be correlated with $X$ but *should* be included to control for their influence
 
 :::
 :::
 
-## Multicolinearity does not violate assumptions {.smaller}
+## Examples {.smaller}
 
-## Multicolinearity may indicate you need to *include* a predictor {.smaller}
+Pairwise correlations *may* indicate you need to include a predictor:^[As we have discussed, variables can be correlated for many reasons. *If* the correlation is caused by confounding, then the confounder should be included in the model. But correlation does not automatically mean confounding, so again, identifying confounders depends on your scientific judgement]
 
-Remember from the causal inference lecture:
+:::{.incremental}
 
-So in this case, we expect $Z$ and $X$ to be correlated because $Z$ *causes* $X$^[There are other reasons they may be correlated, including a shared confounder of $X$ and $Z$. Also, $Z$ may not be the only cause of $X$. Regardless, the effect of $X$ on $Y$ is still confounded by $Z$]
+- Researchers are interested in the effects of traffic on coyote movement. Exploratory analysis reveals that GPS-collared coyotes are more active during times of high traffic. Can we conclude that traffic increases movement? What might be confounding traffic?
+
+- Time of day! Coyotes are crepuscular so they tend to move more in the morning and evening, when traffic is also highest 
+
+- So in this case, we expect traffic and time of day to be highly correlated because $Z$ *causes* $X$
+
+- Does this mean we can't include time of day in the model? No! We *need to* include it if we want to isolate the effect of traffic
+
+## So what's the problem with multicolinearity? {.smaller}
+
+The previous examples hopefully clarify that including or removing predictors based on pairwise correlations is generally bad advice
+
+But including highly correlated predictors is not without problems:
+
+:::{.incremental}
+
+- When variables are highly correlated, they contain little unique information about their individual effects
+
+- Parameter estimates will have higher uncertainty (indicated by large standard errors)
+
+- The higher the correlation, the larger sample size needed to maintain statistical power
+
+:::
+
+## Problematic multicolinearity {.smaller}
+
+One instance that highlights when multicolinearity can be problematic^[And helps explain what multicolinearity is] is when covariates represent percentages that must sum to 1
+
+- Land use (% forest, % developed, % agriculture, etc.)
+
+- Diet (% fruit, % insects, % seeds)
+
+- Behavior (% of time foraging, % resting, % moving)
+
+:::{.fragment}
+These covariates are structurally colinear - if you know the values of all but one category, you know the value of the last category
+
+- Another way to think about the issue - if you change the value of one category, at least one of the other categories [must]{.highlight} also change
+:::
+
+:::{.fragment}
+If you try to include every category as a predictor, many models with fail (error message or infinite standard errors)
+
+Removing one (or more) categories may be necessary to fit the model
+:::
 
 ## Multicolinearity - practical advice {.smaller}
 
+:::{.incremental}
 
-If covariates are correlated because of confounding, you need to include the confounder
+- If covariates are correlated because of confounding, you need to include the confounder (if your goal is causal inference)
 
-If covariates are correlated because they essentially measure the same thing, you should remove all but one
+- If covariates are correlated because they essentially measure the same thing, you should remove all but one
 
-If covariates have a structural correlation (e.g., sum to 1), ...
+- If covariates have a structural correlation (e.g., sum to 1), generally best to drop one predictor
 
-Be prepared for larger SE (but that's what is supposed to happen)
+- When you include correlated predictor variables, be prepared for larger standard errors (because that's what is supposed to happen!)
 
-## Identifying confounders using DAGs {.smaller}
+- If standard errors are so big that they essentially render parameter estimates useless, you may need to simplify the model by removing covariates (but be sure you understand how that changes your interpretation!)
 
-So far, we've used very simple graphs to show confounding caused by a single variable $Z$.
-
-:::{.fragment}
-However, confounding can often show up in more complex DAGs in ways that are not always quite so obvious. 
-
-Do you see any confounders in the following graphs?
 :::
 
-## Other types of associations {.smaller}
+## other types of associations {.smaller}
 
 Confounders are only one type of causal relationship. Several others are important to know about:
 
@@ -613,6 +675,9 @@ As with confounders, DAGs are a critical tool for understanding and identifying 
 
 Mediators are variables that exist along a path *between* $X$ and $Y$
 
+::::{.columns}
+
+::: {.column width="50%"}
 ```{r}
 coords <- list(
   x = c(Y = 2, Z = 1, X = 0),
@@ -630,7 +695,9 @@ mediator <- dagify(
 ggdag(mediator) +
   theme_dag()
 ```
+:::
 
+::: {.column width="50%"}
 :::{.incremental}
 - Often, mediators are the mechanism that causes $X$ to influence $Y$
 
@@ -644,11 +711,16 @@ ggdag(mediator) +
 
 - Including a mediator also allows you to measure the effect of $X$ that is not due to $Z$
 :::
+:::
+::::
 
 ## Colliders {.smaller}
 
 Confounders are common *causes of* $X$ and $Y$. Colliders are common *effects of* $X$ and $Y$
 
+::::{.columns}
+
+::: {.column width="50%"}
 ```{r}
 coords <- list(
   x = c(Y = 2, Z = 1, X = 0),
@@ -666,17 +738,24 @@ collider <- dagify(
 ggdag(collider) +
   theme_dag()
 ```
-
+:::
+::: {.column width="50%"}
 :::{.incremental}
+
 - In a DAG, colliders have arrows pointing *towards* them from both $X$ and $Y$
 
-- Including colliders in models can cause 
+- Including colliders in models can cause associations between $X$ and $Y$ when none actually exists
+
 :::
+:::
+::::
 
 ## Competing exposures {.smaller}
 
 Competing exposures are variables that effect the response variable $Y$ but are independent of the cause $X$
 
+::::{.columns}
+::: {.column width="50%"}
 ```{r}
 coords <- list(
   x = c(Y = 2, Z = 1, X = 0),
@@ -693,7 +772,9 @@ ce <- dagify(
 ggdag(ce) +
   theme_dag()
 ```
+:::
 
+::: {.column width="50%"}
 :::{.incremental}
 - In a DAG, competing exposures have arrows pointing towards $Y$ but not $X$
 
@@ -707,27 +788,28 @@ ggdag(ce) +
     
     + Does including them reduce precision of other model parameters? 
 :::
-
+:::
+::::
 
 ## Examples {.smaller}
 
-Let's return to the three examples from the beginning of lecture
+Let's return to the second and third examples from the beginning of lecture
 
+:::{.incremental}
 
-## Example 2 {.smaller}
+- Why did the effect of mast change when deer abundance was included in the model? What is the relationship between mast, deer, and trillium?
 
-Why did the effect of mast change when deer abundance was included in the model? 
+- $mast \longrightarrow deer \longrightarrow trillium$
 
-:::{.fragment}
-Because deer is a [mediator]{.highlight}, including it in the model removes the effect of mast. But that does not mean mast is not a cause of Trillium abundance!
+- Because deer is a [mediator]{.highlight}, including it in the model removes the effect of mast. But that does not mean mast is not a cause of Trillium abundance!
+
+- What is the role of initial abundance?
+
+- $mast \longrightarrow deer \longrightarrow trillium \longleftarrow abundance_{init}$
+
+- Because initial abundance is not a confounder or a mediator, including it in the model does not bias estimates of deer or mast. Why might you inlude it in the model?
+
 :::
-
-What is the role of initial abundance?
-
-:::{.fragment}
-Because initial abundance is not a confounder or a mediator, including it in the model does not bias estimates of deer or mast. But there are reasons to include it in the model!
-:::
-
 
 ## Example 3 {.smaller}
 
@@ -735,7 +817,7 @@ In laboratory studies, there was no effect of body size on boldness. So why did 
 
 ::::{.columns}
 
-::: {.column width="50%"}
+:::{.column width="50%"}
 
 :::{.incremental}
 
@@ -770,24 +852,232 @@ ggplot(boldnessdata, aes(x = Size, y = Boldness)) +
 Capture acted as a *collider*, which created a relationship where none actually existed. 
 :::
 
+## Using DAGs {.smaller}
+
+So far, we've used very simple graphs to show confounding caused by a single variable $Z$.
+
+:::{.fragment}
+However, confounding can often show up in more complex DAGs in ways that are not always quite so obvious. 
+
+Do you see any confounders in the following graph?
+
+:::
+
+## Using DAGs {.smaller}
+
+Do you see any confounders in the following graph?
+
+```{r}
+eg_dag1 <- dagify(
+  Y ~ C + X,
+  X ~ U,
+  U ~ A,
+  B ~ U + C,
+  C ~ A,
+  exposure = "X",
+  outcome = "Y",
+  coords = list(x = c(X = 1, C = 3, Y = 3, A = 2, B = 2, U = 1),
+                y = c(X = 1, C = 2, Y = 1, A = 2.5, B = 1.5, U = 2))
+)
+
+# 2. Tidy the DAG so we can map variables cleanly 
+tidy_dag1 <- tidy_dagitty(eg_dag1)
+
+# 3. Plot with a conditional linetype for the x -> y edge
+ggplot(tidy_dag1, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges() +
+  geom_dag_node() +
+  geom_dag_text(col = "white") +
+  theme_dag()
+```
+
+## Using DAGs {.smaller}
+
+Do you see any confounders in the following graph?
+
+```{r}
+eg_dag2 <- dagify(
+  Y ~ W + X + M,
+  X ~ S,
+  M ~ S + X,
+  W ~ S,
+  exposure = "X",
+  outcome = "Y",
+  coords = list(x = c(X = 1, S = 1, Y = 3, M = 2, W = 3),
+                y = c(X = 1, S = 3, Y = 1, M = 2, W = 3))
+)
+
+# 2. Tidy the DAG so we can map variables cleanly 
+tidy_dag2 <- tidy_dagitty(eg_dag2)
+
+# 3. Plot with a conditional linetype for the x -> y edge
+ggplot(tidy_dag2, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges() +
+  geom_dag_node() +
+  geom_dag_text(col = "white") +
+  theme_dag()
+```
+
+## Using DAGs {.smaller}
+
+Do you see any confounders in the following graph?
+
+```{r}
+eg_dag3 <- dagify(
+  Y ~ X + Z + A,
+  X ~ Z,
+  Z ~ A,
+  exposure = "X",
+  outcome = "Y",
+  coords = list(x = c(X = 1, Z = 2, Y = 3, A = 3),
+                y = c(X = 1, Z = 2, Y = 1, A = 2))
+)
+
+# 2. Tidy the DAG so we can map variables cleanly 
+tidy_dag3 <- tidy_dagitty(eg_dag3)
+
+# 3. Plot with a conditional linetype for the x -> y edge
+ggplot(tidy_dag3, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges() +
+  geom_dag_node() +
+  geom_dag_text(col = "white") +
+  theme_dag()
+```
+
+## Minimal adjustment set {.smaller}
+
+Conditioning on every confounder is not necessary
+
+Instead, we generally try to find the *minimal adjustment set* that blocks each confounding path
+
+:::{.fragment}
+
+For example, in the following DAG we can condition on $A$ *or* $B$. We do not need to condition on both
+
+```{r}
+eg_dag4 <- dagify(
+  Y ~ B + X,
+  B ~ A,
+  X ~ A,
+  exposure = "X",
+  outcome = "Y",
+  coords = list(x = c(X = 1, Y = 4, A = 2, B = 3),
+                y = c(X = 1, Y = 1, A = 2, B = 2))
+)
+
+# 2. Tidy the DAG so we can map variables cleanly 
+tidy_dag4 <- tidy_dagitty(eg_dag4)
+
+# 3. Plot with a conditional linetype for the x -> y edge
+ggplot(tidy_dag4, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges() +
+  geom_dag_node() +
+  geom_dag_text(col = "white") +
+  theme_dag()
+```
+
+:::
+
+## minimal adjustment set {.smaller}
+
+What variables do we need to adjust in this example?
+
+::::{.columns}
+::: {.column width="50%"}
+```{r}
+ggplot(tidy_dag1, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges() +
+  geom_dag_node() +
+  geom_dag_text(col = "white") +
+  theme_dag()
+```
+:::
+
+::: {.column .fragment width="50%"}
+```{r}
+ggdag_adjustment_set(tidy_dag1, shadow = TRUE) +
+  theme_dag()
+```
+:::
+::::
+
+## Minimal adjustment set {.smaller}
+
+What variables do we need to adjust in this example?
+
+::::{.columns}
+::: {.column width="50%"}
+```{r}
+ggplot(tidy_dag2, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges() +
+  geom_dag_node() +
+  geom_dag_text(col = "white") +
+  theme_dag()
+```
+:::
+
+::: {.column .fragment width="50%"}
+```{r}
+ggdag_adjustment_set(tidy_dag2, shadow = TRUE) +
+  theme_dag()
+```
+:::
+::::
+
+## Minimal adjustment set {.smaller}
+
+What variables do we need to adjust in this example?
+
+::::{.columns}
+::: {.column width="50%"}
+```{r}
+ggplot(tidy_dag3, aes(x = x, y = y, xend = xend, yend = yend)) +
+  geom_dag_edges() +
+  geom_dag_node() +
+  geom_dag_text(col = "white") +
+  theme_dag()
+```
+:::
+
+::: {.column .fragment width="50%"}
+```{r}
+ggdag_adjustment_set(tidy_dag3, shadow = TRUE) +
+  theme_dag()
+```
+:::
+::::
+
 ## More on DAGs {.smaller}
 
 Building DAGs can be overwhelming due to the complexity of ecological systems
 
-Start with the response variable and think about variables that are likely to have meaningful effects
+:::{.incremental}
 
-If you were to do conduct an experiment, which variables would you try to hold constant? What variables would you try to randomize? 
+- Start with the response variable and think about variables that are likely to have meaningful effects
 
+- Move to the main treatment variable(s) of interest. What variables likely influence it? How are those variables related to the response?
+
+- If you were to conduct an experiment, which variables would you try to hold constant? What variables would you try to randomize over? 
+
+- Share your DAG with colleagues and explain your reasoning. Use feedback to revise the DAG until you are satisfied it captures the main variables influencing your system
+
+- Remember that you should include variable [whether you have data to measure them or not!]{.bold}
+
+:::
 
 ## More on colliders {.smaller}
 
 Colliders are challenging to understand and identify in part because they are often not variables we measure
 
-- There is not a column in the data set called "captured" 
+- There is not a column in the lizard data set called "captured" 
 
+:::{.fragment}
 When colliders are measured, they [should not]{.highlight} be included in the model
+:::
 
+:::{.fragment}
 When colliders are not measured, they are essentially in the model by default
+:::
 
 ## Summary {.smaller}
 
