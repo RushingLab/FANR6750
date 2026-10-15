@@ -230,7 +230,7 @@ broom::tidy(fit3)
 - The data includes:
 
     + The number of plants at the end of summer (response variable)
-    + The number of Trillium plants found at the beginning of the spring 
+    + The number of plants found at the beginning of the spring 
     + An index of acorn mast the previous fall
     + The estimated number of deer within the study area 
 
@@ -244,7 +244,7 @@ broom::tidy(fit3)
 
 ## Example 2 {.smaller}
 
-The student initially notices that there is a strong negative association between abundance at the end of summer and acorn mast the preceeding fall
+The student initially notices that there is a strong negative association between abundance at the end of summer and acorn mast the preceding fall
 
 ::::{.columns}
 
@@ -640,7 +640,9 @@ But including highly correlated predictors is not without consequences:
 
 - When variables are highly correlated, they contain little unique information about their individual effects
 
-- Parameter estimates will have higher uncertainty (indicated by large standard errors)
+    + Statistically, perfectly correlated predictors are actually a single variable 
+
+- The higher the correlation, the higher the uncertainty associated with each predictor (indicated by large standard errors)
 
 - The higher the correlation, the larger sample size needed to maintain statistical power
 
@@ -1409,9 +1411,13 @@ Building DAGs can be overwhelming due to the complexity of ecological systems
 
 ## More on colliders {.smaller}
 
-Colliders are challenging to understand and identify in part because they are often not variables we measure
+Colliders are often a form of "selection bias" - we only see data from observations that filter through some form of selection (e.g., capture, survival, self-reporting)
 
+:::{.fragment}
+Part of what makes colliders challenging to identify is that they are often not variables we measure 
 - There is not a column in the lizard data called "captured" 
+
+:::
 
 :::{.fragment}
 When colliders are not measured, they are essentially "in" the analysis by default
@@ -1424,7 +1430,7 @@ When colliders are not measured, they are essentially "in" the analysis by defau
 :::{.fragment}
 When colliders are measured, they [should not]{.highlight} be included in the model
 
-- Again, DAGs are the best tool for identifying colliders so you don't accidently create spurious relationships by adding them to the model
+- Again, DAGs are the best tool for identifying colliders so you don't accidentally create spurious relationships by adding them to the model
 :::
 
 

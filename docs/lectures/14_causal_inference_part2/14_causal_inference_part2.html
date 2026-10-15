@@ -359,7 +359,7 @@ Fall 2026</p>
 <li class="fragment"><p>The data includes:</p>
 <ul>
 <li class="fragment">The number of plants at the end of summer (response variable)</li>
-<li class="fragment">The number of Trillium plants found at the beginning of the spring</li>
+<li class="fragment">The number of plants found at the beginning of the spring</li>
 <li class="fragment">An index of acorn mast the previous fall</li>
 <li class="fragment">The estimated number of deer within the study area</li>
 </ul></li>
@@ -370,7 +370,7 @@ Fall 2026</p>
 </section>
 <section id="example-2-1" class="slide level2 smaller">
 <h2>Example 2</h2>
-<p>The student initially notices that there is a strong negative association between abundance at the end of summer and acorn mast the preceeding fall</p>
+<p>The student initially notices that there is a strong negative association between abundance at the end of summer and acorn mast the preceding fall</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -646,8 +646,11 @@ Fall 2026</p>
 <p>The previous examples hopefully clarify that including or removing predictors based solely on pairwise correlations is bad advice</p>
 <p>But including highly correlated predictors is not without consequences:</p>
 <ul>
-<li class="fragment"><p>When variables are highly correlated, they contain little unique information about their individual effects</p></li>
-<li class="fragment"><p>Parameter estimates will have higher uncertainty (indicated by large standard errors)</p></li>
+<li class="fragment"><p>When variables are highly correlated, they contain little unique information about their individual effects</p>
+<ul>
+<li class="fragment">Statistically, perfectly correlated predictors are actually a single variable</li>
+</ul></li>
+<li class="fragment"><p>The higher the correlation, the higher the uncertainty associated with each predictor (indicated by large standard errors)</p></li>
 <li class="fragment"><p>The higher the correlation, the larger sample size needed to maintain statistical power</p>
 <ul>
 <li class="fragment">Disentangling the effects of highly correlated predictors is essentially a sample size issue, not a violation of model assumptions</li>
@@ -1134,10 +1137,10 @@ Fall 2026</p>
 </section>
 <section id="more-on-colliders" class="slide level2 smaller">
 <h2>More on colliders</h2>
-<p>Colliders are challenging to understand and identify in part because they are often not variables we measure</p>
-<ul>
-<li>There is not a column in the lizard data called “captured”</li>
-</ul>
+<p>Colliders are often a form of “selection bias” - we only see data from observations that filter through some form of selection (e.g., capture, survival, self-reporting)</p>
+<div class="fragment">
+<p>Part of what makes colliders challenging to identify is that they are often not variables we measure - There is not a column in the lizard data called “captured”</p>
+</div>
 <div class="fragment">
 <p>When colliders are not measured, they are essentially “in” the analysis by default</p>
 <ul>
@@ -1148,7 +1151,7 @@ Fall 2026</p>
 <div class="fragment">
 <p>When colliders are measured, they <span class="highlight">should not</span> be included in the model</p>
 <ul>
-<li>Again, DAGs are the best tool for identifying colliders so you don’t accidently create spurious relationships by adding them to the model</li>
+<li>Again, DAGs are the best tool for identifying colliders so you don’t accidentally create spurious relationships by adding them to the model</li>
 </ul>
 </div>
 </section>
