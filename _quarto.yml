@@ -68,8 +68,8 @@ website:
           - text: "Lecture 13: Interactions"
             href: lectures/13_interactions/13_interactions.qmd
 
-          # - text: "Lecture 14:Causal Inference in Observational Studies"
-            # href: lectures/14_causal_inference_part2/14_causal_inference_part2.qmd
+          - text: "Lecture 14: Causal Inference in Observational Studies"
+            href: lectures/14_causal_inference_part2/14_causal_inference_part2.qmd
 
           #- text: "Lecture 15: Model Selection"
           #  href: lectures/15_model_selection.qmd
