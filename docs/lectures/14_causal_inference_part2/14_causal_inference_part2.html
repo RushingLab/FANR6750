@@ -6,8 +6,8 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-234273d1456647dabc34a594ac50e507.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.7.32">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <title>FANR6750 – causal_inference_part2</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,10 +16,16 @@
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -94,7 +100,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-de2f321f334c519abfca5296ca2f67de.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-bd00081fb4a3581c8cfade07523c4959.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -287,8 +293,8 @@ Fall 2026</p>
 </div><div class="column" style="width:50%;">
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>fit1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Sex, <span class="at">data =</span> groundfinchdata, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb1-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Sex, <span class="at">data =</span> groundfinchdata, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb1-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic  p.value
@@ -299,8 +305,8 @@ Fall 2026</p>
 </div>
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>fit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Cover, <span class="at">data =</span> groundfinchdata, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb3-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Cover, <span class="at">data =</span> groundfinchdata, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb3-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic     p.value
@@ -327,8 +333,8 @@ Fall 2026</p>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>fit3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Sex <span class="sc">+</span> Cover, <span class="at">data =</span> groundfinchdata, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb5-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Sex <span class="sc">+</span> Cover, <span class="at">data =</span> groundfinchdata, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb5-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   term        estimate std.error statistic  p.value
@@ -354,8 +360,8 @@ Fall 2026</p>
 <li class="fragment"><p>The student is sent a dataset containing 20 years of surveys from a nature preserve containing a large population of the species.</p></li>
 <li class="fragment"><p>The data includes:</p>
 <ul>
+<li class="fragment">The number of plants at the end of summer (response variable)</li>
 <li class="fragment">The number of Trillium plants found at the beginning of the spring</li>
-<li class="fragment">The number of plants at the end of summer</li>
 <li class="fragment">An index of acorn mast the previous fall</li>
 <li class="fragment">The estimated number of deer within the study area</li>
 </ul></li>
@@ -366,7 +372,7 @@ Fall 2026</p>
 </section>
 <section id="example-2-1" class="slide level2 smaller">
 <h2>Example 2</h2>
-<p>The student initially notices that there is a strong negative association between mast and final abundance</p>
+<p>The student initially notices that there is a strong negative association between abundance at the end of summer and acorn mast the preceeding fall</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -380,8 +386,8 @@ Fall 2026</p>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast, <span class="at">data =</span> trilliumdata)</span>
-<span id="cb7-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast, <span class="at">data =</span> trilliumdata)</span>
+<span id="cb7-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic       p.value
@@ -408,8 +414,8 @@ Fall 2026</p>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast <span class="sc">+</span> initN, <span class="at">data =</span> trilliumdata)</span>
-<span id="cb9-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast <span class="sc">+</span> initN, <span class="at">data =</span> trilliumdata)</span>
+<span id="cb9-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   term        estimate std.error statistic    p.value
@@ -420,8 +426,8 @@ Fall 2026</p>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast <span class="sc">+</span> initN <span class="sc">+</span> deer, <span class="at">data =</span> trilliumdata)</span>
-<span id="cb11-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast <span class="sc">+</span> initN <span class="sc">+</span> deer, <span class="at">data =</span> trilliumdata)</span>
+<span id="cb11-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
   term        estimate std.error statistic     p.value
@@ -472,8 +478,11 @@ Fall 2026</p>
 <div class="fragment">
 <p>Conventional approaches to selecting among models are based on associations among predictor variables (e.g., strong correlations) and/or some type of model selection procedure (e.g., AIC)</p>
 <ul>
-<li class="fragment"><p>As with any statistical procedure, these approaches base modeling decisions on the strength of statistical associations</p></li>
-<li class="fragment"><p>However, we should usually base these decisions on our understanding of <em>why</em> variables are associated with each other</p></li>
+<li class="fragment"><p>As with any statistical procedure, these approaches base modeling decisions on the strength of statistical associations</p>
+<ul>
+<li class="fragment">“Causal salad”</li>
+</ul></li>
+<li class="fragment"><p>However, we should base these decisions on our understanding of <em>why</em> variables are associated with each other</p></li>
 </ul>
 </div>
 </section>
@@ -549,18 +558,12 @@ Fall 2026</p>
 <li class="fragment"><p>As we’ve already seen, one type of variable DAGs help us identify are confounders</p></li>
 <li class="fragment"><p>Confounders open <em>backdoor paths</em> that can create statistical associations between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, even when no causal effect exists<a href="#/footnotes" class="footnote-ref" id="fnref6" role="doc-noteref" data-footnote-href="#/fn6" onclick=""><sup>6</sup></a></p></li>
 <li class="fragment"><p>In manipulative experiments, randomization removes the association between <span class="math inline">\(Z\)</span> and <span class="math inline">\(X\)</span> (i.e., <em>closes</em> the backdoor path)<a href="#/footnotes" class="footnote-ref" id="fnref7" role="doc-noteref" data-footnote-href="#/fn7" onclick=""><sup>7</sup></a></p></li>
-<li class="fragment"><p>What about observational studies?</p></li>
+<li class="fragment"><p>How do we remove the effect of confounders in observational studies?</p>
+<ul>
+<li class="fragment"><p>Multiple regression!<a href="#/footnotes" class="footnote-ref" id="fnref8" role="doc-noteref" data-footnote-href="#/fn8" onclick=""><sup>8</sup></a></p></li>
+<li class="fragment"><p>Multiple regression can accomplish <em>statistically</em> what experiments handle using design/randomization</p></li>
+</ul></li>
 </ul>
-<aside></aside></section>
-<section id="using-a-dag-for-causal-inference-1" class="slide level2 smaller">
-<h2>Using a DAG for causal inference</h2>
-<p>How do we remove the effect of confounders in observational studies?</p>
-<div class="fragment">
-<p>Multiple regression!<a href="#/footnotes" class="footnote-ref" id="fnref8" role="doc-noteref" data-footnote-href="#/fn8" onclick=""><sup>8</sup></a></p>
-</div>
-<div class="fragment">
-<p>In observational studies, we can use multiple regression to accomplish <em>statistically</em> what experiments handle using design/randomization</p>
-</div>
 <aside></aside></section>
 <section id="using-multiple-regression-to-remove-confounding" class="slide level2 smaller">
 <h2>Using multiple regression to remove confounding</h2>
@@ -577,22 +580,27 @@ Fall 2026</p>
 <section id="example-1-3" class="slide level2 smaller">
 <h2>Example 1</h2>
 <p>Let’s use a DAG to figure out what might be happening in example 1. What is the relationship between predation risk, cover, and sex?</p>
-<div class="fragment">
+<div class="columns">
+<div class="column fragment" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-14-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
 </figure>
 </div>
 </div>
 </div>
-</div>
+</div><div class="column" style="width:50%;">
 <ul>
 <li class="fragment"><p>From this DAG, it is clear that sex is a <span class="highlight">confounder</span> of both cover <em>and</em> survival.</p></li>
-<li class="fragment"><p>Because it is a confounder, we have to control for it to quantify the causal effect of cover on survival<a href="#/footnotes" class="footnote-ref" id="fnref10" role="doc-noteref" data-footnote-href="#/fn10" onclick=""><sup>10</sup></a></p></li>
-<li class="fragment"><p>We can also conclude that the model that only includes cover is the <em>wrong model</em> for our question. No model selection necessary!</p></li>
+<li class="fragment"><p>Because it is a confounder, we have to control for it to quantify the causal effect of cover on survival<a href="#/footnotes" class="footnote-ref" id="fnref10" role="doc-noteref" data-footnote-href="#/fn10" onclick=""><sup>10</sup></a></p>
+<ul>
+<li class="fragment">What is the interpretation of the <code>cover</code> variable from the multiple regression model?</li>
+</ul></li>
+<li class="fragment"><p>We can also conclude that the model that includes only cover is the <em>wrong model</em> for our question. No model selection necessary!</p></li>
 </ul>
+</div></div>
 <aside></aside></section>
 <section id="multicolinearity" class="slide level2 theme-inverse center">
 <h2>Multicolinearity</h2>
@@ -604,7 +612,7 @@ Fall 2026</p>
 <p>Typical advice is to remove covariates that have strong, pairwise correlations (e.g., &gt; 0.7)</p>
 </div>
 <div class="fragment">
-<p>But this is <span class="highlight">NOT</span> good advice:</p>
+<p>But this is <span class="highlight">not</span> good advice:</p>
 <ul>
 <li class="fragment"><p>Including correlated predictors does not violate any assumptions of linear models</p></li>
 <li class="fragment"><p>The <em>purpose</em> of multiple regression is to measure the effect of one predictor while holding others constant</p></li>
@@ -613,42 +621,65 @@ Fall 2026</p>
 </ul>
 </div>
 <aside></aside></section>
-<section id="examples-1" class="slide level2 smaller">
-<h2>Examples</h2>
-<p>Pairwise correlations <em>may</em> indicate you need to include a predictor:<a href="#/footnotes" class="footnote-ref" id="fnref12" role="doc-noteref" data-footnote-href="#/fn12" onclick=""><sup>12</sup></a></p>
+<section id="sometimes-you-should-include-correlated-predictors" class="slide level2 smaller">
+<h2>Sometimes you should include correlated predictors</h2>
+<p>Pairwise correlations <em>may</em> indicate you <em>should</em> include a predictor:<a href="#/footnotes" class="footnote-ref" id="fnref12" role="doc-noteref" data-footnote-href="#/fn12" onclick=""><sup>12</sup></a></p>
+<ul>
+<li class="fragment"><p>In the life history trade-off example, habitat quality is likely to be strongly correlated with reproductive success</p></li>
+<li class="fragment"><p>Does this mean we can’t include habitat quality in the model? No! We <em>need to</em> include it if we want to isolate the effect of reproductive success</p></li>
+<li class="fragment"><p>With both parameters in the model, the coefficient associated with reproductive success tells us “after controlling for the effects of habitat quality, do coyotes with higher reproductive success have lower survival”</p></li>
+</ul>
+<aside></aside></section>
+<section id="sometimes-you-should-include-correlated-predictors-1" class="slide level2 smaller">
+<h2>Sometimes you should include correlated predictors</h2>
+<p>Pairwise correlations <em>may</em> indicate you need to include a predictor:</p>
 <ul>
 <li class="fragment"><p>Researchers are interested in the effects of traffic on coyote movement. Exploratory analysis reveals that GPS-collared coyotes are more active during times of high traffic. Can we conclude that traffic increases movement? What might be confounding traffic?</p></li>
-<li class="fragment"><p>Time of day! Coyotes are crepuscular so they tend to move more in the morning and evening, when traffic is also highest</p></li>
-<li class="fragment"><p>So in this case, we expect traffic and time of day to be highly correlated because <span class="math inline">\(Z\)</span> <em>causes</em> <span class="math inline">\(X\)</span></p></li>
-<li class="fragment"><p>Does this mean we can’t include time of day in the model? No! We <em>need to</em> include it if we want to isolate the effect of traffic</p></li>
+<li class="fragment"><p>Time of day! Coyotes are crepuscular so they tend to move more in the morning and evening, when traffic is also highest (<span class="math inline">\(traffic \longleftarrow TOD \longrightarrow movement\)</span>)</p></li>
+<li class="fragment"><p>We <em>need to</em> include time of day if we want to isolate the effect of traffic</p></li>
+<li class="fragment"><p>With both parameters in the model, the coefficient associated with traffic tells us “after controlling for the effects of time of day, do coyotes move less when traffic is high”</p>
+<ul>
+<li class="fragment">As long as time of day and traffic are not perfectly correlated (traffic varies from day to day, especially weekends/holidays) and we have enough data, the regression model can disentangle their effects</li>
+</ul></li>
 </ul>
-<section id="so-whats-the-problem-with-multicolinearity" class="slide level2 smaller">
-<h2>So what’s the problem with multicolinearity?</h2>
-<p>The previous examples hopefully clarify that including or removing predictors based on pairwise correlations is generally bad advice</p>
-<p>But including highly correlated predictors is not without problems:</p>
+</section>
+<section id="effects-of-multicolinearity" class="slide level2 smaller">
+<h2>Effects of multicolinearity</h2>
+<p>The previous examples hopefully clarify that including or removing predictors based solely on pairwise correlations is bad advice</p>
+<p>But including highly correlated predictors is not without consequences:</p>
 <ul>
 <li class="fragment"><p>When variables are highly correlated, they contain little unique information about their individual effects</p></li>
 <li class="fragment"><p>Parameter estimates will have higher uncertainty (indicated by large standard errors)</p></li>
-<li class="fragment"><p>The higher the correlation, the larger sample size needed to maintain statistical power</p></li>
+<li class="fragment"><p>The higher the correlation, the larger sample size needed to maintain statistical power</p>
+<ul>
+<li class="fragment">Disentangling the effects of highly correlated predictors is essentially a sample size issue, not a violation of model assumptions</li>
+</ul></li>
 </ul>
 </section>
-<section id="problematic-multicolinearity" class="slide level2 smaller">
-<h2>Problematic multicolinearity</h2>
-<p>One instance that highlights when multicolinearity can be problematic<a href="#/footnotes" class="footnote-ref" id="fnref13" role="doc-noteref" data-footnote-href="#/fn13" onclick=""><sup>13</sup></a> is when covariates represent percentages that must sum to 1</p>
+<section id="when-is-multicolinearity-a-problem" class="slide level2 smaller">
+<h2>When is multicolinearity a problem?</h2>
+<p>One instance that highlights when multicolinearity <em>can</em> be problematic<a href="#/footnotes" class="footnote-ref" id="fnref13" role="doc-noteref" data-footnote-href="#/fn13" onclick=""><sup>13</sup></a> is when covariates represent percentages that must sum to 1:</p>
 <ul>
-<li class="fragment"><p>Land use (% forest, % developed, % agriculture, etc.)</p></li>
-<li class="fragment"><p>Diet (% fruit, % insects, % seeds)</p></li>
-<li class="fragment"><p>Behavior (% of time foraging, % resting, % moving)</p></li>
+<li><p>Land use (% forest, % developed, % agriculture, etc.)</p></li>
+<li><p>Diet (% fruit, % insects, % seeds)</p></li>
+<li><p>Behavior (% of time foraging, % resting, % moving)</p></li>
 </ul>
 <div class="fragment">
 <p>These covariates are structurally colinear - if you know the values of all but one category, you know the value of the last category</p>
 <ul>
-<li class="fragment">Another way to think about the issue - if you change the value of one category, at least one of the other categories <span class="highlight">must</span> also change</li>
+<li><p>If you change value of one category, value of other categories <span class="highlight">must</span> also change</p>
+<ul>
+<li>“What is the effect of <span class="math inline">\(X\)</span> while holding all other parameters constant” is an impossible question to answer</li>
+</ul></li>
 </ul>
 </div>
 <div class="fragment">
-<p>If you try to include every category as a predictor, many models with fail (error message or infinite standard errors)</p>
-<p>Removing one (or more) categories may be necessary to fit the model</p>
+<ul>
+<li><p>If you try to include every category as a predictor, many models with fail (error message or infinite standard errors)</p>
+<ul>
+<li>Removing one (or more) categories may be necessary to fit the model</li>
+</ul></li>
+</ul>
 </div>
 <aside></aside></section>
 <section id="multicolinearity---practical-advice" class="slide level2 smaller">
@@ -656,18 +687,19 @@ Fall 2026</p>
 <ul>
 <li class="fragment"><p>If covariates are correlated because of confounding, you need to include the confounder (if your goal is causal inference)</p></li>
 <li class="fragment"><p>If covariates are correlated because they essentially measure the same thing, you should remove all but one</p></li>
-<li class="fragment"><p>If covariates have a structural correlation (e.g., sum to 1), generally best to drop one predictor</p></li>
+<li class="fragment"><p>If covariates have a structural correlation (e.g., sum to 1), generally best to drop one category</p></li>
 <li class="fragment"><p>When you include correlated predictor variables, be prepared for larger standard errors (because that’s what is supposed to happen!)</p></li>
 <li class="fragment"><p>If standard errors are so big that they essentially render parameter estimates useless, you may need to simplify the model by removing covariates (but be sure you understand how that changes your interpretation!)</p></li>
+<li class="fragment"><p>Prediction is not effected by multicolinearity. If your goal is to predict, focus on predictive accuracy and don’t worry about pairwise correlations among covariates</p></li>
 </ul>
 </section>
 <section id="other-types-of-associations" class="slide level2 smaller">
 <h2>other types of associations</h2>
 <p>Confounders are only one type of causal relationship. Several others are important to know about:</p>
 <ul>
-<li class="fragment"><p>Mediators</p></li>
-<li class="fragment"><p>Colliders</p></li>
-<li class="fragment"><p>Competing exposures</p></li>
+<li><p>Mediators</p></li>
+<li><p>Colliders</p></li>
+<li><p>Competing exposures</p></li>
 </ul>
 <div class="fragment">
 <p>As with confounders, DAGs are a critical tool for understanding and identifying each of these types of relationships</p>
@@ -687,19 +719,19 @@ Fall 2026</p>
 </div>
 </div>
 </div>
+<p>In a DAG, mediators have arrows pointing <em>from</em> <span class="math inline">\(X\)</span> and <em>to</em> <span class="math inline">\(Y\)</span></p>
 </div><div class="column" style="width:50%;">
 <ul>
 <li class="fragment"><p>Often, mediators are the mechanism that causes <span class="math inline">\(X\)</span> to influence <span class="math inline">\(Y\)</span></p></li>
-<li class="fragment"><p>In a DAG, mediators have arrows pointing <em>from</em> <span class="math inline">\(X\)</span> and <em>to</em> <span class="math inline">\(Y\)</span></p></li>
 <li class="fragment"><p>If <span class="math inline">\(Z\)</span> is a mediator, including it in the model “blocks” the effect of <span class="math inline">\(X\)</span></p>
 <ul>
-<li class="fragment">What is the effect of <span class="math inline">\(X\)</span> after accounting for <span class="math inline">\(Z\)</span>? None, if <span class="math inline">\(X\)</span> acts through it’s effect of <span class="math inline">\(Z\)</span></li>
+<li class="fragment">What is the effect of <span class="math inline">\(X\)</span> after accounting for <span class="math inline">\(Z\)</span>? None, if <span class="math inline">\(X\)</span> acts through it’s effect on <span class="math inline">\(Z\)</span></li>
 </ul></li>
 <li class="fragment"><p>Mediators can sometimes be included in models to test whether <span class="math inline">\(Z\)</span> might be the mechanism</p></li>
-<li class="fragment"><p>Including a mediator also allows you to measure the effect of <span class="math inline">\(X\)</span> that is not due to <span class="math inline">\(Z\)</span></p></li>
+<li class="fragment"><p>Including a mediator also allows you to measure the effect of <span class="math inline">\(X\)</span> that is <em>not</em> due to <span class="math inline">\(Z\)</span><a href="#/footnotes" class="footnote-ref" id="fnref14" role="doc-noteref" data-footnote-href="#/fn14" onclick=""><sup>14</sup></a></p></li>
 </ul>
 </div></div>
-</section>
+<aside></aside></section>
 <section id="colliders" class="slide level2 smaller">
 <h2>Colliders</h2>
 <p>Confounders are common <em>causes of</em> <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. Colliders are common <em>effects of</em> <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></p>
@@ -714,13 +746,49 @@ Fall 2026</p>
 </div>
 </div>
 </div>
+<p>In a DAG, colliders have arrows pointing <em>towards</em> them from both <span class="math inline">\(X\)</span> <em>and</em> <span class="math inline">\(Y\)</span></p>
 </div><div class="column" style="width:50%;">
 <ul>
-<li class="fragment"><p>In a DAG, colliders have arrows pointing <em>towards</em> them from both <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></p></li>
-<li class="fragment"><p>Including colliders in models can cause associations between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> when none actually exists</p></li>
+<li class="fragment">Including colliders in models can cause associations between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> when none actually exists</li>
 </ul>
 </div></div>
 </section>
+<section id="colliders-1" class="slide level2 smaller">
+<h2>Colliders</h2>
+<p>Colliders are very common but understanding what they are and why the cause spurious relationships can be confusing<a href="#/footnotes" class="footnote-ref" id="fnref15" role="doc-noteref" data-footnote-href="#/fn15" onclick=""><sup>15</sup></a></p>
+<p>A few examples:</p>
+<ul>
+<li class="fragment"><p>Research projects that get a lot of press are often low quality. Does rigor influence newsworthiness (or vice versa)?</p>
+<ul>
+<li class="fragment"><p>To get funded, a proposal must either be very high quality <em>or</em> be very “newsworthy”</p></li>
+<li class="fragment"><p>Funding is a collider (<em>quality</em> <span class="math inline">\(\longrightarrow\)</span> <em>funding</em> <span class="math inline">\(\longleftarrow\)</span> <em>newsworthy</em>)</p></li>
+</ul></li>
+</ul>
+<aside></aside></section>
+<section id="colliders-2" class="slide level2 smaller">
+<h2>Colliders</h2>
+<p>Colliders are very common but understanding what they are and why the cause spurious relationships can be confusing<a href="#/footnotes" class="footnote-ref" id="fnref16" role="doc-noteref" data-footnote-href="#/fn16" onclick=""><sup>16</sup></a></p>
+<p>A few examples:</p>
+<ul>
+<li class="fragment"><p>Restaurants in good locations tend to have worse food than restaurants in bad locations. Does location influence food quality?</p>
+<ul>
+<li class="fragment"><p>Restaurants in bad locations <em>have</em> to be good to stay in business. Restaurants in good locations can get away with having lower quality food</p></li>
+<li class="fragment"><p>Staying in business is a collider (<em>location</em> <span class="math inline">\(\longrightarrow\)</span> <em>open</em> <span class="math inline">\(\longleftarrow\)</span> <em>quality</em>)</p></li>
+</ul></li>
+</ul>
+<aside></aside></section>
+<section id="colliders-3" class="slide level2 smaller">
+<h2>Colliders</h2>
+<p>Colliders are very common but understanding what they are and why the cause spurious relationships can be confusing<a href="#/footnotes" class="footnote-ref" id="fnref17" role="doc-noteref" data-footnote-href="#/fn17" onclick=""><sup>17</sup></a></p>
+<p>A few examples:</p>
+<ul>
+<li class="fragment"><p>The guys your friend dates are either handsome or funny. Are good looks and sense of humor related?</p>
+<ul>
+<li class="fragment"><p>Handsome guys can get a date even if they are boring. The rest of us have to be funny</p></li>
+<li class="fragment"><p>Getting a date is a collider (<em>looks</em> <span class="math inline">\(\longrightarrow\)</span> <em>date</em> <span class="math inline">\(\longleftarrow\)</span> <em>humor</em>)</p></li>
+</ul></li>
+</ul>
+<aside></aside></section>
 <section id="competing-exposures" class="slide level2 smaller">
 <h2>Competing exposures</h2>
 <p>Competing exposures are variables that effect the response variable <span class="math inline">\(Y\)</span> but are independent of the cause <span class="math inline">\(X\)</span></p>
@@ -735,9 +803,9 @@ Fall 2026</p>
 </div>
 </div>
 </div>
+<p>In a DAG, competing exposures have arrows pointing towards <span class="math inline">\(Y\)</span> but not <span class="math inline">\(X\)</span></p>
 </div><div class="column" style="width:50%;">
 <ul>
-<li class="fragment"><p>In a DAG, competing exposures have arrows pointing towards <span class="math inline">\(Y\)</span> but not <span class="math inline">\(X\)</span></p></li>
 <li class="fragment"><p>Including competing exposures in models does not directly influence inference about the effect of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span></p></li>
 <li class="fragment"><p>Because competing exposures don’t influence causal inference about <span class="math inline">\(X\)</span>, choices about whether to include them in the model should be based on other considerations</p>
 <ul>
@@ -748,30 +816,23 @@ Fall 2026</p>
 </ul>
 </div></div>
 </section>
-<section id="examples-2" class="slide level2 smaller">
+<section id="examples-1" class="slide level2 smaller">
 <h2>Examples</h2>
 <p>Let’s return to the second and third examples from the beginning of lecture</p>
 <ul>
-<li class="fragment"><p>Why did the effect of mast change when deer abundance was included in the model? What is the relationship between mast, deer, and trillium?</p></li>
+<li class="fragment"><p>Why did the effect of mast change when deer abundance was included in the model? What is the relationship between fall acorn mast, deer abundance, and trillium counts?</p></li>
 <li class="fragment"><p><span class="math inline">\(mast \longrightarrow deer \longrightarrow trillium\)</span></p></li>
-<li class="fragment"><p>Because deer is a <span class="highlight">mediator</span>, including it in the model removes the effect of mast. But that does not mean mast is not a cause of Trillium abundance!</p></li>
+<li class="fragment"><p>Because deer is a <span class="highlight">mediator</span>, including it in the model removes the effect of mast. But that does not mean mast is not a cause of Trillium abundance!<a href="#/footnotes" class="footnote-ref" id="fnref18" role="doc-noteref" data-footnote-href="#/fn18" onclick=""><sup>18</sup></a></p></li>
 <li class="fragment"><p>What is the role of initial abundance?</p></li>
 <li class="fragment"><p><span class="math inline">\(mast \longrightarrow deer \longrightarrow trillium \longleftarrow abundance_{init}\)</span></p></li>
-<li class="fragment"><p>Because initial abundance is not a confounder or a mediator, including it in the model does not bias estimates of deer or mast. Why might you inlude it in the model?</p></li>
+<li class="fragment"><p>Because initial abundance is not a confounder or a mediator, including it in the model does not bias estimates of deer or mast. Why might you include it in the model?</p></li>
 </ul>
-</section>
+<aside></aside></section>
 <section id="example-3-1" class="slide level2 smaller">
 <h2>Example 3</h2>
 <p>In laboratory studies, there was no effect of body size on boldness. So why did the researchers studying wild lizards find this relationship?</p>
 <div class="columns">
-<div class="column" style="width:50%;">
-<ul>
-<li class="fragment"><p>Lizards only end up in the data set <em>if they are captured</em></p></li>
-<li class="fragment"><p>Who gets captured? Lizards that are big <em>or</em> <span class="highlight">bold</span></p></li>
-<li class="fragment"><p>Who doesn’t get captured? Lizards that are small <em>and</em> shy</p></li>
-<li class="fragment"><p>In the observed sample, small lizards are almost guaranteed to be bolder than average<a href="#/footnotes" class="footnote-ref" id="fnref14" role="doc-noteref" data-footnote-href="#/fn14" onclick=""><sup>14</sup></a></p></li>
-</ul>
-</div><div class="column fragment" style="width:50%;">
+<div class="column fragment" style="width:50%;">
 <p>In the population, there is no link between boldness and body size</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -782,6 +843,13 @@ Fall 2026</p>
 </div>
 </div>
 </div>
+</div><div class="column" style="width:50%;">
+<ul>
+<li class="fragment"><p>Lizards only end up in the data set <em>if they are captured</em></p></li>
+<li class="fragment"><p>Who gets captured? Lizards that are big <em>or</em> <span class="highlight">bold</span></p></li>
+<li class="fragment"><p>Who doesn’t get captured? Lizards that are small <em>and</em> shy</p></li>
+<li class="fragment"><p>In the observed sample, small lizards are almost guaranteed to be bolder than average<a href="#/footnotes" class="footnote-ref" id="fnref19" role="doc-noteref" data-footnote-href="#/fn19" onclick=""><sup>19</sup></a></p></li>
+</ul>
 </div></div>
 <div class="fragment">
 <p>Capture acted as a <em>collider</em>, which created a relationship where none actually existed.</p>
@@ -790,29 +858,64 @@ Fall 2026</p>
 <section id="using-dags" class="slide level2 smaller">
 <h2>Using DAGs</h2>
 <p>So far, we’ve used very simple graphs to show confounding caused by a single variable <span class="math inline">\(Z\)</span>.</p>
-<div class="fragment">
 <p>However, confounding can often show up in more complex DAGs in ways that are not always quite so obvious.</p>
+<div class="columns">
+<div class="column fragment" style="width:50%;">
 <p>Do you see any confounders in the following graph?</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
+</figure>
 </div>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<p>What “paths” exist from <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span>?</p>
+<ul>
+<li class="fragment"><p>A</p></li>
+<li class="fragment"><p>B</p></li>
+<li class="fragment"><p>C</p></li>
+</ul>
+</div></div>
 </section>
 <section id="using-dags-1" class="slide level2 smaller">
 <h2>Using DAGs</h2>
 <p>Do you see any confounders in the following graph?</p>
-
-<img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="using-dags-2" class="slide level2 smaller">
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Do you see any confounders in the following graph?</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="column fragment" style="width:50%;">
+<p>What “paths” exist from <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span>?</p>
+</div></div><section id="using-dags-2" class="slide level2 smaller">
 <h2>Using DAGs</h2>
 <p>Do you see any confounders in the following graph?</p>
-
-<img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="using-dags-3" class="slide level2 smaller">
-<h2>Using DAGs</h2>
-<p>Do you see any confounders in the following graph?</p>
-
-<img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="minimal-adjustment-set" class="slide level2 smaller">
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="column fragment" style="width:50%;">
+<p>What “paths” exist from <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span>?</p>
+</div></div><section id="minimal-adjustment-set" class="slide level2 smaller">
 <h2>Minimal adjustment set</h2>
-<p>Conditioning on every confounder is not necessary</p>
+<p>Conditioning on every variable along a confounding pathway is not necessary</p>
 <p>Instead, we generally try to find the <em>minimal adjustment set</em> that blocks each confounding path</p>
 <div class="fragment">
 <p>For example, in the following DAG we can condition on <span class="math inline">\(A\)</span> <em>or</em> <span class="math inline">\(B\)</span>. We do not need to condition on both</p>
@@ -826,9 +929,8 @@ Fall 2026</p>
 </div>
 </div>
 </div>
-</section>
-<section id="minimal-adjustment-set-1" class="slide level2 smaller">
-<h2>minimal adjustment set</h2>
+</section><section id="minimal-adjustment-set-1" class="slide level2 smaller">
+<h2>Minimal adjustment set</h2>
 <p>What variables do we need to adjust in this example?</p>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -852,8 +954,7 @@ Fall 2026</p>
 </div>
 </div>
 </div></div>
-</section>
-<section id="minimal-adjustment-set-2" class="slide level2 smaller">
+</section><section id="minimal-adjustment-set-2" class="slide level2 smaller">
 <h2>Minimal adjustment set</h2>
 <p>What variables do we need to adjust in this example?</p>
 <div class="columns">
@@ -878,8 +979,7 @@ Fall 2026</p>
 </div>
 </div>
 </div></div>
-</section>
-<section id="minimal-adjustment-set-3" class="slide level2 smaller">
+</section><section id="minimal-adjustment-set-3" class="slide level2 smaller">
 <h2>Minimal adjustment set</h2>
 <p>What variables do we need to adjust in this example?</p>
 <div class="columns">
@@ -904,8 +1004,7 @@ Fall 2026</p>
 </div>
 </div>
 </div></div>
-</section>
-<section id="more-on-dags" class="slide level2 smaller">
+</section><section id="more-on-dags" class="slide level2 smaller">
 <h2>More on DAGs</h2>
 <p>Building DAGs can be overwhelming due to the complexity of ecological systems</p>
 <ul>
@@ -914,42 +1013,58 @@ Fall 2026</p>
 <li class="fragment"><p>If you were to conduct an experiment, which variables would you try to hold constant? What variables would you try to randomize over?</p></li>
 <li class="fragment"><p>Share your DAG with colleagues and explain your reasoning. Use feedback to revise the DAG until you are satisfied it captures the main variables influencing your system</p></li>
 <li class="fragment"><p>Remember that you should include variable <span class="bold">whether you have data to measure them or not!</span></p></li>
+<li class="fragment"><p>Observed associations (or lack thereof) <span class="bold">cannot</span> tell you whether your DAG is correct. Building DAGs is a <em>scentific</em> exercise, not a statistical one</p></li>
 </ul>
-</section>
-<section id="more-on-colliders" class="slide level2 smaller">
+</section><section id="more-on-colliders" class="slide level2 smaller">
 <h2>More on colliders</h2>
 <p>Colliders are challenging to understand and identify in part because they are often not variables we measure</p>
 <ul>
-<li class="fragment">There is not a column in the lizard data set called “captured”</li>
+<li>There is not a column in the lizard data called “captured”</li>
 </ul>
 <div class="fragment">
 <p>When colliders are measured, they <span class="highlight">should not</span> be included in the model</p>
+<ul>
+<li>Be aware that sometimes adding confounders to a model can create colliders!</li>
+</ul>
 </div>
 <div class="fragment">
 <p>When colliders are not measured, they are essentially in the model by default</p>
+<ul>
+<li><p>DAGs can help identify potential colliders so that you can avoid being tricked by spurious associations</p></li>
+<li><p>More advanced modeling methods (e.g.&nbsp;hierarchical models) can sometimes be used to explicitly model the effects of colliders</p></li>
+</ul>
 </div>
-</section>
-<section id="summary" class="slide level2 smaller">
+</section><section id="summary" class="slide level2 smaller">
 <h2>Summary</h2>
-<p>Multiple regression is…</p>
-<p>Using multiple regression to disentangle the effects of different covariates requires</p>
-<p>DAGs are graphical models that represent hypothesized relationships between variables that influence (or are influenced by) <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></p>
-<p>DAGs are useful for identifying confounders, mediators, and colliders</p>
-<p>If your goal is to estimate causal effects of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>, your regression model <em>must</em> include known confounders<a href="#/footnotes" class="footnote-ref" id="fnref15" role="doc-noteref" data-footnote-href="#/fn15" onclick=""><sup>15</sup></a></p>
-<pre><code>+ Note that this does not depend on pairwise correlations, AIC scores, etc. Statistical control is equivalent to randomization in manipulative experiments</code></pre>
-<p>You should treat mediators with caution. Including mediators blocks paths between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, which will change results</p>
-<p>Beware of colliders, they are often lurking behind the scenes</p>
-<pre><code>+ Colliders can also cause spurious relationships, which make them tempting to ignore</code></pre>
-<p>Identifying confounders, mediators, and colliders is a <span class="highlight">scientific</span> process, not a statistical one</p>
-<aside></aside></section>
-<section id="advice-and-resources" class="slide level2 smaller">
-<h2>Advice and resources</h2>
+<ul>
+<li class="fragment"><p>Multiple regression is a powerful tool for causal inference in observational studies</p>
+<ul>
+<li class="fragment">Multiple regression to disentangle the effects of different covariates requires</li>
+</ul></li>
+<li class="fragment"><p>DAGs are graphical models that represent hypothesized relationships between variables that influence (or are influenced by) <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></p>
+<ul>
+<li class="fragment">DAGs are useful for identifying confounders, mediators, and colliders</li>
+</ul></li>
+<li class="fragment"><p>If your goal is to estimate causal effects of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>, your regression model <em>must</em> include known confounders</p></li>
+<li class="fragment"><p>Treat mediators with caution. Including mediators blocks paths between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, which will change results</p></li>
+<li class="fragment"><p>Beware of colliders, they are often lurking behind the scenes</p>
+<ul>
+<li class="fragment">Colliders can also cause spurious relationships, which make them tempting to ignore</li>
+</ul></li>
+<li class="fragment"><p>Identifying confounders, mediators, and colliders is a <span class="highlight">scientific</span> process, not a statistical one</p>
+<ul>
+<li class="fragment">Pairwise correlations, AIC scores, p-values, etc. cannot tell you whether your model is correct</li>
+</ul></li>
+</ul>
+</section><section id="additional-resources" class="slide level2 smaller">
+<h2>Additional resources</h2>
 <p>We have purposefully used simple examples in this lecture. In reality, ecological systems are very complex and constructing a complete DAG is challenging</p>
-<p>Daggity</p>
-<p>SB4S youtube</p>
-<p>Causal Inference in R</p>
-</section>
-<section id="looking-ahead" class="slide level2">
+<ul>
+<li>Daggity: Web platform for constructing DAGs and identifying minimal adjustment sets</li>
+</ul>
+<p>SB4S: Recording of causal inference seminar by Richard McLereath (author of Stastistical Rethinking textbook)</p>
+<p>Causal Inference in R: Online text book about causal inference methods using R</p>
+</section><section id="looking-ahead" class="slide level2">
 <h2>Looking ahead</h2>
 <p><br></p>
 <p><span class="highlight">Next time</span>: Model selection</p>
@@ -958,7 +1073,10 @@ Fall 2026</p>
 
 
 </section>
-<aside></aside></section>
+</div>
+</section>
+</div>
+</section>
 <section id="footnotes" class="footnotes footnotes-end-of-document smaller scrollable" role="doc-endnotes"><h2>Footnotes</h2>
 
 <ol>
@@ -975,8 +1093,12 @@ Fall 2026</p>
 <li id="fn11"><p>Though this is not quite the actual meaning</p></li>
 <li id="fn12"><p>As we have discussed, variables can be correlated for many reasons. <em>If</em> the correlation is caused by confounding, then the confounder should be included in the model. But correlation does not automatically mean confounding, so again, identifying confounders depends on your scientific judgement</p></li>
 <li id="fn13"><p>And helps explain what multicolinearity is</p></li>
-<li id="fn14"><p>Otherwise they wouldn’t be captured</p></li>
-<li id="fn15"><p>Technically, not all confounders need to be included. Only the <em>minimal adjustment set</em> need to block all open paths between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> need to be included</p></li>
+<li id="fn14"><p>A model without mediator <span class="math inline">\(Z\)</span> estimates the total effect of <span class="math inline">\(X\)</span>. A model that includes <span class="math inline">\(Z\)</span> estimates the partial effect of <span class="math inline">\(X\)</span>. Both effects might be relevent depending on your question</p></li>
+<li id="fn15"><p>Previously this semester we’ve used the term “spurious” to refer to associations that happen due to chance. If you collected a new sample, you probably wouldn’t find the association. But colliders do not produce random associations. If you repeat the study, you would still find the association. It’s a systematic effect of the collider</p></li>
+<li id="fn16"><p>Previously this semester we’ve used the term “spurious” to refer to associations that happen due to chance. If you collected a new sample, you probably wouldn’t find the association. But colliders do not produce random associations. If you repeat the study, you would still find the association. It’s a systematic effect of the collider</p></li>
+<li id="fn17"><p>Previously this semester we’ve used the term “spurious” to refer to associations that happen due to chance. If you collected a new sample, you probably wouldn’t find the association. But colliders do not produce random associations. If you repeat the study, you would still find the association. It’s a systematic effect of the collider</p></li>
+<li id="fn18"><p>If you intervened by removing acorns, deer abundance would be lower, and Trillium abundance would be higher</p></li>
+<li id="fn19"><p>Otherwise they wouldn’t be captured</p></li>
 </ol>
 </section>
     </div>
@@ -1168,7 +1290,7 @@ Fall 2026</p>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1280,13 +1402,14 @@ Fall 2026</p>
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-            const codeEl = trigger.previousElementSibling.cloneNode(true);
-            for (const childEl of codeEl.children) {
-              if (isCodeAnnotation(childEl)) {
-                childEl.remove();
-              }
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
             }
-            return codeEl.innerText;
+          }
+          return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy

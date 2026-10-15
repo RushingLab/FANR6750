@@ -223,8 +223,8 @@ broom::tidy(fit3)
 
 - The data includes:
 
+    + The number of plants at the end of summer (response variable)
     + The number of Trillium plants found at the beginning of the spring 
-    + The number of plants at the end of summer
     + An index of acorn mast the previous fall
     + The estimated number of deer within the study area 
 
@@ -238,7 +238,7 @@ broom::tidy(fit3)
 
 ## Example 2 {.smaller}
 
-The student initially notices that there is a strong negative association between mast and final abundance 
+The student initially notices that there is a strong negative association between abundance at the end of summer and acorn mast the preceeding fall
 
 ::::{.columns}
 
@@ -366,7 +366,9 @@ Conventional approaches to selecting among models are based on associations amon
 
 - As with any statistical procedure, these approaches base modeling decisions on the strength of statistical associations
 
-- However, we should usually base these decisions on our understanding of *why* variables are associated with each other 
+    + "Causal salad"
+
+- However, we should base these decisions on our understanding of *why* variables are associated with each other 
 
 :::
 
@@ -492,20 +494,11 @@ The benefit of DAGs is that they allow us to identify variables that could preve
 
 - In manipulative experiments, randomization removes the association between $Z$ and $X$ (i.e., *closes* the backdoor path)^[Closing the door is equivalent to blocking the flow of electricity]
 
-- What about observational studies?
-:::
+- How do we remove the effect of confounders in observational studies? 
 
-
-## Using a DAG for causal inference {.smaller}
-
-How do we remove the effect of confounders in observational studies? 
-
-:::{.fragment}
-Multiple regression!^[Multiple regression is not the only method to address confounding, but it is the only one we will cover in this class]
-:::
-
-:::{.fragment}
-In observational studies, we can use multiple regression to accomplish *statistically* what experiments handle using design/randomization
+    + Multiple regression!^[Multiple regression is not the only method to address confounding, but it is the only one we will cover in this class]
+    
+    + Multiple regression can accomplish *statistically* what experiments handle using design/randomization
 :::
 
 ## Using multiple regression to remove confounding {.smaller}
@@ -527,9 +520,14 @@ So a DAG tells us which variables act as confounders and therefore which variabl
 
 Let's use a DAG to figure out what might be happening in example 1. What is the relationship between predation risk, cover, and sex? 
 
-:::{.fragment}
+::::{.columns}
+
+:::{.column width="50%" .fragment}
 
 ```{r}
+#| fig-width: 6
+#| fig-height: 3
+
 library(ggdag)
 finch_dag <- dagify(
   y ~ x + z,
@@ -546,17 +544,24 @@ ggdag(finch_dag,
       use_labels = "label",
       text = FALSE) +
   guides(fill = "none", color = "none") + 
-  theme_dag()
+  theme_dag() +
+  theme(plot.background = element_rect(fill = "#eeeeee"), 
+        panel.background = element_rect(fill = "#eeeeee", color = NA))
 ```
 :::
 
+:::{.column width="50%"}
 :::{.incremental}
 - From this DAG, it is clear that sex is a [confounder]{.highlight} of both cover *and* survival.
 
-- Because it is a confounder, we have to control for it to quantify the causal effect of cover on survival^[Assuming there are no other confounders] 
+- Because it is a confounder, we have to control for it to quantify the causal effect of cover on survival^[Assuming there are no other confounders]
 
-- We can also conclude that the model that only includes cover is the *wrong model* for our question. No model selection necessary!
+    + What is the interpretation of the `cover` variable from the multiple regression model?
+    
+- We can also conclude that the model that includes only cover is the *wrong model* for our question. No model selection necessary!
 :::
+:::
+::::
 
 ## Multicolinearity {.theme-inverse .center}
 
@@ -572,7 +577,7 @@ Typical advice is to remove covariates that have strong, pairwise correlations (
 
 :::{.fragment}
 
-But this is [NOT]{.highlight} good advice:
+But this is [not]{.highlight} good advice:
 
 :::{.incremental}
 
@@ -587,25 +592,43 @@ But this is [NOT]{.highlight} good advice:
 :::
 :::
 
-## Examples {.smaller}
+## Sometimes you should include correlated predictors {.smaller}
 
-Pairwise correlations *may* indicate you need to include a predictor:^[As we have discussed, variables can be correlated for many reasons. *If* the correlation is caused by confounding, then the confounder should be included in the model. But correlation does not automatically mean confounding, so again, identifying confounders depends on your scientific judgement]
+Pairwise correlations *may* indicate you *should* include a predictor:^[As we have discussed, variables can be correlated for many reasons. *If* the correlation is caused by confounding, then the confounder should be included in the model. But correlation does not automatically mean confounding, so again, identifying confounders depends on your scientific judgement]
+
+:::{.incremental}
+
+- In the life history trade-off example, habitat quality is likely to be strongly correlated with reproductive success
+
+- Does this mean we can't include habitat quality in the model? No! We *need to* include it if we want to isolate the effect of reproductive success
+
+- With both parameters in the model, the coefficient associated with reproductive success tells us "after controlling for the effects of habitat quality, do coyotes with higher reproductive success have lower survival"
+
+:::
+
+## Sometimes you should include correlated predictors {.smaller}
+
+Pairwise correlations *may* indicate you need to include a predictor:
 
 :::{.incremental}
 
 - Researchers are interested in the effects of traffic on coyote movement. Exploratory analysis reveals that GPS-collared coyotes are more active during times of high traffic. Can we conclude that traffic increases movement? What might be confounding traffic?
 
-- Time of day! Coyotes are crepuscular so they tend to move more in the morning and evening, when traffic is also highest 
+- Time of day! Coyotes are crepuscular so they tend to move more in the morning and evening, when traffic is also highest ($traffic \longleftarrow TOD \longrightarrow movement$)
 
-- So in this case, we expect traffic and time of day to be highly correlated because $Z$ *causes* $X$
+- We *need to* include time of day if we want to isolate the effect of traffic
 
-- Does this mean we can't include time of day in the model? No! We *need to* include it if we want to isolate the effect of traffic
+- With both parameters in the model, the coefficient associated with traffic tells us "after controlling for the effects of time of day, do coyotes move less when traffic is high"
 
-## So what's the problem with multicolinearity? {.smaller}
+    + As long as time of day and traffic are not perfectly correlated (traffic varies from day to day, especially weekends/holidays) and we have enough data, the regression model can disentangle their effects
 
-The previous examples hopefully clarify that including or removing predictors based on pairwise correlations is generally bad advice
+:::
 
-But including highly correlated predictors is not without problems:
+## Effects of multicolinearity {.smaller}
+
+The previous examples hopefully clarify that including or removing predictors based solely on pairwise correlations is bad advice
+
+But including highly correlated predictors is not without consequences:
 
 :::{.incremental}
 
@@ -615,11 +638,13 @@ But including highly correlated predictors is not without problems:
 
 - The higher the correlation, the larger sample size needed to maintain statistical power
 
+    + Disentangling the effects of highly correlated predictors is essentially a sample size issue, not a violation of model assumptions
+
 :::
 
-## Problematic multicolinearity {.smaller}
+## When is multicolinearity a problem? {.smaller}
 
-One instance that highlights when multicolinearity can be problematic^[And helps explain what multicolinearity is] is when covariates represent percentages that must sum to 1
+One instance that highlights when multicolinearity *can* be problematic^[And helps explain what multicolinearity is] is when covariates represent percentages that must sum to 1:
 
 - Land use (% forest, % developed, % agriculture, etc.)
 
@@ -630,13 +655,16 @@ One instance that highlights when multicolinearity can be problematic^[And helps
 :::{.fragment}
 These covariates are structurally colinear - if you know the values of all but one category, you know the value of the last category
 
-- Another way to think about the issue - if you change the value of one category, at least one of the other categories [must]{.highlight} also change
+- If you change value of one category, value of other categories [must]{.highlight} also change
+
+    + "What is the effect of $X$ while holding all other parameters constant" is an impossible question to answer
+
 :::
 
 :::{.fragment}
-If you try to include every category as a predictor, many models with fail (error message or infinite standard errors)
+- If you try to include every category as a predictor, many models with fail (error message or infinite standard errors)
 
-Removing one (or more) categories may be necessary to fit the model
+    + Removing one (or more) categories may be necessary to fit the model
 :::
 
 ## Multicolinearity - practical advice {.smaller}
@@ -647,12 +675,13 @@ Removing one (or more) categories may be necessary to fit the model
 
 - If covariates are correlated because they essentially measure the same thing, you should remove all but one
 
-- If covariates have a structural correlation (e.g., sum to 1), generally best to drop one predictor
+- If covariates have a structural correlation (e.g., sum to 1), generally best to drop one category
 
 - When you include correlated predictor variables, be prepared for larger standard errors (because that's what is supposed to happen!)
 
 - If standard errors are so big that they essentially render parameter estimates useless, you may need to simplify the model by removing covariates (but be sure you understand how that changes your interpretation!)
 
+- Prediction is not effected by multicolinearity. If your goal is to predict, focus on predictive accuracy and don't worry about pairwise correlations among covariates
 :::
 
 ## other types of associations {.smaller}
@@ -693,23 +722,26 @@ mediator <- dagify(
 )
 
 ggdag(mediator) +
-  theme_dag()
+  theme_dag() +
+  theme(plot.background = element_rect(fill = "#eeeeee"), 
+        panel.background = element_rect(fill = "#eeeeee", color = NA))
 ```
+
+In a DAG, mediators have arrows pointing *from* $X$ and *to* $Y$
+
 :::
 
 ::: {.column width="50%"}
 :::{.incremental}
 - Often, mediators are the mechanism that causes $X$ to influence $Y$
 
-- In a DAG, mediators have arrows pointing *from* $X$ and *to* $Y$
-
 - If $Z$ is a mediator, including it in the model "blocks" the effect of $X$
 
-    + What is the effect of $X$ after accounting for $Z$? None, if $X$ acts through it's effect of $Z$
+    + What is the effect of $X$ after accounting for $Z$? None, if $X$ acts through it's effect on $Z$
 
 - Mediators can sometimes be included in models to test whether $Z$ might be the mechanism 
 
-- Including a mediator also allows you to measure the effect of $X$ that is not due to $Z$
+- Including a mediator also allows you to measure the effect of $X$ that is *not* due to $Z$^[A model without mediator $Z$ estimates the total effect of $X$. A model that includes $Z$ estimates the partial effect of $X$. Both effects might be relevent depending on your question]
 :::
 :::
 ::::
@@ -736,19 +768,67 @@ collider <- dagify(
 )
 
 ggdag(collider) +
-  theme_dag()
+  theme_dag()+
+  theme(plot.background = element_rect(fill = "#eeeeee"), 
+        panel.background = element_rect(fill = "#eeeeee", color = NA))
 ```
+In a DAG, colliders have arrows pointing *towards* them from both $X$ *and* $Y$
+
 :::
 ::: {.column width="50%"}
 :::{.incremental}
-
-- In a DAG, colliders have arrows pointing *towards* them from both $X$ and $Y$
 
 - Including colliders in models can cause associations between $X$ and $Y$ when none actually exists
 
 :::
 :::
 ::::
+
+## Colliders {.smaller}
+
+Colliders are very common but understanding what they are and why the cause spurious relationships can be confusing^[Previously this semester we've used the term "spurious" to refer to associations that happen due to chance. If you collected a new sample, you probably wouldn't find the association. But colliders do not produce random associations. If you repeat the study, you would still find the association. It's a systematic effect of the collider]
+
+A few examples:
+
+:::{.incremental}
+    
+- Research projects that get a lot of press are often low quality. Does rigor influence newsworthiness (or vice versa)? 
+
+    + To get funded, a proposal must either be very high quality *or* be very "newsworthy"
+    
+    + Funding is a collider (*quality* $\longrightarrow$ *funding* $\longleftarrow$ *newsworthy*)
+
+:::
+
+## Colliders {.smaller}
+
+Colliders are very common but understanding what they are and why the cause spurious relationships can be confusing^[Previously this semester we've used the term "spurious" to refer to associations that happen due to chance. If you collected a new sample, you probably wouldn't find the association. But colliders do not produce random associations. If you repeat the study, you would still find the association. It's a systematic effect of the collider]
+
+A few examples:
+
+:::{.incremental}
+- Restaurants in good locations tend to have worse food than restaurants in bad locations. Does location influence food quality? 
+
+    + Restaurants in bad locations *have* to be good to stay in business. Restaurants in good locations can get away with having lower quality food
+    
+    + Staying in business is a collider (*location* $\longrightarrow$ *open* $\longleftarrow$ *quality*)
+
+:::
+
+## Colliders {.smaller}
+
+Colliders are very common but understanding what they are and why the cause spurious relationships can be confusing^[Previously this semester we've used the term "spurious" to refer to associations that happen due to chance. If you collected a new sample, you probably wouldn't find the association. But colliders do not produce random associations. If you repeat the study, you would still find the association. It's a systematic effect of the collider]
+
+A few examples:
+
+:::{.incremental}
+- The guys your friend dates are either handsome or funny. Are good looks and sense of humor related? 
+
+    + Handsome guys can get a date even if they are boring. The rest of us have to be funny
+    
+    + Getting a date is a collider (*looks* $\longrightarrow$ *date* $\longleftarrow$ *humor*)
+    
+:::
 
 ## Competing exposures {.smaller}
 
@@ -770,13 +850,17 @@ ce <- dagify(
 )
 
 ggdag(ce) +
-  theme_dag()
+  theme_dag()+
+  theme(plot.background = element_rect(fill = "#eeeeee"), 
+        panel.background = element_rect(fill = "#eeeeee", color = NA))
 ```
+
+In a DAG, competing exposures have arrows pointing towards $Y$ but not $X$
+
 :::
 
 ::: {.column width="50%"}
 :::{.incremental}
-- In a DAG, competing exposures have arrows pointing towards $Y$ but not $X$
 
 - Including competing exposures in models does not directly influence inference about the effect of $X$ on $Y$ 
 
@@ -797,17 +881,17 @@ Let's return to the second and third examples from the beginning of lecture
 
 :::{.incremental}
 
-- Why did the effect of mast change when deer abundance was included in the model? What is the relationship between mast, deer, and trillium?
+- Why did the effect of mast change when deer abundance was included in the model? What is the relationship between fall acorn mast, deer abundance, and trillium counts?
 
 - $mast \longrightarrow deer \longrightarrow trillium$
 
-- Because deer is a [mediator]{.highlight}, including it in the model removes the effect of mast. But that does not mean mast is not a cause of Trillium abundance!
+- Because deer is a [mediator]{.highlight}, including it in the model removes the effect of mast. But that does not mean mast is not a cause of Trillium abundance!^[If you intervened by removing acorns, deer abundance would be lower, and Trillium abundance would be higher]
 
 - What is the role of initial abundance?
 
 - $mast \longrightarrow deer \longrightarrow trillium \longleftarrow abundance_{init}$
 
-- Because initial abundance is not a confounder or a mediator, including it in the model does not bias estimates of deer or mast. Why might you inlude it in the model?
+- Because initial abundance is not a confounder or a mediator, including it in the model does not bias estimates of deer or mast. Why might you include it in the model?
 
 :::
 
@@ -816,6 +900,24 @@ Let's return to the second and third examples from the beginning of lecture
 In laboratory studies, there was no effect of body size on boldness. So why did the researchers studying wild lizards find this relationship? 
 
 ::::{.columns}
+
+::: {.column width="50%" .fragment}
+
+In the population, there is no link between boldness and body size
+
+```{r}
+ggplot(boldnessdata, aes(x = Size, y = Boldness)) +
+  geom_point(aes(color = Captured)) +
+  scale_color_manual(values = c("grey", "red")) +
+  stat_smooth(method = "lm")+
+  guides(color = guide_legend(title = "Captured")) +
+  theme(plot.background = element_rect(fill = "#eeeeee"), 
+        panel.background = element_rect(fill = "#eeeeee"),
+        legend.background = element_rect(fill = "#eeeeee"),
+        legend.title = element_text(color = "black"))
+```
+
+:::
 
 :::{.column width="50%"}
 
@@ -833,18 +935,6 @@ In laboratory studies, there was no effect of body size on boldness. So why did 
 
 :::
 
-::: {.column width="50%" .fragment}
-
-In the population, there is no link between boldness and body size
-
-```{r}
-ggplot(boldnessdata, aes(x = Size, y = Boldness)) +
-  geom_point(aes(color = Captured)) +
-  scale_color_manual(values = c("grey", "red")) +
-  stat_smooth(method = "lm")
-```
-
-:::
 
 ::::
 
@@ -856,18 +946,16 @@ Capture acted as a *collider*, which created a relationship where none actually 
 
 So far, we've used very simple graphs to show confounding caused by a single variable $Z$.
 
-:::{.fragment}
 However, confounding can often show up in more complex DAGs in ways that are not always quite so obvious. 
 
-Do you see any confounders in the following graph?
-
-:::
-
-## Using DAGs {.smaller}
+::::{.columns}
+:::{.column width="50%" .fragment}
 
 Do you see any confounders in the following graph?
 
 ```{r}
+#| fig-width: 6
+#| fig-height: 3
 eg_dag1 <- dagify(
   Y ~ C + X,
   X ~ U,
@@ -888,14 +976,40 @@ ggplot(tidy_dag1, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_node() +
   geom_dag_text(col = "white") +
-  theme_dag()
+  theme_dag()+
+  theme(plot.background = element_rect(fill = "#eeeeee"), 
+        panel.background = element_rect(fill = "#eeeeee", color = NA))
 ```
+:::
+
+:::{.column width="50%" .fragment}
+
+What "paths" exist from $X$ to $Y$?
+
+:::{.incremental}
+- $X \longrightarrow Y$
+
+- $X \longleftarrow U \longleftarrow A \longrightarrow C \longrightarrow Y$
+
+:::
+
+:::{.fragment}
+
+Why isn't there an open path through $B$?
+:::
+::::
 
 ## Using DAGs {.smaller}
 
 Do you see any confounders in the following graph?
 
+::::{.columns}
+:::{.column width="50%"}
+
+Do you see any confounders in the following graph?
 ```{r}
+#| fig-width: 6
+#| fig-height: 3
 eg_dag2 <- dagify(
   Y ~ W + X + M,
   X ~ S,
@@ -915,14 +1029,39 @@ ggplot(tidy_dag2, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_node() +
   geom_dag_text(col = "white") +
-  theme_dag()
+  theme_dag()+
+  theme(plot.background = element_rect(fill = "#eeeeee"), 
+        panel.background = element_rect(fill = "#eeeeee", color = NA))
 ```
+
+:::{.column width="50%" .fragment}
+
+What "paths" exist from $X$ to $Y$?
+
+:::{.incremental}
+- $X \longrightarrow Y$
+
+- $X \longrightarrow M \longrightarrow Y$
+
+- $X \longleftarrow S \longrightarrow M \longrightarrow Y$
+
+- $X \longleftarrow S \longrightarrow W \longrightarrow Y$
+
+:::
+
+:::
+::::
 
 ## Using DAGs {.smaller}
 
 Do you see any confounders in the following graph?
 
+::::{.columns}
+:::{.column width="50%"}
+
 ```{r}
+#| fig-width: 6
+#| fig-height: 3
 eg_dag3 <- dagify(
   Y ~ X + Z + A,
   X ~ Z,
@@ -941,12 +1080,29 @@ ggplot(tidy_dag3, aes(x = x, y = y, xend = xend, yend = yend)) +
   geom_dag_edges() +
   geom_dag_node() +
   geom_dag_text(col = "white") +
-  theme_dag()
+  theme_dag()+
+  theme(plot.background = element_rect(fill = "#eeeeee"), 
+        panel.background = element_rect(fill = "#eeeeee", color = NA))
 ```
+
+:::{.column width="50%" .fragment}
+
+What "paths" exist from $X$ to $Y$?
+
+:::{.incremental}
+- $X \longrightarrow Y$
+
+- $X \longleftarrow Z \longrightarrow Y$
+
+- $X \longleftarrow Z  \longrightarrow A \longrightarrow Y$
+
+:::
+:::
+::::
 
 ## Minimal adjustment set {.smaller}
 
-Conditioning on every confounder is not necessary
+Conditioning on every variable along a confounding pathway is not necessary
 
 Instead, we generally try to find the *minimal adjustment set* that blocks each confounding path
 
@@ -978,7 +1134,7 @@ ggplot(tidy_dag4, aes(x = x, y = y, xend = xend, yend = yend)) +
 
 :::
 
-## minimal adjustment set {.smaller}
+## Minimal adjustment set {.smaller}
 
 What variables do we need to adjust in this example?
 
@@ -1047,6 +1203,7 @@ ggdag_adjustment_set(tidy_dag3, shadow = TRUE) +
 :::
 ::::
 
+
 ## More on DAGs {.smaller}
 
 Building DAGs can be overwhelming due to the complexity of ecological systems
@@ -1063,53 +1220,63 @@ Building DAGs can be overwhelming due to the complexity of ecological systems
 
 - Remember that you should include variable [whether you have data to measure them or not!]{.bold}
 
+- Observed associations (or lack thereof) [cannot]{.bold} tell you whether your DAG is correct. Building DAGs is a *scentific* exercise, not a statistical one
 :::
 
 ## More on colliders {.smaller}
 
 Colliders are challenging to understand and identify in part because they are often not variables we measure
 
-- There is not a column in the lizard data set called "captured" 
+- There is not a column in the lizard data called "captured" 
 
 :::{.fragment}
 When colliders are measured, they [should not]{.highlight} be included in the model
+
+- Be aware that sometimes adding confounders to a model can create colliders! 
 :::
 
 :::{.fragment}
 When colliders are not measured, they are essentially in the model by default
+
+- DAGs can help identify potential colliders so that you can avoid being tricked by spurious associations
+
+- More advanced modeling methods (e.g. hierarchical models) can sometimes be used to explicitly model the effects of colliders 
 :::
 
 ## Summary {.smaller}
 
-Multiple regression is...
+:::{.incremental}
+- Multiple regression is a powerful tool for causal inference in observational studies
 
-Using multiple regression to disentangle the effects of different covariates requires 
+    + Multiple regression to disentangle the effects of different covariates requires 
 
-DAGs are graphical models that represent hypothesized relationships between variables that influence (or are influenced by) $X$ and $Y$
+- DAGs are graphical models that represent hypothesized relationships between variables that influence (or are influenced by) $X$ and $Y$
 
-DAGs are useful for identifying confounders, mediators, and colliders
+    + DAGs are useful for identifying confounders, mediators, and colliders
 
-If your goal is to estimate causal effects of $X$ on $Y$, your regression model *must* include known confounders^[Technically, not all confounders need to be included. Only the *minimal adjustment set* need to block all open paths between $X$ and $Y$ need to be included]
-
-    + Note that this does not depend on pairwise correlations, AIC scores, etc. Statistical control is equivalent to randomization in manipulative experiments
+- If your goal is to estimate causal effects of $X$ on $Y$, your regression model *must* include known confounders
     
-You should treat mediators with caution. Including mediators blocks paths between $X$ and $Y$, which will change results
+- Treat mediators with caution. Including mediators blocks paths between $X$ and $Y$, which will change results
 
-Beware of colliders, they are often lurking behind the scenes
+- Beware of colliders, they are often lurking behind the scenes
 
     + Colliders can also cause spurious relationships, which make them tempting to ignore
 
-Identifying confounders, mediators, and colliders is a [scientific]{.highlight} process, not a statistical one
+- Identifying confounders, mediators, and colliders is a [scientific]{.highlight} process, not a statistical one
 
-## Advice and resources {.smaller}
+    + Pairwise correlations, AIC scores, p-values, etc. cannot tell you whether your model is correct
+
+:::
+
+## Additional resources {.smaller}
 
 We have purposefully used simple examples in this lecture. In reality, ecological systems are very complex and constructing a complete DAG is challenging
 
-Daggity
+- Daggity: Web platform for constructing DAGs and identifying minimal adjustment sets
 
-SB4S youtube
+SB4S: Recording of causal inference seminar by Richard McLereath (author of Stastistical Rethinking textbook) 
 
-Causal Inference in R
+Causal Inference in R: Online text book about causal inference methods using R
 
 ## Looking ahead
 
