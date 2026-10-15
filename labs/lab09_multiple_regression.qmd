@@ -31,18 +31,6 @@ library(kableExtra)
 source(here::here("R/zzz.R"))
 ```
 
-
-## Lab 5
-
-1) ANOVA
-
-2) Performing an ANOVA with lm() and aov()
-  
-3) Performing an ANOVA by hand
-  
-4) Plotting confidence intervals
-  
-5) Multiple comparisons
   
 
 ## Today's topics
@@ -54,7 +42,6 @@ source(here::here("R/zzz.R"))
   + Blocking
 
 2) Centering predictors
-
 
 
 ### Scenarios
@@ -472,7 +459,7 @@ summary(lm1)
 <br>
 
 
-# Assignment
+# Assignment (not for a grade)
 
 Some time ago, plantations of *Pinus caribaea* were established at four locations on Puerto Rico. As part of a study, four spacing intervals were used at each location to determine the effect of spacing on tree height. Twenty years after the plantations were established, measurements (height in ft) were made in the study plots. Additionally, soil chemistry was analyzed to determine average pH and nitrogen content (mg N/kg soil) for each tree. Note that although spacing interval is a number, it must be treated as a factor since these 4 spacing intervals (and only these 4) are of interest to the researcher.
 

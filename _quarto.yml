@@ -118,8 +118,8 @@ website:
           - text: "Lab 8: Multiple Comparisons"
             href: labs/lab08_mult_comp.qmd
 
-          # - text: "Lab 9: Multiple regression"
-          #   href: labs/lab09_multreg.qmd
+          - text: "Lab 9: Multiple regression"
+            href: labs/lab09_multreg.qmd
           #
           # - text: "Lab 10: Interactions"
           #   href: labs/lab10_interactions.qmd
