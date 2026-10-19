@@ -6,8 +6,8 @@
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-234273d1456647dabc34a594ac50e507.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.32">
 
   <title>FANR6750 – causal_inference_part2</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,16 +16,10 @@
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../../site_libs/revealjs/dist/reveal.css">
   <style>
-    /* Default styles provided by pandoc.
-    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-    */
+    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: 1.5em;}
-    div.column{flex: auto;}
-    @media screen {
-    div.columns{gap: min(4vw, 1.5em);}
-    div.column{overflow-x: auto;}
-    }
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -100,7 +94,7 @@
     code span.vs { color: #032f62; } /* VerbatimString */
     code span.wa { color: #ff5555; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-bd00081fb4a3581c8cfade07523c4959.css">
+  <link rel="stylesheet" href="../../site_libs/revealjs/dist/theme/quarto-de2f321f334c519abfca5296ca2f67de.css">
   <link href="../../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -215,15 +209,19 @@ Fall 2026</p>
 <p><br></p>
 </div>
 <div class="fragment">
-<h3 id="causal-inference-continued">3) Causal inference (continued)</h3>
+<h3 id="visualizing-confounders-using-dags">3) Visualizing confounders using DAGs</h3>
 <p><br></p>
 </div>
 <div class="fragment">
-<h3 id="multiple-regression">4) Multiple regression</h3>
+<h3 id="controlling-confounders-using-multiple-regression">4) Controlling confounders using multiple regression</h3>
 <p><br></p>
 </div>
 <div class="fragment">
-<h3 id="examples-revisited">5) Examples (revisited)</h3>
+<h3 id="other-types-of-relationships-and-what-to-do-with-them">5) Other types of relationships and what to do with them</h3>
+<p><br></p>
+</div>
+<div class="fragment">
+<h3 id="minimal-adjustment-sets">6) Minimal adjustment sets</h3>
 <p><br></p>
 </div>
 </section>
@@ -293,8 +291,8 @@ Fall 2026</p>
 </div><div class="column" style="width:50%;">
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Sex, <span class="at">data =</span> groundfinchdata, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb1-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>fit1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Sex, <span class="at">data =</span> groundfinchdata, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb1-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic  p.value
@@ -305,8 +303,8 @@ Fall 2026</p>
 </div>
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Cover, <span class="at">data =</span> groundfinchdata, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb3-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>fit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Cover, <span class="at">data =</span> groundfinchdata, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb3-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic     p.value
@@ -333,8 +331,8 @@ Fall 2026</p>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Sex <span class="sc">+</span> Cover, <span class="at">data =</span> groundfinchdata, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
-<span id="cb5-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>fit3 <span class="ot">&lt;-</span> <span class="fu">glm</span>(survive <span class="sc">~</span> Sex <span class="sc">+</span> Cover, <span class="at">data =</span> groundfinchdata, <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb5-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   term        estimate std.error statistic  p.value
@@ -361,7 +359,7 @@ Fall 2026</p>
 <li class="fragment"><p>The data includes:</p>
 <ul>
 <li class="fragment">The number of plants at the end of summer (response variable)</li>
-<li class="fragment">The number of Trillium plants found at the beginning of the spring</li>
+<li class="fragment">The number of plants found at the beginning of the spring</li>
 <li class="fragment">An index of acorn mast the previous fall</li>
 <li class="fragment">The estimated number of deer within the study area</li>
 </ul></li>
@@ -372,7 +370,7 @@ Fall 2026</p>
 </section>
 <section id="example-2-1" class="slide level2 smaller">
 <h2>Example 2</h2>
-<p>The student initially notices that there is a strong negative association between abundance at the end of summer and acorn mast the preceeding fall</p>
+<p>The student initially notices that there is a strong negative association between abundance at the end of summer and acorn mast the preceding fall</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
@@ -386,8 +384,8 @@ Fall 2026</p>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast, <span class="at">data =</span> trilliumdata)</span>
-<span id="cb7-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast, <span class="at">data =</span> trilliumdata)</span>
+<span id="cb7-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic       p.value
@@ -414,8 +412,8 @@ Fall 2026</p>
 </div>
 </div><div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast <span class="sc">+</span> initN, <span class="at">data =</span> trilliumdata)</span>
-<span id="cb9-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast <span class="sc">+</span> initN, <span class="at">data =</span> trilliumdata)</span>
+<span id="cb9-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   term        estimate std.error statistic    p.value
@@ -426,8 +424,8 @@ Fall 2026</p>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast <span class="sc">+</span> initN <span class="sc">+</span> deer, <span class="at">data =</span> trilliumdata)</span>
-<span id="cb11-2"><a aria-label="2"></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(finalN <span class="sc">~</span> mast <span class="sc">+</span> initN <span class="sc">+</span> deer, <span class="at">data =</span> trilliumdata)</span>
+<span id="cb11-2"><a></a>broom<span class="sc">::</span><span class="fu">tidy</span>(fit3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
   term        estimate std.error statistic     p.value
@@ -648,8 +646,11 @@ Fall 2026</p>
 <p>The previous examples hopefully clarify that including or removing predictors based solely on pairwise correlations is bad advice</p>
 <p>But including highly correlated predictors is not without consequences:</p>
 <ul>
-<li class="fragment"><p>When variables are highly correlated, they contain little unique information about their individual effects</p></li>
-<li class="fragment"><p>Parameter estimates will have higher uncertainty (indicated by large standard errors)</p></li>
+<li class="fragment"><p>When variables are highly correlated, they contain little unique information about their individual effects</p>
+<ul>
+<li class="fragment">Statistically, perfectly correlated predictors are actually a single variable</li>
+</ul></li>
+<li class="fragment"><p>The higher the correlation, the higher the uncertainty associated with each predictor (indicated by large standard errors)</p></li>
 <li class="fragment"><p>The higher the correlation, the larger sample size needed to maintain statistical power</p>
 <ul>
 <li class="fragment">Disentangling the effects of highly correlated predictors is essentially a sample size issue, not a violation of model assumptions</li>
@@ -749,7 +750,8 @@ Fall 2026</p>
 <p>In a DAG, colliders have arrows pointing <em>towards</em> them from both <span class="math inline">\(X\)</span> <em>and</em> <span class="math inline">\(Y\)</span></p>
 </div><div class="column" style="width:50%;">
 <ul>
-<li class="fragment">Including colliders in models can cause associations between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> when none actually exists</li>
+<li class="fragment"><p>Including colliders in models can cause associations between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> when none actually exists</p></li>
+<li class="fragment"><p>If you know there is a collider in your data, <span class="highlight">do not</span> include it in your model</p></li>
 </ul>
 </div></div>
 </section>
@@ -757,37 +759,97 @@ Fall 2026</p>
 <h2>Colliders</h2>
 <p>Colliders are very common but understanding what they are and why the cause spurious relationships can be confusing<a href="#/footnotes" class="footnote-ref" id="fnref15" role="doc-noteref" data-footnote-href="#/fn15" onclick=""><sup>15</sup></a></p>
 <p>A few examples:</p>
+<div class="columns">
+<div class="column fragment" style="width:50%;">
+<p>Research projects that get a lot of press are often low quality. Does rigor influence newsworthiness (or vice versa)?</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
 <ul>
-<li class="fragment"><p>Research projects that get a lot of press are often low quality. Does rigor influence newsworthiness (or vice versa)?</p>
-<ul>
-<li class="fragment"><p>To get funded, a proposal must either be very high quality <em>or</em> be very “newsworthy”</p></li>
-<li class="fragment"><p>Funding is a collider (<em>quality</em> <span class="math inline">\(\longrightarrow\)</span> <em>funding</em> <span class="math inline">\(\longleftarrow\)</span> <em>newsworthy</em>)</p></li>
-</ul></li>
+<li><p>To get funded, a proposal must either be very high quality <em>or</em> be very “newsworthy”</p></li>
+<li><p>Funding is a collider (<em>quality</em> <span class="math inline">\(\longrightarrow\)</span> <em>funding</em> <span class="math inline">\(\longleftarrow\)</span> <em>newsworthy</em>)</p></li>
 </ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
 <aside></aside></section>
 <section id="colliders-2" class="slide level2 smaller">
 <h2>Colliders</h2>
 <p>Colliders are very common but understanding what they are and why the cause spurious relationships can be confusing<a href="#/footnotes" class="footnote-ref" id="fnref16" role="doc-noteref" data-footnote-href="#/fn16" onclick=""><sup>16</sup></a></p>
 <p>A few examples:</p>
+<div class="columns">
+<div class="column fragment" style="width:50%;">
+<p>Restaurants in good locations tend to have worse food than restaurants in bad locations. Does location influence food quality?</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
 <ul>
-<li class="fragment"><p>Restaurants in good locations tend to have worse food than restaurants in bad locations. Does location influence food quality?</p>
-<ul>
-<li class="fragment"><p>Restaurants in bad locations <em>have</em> to be good to stay in business. Restaurants in good locations can get away with having lower quality food</p></li>
-<li class="fragment"><p>Staying in business is a collider (<em>location</em> <span class="math inline">\(\longrightarrow\)</span> <em>open</em> <span class="math inline">\(\longleftarrow\)</span> <em>quality</em>)</p></li>
-</ul></li>
+<li><p>Restaurants in bad locations <em>have</em> to be good to stay in business. Restaurants in good locations can get away with having lower quality food</p></li>
+<li><p>Staying in business is a collider (<em>location</em> <span class="math inline">\(\longrightarrow\)</span> <em>open</em> <span class="math inline">\(\longleftarrow\)</span> <em>quality</em>)</p></li>
 </ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
 <aside></aside></section>
 <section id="colliders-3" class="slide level2 smaller">
 <h2>Colliders</h2>
 <p>Colliders are very common but understanding what they are and why the cause spurious relationships can be confusing<a href="#/footnotes" class="footnote-ref" id="fnref17" role="doc-noteref" data-footnote-href="#/fn17" onclick=""><sup>17</sup></a></p>
 <p>A few examples:</p>
+<div class="columns">
+<div class="column fragment" style="width:50%;">
+<p>The guys your friend dates are either handsome or funny. Are good looks and sense of humor related?</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
 <ul>
-<li class="fragment"><p>The guys your friend dates are either handsome or funny. Are good looks and sense of humor related?</p>
-<ul>
-<li class="fragment"><p>Handsome guys can get a date even if they are boring. The rest of us have to be funny</p></li>
-<li class="fragment"><p>Getting a date is a collider (<em>looks</em> <span class="math inline">\(\longrightarrow\)</span> <em>date</em> <span class="math inline">\(\longleftarrow\)</span> <em>humor</em>)</p></li>
-</ul></li>
+<li><p>Handsome guys can get a date even if they are boring. The rest of us have to be funny</p></li>
+<li><p>Getting a date is a collider (<em>looks</em> <span class="math inline">\(\longrightarrow\)</span> <em>date</em> <span class="math inline">\(\longleftarrow\)</span> <em>humor</em>)</p></li>
 </ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
 <aside></aside></section>
 <section id="competing-exposures" class="slide level2 smaller">
 <h2>Competing exposures</h2>
@@ -798,7 +860,7 @@ Fall 2026</p>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-23-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -838,7 +900,7 @@ Fall 2026</p>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-24-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -859,61 +921,82 @@ Fall 2026</p>
 <h2>Using DAGs</h2>
 <p>So far, we’ve used very simple graphs to show confounding caused by a single variable <span class="math inline">\(Z\)</span>.</p>
 <p>However, confounding can often show up in more complex DAGs in ways that are not always quite so obvious.</p>
+<div class="fragment">
+<p>Do you see any “open” paths from <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span> in the following graph?</p>
+<ul>
+<li>Paths are “open” if they are created by confounders/mediators; they are “closed” if they contain a collider</li>
+</ul>
+</div>
 <div class="columns">
 <div class="column fragment" style="width:50%;">
-<p>Do you see any confounders in the following graph?</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center" width="480"></p>
 </figure>
 </div>
 </div>
 </div>
 </div><div class="column fragment" style="width:50%;">
-<p>What “paths” exist from <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span>?</p>
+<p>Open paths:</p>
 <ul>
-<li class="fragment"><p>A</p></li>
-<li class="fragment"><p>B</p></li>
-<li class="fragment"><p>C</p></li>
+<li class="fragment"><p><span class="math inline">\(X \longrightarrow Y\)</span></p></li>
+<li class="fragment"><p><span class="math inline">\(X \longleftarrow U \longleftarrow A \longrightarrow C \longrightarrow Y\)</span></p></li>
 </ul>
+<div class="fragment">
+<p>Why isn’t there an open path through <span class="math inline">\(B\)</span>?</p>
+</div>
 </div></div>
 </section>
 <section id="using-dags-1" class="slide level2 smaller">
 <h2>Using DAGs</h2>
-<p>Do you see any confounders in the following graph?</p>
+<p>Do you see any “open” paths from <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span> in the following graph?</p>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p>Do you see any confounders in the following graph?</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="column fragment" style="width:50%;">
-<p>What “paths” exist from <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span>?</p>
-</div></div><section id="using-dags-2" class="slide level2 smaller">
+</div><div class="column fragment" style="width:50%;">
+<p>Open paths:</p>
+<ul>
+<li class="fragment"><p><span class="math inline">\(X \longrightarrow Y\)</span></p></li>
+<li class="fragment"><p><span class="math inline">\(X \longrightarrow M \longrightarrow Y\)</span></p></li>
+<li class="fragment"><p><span class="math inline">\(X \longleftarrow S \longrightarrow M \longrightarrow Y\)</span></p></li>
+<li class="fragment"><p><span class="math inline">\(X \longleftarrow S \longrightarrow W \longrightarrow Y\)</span></p></li>
+</ul>
+</div></div>
+</section>
+<section id="using-dags-2" class="slide level2 smaller">
 <h2>Using DAGs</h2>
-<p>Do you see any confounders in the following graph?</p>
+<p>Do you see any “open” paths from <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span> in the following graph?</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-27-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="column fragment" style="width:50%;">
-<p>What “paths” exist from <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span>?</p>
-</div></div><section id="minimal-adjustment-set" class="slide level2 smaller">
+</div><div class="column fragment" style="width:50%;">
+<p>Open paths:</p>
+<ul>
+<li class="fragment"><p><span class="math inline">\(X \longrightarrow Y\)</span></p></li>
+<li class="fragment"><p><span class="math inline">\(X \longleftarrow Z \longrightarrow Y\)</span></p></li>
+<li class="fragment"><p><span class="math inline">\(X \longleftarrow Z  \longrightarrow A \longrightarrow Y\)</span></p></li>
+</ul>
+</div></div>
+</section>
+<section id="minimal-adjustment-set" class="slide level2 smaller">
 <h2>Minimal adjustment set</h2>
 <p>Conditioning on every variable along a confounding pathway is not necessary</p>
 <p>Instead, we generally try to find the <em>minimal adjustment set</em> that blocks each confounding path</p>
@@ -923,13 +1006,14 @@ Fall 2026</p>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-28-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
 </figure>
 </div>
 </div>
 </div>
 </div>
-</section><section id="minimal-adjustment-set-1" class="slide level2 smaller">
+</section>
+<section id="minimal-adjustment-set-1" class="slide level2 smaller">
 <h2>Minimal adjustment set</h2>
 <p>What variables do we need to adjust in this example?</p>
 <div class="columns">
@@ -938,23 +1022,33 @@ Fall 2026</p>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-23-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-29-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>Which paths do we need to close?</p>
+<ul>
+<li><p><span class="math inline">\(X \longrightarrow Y\)</span></p></li>
+<li><p><span class="math inline">\(X \longleftarrow U \longleftarrow A \longrightarrow C \longrightarrow Y\)</span></p></li>
+</ul>
 </div><div class="column fragment" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-24-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-30-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
 </figure>
 </div>
 </div>
 </div>
+<ul>
+<li class="fragment"><p>To isolate the effect of <span class="math inline">\(X\)</span>, we can include <span class="math inline">\(A\)</span> or <span class="math inline">\(C\)</span> or <span class="math inline">\(U\)</span></p></li>
+<li class="fragment"><p>What happens if we include <span class="math inline">\(B\)</span>?</p></li>
+</ul>
 </div></div>
-</section><section id="minimal-adjustment-set-2" class="slide level2 smaller">
+</section>
+<section id="minimal-adjustment-set-2" class="slide level2 smaller">
 <h2>Minimal adjustment set</h2>
 <p>What variables do we need to adjust in this example?</p>
 <div class="columns">
@@ -963,23 +1057,35 @@ Fall 2026</p>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-31-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>What paths do we need to close?</p>
+<ul>
+<li><p><span class="math inline">\(X \longrightarrow M \longrightarrow Y\)</span></p></li>
+<li><p><span class="math inline">\(X \longleftarrow S \longrightarrow M \longrightarrow Y\)</span></p></li>
+<li><p><span class="math inline">\(X \longleftarrow S \longrightarrow W \longrightarrow Y\)</span></p></li>
+</ul>
 </div><div class="column fragment" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-32-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
+<ul>
+<li class="fragment"><p>To isolate the effect of <span class="math inline">\(X\)</span>, we only need to include <span class="math inline">\(S\)</span></p></li>
+<li class="fragment"><p>Why is including only <span class="math inline">\(W\)</span> insufficient?</p></li>
+<li class="fragment"><p>What happens if we include <span class="math inline">\(M\)</span>?</p></li>
+</ul>
 </div></div>
-</section><section id="minimal-adjustment-set-3" class="slide level2 smaller">
+</section>
+<section id="minimal-adjustment-set-3" class="slide level2 smaller">
 <h2>Minimal adjustment set</h2>
 <p>What variables do we need to adjust in this example?</p>
 <div class="columns">
@@ -988,23 +1094,33 @@ Fall 2026</p>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-27-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-33-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>Open paths we need to close:</p>
+<ul>
+<li><p><span class="math inline">\(X \longleftarrow Z \longrightarrow Y\)</span></p></li>
+<li><p><span class="math inline">\(X \longleftarrow Z  \longrightarrow A \longrightarrow Y\)</span></p></li>
+</ul>
 </div><div class="column fragment" style="width:50%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-28-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="14_causal_inference_part2_files/figure-revealjs/unnamed-chunk-34-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
+<ul>
+<li class="fragment"><p>To isolate the effect of <span class="math inline">\(X\)</span>, we only need to include <span class="math inline">\(Z\)</span></p></li>
+<li class="fragment"><p>Why is including only <span class="math inline">\(A\)</span> insufficient?</p></li>
+</ul>
 </div></div>
-</section><section id="more-on-dags" class="slide level2 smaller">
+</section>
+<section id="more-on-dags" class="slide level2 smaller">
 <h2>More on DAGs</h2>
 <p>Building DAGs can be overwhelming due to the complexity of ecological systems</p>
 <ul>
@@ -1012,70 +1128,72 @@ Fall 2026</p>
 <li class="fragment"><p>Move to the main treatment variable(s) of interest. What variables likely influence it? How are those variables related to the response?</p></li>
 <li class="fragment"><p>If you were to conduct an experiment, which variables would you try to hold constant? What variables would you try to randomize over?</p></li>
 <li class="fragment"><p>Share your DAG with colleagues and explain your reasoning. Use feedback to revise the DAG until you are satisfied it captures the main variables influencing your system</p></li>
-<li class="fragment"><p>Remember that you should include variable <span class="bold">whether you have data to measure them or not!</span></p></li>
+<li class="fragment"><p>Remember that you should include variable <span class="bold">whether you have data to measure them or not!</span></p>
+<ul>
+<li class="fragment">Better to know a confounder exists than to pretend it doesn’t</li>
+</ul></li>
 <li class="fragment"><p>Observed associations (or lack thereof) <span class="bold">cannot</span> tell you whether your DAG is correct. Building DAGs is a <em>scentific</em> exercise, not a statistical one</p></li>
 </ul>
-</section><section id="more-on-colliders" class="slide level2 smaller">
+</section>
+<section id="more-on-colliders" class="slide level2 smaller">
 <h2>More on colliders</h2>
-<p>Colliders are challenging to understand and identify in part because they are often not variables we measure</p>
-<ul>
-<li>There is not a column in the lizard data called “captured”</li>
-</ul>
+<p>Colliders are often a form of “selection bias” - we only see data from observations that filter through some form of selection (e.g., capture, survival, self-reporting)</p>
 <div class="fragment">
-<p>When colliders are measured, they <span class="highlight">should not</span> be included in the model</p>
-<ul>
-<li>Be aware that sometimes adding confounders to a model can create colliders!</li>
-</ul>
+<p>Part of what makes colliders challenging to identify is that they are often not variables we measure - There is not a column in the lizard data called “captured”</p>
 </div>
 <div class="fragment">
-<p>When colliders are not measured, they are essentially in the model by default</p>
+<p>When colliders are not measured, they are essentially “in” the analysis by default</p>
 <ul>
 <li><p>DAGs can help identify potential colliders so that you can avoid being tricked by spurious associations</p></li>
 <li><p>More advanced modeling methods (e.g.&nbsp;hierarchical models) can sometimes be used to explicitly model the effects of colliders</p></li>
 </ul>
 </div>
-</section><section id="summary" class="slide level2 smaller">
+<div class="fragment">
+<p>When colliders are measured, they <span class="highlight">should not</span> be included in the model</p>
+<ul>
+<li>Again, DAGs are the best tool for identifying colliders so you don’t accidentally create spurious relationships by adding them to the model</li>
+</ul>
+</div>
+</section>
+<section id="summary" class="slide level2 smaller">
 <h2>Summary</h2>
 <ul>
-<li class="fragment"><p>Multiple regression is a powerful tool for causal inference in observational studies</p>
+<li class="fragment"><p>Multiple regression is a powerful tool for causal inference in observational studies</p></li>
+<li class="fragment"><p>DAGs help guide model building by identifying confounders, mediators, and colliders</p>
 <ul>
-<li class="fragment">Multiple regression to disentangle the effects of different covariates requires</li>
-</ul></li>
-<li class="fragment"><p>DAGs are graphical models that represent hypothesized relationships between variables that influence (or are influenced by) <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></p>
-<ul>
-<li class="fragment">DAGs are useful for identifying confounders, mediators, and colliders</li>
-</ul></li>
 <li class="fragment"><p>If your goal is to estimate causal effects of <span class="math inline">\(X\)</span> on <span class="math inline">\(Y\)</span>, your regression model <em>must</em> include known confounders</p></li>
 <li class="fragment"><p>Treat mediators with caution. Including mediators blocks paths between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, which will change results</p></li>
-<li class="fragment"><p>Beware of colliders, they are often lurking behind the scenes</p>
-<ul>
-<li class="fragment">Colliders can also cause spurious relationships, which make them tempting to ignore</li>
+<li class="fragment"><p>Beware of colliders, they are often lurking behind the scenes and can cause spurious relationships</p></li>
 </ul></li>
-<li class="fragment"><p>Identifying confounders, mediators, and colliders is a <span class="highlight">scientific</span> process, not a statistical one</p>
+<li class="fragment"><p>Identifying confounders, mediators, and colliders is a <span class="highlight">scientific</span> process.</p>
 <ul>
-<li class="fragment">Pairwise correlations, AIC scores, p-values, etc. cannot tell you whether your model is correct</li>
+<li class="fragment">Correlations, AIC, p-values cannot tell you whether your model is correct</li>
+</ul></li>
+<li class="fragment"><p>Also remember that the proper adjustment set for one variable may be different that the adjustment set for another variable</p>
+<ul>
+<li class="fragment">Identifying causal effects of different variables may require multiple models (Table 2 fallacy)</li>
 </ul></li>
 </ul>
-</section><section id="additional-resources" class="slide level2 smaller">
+</section>
+<section id="additional-resources" class="slide level2 smaller">
 <h2>Additional resources</h2>
-<p>We have purposefully used simple examples in this lecture. In reality, ecological systems are very complex and constructing a complete DAG is challenging</p>
+<p>We have only scratched the surface regarding causal inference in observational studies.</p>
+<p>There are many great resources for learning more about this topic, including:</p>
 <ul>
-<li>Daggity: Web platform for constructing DAGs and identifying minimal adjustment sets</li>
+<li><p><a href="https://www.dagitty.net/dags.html">Dagitty</a>: Web platform for constructing DAGs and identifying minimal adjustment sets</p></li>
+<li><p><a href="https://www.youtube.com/watch?v=KNPYUVmY3NM">Science Before Statistics</a>: Recording of causal inference seminar by Richard McElreath (author of Stastistical Rethinking textbook)</p></li>
+<li><p><a href="https://www.r-causal.org/">Causal Inference in R</a>: Online text book about causal inference methods using R</p></li>
+<li><p>Byrnes, J.E. and Dee, L.E., 2025. Causal inference with observational data and unobserved confounding variables. <em>Ecology Letters</em>, 28(1), p.e70023.</p></li>
 </ul>
-<p>SB4S: Recording of causal inference seminar by Richard McLereath (author of Stastistical Rethinking textbook)</p>
-<p>Causal Inference in R: Online text book about causal inference methods using R</p>
-</section><section id="looking-ahead" class="slide level2">
+</section>
+<section id="looking-ahead" class="slide level2">
 <h2>Looking ahead</h2>
 <p><br></p>
 <p><span class="highlight">Next time</span>: Model selection</p>
 <p><br></p>
-<p><span class="highlight">Reading</span>: <a href="https://statistics4ecologists-v3.netlify.app/03-multipleregression#introduction-to-multiple-regression">Fieberg chp. 3.2-3.5</a> and <a href="https://statistics4ecologists-v3.netlify.app/07-causalnetworks#directed-acyclical-graphs-and-conditional-independencies">Fieberg chp. 7.3</a></p>
+<p><span class="highlight">Reading</span>: Tredennick et al.&nbsp;(2021). A practical guide to selecting models for exploration, inference, and prediction in ecology <em>Ecology</em> 106(6): e03336 (posted on eLC)</p>
 
 
-</section>
-</div>
-</section>
-</div>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document smaller scrollable" role="doc-endnotes"><h2>Footnotes</h2>
 
@@ -1290,7 +1408,7 @@ Fall 2026</p>
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1402,14 +1520,13 @@ Fall 2026</p>
           e.clearSelection();
         }
         const getTextToCopy = function(trigger) {
-          const outerScaffold = trigger.parentElement.cloneNode(true);
-          const codeEl = outerScaffold.querySelector('code');
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
             }
-          }
-          return codeEl.innerText;
+            return codeEl.innerText;
         }
         const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
           text: getTextToCopy
