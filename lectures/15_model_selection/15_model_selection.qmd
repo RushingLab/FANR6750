@@ -70,7 +70,7 @@ Fall 2026
 :::
 
 
-## Motivation
+## Motivation {.smaller}
 
 As discussed in the previous lecture, one of the main challenges of statistical analyses, especially in observational studies, is choosing which covariates to include in a model
 
@@ -84,7 +84,7 @@ As discussed in the previous lecture, one of the main challenges of statistical 
 
 :::
 
-## Examples of model selection approaches
+## Examples of model selection approaches {.smaller}
 
 **Comparison of 2 (nested) models**  
 - Likelihood-ratio test  
@@ -107,7 +107,7 @@ As discussed in the previous lecture, one of the main challenges of statistical 
 - Compare predictions to new data
 
 
-## Questions
+## Questions {.smaller}
 
 To make sense of the various model selection approaches and often conflicting advice around model selection, we need to answer a few questions:
 
@@ -126,7 +126,7 @@ The answers to these questions usually depend on *what* we want our models to do
 :::
 
 
-## Goals of modeling
+## Goals of modeling {.smaller}
 
 :::{.fragment}
 [Exploration]{.red}
@@ -164,7 +164,7 @@ The first step in any analysis is to determine your objective (exploration, infe
 
 :::
 
-## Inference {.theme-inverse}
+## Inference {.theme-inverse .center}
 
 
 ## Inference {.smaller}
@@ -209,11 +209,13 @@ For a well-designed study focused on inference, null hypothesis testing from a s
 
 - For a single study, risk of spurious results can be reduced by formulating good hypotheses
 
-- Where do *a priori* hypotheses come from? Theory (ideally) or...
+- Where do *a priori* hypotheses come from? 
+
+    + Theory (ideally) or...
 
 :::
 
-## Exploration {.theme-inverse}
+## Exploration {.theme-inverse .center}
 
 
 ## Exploration {.smaller}
@@ -225,7 +227,7 @@ For a well-designed study focused on inference, null hypothesis testing from a s
 
 - Particularly common in observational studies with lots of covariates
 
-- e.g., which weather covariates influence abundance of wildlife species?
+- e.g., which weather covariates are associated with abundance of wildlife species?
 
 :::
 
@@ -256,7 +258,7 @@ Key approaches to exploration:
 :::
 
 :::{.fragment}
-None of these approaches is particularly robust and all carry high risk of detecting spurious relationships 
+None of these approaches are particularly robust and all carry high risk of detecting spurious relationships 
 
 
 But if the **stated** modeling objective is exploration, that's not necessarily a problem
@@ -269,16 +271,16 @@ But if the **stated** modeling objective is exploration, that's not necessarily 
 
 :::
 
-## Prediction {.theme-inverse}
+## Prediction {.theme-inverse .center}
 
 
 ## Prediction {.smaller}
 
-Historically, exploration and inference have been the primary focus in ecological research
+Historically, inference (and exploration) have been the primary focus of ecological research
 
 - Emphasis on null hypothesis testing + very complex systems
 
-- More prominent in other fields (meteorology, economics, political science)
+- Prediction is more prominent in other fields (meteorology, economics, political science)
 
 :::{.fragment}
 Prediction is increasingly used to:
@@ -316,33 +318,40 @@ $$\Large E(y_i) = \beta_0 + \beta_1  x1_i + \beta_2  x2_i$$
 
 ## Prediction {.theme-inverse}
 
+</br>
+</br>
 
 In general, we seek models that are as simple as possible (but not more so)
 
+</br>
 
+:::{.fragment}
 Why do we want simplicity?
-
+::: 
 
 ## Fit and over-fit {.smaller}
 
-$\large R^2$ is a measure of model fit - how much variation in the response variable is explained by the predictors?  
+$R^2$ is a measure of model fit - how much variation in the response variable is explained by the predictors?^[ALthough we haven't spent much time on it. $R^2$ is part of the standard output provide by `lm()` objects]  
 
-
-Questions
+:::{.fragment}
+[Questions:]{.highlight}
 
 :::{.incremental}
 - Does the addition of a new predictor variable always increase $R^2$?  
 
-
+    + Yes!
+    
 - Do we want the model with the highest $R^2$?  
 
-
+    + No!
+    
 - What is the harm in adding "extra" predictor variables?
+
+    + Overly-complicated models don’t predict well. They are too specific to a particular dataset.
 :::
 
-:::{.fragment}
-Overly-complicated models don’t predict well. They are too specific to a particular dataset.
 :::
+
 
 ## Fit and over-fit {.smaller}
 
@@ -371,7 +380,7 @@ Predictive ability is assessed by comparing *predicted* values to *observed* val
 
 - But we can't use the same values for both prediction and validation
 
-
+:::{.fragment}
 Ideally, we compare predictions to *out of sample* values
 
 - Predict future values, gather data, compare values (e.g., [waterfowl management](https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.5836))
@@ -380,6 +389,7 @@ Ideally, we compare predictions to *out of sample* values
 knitr::include_graphics("fig/mallard_prediction.jpg")
 ```
 
+:::
 
 ## Prediction {.smaller}
 
@@ -399,26 +409,30 @@ Ideally, we compare predictions to *out of sample* values
 Predictive accuracy can also be approximated using *information-theoretic* approaches
 
 
-## Aic {.theme-inverse}
+## Aic {.theme-inverse .center}
 
-### Warning: Dr. Rushing has strong feelings on AIC, which can generally be summarized as:
+:::{.fragment}
+Warning: Dr. Rushing has strong feelings on AIC, which can generally be summarized as:
+:::
 
+:::{.fragment}
 > ### *You probably shouldn't be using AIC*
 
+:::
 
 ## Aic {.smaller}
 
-Negative 2x the (maximized) log-likelihood plus two times the number of parameters
+</br>
+
+Calculating AIC:
+
+- Negative 2x the (maximized) log-likelihood plus two times the number of parameters
 
 $$\Large AIC = -2L(\hat{\theta}, y) + 2K$$
 
 
-Or, when ordinary least squares (OLS) is used for estimation, AIC is based on the residual sums-of-squares (RSS):
-
-$$\Large AIC = n \log(RSS/n) + 2K$$
-
 :::{.fragment}
-The key is to recognize that
+The key is to recognize that:
 
 > AIC = measure of fit + complexity penalty
 
@@ -436,22 +450,19 @@ AIC is asymtotically equivalent to leave-one-out cross-validation
 1) Select a set of candidate models
 
 
-2) Fit the models to the data (maximize the likelihood or minimize the RSS)  
+2) Fit the models to the data (maximize the likelihood or minimize the RSS)^[Don't worry - R does this for you!]  
 
 3) Compute the AIC of each model  
 
 4) Rank the models by AIC (lower AIC is better)  
 
-5) Compute the difference in AIC scores between the best model, and every other model  
+5) Compute the difference in AIC scores between the best model, and every other model
+    - $\Delta_i = AIC_i - AIC_{min}$
 
-$$\large \Delta_i = AIC_i - AIC_{min}$$
+6) Compute the Akaike weight of each model^[A model with $w = 0.6$ is twice as likely to be the best model in the set as a model with $w = 0.3$]:
 
-6) Compute the Akaike weight of each model:
+    - $w_i = \frac{e^{-0.5\Delta_i}}{\sum_i e^{-0.5 \Delta_i}}$
 
-$$\large w_i = \frac{e^{-0.5\Delta_i}}{\sum_i e^{-0.5 \Delta_i}}$$
-
-
-7) A model with $w = 0.6$ is twice as likely to be the best model in the set as a model with $w = 0.3$
 
 :::
 
@@ -478,10 +489,11 @@ aic.tab %>%
 <br/>
 <br/>
 
-The last term is the “bias adjustment term”
-
 $$\Large AIC_c = n \log(RSS/n) + 2K + \frac{2K(K + 1)}{n - K - 1}$$
 
+:::{.fragment}
+The last term is the “bias adjustment term” (Notice what happens as $n$ decreases)
+:::
 
 ## Notes about aic {.smaller}
 
@@ -503,20 +515,29 @@ $$\Large AIC_c = n \log(RSS/n) + 2K + \frac{2K(K + 1)}{n - K - 1}$$
     + Strong, but spurious, associations will lower AIC scores. AIC *does not* help guard against Type I error!
 
 - **Avoid mixing NHST and AIC**. Recognizing that they measure different things can help clarify confusion
+:::
 
 ## Notes about aic {.smaller}
 
-Final note: AIC is a valid statistical tool but is often mis-used/over-used
+[Final note]{.highlight}: AIC is a valid statistical tool but is often mis-used/over-used
 
+:::{.incremental}
 - If your goals are inferential, you probably shouldn't use AIC 
 
 - Strong *a priori* hypotheses combined with well-designed experiments generally don't require complex model selection methods (and should be preferred regardless)
+
+- If your goal is prediction, probably better to measure actual predictive performance (e.g., using cross validation)
+
+- AIC can be useful in certain contexts (e.g., testing alternative distributions in distance sampling models)
+:::
 
 ## Summary {.smaller}
 
 The right approach to model selection depends on the goal of your study
 
-If the goal is exploration:
+If the goal is [exploration]{.highlight}:
+
+:::{.incremental}
 
 - Use an approach that can identify potential relationships and consider adjustments for multiple comparisons
 
@@ -524,34 +545,40 @@ If the goal is exploration:
 
 - Report your procedures and interpret your results with caution (don't pretend your testing hypotheses!)
 
+:::
 
 ## Summary {.smaller}
 
 The right approach to model selection depends on the goal of your study
 
-If the goal is inference:
+If the goal is [inference]{.highlight}:
+
+:::{.incremental}
 
 - Model selection may not be necessary, especially for manipulative experiments
 
-- Formulate model based on strong *a priori* hypotheses and use NHST
+- Be careful about which covariates you include. Formulate model based on strong *a priori* hypotheses and causal inference methods
 
-- Be careful about which covariates you include. Some covariates need to be included but some can cause problems (we will cover this more in the causal inference discussion)
+- Use null hypothesis testing to judge support for hypothesis. Do not use AIC for inference!
 
 - **DO NOT USE THE SAME DATA FOR BOTH EXPLORATION AND INFERENCE**
 
+:::
 
 ## Summary {.smaller}
 
 The right approach to model selection depends on the goal of your study
 
-If the goal is prediction:
+If the goal is [prediction]{.highlight}:
 
+:::{.incremental}
 - Use model selection approaches meant for prediction (AIC, cross validation)
 
 - Focus on minimizing error 
 
 - Be careful when interpreting relationships between response and predictors
 
+:::
 
 ## Looking ahead
 

@@ -71,23 +71,23 @@ website:
           - text: "Lecture 14: Causal Inference in Observational Studies"
             href: lectures/14_causal_inference_part2/14_causal_inference_part2.qmd
 
-          #- text: "Lecture 15: Model Selection"
-          #  href: lectures/15_model_selection.qmd
+          - text: "Lecture 15: Model Selection"
+            href: lectures/15_model_selection/15_model_selection.qmd
 
           #- text: "Lecture 16: Random Effects"
-          #  href: lectures/16_random_eff.qmd
+          #  href: lectures/16_random_eff/16_random_eff.qmd
 
           #- text: "Lecture 17: Psuedoreplication Part 1: Nested Designs"
-          #  href: lectures/17_nested.qmd
+          #  href: lectures/17_nested/17_nested.qmd
 
           #- text: "Lecture 18: Psuedoreplication Part 2: Repeated Measures"
-          #  href: lectures/18_repeated_measures.qmd
+          #  href: lectures/18_repeated_measures/18_repeated_measures.qmd
 
           #- text: "Lecture 19: Logistic regression"
-          #  href: lectures/19_logistic_regression.qmd
+          #  href: lectures/19_logistic_regression/19_logistic_regression.qmd
 
           #- text: "Lecture 20: Poisson regression"
-          #  href: lectures/20_poisson_regression.qmd
+          #  href: lectures/20_poisson_regression/20_poisson_regression.qmd
 
 
       - text: "Labs"
