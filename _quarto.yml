@@ -74,8 +74,8 @@ website:
           - text: "Lecture 15: Model Selection"
             href: lectures/15_model_selection/15_model_selection.qmd
 
-          #- text: "Lecture 16: Random Effects"
-          #  href: lectures/16_random_eff/16_random_eff.qmd
+          - text: "Lecture 16: Random Effects"
+            href: lectures/16_randeff/16_randeff.qmd
 
           #- text: "Lecture 17: Psuedoreplication Part 1: Nested Designs"
           #  href: lectures/17_nested/17_nested.qmd
@@ -121,12 +121,12 @@ website:
           - text: "Lab 9: Multiple regression"
             href: labs/lab09_multiple_regression.qmd
 
-          # - text: "Lab 10: Interactions"
-          #   href: labs/lab10_interactions.qmd
-          #
-          # - text: "Lab 11: Causal inference"
-          #   href: labs/lab11_causal_inference.qmd
-          #
+          - text: "Lab 10: Interactions"
+            href: labs/lab10_interactions.qmd
+
+          - text: "Lab 11: Causal inference"
+            href: labs/lab11_causal_inference.qmd
+
           # - text: "Lab 12: Model Selection"
           #   href: labs/lab12_model_selection.qmd
           #
