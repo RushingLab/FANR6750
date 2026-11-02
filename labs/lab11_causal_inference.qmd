@@ -268,22 +268,23 @@ To learn more about causal inference, see [Chapters 3 and 4 in the Causal Infere
 
 Let's explore the examples from class, using some of the tools from this lab to extend our discussion of those data sets.
 
-**1.** A group of researchers is interested in how body mass influences "boldness" in fictitious Fruitcake Lizards. The researchers searched their study area and captured lizards that they encountered (n=150). They then used a well-established observational method to quantify the "boldness" of each individual. They also recorded the age of each lizard, the lizard's escape speed as it was released, and the habitat openness of the area where it was caught. You obtain the `lizard` dataset below:
+**1.** A group of researchers is interested in how body mass influences "boldness" in fictitious Fruitcake Lizards. The researchers searched their study area and captured lizards that they encountered (n=150). They then used a well-established observational method to quantify the "boldness" of each individual. You obtain the `boldnessdata` dataset below:
   
 ```{r}
 data(boldnessdata)
 head(boldnessdata)
 ```
 
-  a. What is the main causal question that these researchers are trying to answer? In your response, please state what variable is the exposure (X) and the outcome (Y). For all other variables recorded in the dataset, please identify whether each variable is likely a confounder, collider, mediator, or competing exposure, and justify your responses. 
+  a. What is the main causal question that these researchers are trying to answer? In your response, please state what variable is the exposure (X) and the outcome (Y). For all other variables recorded in the dataset, please identify whether each variable is likely a confounder, collider, mediator, or competing exposure, and justify your responses (you can ignore the `score` column in this question and the following). 
   
   b. Create a DAG using `daggify()` to visualize the relationship between the exposure, outcome, and all other variables recorded in the dataset.
   
-  c. The researchers are interested in the *total causal effect* of the exposure on the outcome. Given your knowledge of which variables in the dataset are confounders, colliders, mediators, or competing exposures, formulate the linear model in `R` and interpret the results of the model. What is the relationship between your exposure (X) and the outcome (Y)? Create a plot and interpret your results in the context of the biological system.
+  c. Assume that the researchers do not have access to the `Captured` column (i.e., they only have data on the captured lizards) and that they are interested in the *total causal effect* of the exposure on the outcome. Using a linear model, the researchers found a strong negative association between X and Y (beta = -0.57, SE = 0.06, t =  -10.49, p < 0.001). Previous studies of *captive-reared* Fruitcake Lizards found no relationship between the exposure (X) and the outcome (Y). Why do you think that these results differ between wild and captive-reared lizards?
   
-  d. Using a linear model, the researchers found a strong negative association between X and Y (beta = -0.57, SE = 0.06, t =  -10.49, p < 0.001). Previous studies of *captive-reared* Fruitcake Lizards found no relationship between the exposure (X) and the outcome (Y). Why do you think that these results differ between wild and captive-reared lizards?
+  d. Fit your own linear models to this data, one with `Captured` as a covariate and one without. Both models should include `Size`. How do the results of these models differ from each other? How do they compare to the results observed by the researchers in step c? Explain the results of each model based on the DAG you created in step b. 
   
-  e. Using your linear model from part (c), assess whether your observational data meets the 4 causal inference assumptions. 
+  e. After showing your results to the researchers, one member of the team raised another issue. They are concerned that the response might also be influenced by the age of each lizard, the lizard's escape speed as it was released, and the habitat openness of the area where it was caught. Unfortunately, none of these variables was recorded during the field work. Revise your previous DAG to include these three variables. Based on the new DAG, do the researchers need to worry about these three variables? If so, how might their conclusions differ from the true casual effect of body size on boldness? 
+  
 
 <br>  
 
@@ -294,9 +295,9 @@ data(trilliumdata)
 head(trilliumdata)
 ```
  
-  a. The student wants to test whether there is an association between: (1) mast and final abundance and (2) mast and initial abundance. Run 2 linear models in `R` using just those Xs and Ys, interpret the results of the models, and create a plot for each model.
+  a. The student wants to test whether there is an association between: (1) mast and final abundance and (2) mast and initial abundance. Run 2 linear models in `R` using just those $X$s and $Y$s, interpret the results of the models, and create a plot for each model.
   
-  b. The student wants to add deer abundance to the model where X = mast and Y = initial Trillium abundance. Run this linear model in `R` and interpret the results of the model. How does the effect of mast change when deer are added to the model? Why might this occur (hint: create a DAG)?
+  b. The student wants to add deer abundance to the model where $X = mast$ and $Y = initial$ Trillium abundance. Run this linear model in `R` and interpret the results of the model. How does the effect of mast change when deer are added to the model? Why might this occur (hint: create a DAG)?
 
   c. Is it reasonable to conclude that acorn mast has a causal effect on Trillium abundance?
   
