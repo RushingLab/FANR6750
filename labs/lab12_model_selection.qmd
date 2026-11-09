@@ -33,19 +33,6 @@ source(here::here("R/zzz.R"))
 ```
 
 
-## Lab 8
-
-- Review of linear model assumptions
-
-- Evaluating model assumptions
-
-  + Visual assessments
-  
-  + Formal tests
-
-- Outliers and influential points
-
-
 ## Today's topics
 
 - Model selection approaches
@@ -324,7 +311,7 @@ print(both)
 <br>
 <br>
 
-# Optional Assignment (Not for grade)
+# Assignment
 
 Create an R Markdown file to do the following:
 

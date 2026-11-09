@@ -127,9 +127,9 @@ website:
           - text: "Lab 11: Causal inference"
             href: labs/lab11_causal_inference.qmd
 
-          # - text: "Lab 12: Model Selection"
-          #   href: labs/lab12_model_selection.qmd
-          #
+          - text: "Lab 12: Model Selection"
+            href: labs/lab12_model_selection.qmd
+
           # - text: "Lab 13: Nested Designs"
           #   href: labs/lab13_nested.qmd
           #
