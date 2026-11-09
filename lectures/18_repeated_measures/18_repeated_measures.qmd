@@ -1,0 +1,285 @@
+---
+format:
+  revealjs:
+    highlight-style: github
+    incremental: false
+    theme: FANR6750.scss
+    reference-location: document
+knitr:
+  opts_chunk:
+    dev: png
+    dev.args: { bg: "transparent" }
+from: markdown+emoji
+---
+
+```{r setup}
+#| echo: false
+#| include: false
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = FALSE, fig.align = 'center', warning = FALSE,
+                      message = FALSE, fig.retina = 2)
+source(here::here("R/zzz.R"))
+library(FANR6750data)
+library(dplyr)
+library(kableExtra)
+library(ggdag)
+```
+
+## LECTURE 18: psuedoreplication part 2: repeated measures {.theme-title .center}
+
+::: footer
+FANR 6750\
+Fall 2026
+:::
+
+## Outline {.theme-inverse .smaller}
+
+
+#### 1) Motivation
+
+<br/>  
+
+:::{.fragment}
+
+#### 2) Data structure and statisical issues
+
+<br/> 
+
+:::
+
+:::{.fragment}
+
+#### 3) Approaches
+
+<br/> 
+
+:::
+
+:::{.fragment}
+
+#### 4) Analyzing repeated measures using linear mixed models
+
+<br/> 
+
+:::
+
+## Motivation {.smaller}
+
+In the last lecture, we learned about analyzing nested data
+
+- Observational units (i.e., subunits) are nested within experimental units (i.e., whole units)
+
+- In the most basic scenario (one categorical treatment variable), analysis of nested data is identical to the "ANOVA" design we learned about in lecture 9, as long as we specify the correct degrees of freedom
+
+- We will see slightly more complex scenarios with multiple treatment variables in lab (aka split-plot designs)
+
+:::{.fragment}
+
+In this lecture, we will focus on a specific type of nested data that is common in many settings --- "repeated measures" 
+:::
+
+## Example {.smaller}
+
+Suppose we want to test the effect of diet on the early growth of chickens   
+
+:::{.fragment}
+We assign each of 36 chicks to one of four diet treatments and then measure their mass every other day for 18 days  
+
+```{r}
+data("chickdata")
+chickdata$Chick <- factor(chickdata$Chick)
+chickdata$Diet <- factor(chickdata$Diet)
+chickdata_wide <- tidyr::pivot_wider(chickdata, names_from = Time,
+                                     names_prefix = "Time", values_from = weight)
+# ChickWeight_wide <- dplyr::mutate(ChickWeight_wide, 
+#                                 Diet = dplyr::case_when(Diet == "L" ~ "Low",
+#                                                               fertilizer == "H" ~ "High"))
+chickdata_wide[c(1,2,10, 11 ,19, 20, 28, 29),] %>%
+  kable(format = "html", col.names = c("Chick", "Diet", "Day 0", "Day 2", "Day 4", "Day 6", "Day 8", "Day 10", "Day 12", "Day 14", "Day 16", "Day 18")) %>%
+  add_header_above(c(" " = 1, " " = 1, "Weight" = 10)) %>%
+  kable_styling(font_size = 14)
+```
+:::
+
+## Chick data {.smaller}
+
+```{r fig.height=6}
+ggplot(chickdata[chickdata$Chick %in% c(1,2,10, 11 ,19, 20, 28, 29),], aes(x = Time, y = weight, color = as.factor(Diet), linetype = as.factor(Chick))) +
+  geom_path() +
+  geom_point() +
+  scale_x_continuous("Day") +
+  scale_y_continuous("Weight") +
+  guides(linetype = "none")
+```
+
+:::{.fragment}
+Questions:
+
+:::{.incremental}
+- What is the experimental unit? 
+
+- What is the observational unit?
+
+- How many treatment variables are there? 
+:::
+:::
+
+## Repeated measures designs {.smaller}
+
+General features  
+
+:::{.incremental}
+- Whole units are called subjects  
+
+- One or more treatments is applied to each subject  
+
+- The response variable is measured multiple times on each subject  
+
+- Time can be thought of as a treatment variable applied at the subunit level, but it *can't be randomly assigned*  
+
+- We are often most interested in the interaction between treatment and time  
+
+- In some cases, one of the treatment variables might be applied part way through the experiment (e.g. BACI design)
+
+:::
+
+## Examples of repeated measures designs {.smaller}
+
+:::{.incremental}
+- To investigate the effect of three drugs, each drug is administered to 8 people, and each person's heart rate is measured every 5 minutes for 4 time intervals  
+
+- The effects of predator exclosures are assessed by monitoring prey abundance over multiple years in exclosures and control sites  
+
+- The effect of dam removal is evaluated by measuring upstream fish abundance before and after dam removal at multiple rivers  
+:::
+
+:::{.fragment}
+In each case, there is a primary treatment variable of interest but also a focus on how the response variable changes over time
+:::
+
+:::{.fragment}
+Data with this structure present several statistical issues that must be addressed for proper inference
+:::
+
+## Statistical issues {.smaller}
+
+:::{.fragment}
+[Non-independence]{.highlight}:
+
+- As with nested data, observations within each subject are non-independent
+
+- This non-independence must be accounted for as part of the analysis
+
+:::
+
+:::{.fragment}
+[Non-randomness]{.highlight}:
+
+- The main difference between repeated measures data and other types of nested designs is that "time" cannot be randomized
+
+- 
+
+:::
+
+## Options for analysis {.smaller}
+
+There are multiple ways to analyze data from repeated measures designs  
+
+:::{.fragment}
+Traditionally, the most common analysis method is a split-plot ANOVA model with adjusted p-values. However:  
+
+:::{.incremental}
+
+- Results are not robust in the presence of severely unbalanced data
+
+- *p*-value adjustments apply to the main treatment, not to time or time $\times$ treatment interaction
+
+- Difficult to accommodate additional model structure (blocks, multiple random effects, etc.)
+:::
+
+:::{.fragment}
+
+Because of these limitations, and because fitted mixed-effect models is now widely used, we will focus on analysis of repeated measures data using linear mixed-effect models
+:::
+
+## Linear mixed models {.smaller}
+
+Increasingly, linear mixed models that account for autocorrelation are the preferred method to fit repeated measures data
+
+Linear mixed models have several advantages over the split-plot ANOVA or profile analysis methods:
+
+- Highly flexible (e.g., can include additional random effects and interactions)
+
+- Can handle unbalanced designs
+
+- Both the `lme4` and `nlme` packages provide methods for accounted for serial autocorrelation common in repeated measures data
+
+## Chick data {.smaller}
+
+::::{.columns}
+
+:::{.column width=50%}
+```{r echo = TRUE, eval = FALSE}
+library(nlme)
+lmm2 <- lme(fixed = weight ~ Diet *Time, 
+            random =  ~ (Time-1)|Chick, 
+            data = chickdata,
+            correlation = corAR1())
+summary(lmm2)
+```
+:::
+
+:::{.column width=50%}
+```{r}
+library(nlme)
+lmm2 <- lme(fixed = weight ~ Diet * Time, 
+            random =  ~ (Time-1)|Chick, data = chickdata, method = "ML",
+            correlation = corAR1())
+summary(lmm2)
+```
+:::
+::::
+
+## Chick data {.smaller}
+
+::::{.columns}
+
+:::{.column width=50%}
+Compare the results from the previous slide to a similar model that does not account for autocorrelation (look particularly at the SE estimates)
+```{r echo = TRUE, eval = FALSE}
+lmm3 <- lme(fixed = weight ~ Diet *Time, 
+            random =  ~ (Time-1)|Chick, 
+            data = chickdata)
+summary(lmm3)
+```
+:::
+
+:::{.column width=50%}
+```{r}
+lmm3 <- lme(fixed = weight ~ Diet * Time, 
+            random =  ~ (Time-1)|Chick, data = chickdata, method = "ML")
+summary(lmm3)
+```
+:::
+::::
+
+## Summary {.smaller}
+
+
+Which of the three methods should I use?  
+
+- For balanced, experimental data, the simplest approach might be the split-plot option with adjusted p-values  
+
+- For unbalanced data or observational studies (which often require additional model complexity), the most robust approach is likely linear mixed models with serial correlation
+
+## Looking ahead
+
+<br/>
+
+[Next time]{.highlight}: Generalized linear models
+
+<br/>
+
+[Reading]{.highlight}: [Fieberg chp. 14](https://statistics4ecologists-v3.netlify.app/14-generalizedlinearmodels)
+
+

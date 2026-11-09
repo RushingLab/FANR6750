@@ -80,8 +80,8 @@ website:
           - text: "Lecture 17: Psuedoreplication Part 1: Nested Designs"
             href: lectures/17_nested/17_nested.qmd
 
-          #- text: "Lecture 18: Psuedoreplication Part 2: Repeated Measures"
-          #  href: lectures/18_repeated_measures/18_repeated_measures.qmd
+          - text: "Lecture 18: Psuedoreplication Part 2: Repeated Measures"
+            href: lectures/18_repeated_measures/18_repeated_measures.qmd
 
           #- text: "Lecture 19: Logistic regression"
           #  href: lectures/19_logistic_regression/19_logistic_regression.qmd
