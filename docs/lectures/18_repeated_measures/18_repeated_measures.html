@@ -413,7 +413,7 @@ Weight
 <li class="fragment"><p>Whole units are called subjects</p></li>
 <li class="fragment"><p>One or more treatments is applied to each subject</p></li>
 <li class="fragment"><p>The response variable is measured multiple times on each subject</p></li>
-<li class="fragment"><p>Time can be thought of as a treatment variable applied at the subunit level, but it <em>can’t be randomly assigned</em></p></li>
+<li class="fragment"><p>“Time” can be thought of as a treatment variable applied at the subunit level, but it <em>can’t be randomly assigned</em></p></li>
 <li class="fragment"><p>We are often most interested in the interaction between treatment and time</p></li>
 <li class="fragment"><p>In some cases, one of the treatment variables might be applied part way through the experiment (e.g.&nbsp;BACI design)</p></li>
 </ul>
@@ -435,18 +435,23 @@ Weight
 </section>
 <section id="statistical-issues" class="slide level2 smaller">
 <h2>Statistical issues</h2>
+<p>Repeated measures data is characterized by at least two types of non-independence:</p>
 <div class="fragment">
-<p><span class="highlight">Non-independence</span>:</p>
+<p><span class="highlight">Subjects</span>:</p>
 <ul>
 <li><p>As with nested data, observations within each subject are non-independent</p></li>
-<li><p>This non-independence must be accounted for as part of the analysis</p></li>
+<li><p>This non-independence is accounted for by treating subject as a random effect</p></li>
 </ul>
 </div>
 <div class="fragment">
-<p><span class="highlight">Non-randomness</span>:</p>
+<p><span class="highlight">Temporal autocorrelation</span>:</p>
 <ul>
-<li><p>The main difference between repeated measures data and other types of nested designs is that “time” cannot be randomized</p></li>
-<li></li>
+<li><p>Because time cannot be randomized, we expect there to be correlations between residuals within each subject</p></li>
+<li><p>Addressed by estimating covariance between repeated measures. Generally, two approaches:</p>
+<ul>
+<li><p>Compound symmetry (CS): Assumes constant correlation between any two points in time regardless of how far apart they are</p></li>
+<li><p>Autoreggressive (AR1): Assumes correlation between repeated measures decreases as the time between them increases</p></li>
+</ul></li>
 </ul>
 </div>
 </section>
@@ -454,132 +459,335 @@ Weight
 <h2>Options for analysis</h2>
 <p>There are multiple ways to analyze data from repeated measures designs</p>
 <div class="fragment">
-<p>Traditionally, the most common analysis method is a split-plot ANOVA model with adjusted p-values. However:</p>
+<p>Traditionally, the most common method was a split-plot ANOVA with adjusted p-values. However:</p>
 <ul>
+<li class="fragment"><p>Requires additional assumptions (e.g., sphericity)</p></li>
 <li class="fragment"><p>Results are not robust in the presence of severely unbalanced data</p></li>
 <li class="fragment"><p><em>p</em>-value adjustments apply to the main treatment, not to time or time <span class="math inline">\(\times\)</span> treatment interaction</p></li>
 <li class="fragment"><p>Difficult to accommodate additional model structure (blocks, multiple random effects, etc.)</p></li>
 </ul>
-<div class="fragment">
-<p>Because of these limitations, and because fitted mixed-effect models is now widely used, we will focus on analysis of repeated measures data using linear mixed-effect models</p>
 </div>
+<div class="fragment">
+<p>Because of these limitations, and because mixed-effect models are now widely used, we will focus on analysis of repeated measures data using linear mixed-effect models</p>
+</div>
+</section>
 <section id="linear-mixed-models" class="slide level2 smaller">
 <h2>Linear mixed models</h2>
-<p>Increasingly, linear mixed models that account for autocorrelation are the preferred method to fit repeated measures data</p>
+<p>Increasingly, linear mixed models that account for autocorrelation of residuals are the preferred method to fit repeated measures data</p>
+<div class="fragment">
 <p>Linear mixed models have several advantages over the split-plot ANOVA or profile analysis methods:</p>
 <ul>
-<li><p>Highly flexible (e.g., can include additional random effects and interactions)</p></li>
-<li><p>Can handle unbalanced designs</p></li>
-<li><p>Both the <code>lme4</code> and <code>nlme</code> packages provide methods for accounted for serial autocorrelation common in repeated measures data</p></li>
+<li class="fragment"><p>Highly flexible (e.g., can include additional random effects and interactions)</p></li>
+<li class="fragment"><p>Can handle unbalanced designs</p></li>
+<li class="fragment"><p>Both the <code>lme4</code> and <code>nlme</code> packages provide methods for accounted for serial autocorrelation common in repeated measures data</p></li>
 </ul>
+</div>
 </section>
 <section id="chick-data-1" class="slide level2 smaller">
 <h2>Chick data</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
+<p>Let’s start with a “simple” mixed-model that estimates the growth rates of the chicks (no diet effect) but assumes no correlation across repeated measures<a href="#/footnotes" class="footnote-ref" id="fnref1" role="doc-noteref" data-footnote-href="#/fn1" onclick=""><sup>1</sup></a>:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">library</span>(nlme)</span>
-<span id="cb1-2"><a></a>lmm2 <span class="ot">&lt;-</span> <span class="fu">lme</span>(<span class="at">fixed =</span> weight <span class="sc">~</span> Diet <span class="sc">*</span>Time, </span>
-<span id="cb1-3"><a></a>            <span class="at">random =</span>  <span class="sc">~</span> (Time<span class="dv">-1</span>)<span class="sc">|</span>Chick, </span>
-<span id="cb1-4"><a></a>            <span class="at">data =</span> chickdata,</span>
-<span id="cb1-5"><a></a>            <span class="at">correlation =</span> <span class="fu">corAR1</span>())</span>
-<span id="cb1-6"><a></a><span class="fu">summary</span>(lmm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
+<span id="cb1-2"><a></a>lmm1 <span class="ot">&lt;-</span> <span class="fu">lme</span>(weight <span class="sc">~</span> Time,</span>
+<span id="cb1-3"><a></a>              <span class="at">random =</span> <span class="sc">~</span>(Time <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">|</span>Chick,</span>
+<span id="cb1-4"><a></a>              <span class="at">data =</span> chickdata)</span>
+<span id="cb1-5"><a></a><span class="fu">summary</span>(lmm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed-effects model fit by maximum likelihood
+<pre><code>Linear mixed-effects model fit by REML
   Data: chickdata 
    AIC  BIC logLik
-  2715 2758  -1347
+  2974 2990  -1483
 
 Random effects:
  Formula: ~(Time - 1) | Chick
          Time Residual
-StdDev: 2.564     15.1
+StdDev: 2.601     12.3
+
+Fixed effects:  weight ~ Time 
+             Value Std.Error  DF t-value p-value
+(Intercept) 29.871     1.204 323   24.80       0
+Time         8.801     0.448 323   19.64       0
+ Correlation: 
+     (Intr)
+Time -0.212
+
+Standardized Within-Group Residuals:
+     Min       Q1      Med       Q3      Max 
+-2.60341 -0.64614 -0.03461  0.74251  3.61196 
+
+Number of Observations: 360
+Number of Groups: 36 </code></pre>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<p>Contrast that with a model that does account for autocorrelation<a href="#/footnotes" class="footnote-ref" id="fnref2" role="doc-noteref" data-footnote-href="#/fn2" onclick=""><sup>2</sup></a>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>lmm2 <span class="ot">&lt;-</span> <span class="fu">lme</span>(weight <span class="sc">~</span> Time, </span>
+<span id="cb3-2"><a></a>            <span class="at">random =</span>  <span class="sc">~</span> (Time <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">|</span>Chick, </span>
+<span id="cb3-3"><a></a>             <span class="at">data =</span> chickdata,</span>
+<span id="cb3-4"><a></a>             <span class="at">correlation =</span> <span class="fu">corAR1</span>())</span>
+<span id="cb3-5"><a></a><span class="fu">summary</span>(lmm2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed-effects model fit by REML
+  Data: chickdata 
+   AIC  BIC logLik
+  2708 2727  -1349
+
+Random effects:
+ Formula: ~(Time - 1) | Chick
+         Time Residual
+StdDev: 2.937    15.44
 
 Correlation Structure: AR(1)
  Formula: ~1 | Chick 
  Parameter estimate(s):
    Phi 
-0.8249 
-Fixed effects:  weight ~ Diet * Time 
+0.8323 
+Fixed effects:  weight ~ Time 
             Value Std.Error  DF t-value p-value
-(Intercept) 38.26     4.951 320   7.728  0.0000
-Diet2       -2.83     7.002  32  -0.404  0.6887
-Diet3       -6.48     7.002  32  -0.926  0.3616
-Diet4       -0.63     7.002  32  -0.090  0.9288
-Time         6.56     0.937 320   6.998  0.0000
-Diet2:Time   1.85     1.325 320   1.399  0.1629
-Diet3:Time   3.93     1.325 320   2.969  0.0032
-Diet4:Time   2.61     1.325 320   1.967  0.0500
+(Intercept) 35.92    2.5095 323   14.31       0
+Time         8.66    0.5221 323   16.58       0
  Correlation: 
-           (Intr) Diet2  Diet3  Diet4  Time   Dt2:Tm Dt3:Tm
-Diet2      -0.707                                          
-Diet3      -0.707  0.500                                   
-Diet4      -0.707  0.500  0.500                            
-Time       -0.254  0.180  0.180  0.180                     
-Diet2:Time  0.180 -0.254 -0.127 -0.127 -0.707              
-Diet3:Time  0.180 -0.127 -0.254 -0.127 -0.707  0.500       
-Diet4:Time  0.180 -0.127 -0.127 -0.254 -0.707  0.500  0.500
+     (Intr)
+Time -0.226
 
 Standardized Within-Group Residuals:
     Min      Q1     Med      Q3     Max 
--2.4886 -0.8607 -0.2404  0.2688  2.3246 
+-2.6225 -0.8897 -0.2315  0.3292  2.3707 
 
 Number of Observations: 360
 Number of Groups: 36 </code></pre>
 </div>
 </div>
 </div></div>
-</section>
+<aside></aside></section>
 <section id="chick-data-2" class="slide level2 smaller">
 <h2>Chick data</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
-<p>Compare the results from the previous slide to a similar model that does not account for autocorrelation (look particularly at the SE estimates)</p>
+<p>We can also estimate the effect of diet and whether it differs across time<a href="#/footnotes" class="footnote-ref" id="fnref3" role="doc-noteref" data-footnote-href="#/fn3" onclick=""><sup>3</sup></a>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>lmm3 <span class="ot">&lt;-</span> <span class="fu">lme</span>(<span class="at">fixed =</span> weight <span class="sc">~</span> Diet <span class="sc">*</span>Time, </span>
-<span id="cb3-2"><a></a>            <span class="at">random =</span>  <span class="sc">~</span> (Time<span class="dv">-1</span>)<span class="sc">|</span>Chick, </span>
-<span id="cb3-3"><a></a>            <span class="at">data =</span> chickdata)</span>
-<span id="cb3-4"><a></a><span class="fu">summary</span>(lmm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div><div class="column" style="width:50%;">
-<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>lmm3 <span class="ot">&lt;-</span> <span class="fu">lme</span>(weight <span class="sc">~</span> Diet <span class="sc">*</span> Time, </span>
+<span id="cb5-2"><a></a>            <span class="at">random =</span>  <span class="sc">~</span> (Time <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">|</span>Chick,  </span>
+<span id="cb5-3"><a></a>            <span class="at">data =</span> chickdata,</span>
+<span id="cb5-4"><a></a>            <span class="at">correlation =</span> <span class="fu">corAR1</span>())</span>
+<span id="cb5-5"><a></a><span class="fu">summary</span>(lmm3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Linear mixed-effects model fit by maximum likelihood
+<pre><code>Linear mixed-effects model fit by REML
   Data: chickdata 
    AIC  BIC logLik
-  2972 3011  -1476
+  2688 2731  -1333
 
 Random effects:
  Formula: ~(Time - 1) | Chick
          Time Residual
-StdDev: 2.313     12.1
+StdDev: 2.741     15.7
 
+Correlation Structure: AR(1)
+ Formula: ~1 | Chick 
+ Parameter estimate(s):
+   Phi 
+0.8371 
 Fixed effects:  weight ~ Diet * Time 
             Value Std.Error  DF t-value p-value
-(Intercept) 32.77     2.398 320  13.668  0.0000
-Diet2       -2.58     3.391  32  -0.760  0.4530
-Diet3       -8.96     3.391  32  -2.642  0.0126
-Diet4       -0.06     3.391  32  -0.018  0.9854
-Time         6.90     0.811 320   8.499  0.0000
-Diet2:Time   1.57     1.147 320   1.369  0.1718
-Diet3:Time   3.53     1.147 320   3.075  0.0023
-Diet4:Time   2.52     1.147 320   2.197  0.0288
+(Intercept) 38.43     5.109 320   7.522  0.0000
+Diet2       -2.78     7.226  32  -0.384  0.7032
+Diet3       -6.28     7.226  32  -0.869  0.3915
+Diet4       -0.64     7.226  32  -0.088  0.9304
+Time         6.55     0.985 320   6.654  0.0000
+Diet2:Time   1.86     1.392 320   1.335  0.1827
+Diet3:Time   3.94     1.392 320   2.832  0.0049
+Diet4:Time   2.61     1.392 320   1.874  0.0619
  Correlation: 
            (Intr) Diet2  Diet3  Diet4  Time   Dt2:Tm Dt3:Tm
 Diet2      -0.707                                          
 Diet3      -0.707  0.500                                   
 Diet4      -0.707  0.500  0.500                            
-Time       -0.233  0.165  0.165  0.165                     
-Diet2:Time  0.165 -0.233 -0.117 -0.117 -0.707              
-Diet3:Time  0.165 -0.117 -0.233 -0.117 -0.707  0.500       
-Diet4:Time  0.165 -0.117 -0.117 -0.233 -0.707  0.500  0.500
+Time       -0.240  0.170  0.170  0.170                     
+Diet2:Time  0.170 -0.240 -0.120 -0.120 -0.707              
+Diet3:Time  0.170 -0.120 -0.240 -0.120 -0.707  0.500       
+Diet4:Time  0.170 -0.120 -0.120 -0.240 -0.707  0.500  0.500
 
 Standardized Within-Group Residuals:
     Min      Q1     Med      Q3     Max 
--2.5658 -0.6256 -0.0314  0.6650  3.4411 
+-2.4336 -0.8417 -0.2380  0.2539  2.2587 
+
+Number of Observations: 360
+Number of Groups: 36 </code></pre>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<p>And test for differences among diet groups:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb7-2"><a></a><span class="fu">emmeans</span>(lmm3, pairwise <span class="sc">~</span> Diet, <span class="at">adjust =</span> <span class="st">"bonferroni"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$emmeans
+ Diet emmean  SE df lower.CL upper.CL
+ 1      97.4 9.1 35     78.9      116
+ 2     111.3 9.1 32     92.8      130
+ 3     126.6 9.1 32    108.1      145
+ 4     120.2 9.1 32    101.7      139
+
+Degrees-of-freedom method: containment 
+Confidence level used: 0.95 
+
+$contrasts
+ contrast      estimate   SE df t.ratio p.value
+ Diet1 - Diet2   -13.96 12.9 32  -1.084  1.0000
+ Diet1 - Diet3   -29.21 12.9 32  -2.269  0.1809
+ Diet1 - Diet4   -22.84 12.9 32  -1.774  0.5131
+ Diet2 - Diet3   -15.25 12.9 32  -1.185  1.0000
+ Diet2 - Diet4    -8.89 12.9 32  -0.690  1.0000
+ Diet3 - Diet4     6.37 12.9 32   0.495  1.0000
+
+Degrees-of-freedom method: containment 
+P value adjustment: bonferroni method for 6 tests </code></pre>
+</div>
+</div>
+</div></div>
+<aside></aside></section>
+<section id="time-continuous-or-categorical" class="slide level2 smaller">
+<h2>Time: continuous or categorical?</h2>
+<p>In repeated measures data, it is possible to treat time as either a continuous predictor or a categorical predictor</p>
+<ul>
+<li><p>Continuous time implies linear “trend” in the response variable. Generally used when values represent actual units of time (hours, days, weeks, etc.)</p></li>
+<li><p>Categorical time allows intervals to differ from each other without imposing trend. Often used when values are not units of time (e.g., “early”, “middle”, “late”)</p></li>
+</ul>
+<div class="fragment">
+<p>When modeling time as a categorical predictor, it is generally necessary to use the continuous variable to estimate the covariance matrix, for example:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>lmm4 <span class="ot">&lt;-</span> <span class="fu">lme</span>(weight <span class="sc">~</span> Diet <span class="sc">*</span> TimeFac, </span>
+<span id="cb9-2"><a></a>            <span class="at">random =</span>  <span class="sc">~</span> (Time <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">|</span>Chick,  </span>
+<span id="cb9-3"><a></a>            <span class="at">data =</span> chickdata,</span>
+<span id="cb9-4"><a></a>            <span class="at">correlation =</span> <span class="fu">corAR1</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="time-continuous-or-categorical-1" class="slide level2 smaller">
+<h2>Time: continuous or categorical?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>Continuous time:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>lmm4 <span class="ot">&lt;-</span> <span class="fu">lme</span>(weight <span class="sc">~</span> Diet <span class="sc">*</span> Week, </span>
+<span id="cb10-2"><a></a>            <span class="at">random =</span>  <span class="sc">~</span> (Week <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">|</span>Chick,  </span>
+<span id="cb10-3"><a></a>            <span class="at">data =</span> chickdata,</span>
+<span id="cb10-4"><a></a>            <span class="at">correlation =</span> <span class="fu">corAR1</span>())</span>
+<span id="cb10-5"><a></a><span class="fu">summary</span>(lmm4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed-effects model fit by REML
+  Data: chickdata 
+   AIC  BIC logLik
+  3197 3239  -1587
+
+Random effects:
+ Formula: ~(Week - 1) | Chick
+            Week Residual
+StdDev: 0.002158    67.35
+
+Correlation Structure: AR(1)
+ Formula: ~1 | Chick 
+ Parameter estimate(s):
+   Phi 
+0.9593 
+Fixed effects:  weight ~ Diet * Week 
+            Value Std.Error  DF t-value p-value
+(Intercept) 69.24     22.43 320   3.087  0.0022
+Diet2       12.54     31.73  32   0.395  0.6953
+Diet3       17.43     31.73  32   0.549  0.5865
+Diet4       13.61     31.73  32   0.429  0.6708
+Week        15.01      4.48 320   3.354  0.0009
+Diet2:Week   1.47      6.33 320   0.232  0.8164
+Diet3:Week   7.97      6.33 320   1.259  0.2090
+Diet4:Week   4.73      6.33 320   0.747  0.4558
+ Correlation: 
+           (Intr) Diet2  Diet3  Diet4  Week   Dt2:Wk Dt3:Wk
+Diet2      -0.707                                          
+Diet3      -0.707  0.500                                   
+Diet4      -0.707  0.500  0.500                            
+Week       -0.396  0.280  0.280  0.280                     
+Diet2:Week  0.280 -0.396 -0.198 -0.198 -0.707              
+Diet3:Week  0.280 -0.198 -0.396 -0.198 -0.707  0.500       
+Diet4:Week  0.280 -0.198 -0.198 -0.396 -0.707  0.500  0.500
+
+Standardized Within-Group Residuals:
+    Min      Q1     Med      Q3     Max 
+-1.0491 -0.6027 -0.2815  0.2967  2.6190 
+
+Number of Observations: 360
+Number of Groups: 36 </code></pre>
+</div>
+</div>
+</div><div class="column fragment" style="width:50%;">
+<p>Categorical time:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>lmm5 <span class="ot">&lt;-</span> <span class="fu">lme</span>(weight <span class="sc">~</span> Diet <span class="sc">*</span> WeekFac, </span>
+<span id="cb12-2"><a></a>            <span class="at">random =</span>  <span class="sc">~</span> (Week <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">|</span>Chick,  </span>
+<span id="cb12-3"><a></a>            <span class="at">data =</span> chickdata,</span>
+<span id="cb12-4"><a></a>            <span class="at">correlation =</span> <span class="fu">corAR1</span>())</span>
+<span id="cb12-5"><a></a><span class="fu">summary</span>(lmm5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed-effects model fit by REML
+  Data: chickdata 
+   AIC  BIC logLik
+  3178 3236  -1574
+
+Random effects:
+ Formula: ~(Week - 1) | Chick
+            Week Residual
+StdDev: 0.002285    67.29
+
+Correlation Structure: AR(1)
+ Formula: ~1 | Chick 
+ Parameter estimate(s):
+   Phi 
+0.9589 
+Fixed effects:  weight ~ Diet * WeekFac 
+               Value Std.Error  DF t-value p-value
+(Intercept)    84.11    21.042 316   3.997  0.0001
+Diet2          13.97    29.758  32   0.469  0.6420
+Diet3          25.47    29.758  32   0.856  0.3985
+Diet4          18.18    29.758  32   0.611  0.5457
+WeekFac2       17.30     6.421 316   2.695  0.0074
+WeekFac3       30.06     8.982 316   3.346  0.0009
+Diet2:WeekFac2  2.02     9.081 316   0.222  0.8241
+Diet3:WeekFac2  6.22     9.081 316   0.685  0.4937
+Diet4:WeekFac2  7.63     9.081 316   0.840  0.4017
+Diet2:WeekFac3  2.95    12.702 316   0.233  0.8163
+Diet3:WeekFac3 15.96    12.702 316   1.256  0.2099
+Diet4:WeekFac3  9.47    12.702 316   0.745  0.4566
+ Correlation: 
+               (Intr) Diet2  Diet3  Diet4  WekFc2 WekFc3 D2:WF2 D3:WF2 D4:WF2
+Diet2          -0.707                                                        
+Diet3          -0.707  0.500                                                 
+Diet4          -0.707  0.500  0.500                                          
+WeekFac2       -0.155  0.110  0.110  0.110                                   
+WeekFac3       -0.210  0.148  0.148  0.148  0.699                            
+Diet2:WeekFac2  0.110 -0.155 -0.077 -0.077 -0.707 -0.495                     
+Diet3:WeekFac2  0.110 -0.077 -0.155 -0.077 -0.707 -0.495  0.500              
+Diet4:WeekFac2  0.110 -0.077 -0.077 -0.155 -0.707 -0.495  0.500  0.500       
+Diet2:WeekFac3  0.148 -0.210 -0.105 -0.105 -0.495 -0.707  0.699  0.350  0.350
+Diet3:WeekFac3  0.148 -0.105 -0.210 -0.105 -0.495 -0.707  0.350  0.699  0.350
+Diet4:WeekFac3  0.148 -0.105 -0.105 -0.210 -0.495 -0.707  0.350  0.350  0.699
+               D2:WF3 D3:WF3
+Diet2                       
+Diet3                       
+Diet4                       
+WeekFac2                    
+WeekFac3                    
+Diet2:WeekFac2              
+Diet3:WeekFac2              
+Diet4:WeekFac2              
+Diet2:WeekFac3              
+Diet3:WeekFac3  0.500       
+Diet4:WeekFac3  0.500  0.500
+
+Standardized Within-Group Residuals:
+    Min      Q1     Med      Q3     Max 
+-1.0488 -0.5987 -0.3024  0.2651  2.6214 
 
 Number of Observations: 360
 Number of Groups: 36 </code></pre>
@@ -589,10 +797,17 @@ Number of Groups: 36 </code></pre>
 </section>
 <section id="summary" class="slide level2 smaller">
 <h2>Summary</h2>
-<p>Which of the three methods should I use?</p>
 <ul>
-<li><p>For balanced, experimental data, the simplest approach might be the split-plot option with adjusted p-values</p></li>
-<li><p>For unbalanced data or observational studies (which often require additional model complexity), the most robust approach is likely linear mixed models with serial correlation</p></li>
+<li class="fragment"><p>Repeated measures data is a special case of nested data in which multiple measurements are taken on each subject</p></li>
+<li class="fragment"><p>In many cases, “time” is a treatment of interest but it cannot be randomized</p></li>
+<li class="fragment"><p>Linear-mixed models can estimate and account for non-independence caused by both subjects and temporal autocorrelation</p></li>
+<li class="fragment"><p>Need to specify covariance structure</p>
+<ul>
+<li class="fragment"><p>Compound symmetry implies constant covariance. Autoregressive implies covariance decreases as time between measurements increases.</p></li>
+<li class="fragment"><p>This is a case where comparison using AIC can be warranted</p></li>
+</ul></li>
+<li class="fragment"><p>Time variable can be treated as either continuous or categorical and can include interactions between treatment variables and time</p></li>
+<li class="fragment"><p>Linear mixed models can also include multiple treatment variables (at both subject and subunit levels), blocks, etc. Very flexible</p></li>
 </ul>
 </section>
 <section id="looking-ahead" class="slide level2">
@@ -604,7 +819,13 @@ Number of Groups: 36 </code></pre>
 
 
 </section>
-</div>
+<section id="footnotes" class="footnotes footnotes-end-of-document smaller scrollable" role="doc-endnotes"><h2>Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>We’re using the <code>nlme</code> package here because it can handle covariances. The syntax is a little different from <code>lme4</code> in that we put the random effect equation as a different argument.The <code>(Time - 1)</code> formulation is used to remove the intercept from the model. Essentially, we do not have sufficient degrees of freedom to estimate the overall mean effect of time and <span class="math inline">\(n\)</span> intercepts for each subject (we can’t estimate <span class="math inline">\(n\)</span> parameters from <span class="math inline">\(n\)</span> observation since we use one df to estimate the mean). So the <code>Time-1</code> imposes a constraint that says the <span class="math inline">\(n\)</span> intercepts must sum to the overall mean, essentially estimating <span class="math inline">\(n-1\)</span> parameters</p></li>
+<li id="fn2"><p>We’re assuming autoregressive covariance here (<code>corAR1()</code> option) but could instead assume compound symmetry by specifying <code>corCompSymm()</code>. Look particularly at the SE estimates, which are lower in this model. That is expected because covariance among residuals means we have less information than if they are uncorrelated</p></li>
+<li id="fn3"><p>in other words, we are testing for a <span class="math inline">\(diet \times time\)</span> interaction</p></li>
+</ol>
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">

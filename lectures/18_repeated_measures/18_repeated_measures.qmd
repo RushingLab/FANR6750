@@ -135,7 +135,7 @@ General features
 
 - The response variable is measured multiple times on each subject  
 
-- Time can be thought of as a treatment variable applied at the subunit level, but it *can't be randomly assigned*  
+- "Time" can be thought of as a treatment variable applied at the subunit level, but it *can't be randomly assigned*  
 
 - We are often most interested in the interaction between treatment and time  
 
@@ -163,32 +163,40 @@ Data with this structure present several statistical issues that must be address
 
 ## Statistical issues {.smaller}
 
+Repeated measures data is characterized by at least two types of non-independence:
+
 :::{.fragment}
-[Non-independence]{.highlight}:
+[Subjects]{.highlight}:
 
 - As with nested data, observations within each subject are non-independent
 
-- This non-independence must be accounted for as part of the analysis
+- This non-independence is accounted for by treating subject as a random effect
 
 :::
 
 :::{.fragment}
-[Non-randomness]{.highlight}:
+[Temporal autocorrelation]{.highlight}:
 
-- The main difference between repeated measures data and other types of nested designs is that "time" cannot be randomized
+- Because time cannot be randomized, we expect there to be correlations between residuals within each subject
 
-- 
+- Addressed by estimating covariance between repeated measures. Generally, two approaches:
+    
+    + Compound symmetry (CS): Assumes constant correlation between any two points in time regardless of how far apart they are
+    
+    + Autoreggressive (AR1): Assumes correlation between repeated measures decreases as the time between them increases
 
 :::
-
+ 
 ## Options for analysis {.smaller}
 
 There are multiple ways to analyze data from repeated measures designs  
 
 :::{.fragment}
-Traditionally, the most common analysis method is a split-plot ANOVA model with adjusted p-values. However:  
+Traditionally, the most common method was a split-plot ANOVA with adjusted p-values. However:  
 
 :::{.incremental}
+
+- Requires additional assumptions (e.g., sphericity)
 
 - Results are not robust in the presence of severely unbalanced data
 
@@ -196,45 +204,53 @@ Traditionally, the most common analysis method is a split-plot ANOVA model with 
 
 - Difficult to accommodate additional model structure (blocks, multiple random effects, etc.)
 :::
+:::
 
 :::{.fragment}
 
-Because of these limitations, and because fitted mixed-effect models is now widely used, we will focus on analysis of repeated measures data using linear mixed-effect models
+Because of these limitations, and because mixed-effect models are now widely used, we will focus on analysis of repeated measures data using linear mixed-effect models
 :::
 
 ## Linear mixed models {.smaller}
 
-Increasingly, linear mixed models that account for autocorrelation are the preferred method to fit repeated measures data
+Increasingly, linear mixed models that account for autocorrelation of residuals are the preferred method to fit repeated measures data
 
+:::{.fragment}
 Linear mixed models have several advantages over the split-plot ANOVA or profile analysis methods:
 
+:::{.incremental}
 - Highly flexible (e.g., can include additional random effects and interactions)
 
 - Can handle unbalanced designs
 
 - Both the `lme4` and `nlme` packages provide methods for accounted for serial autocorrelation common in repeated measures data
+:::
+:::
 
 ## Chick data {.smaller}
 
 ::::{.columns}
 
 :::{.column width=50%}
-```{r echo = TRUE, eval = FALSE}
+Let's start with a "simple" mixed-model that estimates the growth rates of the chicks (no diet effect) but assumes no correlation across repeated measures^[We're using the `nlme` package here because it can handle covariances. The syntax is a little different from `lme4` in that we put the random effect equation as a different argument.The `(Time - 1)` formulation is used to remove the intercept from the model. Essentially, we do not have sufficient degrees of freedom to estimate the overall mean effect of time and $n$ intercepts for each subject (we can't estimate $n$ parameters from $n$ observation since we use one df to estimate the mean). So the `Time-1` imposes a constraint that says the $n$ intercepts must sum to the overall mean, essentially estimating $n-1$ parameters]:
+
+```{r lme, echo = TRUE}
 library(nlme)
-lmm2 <- lme(fixed = weight ~ Diet *Time, 
-            random =  ~ (Time-1)|Chick, 
-            data = chickdata,
-            correlation = corAR1())
-summary(lmm2)
+lmm1 <- lme(weight ~ Time,
+              random = ~(Time - 1)|Chick,
+              data = chickdata)
+summary(lmm1)
 ```
 :::
 
-:::{.column width=50%}
-```{r}
-library(nlme)
-lmm2 <- lme(fixed = weight ~ Diet * Time, 
-            random =  ~ (Time-1)|Chick, data = chickdata, method = "ML",
-            correlation = corAR1())
+:::{.column .fragment width=50%}
+Contrast that with a model that does account for autocorrelation^[We're assuming autoregressive covariance here (`corAR1()` option) but could instead assume compound symmetry by specifying `corCompSymm()`. Look particularly at the SE estimates, which are lower in this model. That is expected because covariance among residuals means we have less information than if they are uncorrelated]:
+
+```{r lme2, echo = TRUE }
+lmm2 <- lme(weight ~ Time, 
+            random =  ~ (Time - 1)|Chick, 
+             data = chickdata,
+             correlation = corAR1())
 summary(lmm2)
 ```
 :::
@@ -245,32 +261,100 @@ summary(lmm2)
 ::::{.columns}
 
 :::{.column width=50%}
-Compare the results from the previous slide to a similar model that does not account for autocorrelation (look particularly at the SE estimates)
-```{r echo = TRUE, eval = FALSE}
-lmm3 <- lme(fixed = weight ~ Diet *Time, 
-            random =  ~ (Time-1)|Chick, 
-            data = chickdata)
+We can also estimate the effect of diet and whether it differs across time^[in other words, we are testing for a $diet \times time$ interaction]:
+```{r echo = TRUE}
+lmm3 <- lme(weight ~ Diet * Time, 
+            random =  ~ (Time - 1)|Chick,  
+            data = chickdata,
+            correlation = corAR1())
 summary(lmm3)
 ```
 :::
 
+:::{.column .fragment width=50%}
+And test for differences among diet groups:
+
+```{r, echo = TRUE}
+library(emmeans)
+emmeans(lmm3, pairwise ~ Diet, adjust = "bonferroni")
+```
+:::
+::::
+
+## Time: continuous or categorical? {.smaller}
+
+In repeated measures data, it is possible to treat time as either a continuous predictor or a categorical predictor
+
+- Continuous time implies linear "trend" in the response variable. Generally used when values represent actual units of time (hours, days, weeks, etc.)
+
+- Categorical time allows intervals to differ from each other without imposing trend. Often used when values are not units of time (e.g., "early", "middle", "late")
+
+:::{.fragment}
+When modeling time as a categorical predictor, it is generally necessary to use the continuous variable to estimate the covariance matrix, for example:
+
+```{r echo = TRUE, eval = F}
+lmm4 <- lme(weight ~ Diet * TimeFac, 
+            random =  ~ (Time - 1)|Chick,  
+            data = chickdata,
+            correlation = corAR1())
+```
+:::
+
+## Time: continuous or categorical? {.smaller}
+
+::::{.columns}
+
 :::{.column width=50%}
-```{r}
-lmm3 <- lme(fixed = weight ~ Diet * Time, 
-            random =  ~ (Time-1)|Chick, data = chickdata, method = "ML")
-summary(lmm3)
+Continuous time:
+```{r echo = FALSE}
+chickdata <- dplyr::mutate(chickdata, Week = case_when(Time < 7 ~ 1,
+                                                       Time >= 7 & Time < 14 ~ 2,
+                                                       Time >= 14 ~ 3))
+chickdata$WeekFac <- as.factor(chickdata$Week)
+```
+
+```{r echo = TRUE}
+lmm4 <- lme(weight ~ Diet * Week, 
+            random =  ~ (Week - 1)|Chick,  
+            data = chickdata,
+            correlation = corAR1())
+summary(lmm4)
+```
+:::
+
+:::{.column .fragment width=50%}
+Categorical time:
+
+```{r echo = TRUE}
+lmm5 <- lme(weight ~ Diet * WeekFac, 
+            random =  ~ (Week - 1)|Chick,  
+            data = chickdata,
+            correlation = corAR1())
+summary(lmm5)
 ```
 :::
 ::::
 
 ## Summary {.smaller}
 
+:::{.incremental}
+- Repeated measures data is a special case of nested data in which multiple measurements are taken on each subject
 
-Which of the three methods should I use?  
+- In many cases, "time" is a treatment of interest but it cannot be randomized
 
-- For balanced, experimental data, the simplest approach might be the split-plot option with adjusted p-values  
+- Linear-mixed models can estimate and account for non-independence caused by both subjects and temporal autocorrelation
 
-- For unbalanced data or observational studies (which often require additional model complexity), the most robust approach is likely linear mixed models with serial correlation
+- Need to specify covariance structure
+
+    + Compound symmetry implies constant covariance. Autoregressive implies covariance decreases as time between measurements increases. 
+    
+    + This is a case where comparison using AIC can be warranted
+
+- Time variable can be treated as either continuous or categorical and can include interactions between treatment variables and time
+
+- Linear mixed models can also include multiple treatment variables (at both subject and subunit levels), blocks, etc. Very flexible
+
+:::
 
 ## Looking ahead
 
