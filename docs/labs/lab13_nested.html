@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Lab 13: Nested ANOVA – FANR6750</title>
+<title>Lab 13: Nested Designs – FANR6750</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -309,6 +309,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../labs/lab12_model_selection.html">
  <span class="dropdown-text">Lab 12: Model Selection</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../labs/lab13_nested.html">
+ <span class="dropdown-text">Lab 13: Nested Designs</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -352,9 +356,8 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul class="collapse">
-  <li><a href="#lab-9" id="toc-lab-9" class="nav-link active" data-scroll-target="#lab-9">Lab 9</a></li>
-  <li><a href="#todays-topics" id="toc-todays-topics" class="nav-link" data-scroll-target="#todays-topics">Today’s topics</a></li>
-  <li><a href="#scenario" id="toc-scenario" class="nav-link" data-scroll-target="#scenario">Scenario</a>
+  <li><a href="#todays-topics" id="toc-todays-topics" class="nav-link active" data-scroll-target="#todays-topics">Today’s topics</a></li>
+  <li><a href="#nested-anova" id="toc-nested-anova" class="nav-link" data-scroll-target="#nested-anova">Nested ANOVA</a>
   <ul class="collapse">
   <li><a href="#the-additive-model" id="toc-the-additive-model" class="nav-link" data-scroll-target="#the-additive-model">The additive model</a></li>
   <li><a href="#hypotheses" id="toc-hypotheses" class="nav-link" data-scroll-target="#hypotheses">Hypotheses</a></li>
@@ -362,6 +365,22 @@ window.Quarto = {
   <li><a href="#analysis-using-aov" id="toc-analysis-using-aov" class="nav-link" data-scroll-target="#analysis-using-aov">Analysis using <code>aov()</code></a></li>
   <li><a href="#issues-with-analyzing-nested-data" id="toc-issues-with-analyzing-nested-data" class="nav-link" data-scroll-target="#issues-with-analyzing-nested-data">Issues with analyzing nested data</a></li>
   <li><a href="#using-the-lme-function" id="toc-using-the-lme-function" class="nav-link" data-scroll-target="#using-the-lme-function">Using the <code>lme()</code> function</a></li>
+  </ul></li>
+  <li><a href="#split-plot-design" id="toc-split-plot-design" class="nav-link" data-scroll-target="#split-plot-design">Split-plot design</a>
+  <ul class="collapse">
+  <li><a href="#the-additive-model-1" id="toc-the-additive-model-1" class="nav-link" data-scroll-target="#the-additive-model-1">The additive model</a></li>
+  <li><a href="#data-example" id="toc-data-example" class="nav-link" data-scroll-target="#data-example">Data example</a></li>
+  <li><a href="#analysis-using-lme" id="toc-analysis-using-lme" class="nav-link" data-scroll-target="#analysis-using-lme">Analysis using <code>lme()</code></a></li>
+  <li><a href="#exploring-the-interaction" id="toc-exploring-the-interaction" class="nav-link" data-scroll-target="#exploring-the-interaction">Exploring the interaction</a></li>
+  <li><a href="#multiple-comparisons-using-glht-package-multcomp" id="toc-multiple-comparisons-using-glht-package-multcomp" class="nav-link" data-scroll-target="#multiple-comparisons-using-glht-package-multcomp">Multiple comparisons using <code>glht()</code> (package <code>multcomp</code>)</a></li>
+  </ul></li>
+  <li><a href="#repeated-measures" id="toc-repeated-measures" class="nav-link" data-scroll-target="#repeated-measures">Repeated measures</a>
+  <ul class="collapse">
+  <li><a href="#additive-model" id="toc-additive-model" class="nav-link" data-scroll-target="#additive-model">Additive model</a></li>
+  <li><a href="#data-example-1" id="toc-data-example-1" class="nav-link" data-scroll-target="#data-example-1">Data example</a></li>
+  <li><a href="#analysis-using-mixed-effects-model-with-correlation-structure" id="toc-analysis-using-mixed-effects-model-with-correlation-structure" class="nav-link" data-scroll-target="#analysis-using-mixed-effects-model-with-correlation-structure">Analysis using mixed effects model with correlation structure</a></li>
+  <li><a href="#exploring-the-interaction-1" id="toc-exploring-the-interaction-1" class="nav-link" data-scroll-target="#exploring-the-interaction-1">Exploring the interaction</a></li>
+  <li><a href="#treating-time-as-continuous" id="toc-treating-time-as-continuous" class="nav-link" data-scroll-target="#treating-time-as-continuous">Treating time as continuous</a></li>
   </ul></li>
   <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment">Assignment</a></li>
   </ul>
@@ -372,7 +391,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lab 13: Nested ANOVA</h1>
+<h1 class="title">Lab 13: Nested Designs</h1>
 <p class="subtitle lead">FANR 6750: Experimental Methods in Forestry and Natural Resources Research<br><small>Fall 2026</small></p>
 </div>
 
@@ -390,55 +409,42 @@ window.Quarto = {
 </header>
 
 
-<section id="lab-9" class="level2">
-<h2 class="anchored" data-anchor-id="lab-9">Lab 9</h2>
-<ul>
-<li><p>Model selection</p>
-<ul>
-<li><p>Exploration</p></li>
-<li><p>Prediction</p></li>
-</ul></li>
-</ul>
-</section>
 <section id="todays-topics" class="level2">
 <h2 class="anchored" data-anchor-id="todays-topics">Today’s topics</h2>
 <ul>
-<li><p>Nested ANOVA</p>
+<li><p>Nested Designs</p>
 <ul>
-<li><p>Specifying the model</p></li>
-<li><p>Hypotheses</p></li>
-<li><p>Random effects</p></li>
-<li><p>lme() function</p></li>
+<li><p>Nested ANOVA model (ANOVA and lme procedures)</p></li>
+<li><p>Split-plot design</p></li>
+<li><p>Repeated measures</p></li>
 </ul></li>
 </ul>
 <p><br></p>
 </section>
-<section id="scenario" class="level1">
-<h1>Scenario</h1>
+<section id="nested-anova" class="level1">
+<h1>Nested ANOVA</h1>
 <p>Remember from lecture that nested designs are useful in situations where we subsample within each experimental unit and we’re interested in treatment effects at the experimental (whole) unit level, not the subunit level. For example:</p>
 <ul>
 <li><p>We count larvae at multiple subplots within a plot</p></li>
 <li><p>We weigh multiple chicks in a brood</p></li>
 <li><p>We measure shrub growth at multiple subplots within a plot</p></li>
 </ul>
-<p><br></p>
 <section id="the-additive-model" class="level2">
 <h2 class="anchored" data-anchor-id="the-additive-model">The additive model</h2>
-<p><span class="math display">\[\Large y_{ijk} = \mu + \alpha_i + \beta_{ij} + \epsilon_{ijk}\]</span></p>
+<p><span class="math display">\[\large y_{ijk} = \mu + \alpha_i + \beta_{ij} + \epsilon_{ijk}\]</span></p>
 <p><strong>Can you define all of the terms in the linear model? Why do we need so many subscripts?</strong></p>
-<p><br></p>
-<p><span class="math display">\[\Large \beta_{ij} \sim normal(0, \sigma^2_B)\]</span></p>
+<p><span class="math display">\[\large \beta_{ij} \sim normal(0, \sigma^2_B)\]</span></p>
 <p>And as always,</p>
-<p><span class="math display">\[\Large \epsilon_{ijk} \sim normal(0, \sigma^2)\]</span></p>
+<p><span class="math display">\[\large \epsilon_{ijk} \sim normal(0, \sigma^2)\]</span></p>
 </section>
 <section id="hypotheses" class="level2">
 <h2 class="anchored" data-anchor-id="hypotheses">Hypotheses</h2>
 <p>Treatment effects:</p>
-<p><span class="math display">\[\Large H_0 : \alpha_1 = · · · = \alpha_a = 0\]</span> <span class="math display">\[\Large H_a : at\; least\; one\; inequality\]</span> Random variation among experimental units:</p>
-<p><span class="math display">\[\Large H_0 : \sigma^2_B = 0\]</span></p>
-<p><span class="math display">\[\Large H_a : \sigma^2_B &gt; 0\]</span></p>
+<p><span class="math display">\[\large H_0 : \alpha_1 = · · · = \alpha_a = 0\]</span> <span class="math display">\[\large H_a : at\; least\; one\; inequality\]</span> Random variation among experimental units:</p>
+<p><span class="math display">\[\large H_0 : \sigma^2_B = 0\]</span></p>
+<p><span class="math display">\[\large H_a : \sigma^2_B &gt; 0\]</span></p>
 <p>Note: Here we have referred to the variance term as <span class="math inline">\(\sigma^2_B\)</span> but we could use any reasonable subscript to refer to the variance term for the random effect.</p>
-<p>Note: Recall that a nested ANOVA is primarily used when the variation among experimental units is of interest. If this variation was not of interest or if we had reason to believe that all the experimental units did not differ from each other, we can simplify to a one-way ANOVA.</p>
+<p>Note: Recall that a nested ANOVA is primarily used when the variation among experimental units is of interest. If this variation was not of interest or if we had reason to believe that all the experimental units did not differ from each other, we can simplify to a one-way ANOVA by using the mean of all subunits within a whole unit as the response variable.</p>
 </section>
 <section id="example-data" class="level2">
 <h2 class="anchored" data-anchor-id="example-data">Example data</h2>
@@ -504,7 +510,6 @@ window.Quarto = {
 <span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residuals 27   13.9   0.516</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Can you spot the difference? What calculations changed between these two analyses?</p>
-<p><br> <br></p>
 <p>Note: The next few code chunks are not necessary. They are simply demonstrating that what we are doing here is exactly the same as performing a one way ANOVA after averaging across the subunits.</p>
 <p>What happens if we analyze plot-level means? The <code>aggregate()</code> function is similar to <code>tapply()</code> but it works on entire data frames. Here we get averages for each whole plot:</p>
 <div class="cell" data-layout-align="center">
@@ -542,17 +547,11 @@ window.Quarto = {
 <li><p>Doesn’t handle unbalanced designs well</p></li>
 <li><p>But, you can use <code>model.tables()</code></p></li>
 </ul>
-<p><br></p>
 <p>An alternative is to use the <code>lme()</code> function in the <code>nlme</code> package (which is designed for mixed effects models)</p>
 <ul>
 <li><p>Possible to get direct estimates of <span class="math inline">\(\sigma^2_B\)</span> and other variance parameters</p></li>
 <li><p>Handles very complex models and unbalanced designs</p></li>
 <li><p>Possible to do multiple comparisons and contrasts using the <code>glht()</code> function in the <code>multcomp</code> package</p></li>
-</ul>
-<p>But…</p>
-<ul>
-<li><p>Only works if there are random effects</p></li>
-<li><p>ANOVA tables aren’t as complete as <code>aov()</code></p></li>
 </ul>
 </section>
 <section id="using-the-lme-function" class="level2">
@@ -582,10 +581,8 @@ window.Quarto = {
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Residual    0.5156   0.718</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The first row shows the estimates of <span class="math inline">\(\sigma^2_B\)</span> and <span class="math inline">\(\sigma_B\)</span>. These are redundant values since one can be calculated from the other. The second row shows the estimates of <span class="math inline">\(\sigma^2\)</span> and <span class="math inline">\(\sigma\)</span>.</p>
-<p><br> <br></p>
 <p><strong>What can we say about the amount of random variation within whole units relative to among whole units (after accounting for treatment effects)? Does it appear that in this scenario the random effect of plot was necessary?</strong></p>
 <p>Note that we will reject the null hypothesis related to the variance (<span class="math inline">\(\sigma^2_B = 0\)</span>) if the F-statistic (<span class="math inline">\(\frac{MS_B}{MS_E}\)</span>) &gt; <span class="math inline">\(F_{a(b-1), ab(n-1),\alpha}\)</span>. Keep in mind though that to get this F-statistic, we will need to use the aov() function approach.</p>
-<p><br></p>
 <p>Next, we can extract the plot-level random effects. These are the <span class="math inline">\(\beta_{ij}\)</span>’s:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">ranef</span>(lme1), <span class="dv">2</span>)</span>
@@ -638,32 +635,339 @@ window.Quarto = {
 <span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Linear Hypotheses:</span></span>
 <span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                        Estimate lwr    upr   </span></span>
 <span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Bt - Control == 0      -4.333   -5.639 -3.028</span></span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Dimilin - Control == 0 -5.750   -7.056 -4.444</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Dimilin - Control == 0 -5.750   -7.055 -4.445</span></span>
 <span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Dimilin - Bt == 0      -1.417   -2.722 -0.111</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
+<section id="split-plot-design" class="level1">
+<h1>Split-plot design</h1>
+<p>Although we did not cover them in lecture, split-plot designs are a special case of nested designs where treatments are applied at two levels of experimental units: whole-units and sub-units. We can conceptualize this as two blocked designs, one nested inside the other.</p>
+<p>For example</p>
+<ul>
+<li><p>Ag fields are sprayed with herbicides, and fertilizers are applied to plots within fields</p></li>
+<li><p>Tenderizer is applied to roasts, and cooking times are applied to cores</p></li>
+</ul>
+<p>In these cases, we’re interested in treatment effects at <strong>both</strong> levels</p>
+<section id="the-additive-model-1" class="level2">
+<h2 class="anchored" data-anchor-id="the-additive-model-1">The additive model</h2>
+<p>We can write the split plot model as:</p>
+<p><span class="math display">\[\large y_{ijk} = \mu + \alpha_i + \beta_j + \alpha \beta_{ij} + \gamma_k + \delta_{ik} + \epsilon_{ijk}\]</span></p>
+<p>Where:</p>
+<p><span class="math inline">\(i = 1,...,a\)</span>: The whole unit treatment levels</p>
+<p><span class="math inline">\(j = 1,...,b\)</span>: The sub unit treatment levels</p>
+<p><span class="math inline">\(k = 1,...,c\)</span>: The number of blocks</p>
+<p>The <span class="math inline">\(\alpha\)</span>’s and <span class="math inline">\(\beta\)</span>’s are fixed treatment effects where <span class="math inline">\(\alpha_i\)</span> represents the treatment applied to the whole unit and <span class="math inline">\(\beta_j\)</span> represents the treatment applied to the sub unit. Note the interaction <span class="math inline">\(\alpha \beta_{ij}\)</span>. The <span class="math inline">\(\gamma_i\)</span> term represents a random block effect<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. The <span class="math inline">\(\delta_{ik}\)</span> term is a random whole-unit effect (the same term we labeled <span class="math inline">\(\beta_{ij}\)</span> in the nested model above) and <span class="math inline">\(\epsilon_{ijk}\)</span> is the residual variation.</p>
+<p>Because we want our inferences to apply to all whole units, <span class="math inline">\(\delta_{ik}\)</span> is random. Specifically:</p>
+<p><span class="math display">\[\large \delta_{ik} \sim normal(0, \sigma^2_R)\]</span></p>
+<p>We might view block as random too:</p>
+<p><span class="math display">\[\large \gamma_k \sim normal(0, \sigma^2_C)\]</span></p>
+<p>And as always,</p>
+<p><span class="math display">\[\large \epsilon_{ijk} \sim normal(0, \sigma^2)\]</span></p>
+</section>
+<section id="data-example" class="level2">
+<h2 class="anchored" data-anchor-id="data-example">Data example</h2>
+<p>Below is a classic dataset which comes from a food science study. Six beef carcasses are obtained at random from a meat packaging plant. From the same section on each carcass, three rolled roasts are prepared as nearly alike as possible. Each of the roasts is assigned at random to one of three tenderizing treatments of particular interest: control, vinegar marinade, or papain marinade</p>
+<p>After treatment, a coring device is used to make four cores of meat near the center of each roast. The cores are left in place and the three roasts from the same carcass are placed together in a oven and allowed to cook. After 30 minutes, one of the cores is taken at random from each roast, another drawn randomly after 36 minutes, a third at 42 minutes, and the final at 48 minutes</p>
+<p>After cooling, the cores are measured for tenderness using the Warner-Bratzler device. The response variable is the WB score for each core.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"meatdata"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(meatdata)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 'data.frame':    72 obs. of  5 variables:</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ Wbscore   : num  8.25 7.5 4.25 3.5 7.25 6.25 3.5 3.5 6.5 4.5 ...</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ tenderizer: chr  "C" "C" "C" "C" ...</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ time      : int  30 36 42 48 30 36 42 48 30 36 ...</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ carcass   : int  1 1 1 1 1 1 1 1 1 1 ...</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ roast     : int  1 1 1 1 2 2 2 2 3 3 ...</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(meatdata)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     Wbscore      tenderizer             time         carcass        roast     </span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Min.   :2.00   Length:72          Min.   :30.0   Min.   :1.0   Min.   : 1.0  </span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  1st Qu.:3.25   Class :character   1st Qu.:34.5   1st Qu.:2.0   1st Qu.: 5.0  </span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Median :4.25   Mode  :character   Median :39.0   Median :3.5   Median : 9.5  </span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Mean   :4.78                      Mean   :39.0   Mean   :3.5   Mean   : 9.5  </span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  3rd Qu.:6.25                      3rd Qu.:43.5   3rd Qu.:5.0   3rd Qu.:14.0  </span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Max.   :8.25                      Max.   :48.0   Max.   :6.0   Max.   :18.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As we’ve done with other examples, we need to convert each predictor to a factor (in this case, converting to factors is necessary to use the <code>mcp()</code> function, later in the analysis):</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>meatdata<span class="sc">$</span>time <span class="ot">&lt;-</span> <span class="fu">factor</span>(meatdata<span class="sc">$</span>time)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>meatdata<span class="sc">$</span>carcass <span class="ot">&lt;-</span> <span class="fu">factor</span>(meatdata<span class="sc">$</span>carcass)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>meatdata<span class="sc">$</span>roast <span class="ot">&lt;-</span> <span class="fu">factor</span>(meatdata<span class="sc">$</span>roast)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>meatdata<span class="sc">$</span>tenderizer <span class="ot">&lt;-</span> <span class="fu">factor</span>(meatdata<span class="sc">$</span>tenderizer)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>What does it mean to treat time as a factor? How would you interpret the results from a model that treated time as a continuous predictor vs a factor?</strong></p>
+<p>Notice that all the roast column does is enumerate the tenderizer × carcass combinations (which explains why the corresponding term in the additive model is <span class="math inline">\(\delta_{ik}\)</span>):</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(meatdata, <span class="at">n=</span><span class="dv">12</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;    Wbscore tenderizer time carcass roast</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     8.25          C   30       1     1</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2     7.50          C   36       1     1</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3     4.25          C   42       1     1</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 4     3.50          C   48       1     1</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 5     7.25          V   30       1     2</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 6     6.25          V   36       1     2</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 7     3.50          V   42       1     2</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 8     3.50          V   48       1     2</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 9     6.50          P   30       1     3</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 10    4.50          P   36       1     3</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 11    3.50          P   42       1     3</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 12    2.50          P   48       1     3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="analysis-using-lme" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-using-lme">Analysis using <code>lme()</code></h2>
+<p>Using the <code>lme()</code> function, we are able to have multiple random effects in our model.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>lme.meat <span class="ot">&lt;-</span> <span class="fu">lme</span>(Wbscore <span class="sc">~</span> tenderizer <span class="sc">*</span> time,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">random =</span> <span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>carcass<span class="sc">/</span>roast,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> meatdata,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">correlation =</span> <span class="fu">corCompSymm</span>()) <span class="co"># Make results same as ANOVA table results)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that the random effect argument tells the model that roasts (i.e., whole units) are nested within carcass (i.e., blocks), which correctly deals with the multi-level non-independence of this design (cores nested within roasts nested within carcasses).</p>
+<p>Look at the results:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lme.meat)[<span class="sc">-</span><span class="dv">1</span>,]</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                 numDF denDF F-value p-value</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tenderizer          2    10   190.0  &lt;.0001</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; time                3    45   656.6  &lt;.0001</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; tenderizer:time     6    45    18.5  &lt;.0001</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The first row of the ANOVA table is for the (Intercept) term, which we can ignore here (hence the <code>[-1,]</code> indexing operation):</p>
+</section>
+<section id="exploring-the-interaction" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-the-interaction">Exploring the interaction</h2>
+<p>Is the time effect significant for each level of tenderizer?</p>
+<p>To test that interaction, we can create subsetted ANOVAs to look at the effect of one variable across multiple levels of another.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>lme.meatP <span class="ot">&lt;-</span> <span class="fu">lme</span>(Wbscore <span class="sc">~</span> time, <span class="at">data =</span> meatdata,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">random =</span> <span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>carcass<span class="sc">/</span>roast, </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">correlation =</span> <span class="fu">corCompSymm</span>(),</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subset =</span> tenderizer<span class="sc">==</span><span class="st">"P"</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lme.meatP, <span class="at">Terms =</span> <span class="st">"time"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-test for: time </span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   numDF denDF F-value p-value</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     3    15   126.7  &lt;.0001</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>lme.meatV <span class="ot">&lt;-</span> <span class="fu">lme</span>(Wbscore <span class="sc">~</span> time, <span class="at">data =</span> meatdata,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">random =</span> <span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>carcass<span class="sc">/</span>roast, </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">correlation =</span> <span class="fu">corCompSymm</span>(),</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subset =</span> tenderizer<span class="sc">==</span><span class="st">"V"</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lme.meatV, <span class="at">Terms =</span> <span class="st">"time"</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-test for: time </span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   numDF denDF F-value p-value</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     3    15   274.7  &lt;.0001</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>lme.meatC <span class="ot">&lt;-</span> <span class="fu">lme</span>(Wbscore <span class="sc">~</span> time, <span class="at">data =</span> meatdata, </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">random =</span> <span class="sc">~</span><span class="dv">1</span><span class="sc">|</span>carcass<span class="sc">/</span>roast, </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">correlation =</span> <span class="fu">corCompSymm</span>(),</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">subset =</span> tenderizer<span class="sc">==</span><span class="st">"C"</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lme.meatC, <span class="at">Terms =</span> <span class="st">"time"</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; F-test for: time </span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   numDF denDF F-value p-value</span></span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1     3    15   305.7  &lt;.0001</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Yes, the time effect is significant for each level of tenderizer, though note that this approach does not correct for multiple comparisons.</p>
+</section>
+<section id="multiple-comparisons-using-glht-package-multcomp" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-comparisons-using-glht-package-multcomp">Multiple comparisons using <code>glht()</code> (package <code>multcomp</code>)</h2>
+<p>Within each tenderizer treatment, we can test for variation among time treatments in a way that accounts for multiple comparisons using the <code>glht()</code> function:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>mcP <span class="ot">&lt;-</span> <span class="fu">glht</span>(lme.meatP, <span class="at">linfct =</span> <span class="fu">mcp</span>(<span class="at">time=</span><span class="st">"Tukey"</span>))</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mcP)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   Simultaneous Tests for General Linear Hypotheses</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Multiple Comparisons of Means: Tukey Contrasts</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Fit: lme.formula(fixed = Wbscore ~ time, data = meatdata, random = ~1 | </span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     carcass/roast, correlation = corCompSymm(), subset = tenderizer == </span></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     "P")</span></span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Linear Hypotheses:</span></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 36 - 30 == 0    -1.25       0.18   -6.94  &lt; 1e-07 ***</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 42 - 30 == 0    -2.33       0.18  -12.96  &lt; 1e-07 ***</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 - 30 == 0    -3.33       0.18  -18.52  &lt; 1e-07 ***</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 42 - 36 == 0    -1.08       0.18   -6.02  &lt; 1e-07 ***</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 - 36 == 0    -2.08       0.18  -11.57  &lt; 1e-07 ***</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 - 42 == 0    -1.00       0.18   -5.55  1.2e-07 ***</span></span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Adjusted p values reported -- single-step method)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can also easily plot the differences between cooking times for “P” tenderizer (and for the other 2 levels of tenderizer as well)</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mcP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="lab13_nested_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Note that time was a treatment variable in this model, but because of the way time treatments were applied (using the cores), it was possible to randomize cooking time. This is somewhat of a unique case because time usually cannot be randomized.</strong></p>
+</section>
+</section>
+<section id="repeated-measures" class="level1">
+<h1>Repeated measures</h1>
+<p>Experiments that use “repeated measures” are those that have the following components:</p>
+<ol type="1">
+<li><p>We randomly assign each ‘subject’ to a treatment</p></li>
+<li><p>We record the response to the treatment over time</p></li>
+</ol>
+<p>In these cases, we need to think about several sources of variation in the model:</p>
+<ol type="1">
+<li><p>Treatment</p></li>
+<li><p>Time</p></li>
+<li><p>Treatment-time interaction</p></li>
+<li><p>Random variation among subjects</p></li>
+<li><p>Random variation within subjects</p></li>
+</ol>
+<p>However, unlike the split-plot example, time cannot be randomized in repeated measures studies and this form on non-independence must be accounted for during analysis.</p>
+<section id="additive-model" class="level2">
+<h2 class="anchored" data-anchor-id="additive-model">Additive model</h2>
+<p><span class="math display">\[
+y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \delta_{ik} + \epsilon_{ijk}
+\]</span></p>
+<p>Where:</p>
+<p><span class="math inline">\(\mu\)</span>: Grand mean<br>
+<span class="math inline">\(\alpha_i\)</span>: effect of the ith treatment level<br>
+<span class="math inline">\(\beta_j\)</span>: effect of the jth time level<br>
+<span class="math inline">\(\alpha\beta_{ij}\)</span>: interaction effect between treatment and time levels<br>
+<span class="math inline">\(\delta_{ik}\)</span>: effect of kth subject receiving the ith treatment level<br>
+<span class="math inline">\(\epsilon_{ijk}\)</span>: residual error</p>
+<p><strong>What would be the hypotheses related to this model?</strong></p>
+<p><strong>Which effects are fixed and which are random?</strong></p>
+<p>Note also that, unlike the split-plot example, we do not have a block term in this model. We can, however, easily add one if our design includes blocks using the same random effect formulation shown in the meatdata example.</p>
+</section>
+<section id="data-example-1" class="level2">
+<h2 class="anchored" data-anchor-id="data-example-1">Data example</h2>
+<p>The dataset below contains information on leaf growth by 10 plants subjected to different fertilizer treatments. Leaf growth on each plant was measured weekly for 5 weeks.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"plantdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Before beginning the analysis, we will want to convert some variables to factors.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>plantdata<span class="sc">$</span>plant <span class="ot">&lt;-</span> <span class="fu">factor</span>(plantdata<span class="sc">$</span>plant)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>plantdata<span class="sc">$</span>fertilizer <span class="ot">&lt;-</span> <span class="fu">factor</span>(plantdata<span class="sc">$</span>fertilizer)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>plantdata<span class="sc">$</span>weekFact <span class="ot">&lt;-</span> <span class="fu">factor</span>(plantdata<span class="sc">$</span>week)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(plantdata)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 'data.frame':    50 obs. of  5 variables:</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ plant     : Factor w/ 10 levels "1","2","3","4",..: 1 1 1 1 1 2 2 2 2 2 ...</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ fertilizer: Factor w/ 2 levels "H","L": 2 2 2 2 2 2 2 2 2 2 ...</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ week      : int  1 2 3 4 5 1 2 3 4 5 ...</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ leaves    : int  4 5 6 8 10 3 4 6 6 9 ...</span></span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  $ weekFact  : Factor w/ 5 levels "1","2","3","4",..: 1 2 3 4 5 1 2 3 4 5 ...</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As always, it helps to visualize the data:</p>
+<div class="cell" data-layout-align="left">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plantdata, <span class="fu">aes</span>(<span class="at">x =</span> weekFact, <span class="at">y =</span> leaves, </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">group =</span> plant, </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">color =</span> fertilizer)) <span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_path</span>() <span class="sc">+</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="st">"Week"</span>) <span class="sc">+</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="st">"Number of leaves"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="lab13_nested_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption><strong>Leaf growth on 10 plants subjected to two fertilizer treatments across five weeks</strong></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="analysis-using-mixed-effects-model-with-correlation-structure" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-using-mixed-effects-model-with-correlation-structure">Analysis using mixed effects model with correlation structure</h2>
+<p>Using the <code>lme()</code> function, we are able to have multiple random effects in our model. Let’s start by fitting a model that treats week as a categorical predictor and assumes compound symmetry:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>lme.plant <span class="ot">&lt;-</span> <span class="fu">lme</span>(leaves <span class="sc">~</span> fertilizer <span class="sc">*</span> weekFact, </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">random =</span>  <span class="sc">~</span> (week <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">|</span>plant,  </span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> plantdata,</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">correlation =</span> <span class="fu">corCompSymm</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Note that we still specify the numeric version of week in the random effect part of the model. The categorical variable is only used in the fixed effect part of the model.</p>
+<p>Look at the results:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lme.plant)[<span class="sc">-</span><span class="dv">1</span>,]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                     numDF denDF F-value p-value</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; fertilizer              1     8    1.56  0.2474</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; weekFact                4    32  132.28  &lt;.0001</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; fertilizer:weekFact     4    32    2.85  0.0399</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>What is your conclusion about the effect of fertilizer treatments? Is there an interaction between treatment and time?</p>
+</section>
+<section id="exploring-the-interaction-1" class="level2">
+<h2 class="anchored" data-anchor-id="exploring-the-interaction-1">Exploring the interaction</h2>
+<p>Is the time effect significant for each level of fertilizer treatment?</p>
+<p>One way to test whether fertilizer treatments differ during each week is to use the <code>enmeans()</code>, which allows us to specify specific contrasts and apply corrections for multiple tests (unlike the subset approach used above):</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>plant.emm <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(lme.plant, <span class="sc">~</span> fertilizer <span class="sc">*</span> weekFact)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">pairs</span>(plant.emm, <span class="at">simple =</span> <span class="st">"fertilizer"</span>, <span class="at">adjust =</span> <span class="st">"bonferroni"</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; weekFact = 1:</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast estimate    SE df t.ratio p.value</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  H - L         0.0 0.797  8   0.000  1.0000</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; weekFact = 2:</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast estimate    SE df t.ratio p.value</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  H - L         1.0 0.806  8   1.240  0.2500</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; weekFact = 3:</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast estimate    SE df t.ratio p.value</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  H - L         1.8 0.821  8   2.192  0.0597</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; weekFact = 4:</span></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast estimate    SE df t.ratio p.value</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  H - L         1.6 0.841  8   1.902  0.0937</span></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; weekFact = 5:</span></span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  contrast estimate    SE df t.ratio p.value</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  H - L         1.4 0.867  8   1.615  0.1449</span></span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Degrees-of-freedom method: containment</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Which contrasts are significant? What is the advantage of only testing H vs.&nbsp;L within each week (as opposed to every combination of fertilizer vs week)?</p>
+</section>
+<section id="treating-time-as-continuous" class="level2">
+<h2 class="anchored" data-anchor-id="treating-time-as-continuous">Treating time as continuous</h2>
+<p>We can also fit the model treating week as a continuous variable:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>lme.plant2 <span class="ot">&lt;-</span> <span class="fu">lme</span>(leaves <span class="sc">~</span> fertilizer <span class="sc">*</span> week, </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>                 <span class="at">random =</span>  <span class="sc">~</span> (week <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">|</span>plant,  </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> plantdata,</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">correlation =</span> <span class="fu">corCompSymm</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Look at the results:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(lme.plant2)[<span class="sc">-</span><span class="dv">1</span>,]</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                 numDF denDF F-value p-value</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; fertilizer          1     8     1.9  0.2062</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; week                1    38   511.8  &lt;.0001</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; fertilizer:week     1    38     5.6  0.0235</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Do your conclusions change from the version above? Why might you choose to model week as categorical vs continuous?</p>
+</section>
+</section>
 <section id="assignment" class="level1">
 <h1>Assignment</h1>
-<p>To determine if salinity affects fish reproductive performance, a researcher places one pregnant female in a tank with one of three salinity levels: low, medium, and high, or a control tank. A week after birth, two offspring (fry) are measured.</p>
-<p>The data can be accessed using:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(FANR6750data)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"salinitydata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Perform the appropriate analysis using <code>aov()</code> and <code>lme()</code> on the dataset. Answer the following questions:</p>
+<p>Create an R Markdown file to do the following:</p>
 <ol type="1">
-<li><p>What are the null and alternative hypotheses?</p></li>
-<li><p>Does salinity affect fry growth?</p></li>
-<li><p>If so, which salinity levels differ?</p></li>
-<li><p>Is there more random variation among or within experimental units?</p></li>
-</ol>
-<ol type="a">
-<li>Do you think that it was important to include ‘adult’ as a random effect or could this analysis have been simplified to a one-way ANOVA?</li>
-<li>Calculate a F-statistic and critical value to determine whether or not to reject the null hypothesis related to the variance term.</li>
-</ol>
-<ol start="5" type="1">
-<li><p>Include a well formatted ANOVA table (with header) from the aov() results.</p></li>
+<li><p>Re-fit the first repeated measures model from above, but assuming autoregressive covariance structure instead of compound symmetry (see lecture slides for the AR1 correlation option). Do your conclusions about the effect of fertilizer treatments or their interaction with time change?</p></li>
+<li><p>As mentioned in the model selection lab, AIC can be useful for comparing alternative formulations of a model where <em>a priori</em> hypotheses are not relevant. Calculate the AIC of the compound symmetry and AR1 models. Construct a complete AIC table comparing the two models. Which model would you choose based on these results?</p></li>
+<li><p>Re-fit the top model from question 2 but without an interaction between fertilizer and time. Interpret each parameter estimate from that model and state your conclusions about the effects of fertilizer treatments and time. Which model would you base your conclusions on (the interaction or the additive model) and why?</p></li>
 <li><p>At the end of your report, under a header titled “Reflection”, answer the following questions:</p></li>
 </ol>
 <ul>
@@ -684,7 +988,13 @@ window.Quarto = {
 
 </section>
 
-</main> <!-- /main -->
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Note that this term is optional. If you do not have blocks, it can be removed<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

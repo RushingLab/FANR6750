@@ -1,5 +1,5 @@
 ---
-title: "Lab 13: Nested ANOVA"
+title: "Lab 13: Nested Designs"
 subtitle: "FANR 6750: Experimental Methods in Forestry and Natural Resources Research<br><small>Fall 2026</small>"
 format:
   html:
@@ -33,32 +33,19 @@ library(kableExtra)
 source(here::here("R/zzz.R"))
 ```
 
-
-## Lab 9
-
-- Model selection
-
-  + Exploration
-  
-  + Prediction
-
-
 ## Today's topics
 
-- Nested ANOVA
+- Nested Designs
 
-  + Specifying the model
+  + Nested ANOVA model (ANOVA and lme procedures)
   
-  + Hypotheses
+  + Split-plot design
 
-  + Random effects
-  
-  + lme() function
-
+  + Repeated measures
 
 <br>
 
-# Scenario
+# Nested ANOVA
 
 Remember from lecture that nested designs are useful in situations where we subsample within each experimental unit and we’re interested in treatment effects at the experimental (whole) unit level, not the subunit level. For example:
 
@@ -68,37 +55,35 @@ Remember from lecture that nested designs are useful in situations where we subs
 
 - We measure shrub growth at multiple subplots within a plot
 
-<br>
 
 ## The additive model
 
-$$\Large y_{ijk} = \mu + \alpha_i + \beta_{ij} + \epsilon_{ijk}$$
+$$\large y_{ijk} = \mu + \alpha_i + \beta_{ij} + \epsilon_{ijk}$$
 
 **Can you define all of the terms in the linear model? Why do we need so many subscripts?**
 
-<br>
 
-$$\Large \beta_{ij} \sim normal(0, \sigma^2_B)$$
+$$\large \beta_{ij} \sim normal(0, \sigma^2_B)$$
 
 And as always,
 
-$$\Large \epsilon_{ijk} \sim normal(0, \sigma^2)$$
+$$\large \epsilon_{ijk} \sim normal(0, \sigma^2)$$
 
 ## Hypotheses
 
 Treatment effects:
 
-$$\Large H_0 : \alpha_1 = · · · = \alpha_a = 0$$
-$$\Large H_a : at\; least\; one\; inequality$$
+$$\large H_0 : \alpha_1 = · · · = \alpha_a = 0$$
+$$\large H_a : at\; least\; one\; inequality$$
 Random variation among experimental units:
 
-$$\Large H_0 : \sigma^2_B = 0$$
+$$\large H_0 : \sigma^2_B = 0$$
 
-$$\Large H_a : \sigma^2_B > 0$$
+$$\large H_a : \sigma^2_B > 0$$
 
 Note: Here we have referred to the variance term as $\sigma^2_B$ but we could use any reasonable subscript to refer to the variance term for the random effect.
 
-Note: Recall that a nested ANOVA is primarily used when the variation among experimental units is of interest. If this variation was not of interest or if we had reason to believe that all the experimental units did not differ from each other, we can simplify to a one-way ANOVA.
+Note: Recall that a nested ANOVA is primarily used when the variation among experimental units is of interest. If this variation was not of interest or if we had reason to believe that all the experimental units did not differ from each other, we can simplify to a one-way ANOVA by using the mean of all subunits within a whole unit as the response variable.
 
 ## Example data
 
@@ -154,8 +139,6 @@ summary(aov.correct)
 
 Can you spot the difference? What calculations changed between these two analyses?
 
-<br>
-<br>
 
 Note: The next few code chunks are not necessary. They are simply demonstrating that what we are doing here is exactly the same as performing a one way ANOVA after averaging across the subunits.
 
@@ -186,7 +169,6 @@ When using using `aov()` with Error term:
 
 - But, you can use `model.tables()`
 
-<br>
 
 An alternative is to use the `lme()` function in the `nlme` package (which is designed for mixed effects models)
 
@@ -196,11 +178,6 @@ An alternative is to use the `lme()` function in the `nlme` package (which is de
 
 - Possible to do multiple comparisons and contrasts using the `glht()` function in the `multcomp` package
 
-But…
-
-- Only works if there are random effects
-
-- ANOVA tables aren’t as complete as `aov()`
 
 ## Using the `lme()` function
 
@@ -231,14 +208,11 @@ VarCorr(lme1)
 
 The first row shows the estimates of $\sigma^2_B$ and $\sigma_B$. These are redundant values since one can be calculated from the other. The second row shows the estimates of $\sigma^2$ and $\sigma$.
 
-<br>
-<br>
 
 **What can we say about the amount of random variation within whole units relative to among whole units (after accounting for treatment effects)? Does it appear that in this scenario the random effect of plot was necessary?**
 
 Note that we will reject the null hypothesis related to the variance ($\sigma^2_B = 0$) if the F-statistic ($\frac{MS_B}{MS_E}$) > $F_{a(b-1), ab(n-1),\alpha}$. Keep in mind though that to get this F-statistic, we will need to use the aov() function approach.
 
-<br>
 
 Next, we can extract the plot-level random effects. These are the $\beta_{ij}$’s:
 
@@ -254,33 +228,308 @@ summary(tuk)
 confint(tuk)
 ```
 
-# Assignment
+# Split-plot design
 
-To determine if salinity affects fish reproductive performance, a researcher places one pregnant female in a tank with one of three salinity levels: low, medium, and high, or a control tank. A week after birth, two offspring (fry) are measured.
+Although we did not cover them in lecture, split-plot designs are a special case of nested designs where treatments are applied at two levels of experimental units: whole-units and sub-units. We can conceptualize this as two blocked designs, one nested inside the other.
 
-The data can be accessed using:
+For example
 
-```{r, eval= T}
-library(FANR6750data)
-data("salinitydata")
+- Ag fields are sprayed with herbicides, and fertilizers are applied to plots within fields  
+
+- Tenderizer is applied to roasts, and cooking times are applied to cores  
+
+In these cases, we’re interested in treatment effects at **both** levels
+
+
+## The additive model
+
+We can write the split plot model as:
+
+$$\large y_{ijk} = \mu + \alpha_i + \beta_j + \alpha \beta_{ij} + \gamma_k + \delta_{ik} + \epsilon_{ijk}$$
+
+Where:
+
+$i = 1,...,a$: The whole unit treatment levels
+
+$j = 1,...,b$: The sub unit treatment levels
+
+$k = 1,...,c$: The number of blocks
+
+
+The $\alpha$’s and $\beta$’s are fixed treatment effects where $\alpha_i$ represents the treatment applied to the whole unit and $\beta_j$ represents the treatment applied to the sub unit. Note the interaction $\alpha \beta_{ij}$. The $\gamma_i$ term represents a random block effect^[Note that this term is optional. If you do not have blocks, it can be removed]. The $\delta_{ik}$ term is a random whole-unit effect (the same term we labeled $\beta_{ij}$ in the nested model above) and $\epsilon_{ijk}$ is the residual variation.  
+
+Because we want our inferences to apply to all whole units, $\delta_{ik}$ is random. Specifically:
+
+$$\large \delta_{ik} \sim normal(0, \sigma^2_R)$$
+
+We might view block as random too:
+
+$$\large \gamma_k \sim normal(0, \sigma^2_C)$$
+
+And as always,
+
+$$\large \epsilon_{ijk} \sim normal(0, \sigma^2)$$
+
+
+## Data example
+
+Below is a classic dataset which comes from a food science study. Six beef carcasses are obtained at random from a meat packaging plant. From the same section on each carcass, three rolled roasts are prepared as nearly alike as possible. Each of the roasts is assigned at random to one of three tenderizing treatments of particular interest: control, vinegar marinade, or papain marinade
+
+After treatment, a coring device is used to make four cores of meat near the center of each roast. The cores are left in place and the three roasts from the same carcass are placed together in a oven and allowed to cook. After 30 minutes, one of the cores is taken at random from each roast, another drawn randomly after 36 minutes, a third at 42 minutes, and the final at 48 minutes
+
+After cooling, the cores are measured for tenderness using the Warner-Bratzler device. The response variable is the WB score for each core.
+
+```{r}
+library(FANR6750)
+data("meatdata")
+str(meatdata)
+summary(meatdata)
+```
+
+As we've done with other examples, we need to convert each predictor to a factor (in this case, converting to factors is necessary to use the `mcp()` function, later in the analysis):
+
+```{r}
+meatdata$time <- factor(meatdata$time)
+meatdata$carcass <- factor(meatdata$carcass)
+meatdata$roast <- factor(meatdata$roast)
+meatdata$tenderizer <- factor(meatdata$tenderizer)
 ```
 
 
-Perform the appropriate analysis using `aov()` and `lme()` on the dataset. Answer the following questions:
+**What does it mean to treat time as a factor? How would you interpret the results from a model that treated time as a continuous predictor vs a factor?**
 
-1) What are the null and alternative hypotheses?
 
-2) Does salinity affect fry growth?
+Notice that all the roast column does is enumerate the tenderizer × carcass combinations (which explains why the corresponding term in the additive model is $\delta_{ik}$):
 
-3) If so, which salinity levels differ?
+```{r}
+head(meatdata, n=12)
+```
 
-4) Is there more random variation among or within experimental units?
-  a. Do you think that it was important to include 'adult' as a random effect or could this analysis have been simplified to a one-way ANOVA?
-  b. Calculate a F-statistic and critical value to determine whether or not to reject the null hypothesis related to the variance term.
-  
-5) Include a well formatted ANOVA table (with header) from the aov() results.
+## Analysis using `lme()`
 
-6) At the end of your report, under a header titled "Reflection", answer the following questions: 
+Using the `lme()` function, we are able to have multiple random effects in our model.
+
+
+```{r}
+library(nlme)
+lme.meat <- lme(Wbscore ~ tenderizer * time,
+                random = ~1|carcass/roast,
+                data = meatdata,
+                correlation = corCompSymm()) # Make results same as ANOVA table results)
+```
+
+Note that the random effect argument tells the model that roasts (i.e., whole units) are nested within carcass (i.e., blocks), which correctly deals with the multi-level non-independence of this design (cores nested within roasts nested within carcasses).
+
+Look at the results:
+
+```{r}
+anova(lme.meat)[-1,]
+```
+
+The first row of the ANOVA table is for the (Intercept) term, which we can ignore here (hence the `[-1,]` indexing operation):
+
+## Exploring the interaction
+
+Is the time effect significant for each level of tenderizer?
+
+To test that interaction, we can create subsetted ANOVAs to look at the effect of one variable across multiple levels of another.
+
+```{r}
+lme.meatP <- lme(Wbscore ~ time, data = meatdata,
+                 random = ~1|carcass/roast, 
+                 correlation = corCompSymm(),
+                 subset = tenderizer=="P")
+anova(lme.meatP, Terms = "time")
+```
+
+
+```{r}
+lme.meatV <- lme(Wbscore ~ time, data = meatdata,
+                 random = ~1|carcass/roast, 
+                 correlation = corCompSymm(),
+                 subset = tenderizer=="V")
+anova(lme.meatV, Terms = "time")
+```
+
+```{r}
+lme.meatC <- lme(Wbscore ~ time, data = meatdata, 
+                 random = ~1|carcass/roast, 
+                 correlation = corCompSymm(),
+                 subset = tenderizer=="C")
+anova(lme.meatC, Terms = "time")
+```
+
+Yes, the time effect is significant for each level of tenderizer, though note that this approach does not correct for multiple comparisons.
+
+## Multiple comparisons using `glht()` (package `multcomp`)
+
+Within each tenderizer treatment, we can test for variation among time treatments in a way that accounts for multiple comparisons using the `glht()` function:
+
+```{r}
+library(multcomp)
+mcP <- glht(lme.meatP, linfct = mcp(time="Tukey"))
+summary(mcP)
+```
+
+We can also easily plot the differences between cooking times for “P” tenderizer (and for the other 2 levels of tenderizer as well)
+
+```{r}
+plot(mcP)
+```
+
+**Note that time was a treatment variable in this model, but because of the way time treatments were applied (using the cores), it was possible to randomize cooking time. This is somewhat of a unique case because time usually cannot be randomized.**
+
+# Repeated measures
+
+Experiments that use "repeated measures" are those that have the following components:
+
+1) We randomly assign each ‘subject’ to a treatment
+
+2) We record the response to the treatment over time
+
+
+In these cases, we need to think about several sources of variation in the model:
+
+1) Treatment  
+
+2) Time
+
+3) Treatment-time interaction
+
+4) Random variation among subjects
+
+5) Random variation within subjects
+
+However, unlike the split-plot example, time cannot be randomized in repeated measures studies and this form on non-independence must be accounted for during analysis. 
+
+## Additive model
+
+$$
+y_{ijk} = \mu + \alpha_i + \beta_j + \alpha\beta_{ij} + \delta_{ik} + \epsilon_{ijk}
+$$
+
+Where:
+
+$\mu$: Grand mean  
+$\alpha_i$: effect of the ith treatment level  
+$\beta_j$: effect of the jth time level  
+$\alpha\beta_{ij}$: interaction effect between treatment and time levels  
+$\delta_{ik}$: effect of kth subject receiving the ith treatment level  
+$\epsilon_{ijk}$: residual error  
+
+
+**What would be the hypotheses related to this model?**
+
+**Which effects are fixed and which are random?**
+
+Note also that, unlike the split-plot example, we do not have a block term in this model. We can, however, easily add one if our design includes blocks using the same random effect formulation shown in the meatdata example.  
+
+
+## Data example
+
+The dataset below contains information on leaf growth by 10 plants subjected to different fertilizer treatments. Leaf growth on each plant was measured weekly for 5 weeks.
+
+```{r}
+library(FANR6750)
+data("plantdata")
+```
+
+Before beginning the analysis, we will want to convert some variables to factors.
+
+```{r}
+plantdata$plant <- factor(plantdata$plant)
+plantdata$fertilizer <- factor(plantdata$fertilizer)
+plantdata$weekFact <- factor(plantdata$week)
+
+str(plantdata)
+```
+
+
+As always, it helps to visualize the data:
+
+```{r, fig.align='left', fig.cap="**Leaf growth on 10 plants subjected to two fertilizer treatments across five weeks**"}
+library(ggplot2)
+
+ggplot(plantdata, aes(x = weekFact, y = leaves, 
+                      group = plant, 
+                      color = fertilizer)) +
+  geom_path() +
+  scale_x_discrete("Week") +
+  scale_y_continuous("Number of leaves")
+```
+
+
+## Analysis using mixed effects model with correlation structure
+
+Using the `lme()` function, we are able to have multiple random effects in our model. Let's start by fitting a model that treats week as a categorical predictor and assumes compound symmetry:
+
+
+```{r}
+library(nlme)
+lme.plant <- lme(leaves ~ fertilizer * weekFact, 
+                 random =  ~ (week - 1)|plant,  
+                 data = plantdata,
+                 correlation = corCompSymm())
+
+```
+
+Note that we still specify the numeric version of week in the random effect part of the model. The categorical variable is only used in the fixed effect part of the model. 
+
+Look at the results:
+
+```{r}
+anova(lme.plant)[-1,]
+```
+
+What is your conclusion about the effect of fertilizer treatments? Is there an interaction between treatment and time?
+
+## Exploring the interaction
+
+Is the time effect significant for each level of fertilizer treatment?
+
+One way to test whether fertilizer treatments differ during each week is to use the `enmeans()`, which allows us to specify specific contrasts and apply corrections for multiple tests (unlike the subset approach used above):
+
+```{r}
+library(emmeans)
+plant.emm <- emmeans(lme.plant, ~ fertilizer * weekFact)
+pairs(plant.emm, simple = "fertilizer", adjust = "bonferroni")
+```
+
+Which contrasts are significant? What is the advantage of only testing H vs. L within each week (as opposed to every combination of fertilizer vs week)?
+
+## Treating time as continuous
+
+We can also fit the model treating week as a continuous variable: 
+
+
+```{r}
+lme.plant2 <- lme(leaves ~ fertilizer * week, 
+                 random =  ~ (week - 1)|plant,  
+                 data = plantdata,
+                 correlation = corCompSymm())
+
+```
+
+Look at the results:
+
+```{r}
+anova(lme.plant2)[-1,]
+```
+
+Do your conclusions change from the version above? Why might you choose to model week as categorical vs continuous? 
+
+
+# Assignment
+
+Create an R Markdown file to do the following:
+
+1. Re-fit the first repeated measures model from above, but assuming autoregressive covariance structure instead of compound symmetry (see lecture slides for the AR1 correlation option). Do your conclusions about the effect of fertilizer treatments or their interaction with time change?
+
+2. As mentioned in the model selection lab, AIC can be useful for comparing alternative formulations of a model where *a priori* hypotheses are not relevant. Calculate the AIC of the compound symmetry and AR1 models. Construct a complete AIC table comparing the two models. Which model would you choose based on these results? 
+
+3. Re-fit the top model from question 2 but without an interaction between fertilizer and time. Interpret each parameter estimate from that model and state your conclusions about the effects of fertilizer treatments and time. Which model would you base your conclusions on (the interaction or the additive model) and why? 
+
+4. At the end of your report, under a header titled "Reflection", answer the following questions: 
 
 - On a 1-10 scale, how would you rate your confidence in the topics covered in this lab? 
 

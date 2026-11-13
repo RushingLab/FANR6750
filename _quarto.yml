@@ -130,9 +130,9 @@ website:
           - text: "Lab 12: Model Selection"
             href: labs/lab12_model_selection.qmd
 
-          # - text: "Lab 13: Nested Designs"
-          #   href: labs/lab13_nested.qmd
-          #
+          - text: "Lab 13: Nested Designs"
+            href: labs/lab13_nested.qmd
+            
           # - text: "Bonus lab: Generalized Linear Models"
           #   href: labs/lab14_glm.qmd
 
