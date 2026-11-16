@@ -9,16 +9,20 @@
     <lastmod>2026-08-31T16:45:23.533Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/04_ttest/04_ttest.html</loc>
-    <lastmod>2026-08-31T16:45:23.538Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/19_glm/19_glm.html</loc>
+    <lastmod>2026-11-16T13:50:11.229Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/01_intro_to_stats/01_intro_to_stats.html</loc>
-    <lastmod>2026-08-31T16:45:23.532Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/16_randeff/16_randeff.html</loc>
+    <lastmod>2026-10-29T14:21:08.065Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/07_causal_inference/07_causal_inference.html</loc>
-    <lastmod>2026-09-11T13:03:30.694Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/08_expdesign/08_expdesign.html</loc>
+    <lastmod>2026-09-23T12:59:53.533Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/20_logistic_reg/20_logistic_reg.html</loc>
+    <lastmod>2026-11-16T14:16:16.528Z</lastmod>
   </url>
   <url>
     <loc>https://rushinglab.github.io/FANR6750/lectures/00_course_intro/00_course_intro.html</loc>
@@ -29,79 +33,39 @@
     <lastmod>2026-08-31T16:45:23.607Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/17_nested/17_nested.html</loc>
-    <lastmod>2026-11-05T19:53:51.225Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/03_inference/03_inference.html</loc>
+    <lastmod>2026-08-31T16:45:23.537Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/15_model_selection/15_model_selection.html</loc>
-    <lastmod>2026-10-28T13:16:12.346Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/09_ANOVA/09_ANOVA.html</loc>
+    <lastmod>2026-08-31T16:45:23.600Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/06_assumptions/06_assumptions.html</loc>
-    <lastmod>2026-08-31T16:45:23.588Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/18_repeated_measures/18_repeated_measures.html</loc>
+    <lastmod>2026-11-10T15:36:36.861Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/syllabus.html</loc>
-    <lastmod>2026-08-31T16:45:23.623Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/14_causal_inference_part2/14_causal_inference_part2.html</loc>
+    <lastmod>2026-10-15T21:55:59.925Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/FANR6750.html</loc>
-    <lastmod>2026-08-31T16:45:23.273Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rushinglab.github.io/FANR6750/references/homework.html</loc>
-    <lastmod>2026-08-31T16:45:23.622Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rushinglab.github.io/FANR6750/references/graphics.html</loc>
-    <lastmod>2026-08-31T16:45:23.622Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab11_causal_inference.html</loc>
-    <lastmod>2026-11-02T15:18:45.407Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab07_ANOVA.html</loc>
-    <lastmod>2026-10-05T12:58:35.910Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab04_t-tests.html</loc>
-    <lastmod>2026-08-31T16:45:23.519Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab09_multiple_regression.html</loc>
-    <lastmod>2026-10-15T21:59:24.904Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab01_intro_to_R.html</loc>
+    <loc>https://rushinglab.github.io/FANR6750/index.html</loc>
     <lastmod>2026-08-31T16:45:23.518Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab12_model_selection.html</loc>
-    <lastmod>2026-11-09T14:17:07.153Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/references/projects_and_directories.html</loc>
+    <lastmod>2026-08-31T16:45:23.622Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab14_glm.html</loc>
-    <lastmod>2026-08-31T16:45:23.521Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/references/RMarkdown.html</loc>
+    <lastmod>2026-08-31T16:45:23.622Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab13_nested.html</loc>
-    <lastmod>2026-11-11T20:13:48.194Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/notes.html</loc>
+    <lastmod>2026-11-09T14:36:54.373Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab10_interactions.html</loc>
-    <lastmod>2026-08-31T16:45:23.520Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab6_expdesign.html</loc>
-    <lastmod>2026-10-05T12:58:35.928Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab08_mult_comp.html</loc>
-    <lastmod>2026-10-08T18:07:32.362Z</lastmod>
-  </url>
-  <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab02_Intro_project_and_Rmd.html</loc>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab03_inference.html</loc>
     <lastmod>2026-08-31T16:45:23.519Z</lastmod>
   </url>
   <url>
@@ -109,40 +73,84 @@
     <lastmod>2026-08-31T16:45:23.520Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/labs/lab03_inference.html</loc>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab02_Intro_project_and_Rmd.html</loc>
     <lastmod>2026-08-31T16:45:23.519Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/notes.html</loc>
-    <lastmod>2026-11-09T14:36:54.373Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab08_mult_comp.html</loc>
+    <lastmod>2026-10-08T18:07:32.362Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/references/RMarkdown.html</loc>
-    <lastmod>2026-08-31T16:45:23.622Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab6_expdesign.html</loc>
+    <lastmod>2026-10-05T12:58:35.928Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/references/projects_and_directories.html</loc>
-    <lastmod>2026-08-31T16:45:23.622Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab10_interactions.html</loc>
+    <lastmod>2026-08-31T16:45:23.520Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/index.html</loc>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab13_nested.html</loc>
+    <lastmod>2026-11-11T20:13:48.194Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab14_glm.html</loc>
+    <lastmod>2026-08-31T16:45:23.521Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab12_model_selection.html</loc>
+    <lastmod>2026-11-09T14:17:07.153Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab01_intro_to_R.html</loc>
     <lastmod>2026-08-31T16:45:23.518Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/14_causal_inference_part2/14_causal_inference_part2.html</loc>
-    <lastmod>2026-10-15T21:55:59.925Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab09_multiple_regression.html</loc>
+    <lastmod>2026-10-15T21:59:24.904Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/18_repeated_measures/18_repeated_measures.html</loc>
-    <lastmod>2026-11-10T15:36:36.861Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab04_t-tests.html</loc>
+    <lastmod>2026-08-31T16:45:23.519Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/09_ANOVA/09_ANOVA.html</loc>
-    <lastmod>2026-08-31T16:45:23.600Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab07_ANOVA.html</loc>
+    <lastmod>2026-10-05T12:58:35.910Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/03_inference/03_inference.html</loc>
-    <lastmod>2026-08-31T16:45:23.537Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/labs/lab11_causal_inference.html</loc>
+    <lastmod>2026-11-02T15:18:45.407Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/references/graphics.html</loc>
+    <lastmod>2026-08-31T16:45:23.622Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/references/homework.html</loc>
+    <lastmod>2026-08-31T16:45:23.622Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/FANR6750.html</loc>
+    <lastmod>2026-08-31T16:45:23.273Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/syllabus.html</loc>
+    <lastmod>2026-08-31T16:45:23.623Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/06_assumptions/06_assumptions.html</loc>
+    <lastmod>2026-08-31T16:45:23.588Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/15_model_selection/15_model_selection.html</loc>
+    <lastmod>2026-10-28T13:16:12.346Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/17_nested/17_nested.html</loc>
+    <lastmod>2026-11-05T19:53:51.225Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/21_poisson_reg/21_poisson_reg.html</loc>
+    <lastmod>2026-11-16T14:59:39.598Z</lastmod>
   </url>
   <url>
     <loc>https://rushinglab.github.io/FANR6750/lectures/10_multcomp/10_multcomp.html</loc>
@@ -153,12 +161,16 @@
     <lastmod>2026-08-31T16:45:23.603Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/08_expdesign/08_expdesign.html</loc>
-    <lastmod>2026-09-23T12:59:53.533Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/07_causal_inference/07_causal_inference.html</loc>
+    <lastmod>2026-09-11T13:03:30.694Z</lastmod>
   </url>
   <url>
-    <loc>https://rushinglab.github.io/FANR6750/lectures/16_randeff/16_randeff.html</loc>
-    <lastmod>2026-10-29T14:21:08.065Z</lastmod>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/01_intro_to_stats/01_intro_to_stats.html</loc>
+    <lastmod>2026-08-31T16:45:23.532Z</lastmod>
+  </url>
+  <url>
+    <loc>https://rushinglab.github.io/FANR6750/lectures/04_ttest/04_ttest.html</loc>
+    <lastmod>2026-08-31T16:45:23.538Z</lastmod>
   </url>
   <url>
     <loc>https://rushinglab.github.io/FANR6750/lectures/05_nhst/05_nhst.html</loc>

@@ -252,6 +252,18 @@ window.Quarto = {
     <a class="dropdown-item" href="../lectures/18_repeated_measures/18_repeated_measures.html">
  <span class="dropdown-text">Lecture 18: Psuedoreplication Part 2: Repeated Measures</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/19_glm/19_glm.html">
+ <span class="dropdown-text">Lecture 19: Generalized linear models</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/20_logistic_reg/20_logistic_reg.html">
+ <span class="dropdown-text">Lecture 20: Logistic_regression</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../lectures/21_poisson_reg/21_poisson_reg.html">
+ <span class="dropdown-text">Lecture 21: Poisson_regression</span></a>
+  </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
@@ -614,7 +626,7 @@ window.Quarto = {
 <span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;                        Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
 <span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Bt - Control == 0        -4.333      0.557   -7.78   &lt;0.001 ***</span></span>
 <span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Dimilin - Control == 0   -5.750      0.557  -10.32   &lt;0.001 ***</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Dimilin - Bt == 0        -1.417      0.557   -2.54     0.03 *  </span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Dimilin - Bt == 0        -1.417      0.557   -2.54    0.029 *  </span></span>
 <span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
 <span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Adjusted p values reported -- single-step method)</span></span>
@@ -791,12 +803,12 @@ window.Quarto = {
 <span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
 <span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Linear Hypotheses:</span></span>
 <span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;              Estimate Std. Error z value Pr(&gt;|z|)    </span></span>
-<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 36 - 30 == 0    -1.25       0.18   -6.94  &lt; 1e-07 ***</span></span>
-<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 42 - 30 == 0    -2.33       0.18  -12.96  &lt; 1e-07 ***</span></span>
-<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 - 30 == 0    -3.33       0.18  -18.52  &lt; 1e-07 ***</span></span>
-<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 42 - 36 == 0    -1.08       0.18   -6.02  &lt; 1e-07 ***</span></span>
-<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 - 36 == 0    -2.08       0.18  -11.57  &lt; 1e-07 ***</span></span>
-<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 - 42 == 0    -1.00       0.18   -5.55  1.2e-07 ***</span></span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 36 - 30 == 0    -1.25       0.18   -6.94   &lt;1e-06 ***</span></span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 42 - 30 == 0    -2.33       0.18  -12.96   &lt;1e-06 ***</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 - 30 == 0    -3.33       0.18  -18.52   &lt;1e-06 ***</span></span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 42 - 36 == 0    -1.08       0.18   -6.02   &lt;1e-06 ***</span></span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 - 36 == 0    -2.08       0.18  -11.57   &lt;1e-06 ***</span></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 48 - 42 == 0    -1.00       0.18   -5.55   &lt;1e-06 ***</span></span>
 <span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ---</span></span>
 <span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</span></span>
 <span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; (Adjusted p values reported -- single-step method)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

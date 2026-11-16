@@ -83,12 +83,14 @@ website:
           - text: "Lecture 18: Psuedoreplication Part 2: Repeated Measures"
             href: lectures/18_repeated_measures/18_repeated_measures.qmd
 
-          #- text: "Lecture 19: Logistic regression"
-          #  href: lectures/19_logistic_regression/19_logistic_regression.qmd
+          - text: "Lecture 19: Generalized linear models"
+            href: lectures/19_glm/19_glm.qmd
 
-          #- text: "Lecture 20: Poisson regression"
-          #  href: lectures/20_poisson_regression/20_poisson_regression.qmd
+          - text: "Lecture 20: Logistic_regression"
+            href: lectures/20_logistic_reg/20_logistic_reg.qmd
 
+          - text: "Lecture 21: Poisson_regression"
+            href: lectures/21_poisson_reg/21_poisson_reg.qmd
 
       - text: "Labs"
         icon: display
