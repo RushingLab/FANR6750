@@ -86,10 +86,10 @@ website:
           - text: "Lecture 19: Generalized linear models"
             href: lectures/19_glm/19_glm.qmd
 
-          - text: "Lecture 20: Logistic_regression"
+          - text: "Lecture 20: Logistic regression"
             href: lectures/20_logistic_reg/20_logistic_reg.qmd
 
-          - text: "Lecture 21: Poisson_regression"
+          - text: "Lecture 21: Poisson regression"
             href: lectures/21_poisson_reg/21_poisson_reg.qmd
 
       - text: "Labs"
